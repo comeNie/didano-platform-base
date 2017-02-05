@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, shrink-to-fit=no, initial-scale=1" />
+<meta name="description" content="" />
+<meta name="author" content="didano" />
+<title>didano video</title>
+<link href="../video/css/bootstrap.min.css" rel="stylesheet" />
+<link href="../video/css/simple-sidebar.css" rel="stylesheet" />
+<script src="../video/js/jquery.min.js"></script>
+<script src="../video/js/bootstrap.min.js"></script>
+<script src="../video/js/didano.js"></script>
+
+</head>
+<body>
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<div id="sidebar-wrapper">
+			<ul class="sidebar-nav">
+				<li class="sidebar-brand"><a href="#"> 谛达诺视频系统 </a></li>
+				<li><a th:href="@{~/video/show_videos}">视频详情</a></li>
+				<li><a th:href="@{~/video/paymentAuthorization}">付费授权</a></li>
+				<li><a th:href="@{~/video/test_websocket}">测试websocket</a></li>
+			</ul>
+		</div>
+		<!-- /#sidebar-wrapper -->
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper">
+			<div class="container-fluid padding-rl-0">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="col-md-12 bg-color-white top">
+            				<div class="col-md-1"> 
+                				<img src="../video/img/log.png" alt="" class="width-40">
+            				</div>
+        				</div>
+						<div layout:fragment="content">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- /#page-content-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- jQuery -->
+	<script src="../video/js/jquery.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="../video/js/bootstrap.min.js"></script>
+
+	<!-- Menu Toggle Script -->
+	<script>
+		$("#menu-toggle").click(function(e) {
+			e.preventDefault();
+			$("#wrapper").toggleClass("toggled");
+		});
+	</script>
+</body>
+
+</html>

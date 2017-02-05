@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="video/main">
+<head>
+<title>Demo</title>
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-table.css" />
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap-table.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+        console.log("1111111");
+    });
+</script>
+
+</head>
+
+<body>
+<div>my list</div>
+	<h1 layout:fragment="header" style="text-align:center"> 商品名录2: View all</h1>
+	<div layout:fragment="content" class="container">
+		<table data-toggle="table" data-url="/rest/get/good?page=1&size=8">
+			<thead>
+		        <tr>
+		            <th data-field="id">Item ID</th>
+		            <th data-field="name">Item Name</th>
+		            <th data-field="catalogId">catalogId</th>
+		            <th data-field="price">Item Price</th>
+		        </tr>
+    		</thead>
+		</table>
+			
+	</div>
+</body>
+</html>
+

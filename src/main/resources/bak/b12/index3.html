@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap-table.css">
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="bootstrap-table.js"></script>
+    <script src="bootstrap-table-zh-CN.js"></script>
+</head>
+<body>
+<h1>show data</h1>
+<table data-toggle="table">
+</table>
+<!-- Fixed navbar -->
+<script type="text/javascript">
+    $('#table').bootstrapTable({
+    url: 'data2.json',
+    columns: [{
+        field: 'id',
+        title: 'Item ID'
+    }, {
+        field: 'name',
+        title: 'Item Name'
+    }, {
+        field: 'catalogId',
+        title: 'catalog id'
+    }, {
+        field: 'price',
+        title: 'Item Price'
+    },]
+});
+</script>>
+</body>
+</html>

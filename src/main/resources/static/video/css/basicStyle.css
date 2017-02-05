@@ -1,0 +1,38 @@
+body{
+	background-color: #E4E4E4;
+	font-family: "Microsoft YaHei" !important;
+}
+.width-40{
+	width: 60%;
+}
+.width-80{
+	width: 96%;
+}
+.width-100{
+	width: 100%;
+}
+.padding-rl-0{
+	padding-right: 0px !important;
+	padding-left: 0px !important;
+}
+.padding-trl{
+	padding-top: 0px !important;
+	padding-right: 0px !important;
+	padding-left: 0px !important;
+}
+.top{
+	height: 70px;
+	line-height: 70px;
+}
+.bg-color-white{
+	background-color: white;
+}
+.margin-bottom-10{
+	margin-bottom: 10px;
+}
+.margin-bottom-20{
+	margin-bottom: 20px;
+}
+.margin-left-5{
+	margin-left: 5px;
+}

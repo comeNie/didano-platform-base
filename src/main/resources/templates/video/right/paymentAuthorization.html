@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="video/main" charset="UTF-8">
+<head>
+	<meta charset="UTF-8">
+	<title>付费授权</title>
+    <link rel="stylesheet" href="../video/css/payAuth.css" />
+	<link rel="stylesheet" href="../video/css/basicStyle.css" />
+
+    <script>
+        $(document).ready(function(){
+            $.ajax({
+                type: "GET",
+                url:server_url+"/video/rest/post/school_all",
+                dataType: "json",
+                success: function(rs){
+                    var schoolList = "";
+                    $.each(rs.data, function(idx, obj) {
+                        for(var i = 0; i < obj.length; i++){
+                            schoolList += '<div class="col-md-2 school-list-comment list-height" onclick="getSchoolStudentList(this)" id="'+obj[i].id+'"><span class="dot"></span><span>'+obj[i].title+'<span></div>';
+                        }
+                        $(".school-list-body").append(schoolList);
+                    });
+                },
+                error: function(){
+                }
+            });     
+        });
+
+
+        function getSchoolStudentList(obj){
+            $(".class-list-body").empty();
+            $(".school_title").empty();
+            $(".list-body").eq(1).removeClass("hidden");
+            var schooldId = $(obj).attr('id');
+            var schooldName = $(obj).children().eq(1).text();
+            $(".school_title").html(schooldName);
+            $.ajax({
+                type: "POST",
+                url:server_url+"/video/rest/post/auth_switch_by_school/"+schooldId,
+                dataType: "json",
+                success: function(rs){
+                    var classList = "";
+                    $.each(rs.data['list'], function(index, obj) {
+                        /*班级列表*/
+                        classList = '<div class="col-md-12 class-list-comment list-height" onclick="" id="'+obj['id']+'">'+obj['title']+'</div>';
+                        $(".class-list-body").append(classList);
+
+                        /*学生列表*/
+                        var studentList = "";
+                        $.each(obj['list'], function(idx, objt) {
+                            var spanStr = "";
+                            if(objt['isUse']){
+                                spanStr = '<input type="checkbox" checked="checked" class="hidden"/><span class="rectangular bg-color-blue"></span>';
+                            }else{
+                                spanStr = '<input type="checkbox" class="hidden"/><span class="rectangular"></span>';
+                            }
+                            studentList += '<div class="col-md-1 student-list" onclick="authSwitchVideo(this)" id="'+objt['id']+'">'+spanStr+'<span>'+objt['ownerName']+'</span></div>';
+                        });
+                        $(".class-list-body").append(studentList);
+                    });
+                },
+                error: function(){
+
+                }
+            });
+        }
+
+
+        /*设置授权状态*/
+        function authSwitchVideo(obj){
+            var id= $(obj).attr('id');
+            var sendIsUse = true;
+            if($(obj).children().eq(0).is(':checked')){
+                sendIsUse = false;
+                $(obj).children().eq(0).prop("checked",false);
+            }else{
+                sendIsUse = true;
+                $(obj).children().eq(0).prop("checked",true);
+            }
+            $.ajax({
+                type: "POST",
+                url:server_url+"/video/rest/post/auth_switch_edit4video",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data:JSON.stringify({"id":id,"isUse": sendIsUse}),
+                success: function(rs){
+                    if(rs.success){
+                        if(sendIsUse){
+                            $(obj).children().eq(1).addClass("bg-color-blue");
+                        }else{
+                            $(obj).children().eq(1).removeClass("bg-color-blue");
+                        }
+                    }
+                },
+                error: function(){
+                }
+            });
+        }
+    </script>
+
+</head>
+<body>
+	<!-- <h1 layout:fragment="header" style="text-align:center">付费授权</h1> -->
+    <div layout:fragment="content" class="container width-100 padding-rl-0">
+    	<!-- <div class="col-md-12 bg-color-white top">
+            <div class="col-md-1"> 
+                <img src="img/log.png" alt="" class="width-40">
+            </div>
+        </div> -->
+    	<div class="col-md-12 list-body bg-color-white width-80 padding-rl-0">
+	    	<div class="col-md-12 list-title list-height">
+	    		付费授权
+	    	</div>
+            <div class="col-md-12 title">
+                <div class="col-md-6 padding-rl-0">学校列表</div>
+                <!-- <div class="col-md-6 text-right search-btn">
+                    <input type="text" placeholder="请输入查询学校名称" name="title"/>
+                    <span class="search_click" onclick="searchSchool(this)">
+                        <img src="img/search_btn.png" class="search_img">
+                    </span>
+                    
+                </div> -->
+            </div>
+	    	<div class="col-md-12 school-list-body padding-rl-0">
+	    		<!-- <div class="col-md-2 school-list-comment list-height">
+                    <span class="dot"></span>
+	    			<span>超级红黄蓝无敌学校<span>
+	    		</div> -->
+	    	</div>
+    	</div>
+        <div class="col-md-12 list-body bg-color-white width-80 padding-rl-0 hidden margin-bottom-20">
+            <div class="col-md-12 school_title list-height">
+            </div>
+            <!-- <div class="col-md-12 list-height">班级列表</div> -->
+            <div class="col-md-12 class-list-body padding-rl-0"> 
+                <!-- <div class="col-md-12 class-list-comment list-height">草莓班</div>
+                <div class="col-md-1">
+                    <span class="rectangular"></span>
+                    <span>小明</span>
+                </div>
+                <div class="col-md-1">
+                    <span class="rectangular"></span>
+                    <span>小明</span>
+                </div>
+                <div class="col-md-1">
+                    <span class="rectangular"></span>
+                    <span>小明</span>
+                </div>
+                <div class="col-md-1">
+                    <span class="rectangular"></span>
+                    <span>小明</span>
+                </div>
+                <div class="col-md-1">
+                    <span class="rectangular"></span>
+                    <span>小明</span>
+                </div> -->
+
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

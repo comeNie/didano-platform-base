@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="video/main" charset="UTF-8">
+<head>
+<meta charset="UTF-8">
+<title>视频详情</title>
+<link rel="stylesheet" href="../video/css/test.css" />
+<link rel="stylesheet" href="../video/css/basicStyle.css" />
+<link rel="stylesheet" href="../video/css/payAuth.css" />
+<link rel="stylesheet" href="http://g.alicdn.com/de/prismplayer/1.5.5/skins/default/index.css" />
+<script type="text/javascript" src="http://g.alicdn.com/de/prismplayer/1.5.5/prism-min.js"></script>
+<style type="text/css">
+body {
+	background: #ccc;
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+    var spanStr = "";
+    $.ajax({
+            url: server_url+"/video/rest/post/channel_all", 
+            type:'post',
+            dataType:'json',
+           	timeout: 5000,
+           	success:function(data){
+                var num = data.data;
+                var all_live = '<font color="red">'+num.all_live_num+'</font>';
+                var all_channel = '<font color="red">'+num.all_monitor_num+'</font>';
+                $(".all_live").append(all_live);
+                $(".all_channel").append(all_channel);
+                var school = num.schools;
+                $.each(school,function(title,obj){
+                    spanStr += '<div class="col-md-2 school-list-comment list-height" name="'+obj.all_monitor_num+'|'+obj.all_live_num+'" id="'+obj.school_id+'" onclick=getSchool(this)><span class="dot"></span><span class="al_school_name">'+obj.school_name+'</span><span>'+obj.all_video_num+'</span></div>';
+                });
+                $(".school-list-body").append(spanStr);
+            },
+            error:function(){
+                alert("error");
+            },
+    });
+});
+var SCHOOL_ID;
+function getSchool(obj){
+    $(".nls-live").empty();
+    $(".nls-channel").empty();
+	$("#channel_classId").empty();
+	$("#live_classId").empty();
+    var channel_num_obj = $(obj).attr('name');
+    var channel_num_array = channel_num_obj.split("|");
+    var all_live_num = channel_num_array[1];
+    var all_monitor_num = channel_num_array[0];
+    var div = document.getElementById("content");
+        if(div.style.display == 'none'){
+            div.style.display = 'block';
+        }
+    SCHOOL_ID = $(obj).attr('id');
+    var divStr = "";
+    var spanStr = "";
+    var classInfo = "";
+    var optionStr = '<option value="0">公共场所</option>';
+    $.ajax({
+        url: server_url+"/video/rest/post/channel_search/1/100", 
+        type:'post',
+        dataType:'json',
+        contentType: "application/json; charset=utf-8",
+        data:JSON.stringify({
+            "schoolId":SCHOOL_ID,
+        }),
+        timeout: 5000,
+        success:function(rs){
+            if(rs.success){
+                $.ajax({
+                    url: server_url+"/video/rest/post/classes_search_by_schoolid/"+SCHOOL_ID,
+                    type:'post',
+                    dataType:'json',
+                    contentType: "application/json; charset=utf-8",
+                    timeout: 5000,
+                    success:function(rs1){
+                        $.each(rs1.data.list,function(title,obj){
+                            optionStr += '<option value="'+obj.id+'">'+obj.title+'</option>';
+                       	});
+                       	$("#channel_classId").append(optionStr);
+                       	$("#live_classId").append(optionStr);
+                       	var rs2 = rs1.data.list;
+                       	var data = rs.data.list;
+                        $.each(data,function(title,obj){
+                            var divStr = "";
+                            var divStr1 = "";
+                            var divStr2 = "";
+                            var divStr3 = "";
+                            var divStr4 = "";
+                            if(obj.type == 1){
+                                divStr1 = '<div class="col-md-4 col-xs-4 col-sm-4" ><table class="table width-100 table-bg"><tr class="no-border padding-trl-0"><td colspan="2" class="border-white padding-trl"><img src="img/1.jpg" alt="" class="width-100" id="'+obj.ossPlayUrl+'" onclick="show_channel(this)"></td></tr><tr><td align="left" class="border-white table-font-color font-size-1">'+obj.name+'直播</td><td align="right" class="border-white"><button type="button" class="btn btn-info btn-color1" data-toggle="modal" id="'+obj.name+obj.id+'"onclick="setting1(this)">配置</button><div class="modal fade live_edit1" align="left" id="live'+obj.name+obj.id+'"><div class="modal-dialog"> <div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×&nbsp;&nbsp;Close</span></button><h4 class="modal-title">配置推流</h4></div><form role="form" method="post" action=""><div class="modal-body"><div class="form-group"><label>中文名称</label><p><input type="text" placeholder="请输入中文名" name="live_edit_name" id="live_edit_name'+obj.id+'" value="'+obj.name+'"></p></div><div class="form-group"><label>英文名称</label><p><input type="text" placeholder="请输入英文名" name="live_edit_enName" id="live_edit_enName'+obj.id+'" value="'+obj.enName+'"></p></div> <div class="form-group oss-push-url">  <label>推流地址</label><p>'+obj.ossPushUrl+'</p></div>';
+                                if(obj.status == 1){
+                                    divStr2 = '<div class="form-group"><label>频道开关</label><p><input type="radio" name="live_edit_status'+obj.id+'" value="1" checked>开</p><p><input type="radio" name="live_edit_status'+obj.id+'" value="0">关</p></div>';
+                                }else{
+                                    divStr2 = '<div class="form-group"><label>频道开关</label><p><input type="radio" name="live_edit_status'+obj.id+'" value="1">开</p><p><input type="radio" name="live_edit_status'+obj.id+'" value="0" checked>关</p></div>';
+                                }
+                                divStr3 = '<div class="form-group">  <label>适配班级</label><p><select name="channel_edit_classId" id="live_edit_classId'+obj.id+'">';
+                                $.each(rs2,function(title,obj1){
+		                            if(obj1.id == obj.classId){
+		                            	divStr4 += '<option value="'+obj1.id+'" selected="selected">'+obj1.title+'</option>';
+		                            }
+		                       	});
+                                divStr5 = optionStr+'</select></p></div><div class="form-group">  <label>频道服务</label><p><select name="" id=""><option value="">300/18次</option><option value="">500/30次</option> <option value="">1000/75次</option></select></p></div> </div><div class="modal-footer"><div class="form-group"><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button><button type="button" class="btn btn-primary btn-color2" id="'+obj.id+'" data-dismiss="modal" onclick="live_edit(this)">确定</button></div></div></form></div></div></div></td></tr> <tr><td align="left" class="border-gw table-font-color">累计观看次数</td><td align="right" class="border-gw table-font-color">654321</td></tr><tr><td align="left" class="border-white table-font-color">今日观看次数</td><td align="right" class="border-white table-font-color">123456</td></tr></table></div>';
+                                divStr = divStr1+divStr2+divStr3+divStr4+divStr5;
+                                $(".nls-live").append(divStr);
+                            }else{
+                                divStr1 = '<div class="col-md-4 col-xs-4 col-sm-4" ><table class="table width-100 table-bg"><tr "><td colspan="2" class="border-white padding-trl"><img src="img/1.jpg" alt="" class="width-100" id="'+obj.ossPlayUrl+'" onclick="show_channel(this)"></td></tr><tr><td align="left" class="border-white table-font-color font-size-1">'+obj.name+'监控</td><td align="right" class="border-white"><button type="button" class="btn btn-info btn-color1" data-toggle="modal" id="'+obj.name+obj.id+'"onclick="setting(this)">配置</button><div class="modal fade channel_edit1" align="left" id="channel'+obj.name+obj.id+'"><div class="modal-dialog"> <div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×&nbsp;&nbsp;Close</span></button><h4 class="modal-title">配置推流</h4></div><form role="form" method="post" action=""><div class="modal-body"><div class="form-group"><label>中文名称</label><p><input type="text" placeholder="请输入中文名" name="channel_edit_name" id="channel_edit_name'+obj.id+'" value="'+obj.name+'"></p></div><div class="form-group"><label>英文名称</label><p><input type="text" placeholder="请输入英文名" name="channel_edit_enName" id="channel_edit_enName'+obj.id+'" value="'+obj.enName+'"></p></div> <div class="form-group oss-push-url">  <label>推流地址</label><p>'+obj.ossPushUrl+'</p></div>';
+                                if(obj.status == 1){
+                                    divStr2 = '<div class="form-group">  <label>频道开关</label><p><input type="radio" name="channel_edit_status'+obj.id+'" value="1" checked>开</p><p><input type="radio" name="channel_edit_status'+obj.id+'" value="0">关</p></div>';
+                                }else{
+                                    divStr2 = '<div class="form-group">  <label>频道开关</label><p><input type="radio" name="channel_edit_status'+obj.id+'" value="1">开</p><p><input type="radio" name="channel_edit_status'+obj.id+'" value="0" checked>关</p></div>';
+                                }
+                                divStr3 = '<div class="form-group">  <label>适配班级</label><p><select name="channel_edit_classId" id="channel_edit_classId'+obj.id+'">';
+                                $.each(rs2,function(title,obj1){
+		                            if(obj1.id == obj.classId){
+		                            	divStr4 += '<option value="'+obj1.id+'" selected="selected">'+obj1.title+'</option>';
+		                            }
+		                       	});
+		                       	divStr5 = optionStr+'</select></p></div><div class="form-group">  <label>频道服务</label><p><select name="" id=""><option value="">300/18次</option><option value="">500/30次</option> <option value="">1000/75次</option></select></p></div> </div><div class="modal-footer"><div class="form-group"><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button><button type="button" class="btn btn-primary btn-color2" id="'+obj.id+'" data-dismiss="modal" onclick="channel_edit(this)">确定</button></div></div></form></div></div></div></td></tr> <tr><td align="left" class="border-gw table-font-color">累计观看次数</td><td align="right" class="border-gw table-font-color">654321</td></tr><tr><td align="left" class="border-white table-font-color">今日观看次数</td><td align="right" class="border-white table-font-color">123456</td></tr></table></div>';
+                                divStr = divStr1+divStr2+divStr3+divStr4+divStr5;
+                                $(".nls-channel").append(divStr);
+                            }
+                        });
+                    },
+                });
+            }
+        },
+        error:function(){
+            alert("error");
+        },
+    });
+    var schoolTitle = $(obj).children().eq(1).text();
+    $(".school").html(schoolTitle);
+    $(".school_liveNum").html(all_live_num);
+    $(".school_channelNum").html(all_monitor_num);
+ }
+function channel_add(obj){
+    var channel_name = document.getElementById("channel_name").value;
+    var channel_enName = document.getElementById("channel_enName").value;
+    var channel_classId = document.getElementById("channel_classId").value;
+    var channel_des = document.getElementById("channel_des").value;
+    $.ajax({
+        url: server_url+"/video/rest/post/channel_add", 
+        type:'post',
+        dataType:'json',
+        contentType: "application/json; charset=utf-8",
+        data:JSON.stringify({
+            "classId": channel_classId,
+            "enName": channel_enName,
+            "name": channel_name,
+            "schoolId": SCHOOL_ID,
+            "des": channel_des,
+            "type": 0,
+        }),
+        success:function(data){
+            alert("添加成功");
+        },
+        error:function(){
+            alert("error");
+        },
+    });
+}
+function live_add(){
+    var live_name = document.getElementById("live_name").value;
+    var live_enName = document.getElementById("live_enName").value;
+    var live_classId = document.getElementById("live_classId").value;
+    var live_des = document.getElementById("live_des").value;
+    $.ajax({
+        url: server_url+"/video/rest/post/channel_add", 
+        type:'post',
+        dataType:'json',
+        contentType: "application/json; charset=utf-8",
+        data:JSON.stringify({
+            "classId": live_classId,
+            "enName": live_enName,
+            "name": live_name,
+            "schoolId": SCHOOL_ID,
+            "des": live_des,
+            "type": 1,
+        }),
+        success:function(data){
+            alert("添加成功");
+        },
+        error:function(){
+            alert("error");
+        },
+    });
+}
+function setting(obj){
+    var name = "#channel"+$(obj).attr('id');
+    $(name).modal("show");
+}
+function setting1(obj){
+    var name = "#live"+$(obj).attr('id');
+    $(name).modal("show");
+}
+function channel_edit(obj){
+    var channel_edit_name_id = "channel_edit_name"+$(obj).attr('id');
+    var channel_edit_name = document.getElementById(channel_edit_name_id).value;
+    var channel_edit_enName_id = "channel_edit_enName"+$(obj).attr('id');
+    var channel_edit_enName = document.getElementById(channel_edit_enName_id).value;
+    var channel_edit_classId_id = "channel_edit_classId"+$(obj).attr('id');
+    var channel_edit_classId = document.getElementById(channel_edit_classId_id).value;
+    var id = $(obj).attr('id');
+    var radio_name = "channel_edit_status"+$(obj).attr('id');
+    var radio = document.getElementsByName(radio_name);
+    var status=null; 
+    $.each(radio,function(title,obj){
+        if(obj.checked==true) {
+            status=obj.value;
+       }
+    });
+    $.ajax({
+        url: server_url+"/video/rest/post/channel_edit", 
+        type:'post',
+        dataType:'json',
+        contentType: "application/json; charset=utf-8",
+        data:JSON.stringify({
+            "classId": channel_edit_classId,
+            "enName": channel_edit_enName,
+            "name": channel_edit_name,
+            "schoolId": SCHOOL_ID,
+            "status": status,
+            "id": id,
+        }),
+        success:function(data){
+            alert("配置成功");
+        },
+        error:function(){
+            alert("error");
+        },
+    });
+}
+function live_edit(obj){
+    var live_edit_name_id = "live_edit_name"+$(obj).attr('id');
+    var live_edit_name = document.getElementById(live_edit_name_id).value;
+    var live_edit_enName_id = "live_edit_enName"+$(obj).attr('id');
+    var live_edit_enName = document.getElementById(live_edit_enName_id).value;
+    var live_edit_classId_id = "live_edit_classId"+$(obj).attr('id');
+    var live_edit_classId = document.getElementById(live_edit_classId_id).value;
+    var id = $(obj).attr('id');
+    var radio_name = "live_edit_status"+$(obj).attr('id');
+    var radio = document.getElementsByName(radio_name);
+    var status=null; 
+    $.each(radio,function(title,obj){
+        if(obj.checked==true) {
+            status=obj.value;
+       }
+    });
+    $.ajax({
+        url: server_url+"/video/rest/post/channel_edit", 
+        type:'post',
+        dataType:'json',
+        contentType: "application/json; charset=utf-8",
+        data:JSON.stringify({
+            "classId": live_edit_classId,
+            "enName": live_edit_enName,
+            "schoolId": SCHOOL_ID,
+            "name": live_edit_name,
+            "status": status,
+            "id": id,
+        }),
+        success:function(data){
+            alert("配置成功");
+        },
+        error:function(){
+            alert("error");
+        },
+    });
+}
+function show_channel(obj){
+    var url = $(obj).attr('id');
+    var videoUrl = '<script>'
+    				+'var player = new prismplayer({'
+    				+' id: "J_prismPlayer", '
+    				+'source: "'+url+'",'
+    				+'autoplay: true,'
+    				+'width: "100%",'
+    				+'height: "50%",'
+    				+'});'
+    				+'<\/script>';
+    $(".show-channel").append(videoUrl);
+}
+function show_live(obj){
+    var url = $(obj).attr('id');
+    var videoUrl = '<video src="'+url+'"></video>';
+    $(".show-live").append(videoUrl);
+}
+</script>
+</head>
+<body>
+	<div layout:fragment="content" class="container width-100 padding-rl-0">
+		<div class="col-md-12 list-body bg-color-white width-80 padding-rl-0">
+			<div class="list">
+				<span class="span_one">视频状况</span> <span class="span_two all_live">正在直播频道：</span>
+				<span class="span_th all_channel">共有监控频道：</span>
+			</div>
+			<div class="col-md-12 title ipt">
+				<div class="col-md-6 padding-rl-0">学校列表及该校频道数</div>
+			</div>
+			<div class="col-md-12 school-list-body padding-rl-0"></div>
+		</div>
+		<div style="display: none" id="content">
+			<div
+				class="col-md-12 col-xs-12 col-sm-12 list-body width-80 padding-rl-0 bg-white-color">
+				<div class="details-monitor">
+					<div class="list no-border margin-bottom-10">
+						<span class="school al_span_one"></span><span class="al_span_one">监控频道</span>
+						<span class="span_two">监控频道数：<span
+							class="school_channelNum"></span></span>
+						<!-- 触发模态弹出窗的元素 -->
+						<span class="span_right"><button type="button"
+								class="btn btn-info btn-color2" data-toggle="modal"
+								data-target="#channel_add">添加频道</button></span>
+						<!-- 模态弹出窗 -->
+						<div class="modal fade" id="channel_add">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<!-- 模态弹出窗内容 -->
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">
+											<span aria-hidden="true">×&nbsp;&nbsp;Close</span>
+										</button>
+										<h4 class="modal-title">新建推流</h4>
+									</div>
+									<form role="form" method="post">
+										<div class="modal-body">
+											<div class="form-group">
+												<label>中文名称</label>
+												<p>
+													<input type="text" name="channel_name" placeholder="请输入中文名"
+														id="channel_name">
+												</p>
+											</div>
+											<div class="form-group">
+												<label>英文名称</label>
+												<p>
+													<input type="text" name="channel_enName"
+														placeholder="请输入英文名" id="channel_enName">
+												</p>
+											</div>
+											<!-- <div class="form-group">  
+                                                        <label>频道开关</label>
+                                                        <p><input type="radio" name="channel_status" value="1" checked>开</p>
+                                                        <p><input type="radio" name="channel_status" value="0">关</p>
+                                                    </div> -->
+											<div class="form-group">
+												<label>适配班级</label>
+												<p>
+													<select class="channel_classId" name="channel_classId"
+														id="channel_classId">
+														<option value="0">公共场所</option>
+													</select>
+												</p>
+											</div>
+											<div class="form-group">
+												<label>频道服务</label>
+												<p>
+													<select name="" id="">
+														<option value="">300/18次</option>
+														<option value="">500/30次</option>
+														<option value="">1000/75次</option>
+													</select>
+												</p>
+											</div>
+											<div class="form-group">
+												<label>频道描述</label>
+												<p>
+													<input type="text" name="channel_des" id="channel_des"
+														placeholder="请输入频道描述">
+												</p>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<div class="form-group">
+												<button type="button" class="btn btn-default"
+													data-dismiss="modal">关闭</button>
+												<!-- <div onclick="channel_add(this)" class="btn btn-primary">确定</div> -->
+												<button type="button" class="btn btn-primary btn-color2"
+													data-dismiss="modal" onclick="channel_add(this)">确定</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="video ">
+						<div class="col-md-6 col-xs-6 col-sm-6">
+							<table class="table">
+								<tr>
+									<th class="show-channel no-border">
+										<div class="prism-player" id="J_prismPlayer"></div>
+										
+									</th>
+								</tr>
+							</table>
+						</div>
+						<div class="col-md-6 col-xs-6 col-sm-6 nls-channel">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div
+				class="col-md-12 col-xs-12 col-sm-12 list-body width-80 padding-rl-0 bg-white-color margin-bottom-20">
+				<div class="details-live">
+					<div class="list no-border margin-bottom-10">
+						<span class="school al_span_one"></span><span class="al_span_one">直播频道</span>
+						<span class="span_two">直播频道数：<span class="school_liveNum"></span></span>
+						<!-- 触发模态弹出窗的元素 -->
+						<span class="span_right"><button type="button"
+								class="btn btn-info btn-color2" data-toggle="modal"
+								data-target="#live_add">添加频道</button></span>
+						<!-- 模态弹出窗 -->
+						<div class="modal fade" id="live_add">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<!-- 模态弹出窗内容 -->
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">
+											<span aria-hidden="true">×&nbsp;&nbsp;Close</span>
+										</button>
+										<h4 class="modal-title">新建推流</h4>
+									</div>
+									<form role="form" method="post">
+										<div class="modal-body">
+											<div class="form-group">
+												<label>中文名称</label>
+												<p>
+													<input type="text" name="live_name" placeholder="请输入中文名"
+														id="live_name">
+												</p>
+											</div>
+											<div class="form-group">
+												<label>英文名称</label>
+												<p>
+													<input type="text" name="live_enName" placeholder="请输入英文名"
+														id="live_enName">
+												</p>
+											</div>
+											<!-- <div class="form-group">  
+                                                        <label>频道开关</label>
+                                                        <p><input type="radio" name="live_status" value="1">开</p>
+                                                        <p><input type="radio" name="live_status" value="0">关</p>
+                                                    </div> -->
+											<div class="form-group">
+												<label>适配班级</label>
+												<p>
+													<select name="live_classId" id="live_classId">
+														<option value="0">公共场所</option>
+													</select>
+												</p>
+											</div>
+											<div class="form-group">
+												<label>频道服务</label>
+												<p>
+													<select name="" id="">
+														<option value="">300/18次</option>
+														<option value="">500/30次</option>
+														<option value="">1000/75次</option>
+													</select>
+												</p>
+											</div>
+											<div class="form-group">
+												<label>频道描述</label>
+												<p>
+													<input type="text" name="live_des" id="live_des"
+														placeholder="请输入频道描述">
+												</p>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<div class="form-group">
+												<button type="button" class="btn btn-default btn-color2"
+													data-dismiss="modal">关闭</button>
+												<!-- <div onclick="live_add(this)" class="btn btn-primary">确定</div> -->
+												<button type="button" class="btn btn-primary"
+													id="'+obj.id+'" data-dismiss="modal"
+													onclick="live_add(this)">确定</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="video ">
+						<div class="col-md-6 col-xs-6 col-sm-6">
+							<table class="table">
+								<tr>
+									<th class="show-live border-white"><video src=""></video>
+									</th>
+								</tr>
+							</table>
+						</div>
+						<div class="col-md-6 col-xs-6 col-sm-6 nls-live">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

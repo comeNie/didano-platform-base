@@ -1,0 +1,20 @@
+2017-01-10 19:09:51.149 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 12517 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-10 19:09:51.151 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-10 19:09:51.151 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-10 19:09:55.103 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-10 19:10:01.853 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 11.538 seconds (JVM running for 12.602)
+2017-01-10 19:10:01.872 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-10 19:11:24.122 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 12533 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-10 19:11:24.125 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-10 19:11:24.126 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-10 19:11:26.207 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-10 19:11:30.342 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 6.584 seconds (JVM running for 7.242)
+2017-01-10 19:11:30.342 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-10 19:14:56.047 [http-nio-8080-exec-10] INFO  cn.didano.video.controller.PostController - 访问  PostController:channel_all
+2017-01-10 19:16:53.520 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 12582 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-10 19:16:53.524 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-10 19:16:53.524 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-10 19:16:55.662 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-10 19:16:59.768 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 6.626 seconds (JVM running for 7.518)
+2017-01-10 19:16:59.769 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-10 19:17:30.143 [http-nio-8080-exec-8] INFO  cn.didano.video.controller.PostController - 访问  PostController:channel_all

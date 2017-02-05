@@ -1,0 +1,80 @@
+.bg-color-blue,.dot{
+	background-color: #6DC0F1;
+}
+.bg-color-blue{
+	opacity: 0.7;
+}
+.list-body{
+	margin-left:2%;
+	margin-top: 20px;
+	border-radius: 5px;
+}
+.list-height,.school_title{
+	height: 40px;
+	line-height: 40px;
+}
+.list-title,.school_title{
+	border-bottom: 2px solid #E4E4E4;
+}
+.list-title,.school_title,.title{
+	font-size: 1.5rem;
+}
+.list-title{
+	font-weight: 600;	
+}
+.school-list-comment{
+	color: #949494;
+}
+.student-list{
+	height: 30px;
+	line-height: 30px;
+}
+
+.dot,.rectangular{
+	display: -webkit-inline-box;
+    display: inline-block;
+    margin-right: 5px;
+}
+.dot{
+	height: 10px;
+	width: 10px;
+	border-radius: 10px;
+}
+.rectangular{
+	height: 12px;
+	width: 12px;
+	border: 1px solid #6DC0F1;
+}
+.rectangular + span{
+	font-size: 1.2rem;
+}
+.title{
+	height: 30px;
+	line-height: 30px;
+}
+.title,.rectangular + span{
+	color: #5E5E5E;
+}
+.search-btn{
+	margin-top: 5px;
+	font-size: 1.2rem;
+	color: #949494;
+	font-weight: 400;
+}
+.search-btn input{
+	border:none;
+	height: 26px;
+	width: 200px;
+	background: inherit;
+	text-indent:1.5em;
+	border-radius: 20px;
+	background-color: rgba(224, 224, 224, 1);
+}
+.search_click{
+	position: relative;
+	right: 30px;
+	width: 30px;
+}
+.search_img{
+	height: 20px;
+}

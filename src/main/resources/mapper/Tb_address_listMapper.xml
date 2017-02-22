@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.didano.base.dao.Tb_address_listMapper">
+  <select id="findByTeacher" parameterType="Integer" resultType="cn.didano.base.model.Tb_address_list">
+    SELECT a.* FROM tb_student a,tb_staff_class b WHERE b.id=14 AND a.class_id=b.class_id  AND a.deleted =0 AND b.deleted=0 ORDER BY CONVERT( a.name USING gbk )
+</select> 
+ <select id="findAll" resultType="cn.didano.base.model.Tb_address_list">
+ SELECT a.id,a.class_id,a.name,a.birthday,a.gender FROM tb_student a WHERE   a.deleted =0  ORDER BY CONVERT( a.name USING gbk )
+  </select>
+ 
+ <select id="findById" parameterType="Integer" resultType="cn.didano.base.model.Tb_address_list"> 
+ SELECT a.id,a.class_id,a.name,a.birthday,a.gender FROM tb_student a WHERE  a.id=356 AND a.deleted =0 
+ </select>
+
+ <select id="findByschool" parameterType="Integer" resultType="cn.didano.base.model.Tb_address_list">
+  SELECT * FROM tb_student WHERE school_id=#{id} ORDER BY class_id
+ </select>
+<select id="findParentById" parameterType="Integer" resultType="cn.didano.base.model.Tb_parent">SELECT p.name AS parent_name,p.phone AS parent_phone FROM 
+(SELECT tmp1.id,tmp1.name,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 
+ tb_student  AS tmp1 ,tb_student_parent p WHERE tmp1.id=p.student_id AND tmp1.id=#{id}) AS tmp2 LEFT JOIN tb_school_parent p ON tmp2.parent_id=p.id</select>
+<select id="findByClass" parameterType="Integer" resultType="cn.didano.base.model.Tb_address_list">
+  SELECT a.* FROM tb_student a WHERE  a.class_id=54 AND a.deleted =0 ORDER BY CONVERT( a.name USING gbk )
+ </select>
+<select id="findTeacherByClass" resultType="cn.didano.base.model.Tb_teacher">
+ SELECT tmp1.id,tmp1.name,tmp1.type,tmp1.class_id ,c.sign_timestamp,c.in_time,c.out_time FROM 
+	 (SELECT a.id,a.name,a.type,b.class_id FROM tb_staff a,tb_staff_class b 
+	 WHERE a.type=32 AND a.id=b.staff_id  AND a.deleted=0 AND b.deleted=0 ) AS tmp1 
+	 LEFT JOIN tb_staff_signdate c ON (tmp1.id =c.staff_id   )
+	 WHERE sign_timestamp BETWEEN 1469548800 AND 1469548900 AND class_id=#{id}
+</select>
+<update id="Update" parameterType="cn.didano.base.model.Tb_address_list">UPDATE tb_student a SET a.class_id=#{class_id},a.gender=#{gender,jdbcType=TINYINT},a.birthday=#{birthday,jdbcType=DATE} where a.id=#{id}</update>
+
+<update id="delete" parameterType="Integer">UPDATE tb_student AS a,tb_student_parent AS b,tb_school_parent AS c SET a.deleted=1,b.deleted=1,c.deleted=1 WHERE a.id=#{id} AND b.student_id=#{id} AND c.id IN (SELECT id FROM(SELECT p.id FROM 
+(SELECT tmp1.id,tmp1.name,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 
+ tb_student  AS tmp1 ,tb_student_parent p WHERE tmp1.id=p.student_id AND tmp1.id=#{id}) AS tmp2 LEFT JOIN tb_school_parent p ON tmp2.parent_id=p.id)a)</update>
+<update id="UpdateParent" parameterType="cn.didano.base.model.Tb_parent">
+  UPDATE tb_school_parent SET phone=#{parent_phone} where id = (select id from(SELECT p.id FROM 
+(SELECT tmp1.id,tmp1.name,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 
+ tb_student  AS tmp1 ,tb_student_parent p WHERE tmp1.id=p.student_id AND tmp1.id=#{id}) AS tmp2 LEFT JOIN tb_school_parent p ON tmp2.parent_id=p.id WHERE p.name=#{parent_name})a )
+</update>
+
+<update id="UpdateTeacher" parameterType="cn.didano.base.model.Tb_teacher">
+  UPDATE TB_STAFF a,tb_staff_class b,tb_staff_signdate c SET a.type = #{type},a.name=#{name},a.phone=#{phone} ,a.deleted=#{deleted},b.class_id=#{class_id},
+c.set_intime=#{in_time},c.set_outtime=#{out_time} where a.id = #{id} 
+</update>
+</mapper>

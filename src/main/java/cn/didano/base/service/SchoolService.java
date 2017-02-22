@@ -36,6 +36,7 @@ public class SchoolService {
 		return schoolMapper.selectByExample(condition);
 	}
 	
+	
 	/**
 	 * 查询所有
 	 * 

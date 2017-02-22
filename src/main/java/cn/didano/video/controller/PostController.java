@@ -1,5 +1,6 @@
 package cn.didano.video.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -7,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,21 +23,30 @@ import com.github.pagehelper.PageInfo;
 
 import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Bs_good;
+import cn.didano.base.model.Tb_address_list;
 import cn.didano.base.model.Tb_class;
+import cn.didano.base.model.Tb_newstudent;
 import cn.didano.base.model.Tb_school;
+import cn.didano.base.model.Tb_schoolparent;
+import cn.didano.base.model.Tb_student;
+import cn.didano.base.model.Tb_student_inf;
+import cn.didano.base.model.Tb_studentparent;
 import cn.didano.base.model.Vd_auth_switch;
 import cn.didano.base.model.Vd_auth_time_control;
 import cn.didano.base.model.Vd_channel;
 import cn.didano.base.model.View_channel_info;
 import cn.didano.base.model.View_channel_info_on;
 import cn.didano.base.model.View_switch_s_c;
+import cn.didano.base.service.AddressService;
 import cn.didano.base.service.AuthSwitchService;
 import cn.didano.base.service.AuthTimeControlService;
 import cn.didano.base.service.ChannelService;
 import cn.didano.base.service.ClassService;
 import cn.didano.base.service.GoodService;
 import cn.didano.base.service.ManagerService;
+import cn.didano.base.service.NewStudentService;
 import cn.didano.base.service.SchoolService;
+import cn.didano.base.service.StudentService;
 import cn.didano.base.service.ViewChannelService;
 import cn.didano.video.auth.channel.ChannelStatus;
 import cn.didano.video.constant.BackType;
@@ -51,7 +60,9 @@ import cn.didano.video.json.In_Channel_Edit;
 import cn.didano.video.json.In_Channel_Search;
 import cn.didano.video.json.In_Control_Add;
 import cn.didano.video.json.In_Control_Edit;
+import cn.didano.video.json.In_Parent_Add;
 import cn.didano.video.json.In_School_Search;
+import cn.didano.video.json.In_Student_Add;
 import cn.didano.video.json.In_Switch_Edit4Video;
 import cn.didano.video.json.In_Switch_Search;
 import cn.didano.video.json.Out;
@@ -95,7 +106,71 @@ public class PostController {
 	private AuthTimeControlService controlService;
 	@Autowired
 	private WebsocketService websocketService;
+    @Autowired
+    private StudentService studentService;
+   
 
+    /**
+	 * 获取学生照片
+	 */	
+	@PostMapping(value = "student_search_by_studentid/{student_id}")
+	@ApiOperation(value="搜索学生照片", notes = "搜索学生照片，不翻页")
+	@ResponseBody
+	public Out<OutList<Tb_student_inf>> student_search(@PathVariable("student_id") Integer student_id) {
+		logger.info("访问  PostController:student_search_by_studentid student_id ="+student_id);
+		List<Tb_student> studentall = null;
+		List<Tb_student_inf> student = new ArrayList<Tb_student_inf>();		
+		OutList<Tb_student_inf> outList = null;
+		Out<OutList<Tb_student_inf>> back = new Out<OutList<Tb_student_inf>>();
+		try {
+			studentall = studentService.selectById(student_id);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+			if(studentall.size()>4){
+				student.add(new Tb_student_inf(studentall.get(0).getHeight(),studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));				
+			    Tb_student tb=studentall.get((int)(Math.random()*(studentall.size()-1)/5)+(studentall.size()-1)/5);
+			    Tb_student_inf inf = new Tb_student_inf(tb.getHeight(),tb.getWeight()/1000,tb.getOrgImgUrl(),sdf.format(tb.getCreated()));
+			    student.add(inf);			    
+				 tb=studentall.get((int)(Math.random()*(studentall.size()-1)/5)+((studentall.size()-1)*3)/5);
+				inf=new Tb_student_inf(tb.getHeight(),tb.getWeight()/1000,tb.getOrgImgUrl(),sdf.format(tb.getCreated()));
+			    student.add(inf);
+			    tb=studentall.get(studentall.size()-1);
+			    student.add(new Tb_student_inf(tb.getHeight(),tb.getWeight()/1000,tb.getOrgImgUrl(),sdf.format(tb.getCreated())));			
+			}else if(studentall.size()==1){
+				for (int i = 0; i < 4; i++) {
+					student.add(new Tb_student_inf(studentall.get(0).getHeight(),studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));
+				}
+			}else if(studentall.size()==2){
+				student.add(new Tb_student_inf(studentall.get(0).getHeight(),studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(0).getHeight(),studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(1).getHeight(),studentall.get(1).getWeight()/1000,studentall.get(1).getOrgImgUrl(),sdf.format(studentall.get(1).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(1).getHeight(),studentall.get(1).getWeight()/1000,studentall.get(1).getOrgImgUrl(),sdf.format(studentall.get(1).getCreated())));
+			}else if(studentall.size()==3){
+				student.add(new Tb_student_inf(studentall.get(0).getHeight(),studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(1).getHeight(),studentall.get(1).getWeight()/1000,studentall.get(1).getOrgImgUrl(),sdf.format(studentall.get(1).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(1).getHeight(),studentall.get(1).getWeight()/1000,studentall.get(1).getOrgImgUrl(),sdf.format(studentall.get(1).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(2).getHeight(),studentall.get(2).getWeight()/1000,studentall.get(2).getOrgImgUrl(),sdf.format(studentall.get(2).getCreated())));
+			}
+
+			for(Tb_student_inf s:student){
+				if(!s.getOrgImgUrl().equals("")){
+				StringBuilder address =new StringBuilder("http://image-didanuo.oss-cn-shenzhen.aliyuncs.com/") ;
+				address.append(s.getOrgImgUrl());
+				s.setOrgImgUrl(address.toString());
+				}
+				
+			}
+			
+			outList = new OutList<Tb_student_inf>(student.size(),student);
+			back.setBackTypeWithLog(outList, BackType.SUCCESS);
+			
+		} catch (ServiceException e) {
+			logger.warn(e.getMessage());
+			back.setServiceExceptionWithLog(e.getExceptionEnums());
+		}
+		return back;
+	}
+	
+	
 	/**
 	 * 获取商品列表
 	 * 

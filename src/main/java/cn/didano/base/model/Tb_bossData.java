@@ -7,7 +7,7 @@ public class Tb_bossData {
 
 	private List<Tb_teacher> teacher  = new ArrayList<Tb_teacher>();
 	private List<Tb_newstaff> staff =new ArrayList<Tb_newstaff>();
-	private List<Tb_classStudent> student = new ArrayList<Tb_classStudent>();
+	private List<Tb_classStudent> studentall = new ArrayList<Tb_classStudent>();
 	
 	public List<Tb_teacher> getTeacher() {
 		return teacher;
@@ -21,15 +21,16 @@ public class Tb_bossData {
 	public void setStaff(List<Tb_newstaff> staff) {
 		this.staff = staff;
 	}
-	public List<Tb_classStudent> getStudent() {
-		return student;
+	
+	public List<Tb_classStudent> getStudentall() {
+		return studentall;
 	}
-	public void setStudent(List<Tb_classStudent> student) {
-		this.student = student;
+	public void setStudentall(List<Tb_classStudent> studentall) {
+		this.studentall = studentall;
 	}
 	@Override
 	public String toString() {
-		return "Tb_bossData [teacher=" + teacher + ", staff=" + staff + ", student=" + student + "]";
+		return "Tb_bossData [teacher=" + teacher + ", staff=" + staff + ", studentall=" + studentall + "]";
 	}
 	
 }

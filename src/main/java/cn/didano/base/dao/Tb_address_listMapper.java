@@ -18,6 +18,7 @@ public interface Tb_address_listMapper {
 	List<Tb_teacher> findteacherByschool(Integer id);
 	List<Tb_address_list> findByschool(Integer id);
 	List<Tb_class> findClassByschool(Integer id);
+	List<Tb_address_list> findByName(String name);
 	int UpdateTeacher(Tb_teacher teacher);
 	int Update( Tb_address_list list); 
 	int UpdateParent(Tb_parent parent);

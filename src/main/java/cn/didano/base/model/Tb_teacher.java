@@ -8,12 +8,30 @@ public class Tb_teacher {
 	private String name;
 	private byte type;
 	private String phone;
+	private String title;
+	private Integer school_id;
+	
 	private Integer class_id;
 	private long sign_timestamp;
 	private Date in_time;
 	private Date out_time;
 	private byte deleted;
 	
+
+	
+	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public Integer getSchool_id() {
+		return school_id;
+	}
+	public void setSchool_id(Integer school_id) {
+		this.school_id = school_id;
+	}
 	
 	public byte getDeleted() {
 		return deleted;
@@ -71,9 +89,9 @@ public class Tb_teacher {
 	}
 	@Override
 	public String toString() {
-		return "Tb_teacher [id=" + id + ", name=" + name + ", type=" + type + ", phone=" + phone + ", class_id="
-				+ class_id + ", sign_timestamp=" + sign_timestamp + ", in_time=" + in_time + ", out_time=" + out_time
-				+ ", deleted=" + deleted + "]";
+		return "Tb_teacher [id=" + id + ", name=" + name + ", type=" + type + ", phone=" + phone + ", title=" + title
+				+ ", school_id=" + school_id + ", class_id=" + class_id + ", sign_timestamp=" + sign_timestamp
+				+ ", in_time=" + in_time + ", out_time=" + out_time + ", deleted=" + deleted + "]";
 	}
 	
 }

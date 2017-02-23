@@ -27,10 +27,12 @@ public class NewTeacherService {
 	@Autowired
 	private Tb_staff_signdateMapper dateMapper;
 	
+	
 	/**
 	 * 通过员工id查询
 	 */
 	public Tb_newstaff findById(Integer id){
+		
 		return newstaffMapper.selectByPrimaryKey(id);
 	}
 	/**
@@ -42,13 +44,14 @@ public class NewTeacherService {
 		return newstaffMapper.updateByPrimaryKeySelective(staff);
 	}
 	/**
-	 * 通过类别查询
+	 * 通过学校查询该学校的医生和保洁
 	 */
-	public List<Tb_newstaff> findByType(byte id){
+	public List<Tb_newstaff> findByType(Integer schoolid){
 		Tb_newstaffExample condition = new Tb_newstaffExample();
 		Tb_newstaffExample.Criteria criteria = condition.createCriteria();
 		// 对于已经deleted=1的不显示 禁用不显示
-		criteria.andTypeEqualTo(id);
+		criteria.andTypeBetween((byte)33, (byte)34);
+		criteria.andSchoolIdEqualTo(schoolid);
 		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
 		return newstaffMapper.selectByExample(condition);
 	}

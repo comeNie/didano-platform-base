@@ -16,16 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Tb_address_list;
+import cn.didano.base.model.Tb_bossData;
+import cn.didano.base.model.Tb_class;
+import cn.didano.base.model.Tb_classStudent;
 import cn.didano.base.model.Tb_newstaff;
 import cn.didano.base.model.Tb_newstudent;
 import cn.didano.base.model.Tb_parent;
 import cn.didano.base.model.Tb_schoolparent;
 import cn.didano.base.model.Tb_staff_class;
 import cn.didano.base.model.Tb_staff_signdate;
-import cn.didano.base.model.Tb_studentByschool;
 import cn.didano.base.model.Tb_studentparent;
 import cn.didano.base.model.Tb_teacher;
+import cn.didano.base.model.Tb_teacherAndStudent;
 import cn.didano.base.service.AddressService;
+import cn.didano.base.service.ClassService;
 import cn.didano.base.service.NewStudentService;
 import cn.didano.base.service.NewTeacherService;
 import cn.didano.video.constant.BackType;
@@ -53,7 +57,8 @@ public class AddressController {
 	private NewStudentService  newstudentService;
 	@Autowired
 	private NewTeacherService newteacherService;
-	
+	@Autowired
+	private ClassService classService;
 	
 	
 	
@@ -82,28 +87,7 @@ public class AddressController {
 		}
 		return back;
 	}
-	/**
-	 * 通过类型查找员工
-	 */
-	 @PostMapping(value = "teacher_searchByType/{type}")
-	 @ApiOperation(value="通过类型查找员工", notes = "通过类型查找员工")
-	 @ResponseBody
-		public Out<OutList<Tb_newstaff>> teacher_searchByType(@PathVariable("type") byte type) {
-			logger.info("访问  PostController:teacher_searchByType,type="+type);
-			List<Tb_newstaff> staff = null;
-			OutList<Tb_newstaff> outList = null;
-			Out<OutList<Tb_newstaff>> back = new Out<OutList<Tb_newstaff>>();
-			try {
-				staff=newteacherService.findByType(type);
-				
-				outList = new OutList<Tb_newstaff>(staff.size(),staff);
-				back.setBackTypeWithLog(outList,BackType.SUCCESS_SEARCH_NORMAL);
-			} catch (ServiceException e) {
-				logger.warn(e.getMessage());
-				back.setServiceExceptionWithLog(e.getExceptionEnums());
-			}
-			return back;
-		}
+	
 	
 	
 	/**
@@ -210,38 +194,84 @@ public class AddressController {
 			}
 			return back;
 		}
-	
+	 /**
+		 * 通过园长id查询小朋友并通过班级分类
+		 */
+		 @PostMapping(value = "student_searchByBoss/{staff_id}")
+		 @ApiOperation(value="通过园长id查询小朋友并通过班级分类", notes = "园长查询小朋友并通过班级分类")
+		 @ResponseBody
+			public Out<Tb_bossData> student_searchByBoss(@PathVariable("staff_id") Integer staff_id) {
+				logger.info("访问  PostController:student_searchByBoss,staff_id="+staff_id);
+				Tb_newstaff staff = newteacherService.findById(staff_id);
+				Tb_bossData data = new Tb_bossData();
+				List<Tb_address_list> student = null;	
+				List<Tb_classStudent> student2 = new ArrayList<Tb_classStudent>();
+				
+				Tb_classStudent cs=new Tb_classStudent();
+				List<Tb_class> classall= addressService.findClassByschool(staff.getSchoolId());
+				Out<Tb_bossData> back = new Out<Tb_bossData>();
+				try {
+					
+						for(Tb_class c :classall){
+						student=addressService.findByClass(c.getId());
+						 cs= new Tb_classStudent();
+						cs.setClassName(c.getTitle());
+						for(Tb_address_list list:student){
+							List<Tb_parent> parent=addressService.findparent(list.getId());
+							list.getParent().addAll(parent);						
+						}
+						cs.getStudent().addAll(student);
+						student2.add(cs);
+						}
+						List<Tb_teacher> teacherall = addressService.findteacherByschool(staff.getSchoolId());
+						List<Tb_newstaff> staffall = newteacherService.findByType(staff.getSchoolId());
+						data.getStaff().addAll(staffall);
+						data.getTeacher().addAll(teacherall);
+						data.getStudent().addAll(student2);
+					
+					
+					
+					back.setBackTypeWithLog(data,BackType.SUCCESS_SEARCH_NORMAL);
+				} catch (ServiceException e) {
+					logger.warn(e.getMessage());
+					back.setServiceExceptionWithLog(e.getExceptionEnums());
+				}
+				return back;
+			}
+		
+	 
 	/**
-	 * 通过员工id查询小朋友并通过班级分类
+	 * 通过老师id查询小朋友
 	 */
 	 @PostMapping(value = "student_searchByClass/{staff_id}")
-	 @ApiOperation(value="通过员工id小朋友并通过班级分类", notes = "园长查询小朋友并通过班级分类")
+	 @ApiOperation(value="通过老师id查询小朋友", notes = "通过老师id查询小朋友")
 	 @ResponseBody
-		public Out<OutList<Tb_address_list>> student_searchByClass(@PathVariable("staff_id") Integer staff_id) {
-			logger.info("访问  PostController:student_searchByClass,class_id="+staff_id);
+		public Out<Tb_teacherAndStudent> student_searchByClass(@PathVariable("staff_id") Integer staff_id) {
+			logger.info("访问  PostController:student_searchByClass,staff_id="+staff_id);
 			Tb_newstaff staff = newteacherService.findById(staff_id);
-			List<Tb_studentByschool> all=new ArrayList<Tb_studentByschool>();
-			List<Tb_address_list> student = null;
-			OutList<Tb_address_list> outList = null;
-			Out<OutList<Tb_address_list>> back = new Out<OutList<Tb_address_list>>();
+			Tb_teacherAndStudent data = new Tb_teacherAndStudent();
+			List<Tb_address_list> student = null;	
+			Tb_classStudent cs=new Tb_classStudent();
+			Out<Tb_teacherAndStudent> back = new Out<Tb_teacherAndStudent>();
 			try {
-				if(staff.getType()==31){
-					student=addressService.findBySchool(staff.getSchoolId());
-					for(Tb_address_list list:student){
-						List<Tb_parent> parent=addressService.findparent(list.getId());
-						list.getParent().addAll(parent);						
-					}
-				}else if(staff.getType()==32){
-					student=addressService.findByTeacher(staff.getSchoolId());
+				if(staff.getType()==32){
+					
+					student=addressService.findByTeacher(staff.getId());
 					for(Tb_address_list list:student){
 						List<Tb_parent> parent=addressService.findparent(list.getId());
 						list.getParent().addAll(parent);
 					}
+					cs.setClassName(classService.selectNameByPrimaryKey(student.get(1).getClass_id()));
+					cs.getStudent().addAll(student);
+					List<Tb_teacher> classstaff= addressService.findTeacherByClass(student.get(1).getClass_id());
+		            List<Tb_newstaff> doctor = newteacherService.findByType(staff.getSchoolId());
+		            data.getTeacher().addAll(classstaff);
+		            data.getDoctor().addAll(doctor);
+		            data.setStudent(cs);
 				}
 				
 				
-				outList = new OutList<Tb_address_list>(student.size(),student);
-				back.setBackTypeWithLog(outList,BackType.SUCCESS_SEARCH_NORMAL);
+				back.setBackTypeWithLog(data,BackType.SUCCESS_SEARCH_NORMAL);
 			} catch (ServiceException e) {
 				logger.warn(e.getMessage());
 				back.setServiceExceptionWithLog(e.getExceptionEnums());

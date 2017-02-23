@@ -88,4 +88,5 @@ public class GoodService {
 			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
 		return goodMapper.updateByPrimaryKey(record);
 	}
+	
 }

@@ -15,15 +15,25 @@
  <select id="findByschool" parameterType="Integer" resultType="cn.didano.base.model.Tb_address_list">
   SELECT * FROM tb_student WHERE school_id=#{id} ORDER BY class_id
  </select>
+ <select id="findClassByschool" parameterType="Integer" resultType="cn.didano.base.model.Tb_class">
+ SELECT id ,title FROM tb_class WHERE school_id=#{id} AND deleted = 0
+ </select>
+ <select id="findteacherByschool" parameterType="Integer" resultType="cn.didano.base.model.Tb_teacher">
+SELECT tmp1.id,tmp1.name,tmp1.phone,tmp1.class_id,c.title,tmp1.type,tmp1.school_id FROM
+(SELECT a.id,b.class_id,a.type,a.school_id,a.name,a.phone
+FROM tb_staff a,tb_staff_class b WHERE a.school_id=#{id} AND a.deleted=0 AND a.type =32 and a.id=b.staff_id
+)AS tmp1 LEFT JOIN tb_class c ON tmp1.class_id=c.id
+  
+ </select>
 <select id="findParentById" parameterType="Integer" resultType="cn.didano.base.model.Tb_parent">SELECT p.name AS parent_name,p.phone AS parent_phone FROM 
 (SELECT tmp1.id,tmp1.name,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 
  tb_student  AS tmp1 ,tb_student_parent p WHERE tmp1.id=p.student_id AND tmp1.id=#{id}) AS tmp2 LEFT JOIN tb_school_parent p ON tmp2.parent_id=p.id</select>
 <select id="findByClass" parameterType="Integer" resultType="cn.didano.base.model.Tb_address_list">
-  SELECT a.* FROM tb_student a WHERE  a.class_id=54 AND a.deleted =0 ORDER BY CONVERT( a.name USING gbk )
+  SELECT a.* FROM tb_student a WHERE  a.class_id=#{id} AND a.deleted =0 ORDER BY CONVERT( a.name USING gbk )
  </select>
-<select id="findTeacherByClass" resultType="cn.didano.base.model.Tb_teacher">
- SELECT tmp1.id,tmp1.name,tmp1.type,tmp1.class_id ,c.sign_timestamp,c.in_time,c.out_time FROM 
-	 (SELECT a.id,a.name,a.type,b.class_id FROM tb_staff a,tb_staff_class b 
+<select id="findTeacherByClass" parameterType="Integer" resultType="cn.didano.base.model.Tb_teacher">
+ SELECT tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id ,c.sign_timestamp,c.in_time,c.out_time FROM 
+	 (SELECT a.id,a.name,a.phone,a.type,b.class_id FROM tb_staff a,tb_staff_class b 
 	 WHERE a.type=32 AND a.id=b.staff_id  AND a.deleted=0 AND b.deleted=0 ) AS tmp1 
 	 LEFT JOIN tb_staff_signdate c ON (tmp1.id =c.staff_id   )
 	 WHERE sign_timestamp BETWEEN 1469548800 AND 1469548900 AND class_id=#{id}

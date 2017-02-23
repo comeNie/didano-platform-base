@@ -5,7 +5,7 @@
 <generatorConfiguration>
 	<!--数据库驱动 -->
 	<classPathEntry
-		location="/Users/wangyi/.m2/repository/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39.jar" />
+		location="C:/.m2/repository/mysql/mysql-connector-java/5.1.40/mysql-connector-java-5.1.40.jar" />
 	<context id="video_didano" targetRuntime="MyBatis3" defaultModelType="flat">
 		<commentGenerator>
 			<property name="suppressDate" value="true" />
@@ -13,7 +13,7 @@
 		</commentGenerator>
 		<!--数据库链接地址账号密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost/tasksdb" userId="root"
+			connectionURL="jdbc:mysql://localhost/xiaonuo_test" userId="root"
 			password="123456">
 		</jdbcConnection>
 		<javaTypeResolver>
@@ -126,7 +126,7 @@
 			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>   
 		</table> -->
 		
-		 <table tableName="tb_school" domainObjectName="Tb_school"
+		 <!-- <table tableName="tb_school" domainObjectName="Tb_school"
 			enableCountByExample="true" enableSelectByExample="true"
 			selectByExampleQueryId="true" >
 			<ignoreColumn column ="address" />
@@ -137,7 +137,7 @@
 			<ignoreColumn column="key_active_time" /> 
 			<ignoreColumn column="created" /> 
 			<ignoreColumn column="updated" /> 
-		</table> 
+		</table> -->
 		
 		<!-- <table tableName="tb_staff" domainObjectName="Tb_staff"
 			enableCountByExample="true" enableSelectByExample="true"
@@ -162,5 +162,26 @@
 			enableCountByExample="true"  enableSelectByExample="true"
 			selectByExampleQueryId="true">	
 		</table> -->
+		
+		<table tableName="tb_staff" domainObjectName="Tb_newstaff"
+			enableCountByExample="true" enableUpdateByExample="true"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true">	
+			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>
+		</table>
+		
+			<table tableName="tb_staff_class" domainObjectName="Tb_staff_class"
+			enableCountByExample="true" enableUpdateByExample="true"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true">	
+			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>
+		</table>
+		
+			<table tableName="tb_staff_signdate" domainObjectName="Tb_staff_signdate"
+			enableCountByExample="true" enableUpdateByExample="true"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true">	
+			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>
+		</table>
 	</context>
 </generatorConfiguration>

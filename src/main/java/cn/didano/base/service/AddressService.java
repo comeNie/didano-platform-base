@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import cn.didano.base.dao.Tb_address_listMapper;
 import cn.didano.base.model.Tb_address_list;
+import cn.didano.base.model.Tb_class;
 import cn.didano.base.model.Tb_parent;
 import cn.didano.base.model.Tb_teacher;
 @Service
@@ -15,6 +16,18 @@ public class AddressService {
 	@Autowired
 	private Tb_address_listMapper addressMapper;
 	
+	/**
+	 * 通过学校查询所有老师
+	 */
+	public List<Tb_teacher> findteacherByschool(Integer id){
+		return addressMapper.findteacherByschool(id);
+	}
+	/**
+	 * 通过学校查询该学校所有班级
+	 */
+	public List<Tb_class> findClassByschool(Integer id){
+		return addressMapper.findClassByschool(id);
+	}
 	/**
 	 * 通过学校查询
 	 */

@@ -19,6 +19,7 @@ public interface Tb_newstaffMapper {
     List<Tb_newstaff> selectByExample(Tb_newstaffExample example);
 
     Tb_newstaff selectByPrimaryKey(Integer id);
+   
 
     int updateByExampleSelective(@Param("record") Tb_newstaff record, @Param("example") Tb_newstaffExample example);
 

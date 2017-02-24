@@ -12,8 +12,8 @@
  SELECT a.id,a.class_id,a.name,a.birthday,a.gender FROM tb_student a WHERE  a.id=356 AND a.deleted =0 
  </select>
 
- <select id="findByName" parameterType="String" resultType="cn.didano.base.model.Tb_address_list">
-   select * from tb_student where name = #{name};
+ <select id="findByName"  parameterType="cn.didano.base.model.Tb_studentData" resultType="cn.didano.base.model.Tb_address_list">
+   select * from tb_student where name=#{name} and school_id=#{schoolid} 
  </select>
  <select id="findByschool" parameterType="Integer" resultType="cn.didano.base.model.Tb_address_list">
   SELECT * FROM tb_student WHERE school_id=#{id} ORDER BY class_id

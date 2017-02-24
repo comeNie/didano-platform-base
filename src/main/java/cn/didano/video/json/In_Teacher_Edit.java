@@ -18,8 +18,7 @@ public class In_Teacher_Edit {
 	private byte type;
 	@ApiModelProperty(value = "所带班级",required=true)
 	private Integer class_id;
-	@ApiModelProperty(value = "当天时间",required=true)
-	private long sign_timestamp;
+	
 	@ApiModelProperty(value = "签到时间",required=true)
 	private Date in_time;
 	@ApiModelProperty(value = "签退",required=true)
@@ -63,12 +62,7 @@ public class In_Teacher_Edit {
 	public void setClass_id(Integer class_id) {
 		this.class_id = class_id;
 	}
-	public long getSign_timestamp() {
-		return sign_timestamp;
-	}
-	public void setSign_timestamp(long sign_timestamp) {
-		this.sign_timestamp = sign_timestamp;
-	}
+	
 	public Date getIn_time() {
 		return in_time;
 	}

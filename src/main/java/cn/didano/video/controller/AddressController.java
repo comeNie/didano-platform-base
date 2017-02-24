@@ -82,7 +82,7 @@ public class AddressController {
 				list.getParent().addAll(parent);
 			}
 			outList = new OutList<Tb_address_list>(student.size(), student);
-			back.setBackTypeWithLog(outList, BackType.SUCCESS_SEARCH_NORMAL);
+			back.setBackTypeWithLog(outList, BackType.SUCCESS_SEARCH_NORMAL);	
 		} catch (ServiceException e) {
 			logger.warn(e.getMessage());
 			back.setServiceExceptionWithLog(e.getExceptionEnums());
@@ -182,11 +182,12 @@ public class AddressController {
 	@ResponseBody
 	public Out<String> teacher_edit(
 			@ApiParam(value = "编辑老师信息", required = true) @RequestBody In_Teacher_Edit teacher_e) {
-		logger.info("访问  PostController:teacher_edit,teacher=" + teacher_e);
+		logger.info("访问 PostController:teacher_edit,teacher=" + teacher_e);
 		Tb_teacher teacher = new Tb_teacher();
 		Out<String> back = new Out<String>();
 		try {
 			BeanUtils.copyProperties(teacher, teacher_e);
+			
 			int rowNum = addressService.UpdateTeacher(teacher);// insert
 
 			if (rowNum > 0) {

@@ -26,6 +26,7 @@ import cn.didano.base.model.Tb_parentadd;
 import cn.didano.base.model.Tb_schoolparent;
 import cn.didano.base.model.Tb_staff_class;
 import cn.didano.base.model.Tb_staff_signdate;
+import cn.didano.base.model.Tb_studentData;
 import cn.didano.base.model.Tb_studentparent;
 import cn.didano.base.model.Tb_teacher;
 import cn.didano.base.model.Tb_teacherAndStudent;
@@ -34,7 +35,6 @@ import cn.didano.base.service.ClassService;
 import cn.didano.base.service.NewStudentService;
 import cn.didano.base.service.NewTeacherService;
 import cn.didano.video.constant.BackType;
-import cn.didano.video.json.In_Parent_Add;
 import cn.didano.video.json.In_Student_Add;
 import cn.didano.video.json.In_Student_Edit;
 import cn.didano.video.json.In_Teacher_Add;
@@ -61,35 +61,78 @@ public class AddressController {
 	@Autowired
 	private ClassService classService;
 
+	
+
+	
 	/**
-	 * 通讯录首页 通过小朋友名字查询小朋友
-	 * 
-	 * @param teacher_id
-	 * @return
+	 * 通过名字搜索
 	 */
-	@PostMapping(value = "student_searchByName/{student_name}")
-	@ApiOperation(value = "通过小朋友名字查询小朋友", notes = "通过小朋友名字查询小朋友")
+	@PostMapping(value = "studentstaff_searchByName/{name}/{id}")
+	@ApiOperation(value = "通过名字搜索", notes = "通过名字搜索")
 	@ResponseBody
-	public Out<OutList<Tb_address_list>> student_searchByName(@PathVariable("student_name") String student_name) {
-		logger.info("访问  PostController:student_searchByName,student_name=" + student_name);
+	public Out<Tb_bossData> studentstaff_searchByName(@PathVariable("name") String name,@PathVariable("id") Integer id) {
+		logger.info("访问  PostController:studentstaff_searchByName,name=" + name+",id="+id);		
+		Tb_newstaff s0 = newteacherService.findById(id);
+		List<Tb_newstaff> staff = newteacherService.findByName(name,s0.getSchoolId());
+		Tb_bossData data = new Tb_bossData();
 		List<Tb_address_list> student = null;
-		OutList<Tb_address_list> outList = null;
-		Out<OutList<Tb_address_list>> back = new Out<OutList<Tb_address_list>>();
+		List<Tb_classStudent> student2 = new ArrayList<Tb_classStudent>();
+		Tb_classStudent s = new Tb_classStudent();
+		Tb_classStudent s2 = new Tb_classStudent();
+		Tb_classStudent s3 = new Tb_classStudent();
+		
+		Out<Tb_bossData> back = new Out<Tb_bossData>();
 		try {
-			student = addressService.findByname(student_name);
+
+			if(staff.size()!=0){
+				data.getStaff().addAll(staff);
+			}
+			Tb_studentData data1 = new Tb_studentData();
+			data1.setName(name);
+			data1.setSchoolid(s0.getSchoolId());
+			student = addressService.findByname(data1);
+			if(student.size()!=0){
+			s.setClassName(classService.selectNameByPrimaryKey(student.get(0).getClass_id()));
 			for (Tb_address_list list : student) {
 				List<Tb_parent> parent = addressService.findparent(list.getId());
 				list.getParent().addAll(parent);
+				if(classService.selectNameByPrimaryKey(list.getClass_id()).equals(s.getClassName())){
+					s.getStudent().add(list);
+				}else {
+					if(s2.getClassName()==null){
+					s2.setClassName(classService.selectNameByPrimaryKey(list.getClass_id()));
+					}
+					if(classService.selectNameByPrimaryKey(list.getClass_id()).equals(s2.getClassName())){
+						s2.getStudent().add(list);
+					}else{
+						if(s3.getClassName()==null){
+							s3.setClassName(classService.selectNameByPrimaryKey(list.getClass_id()));
+						}
+						if(classService.selectNameByPrimaryKey(list.getClass_id()).equals(s3.getClassName())){
+							s3.getStudent().add(list);
+						}
+					}
+					
+					
+				}
 			}
-			outList = new OutList<Tb_address_list>(student.size(), student);
-			back.setBackTypeWithLog(outList, BackType.SUCCESS_SEARCH_NORMAL);	
+			student2.add(s);
+			if(s2.getStudent().size()!=0){
+			student2.add(s2);		
+			}
+			if(s3.getStudent().size()!=0){
+				student2.add(s3);
+			}
+			data.getStudentall().addAll(student2);
+			}
+			back.setBackTypeWithLog(data, BackType.SUCCESS_SEARCH_NORMAL);
 		} catch (ServiceException e) {
 			logger.warn(e.getMessage());
 			back.setServiceExceptionWithLog(e.getExceptionEnums());
 		}
 		return back;
 	}
-
+	
 	/**
 	 * 
 	 * 删除员工

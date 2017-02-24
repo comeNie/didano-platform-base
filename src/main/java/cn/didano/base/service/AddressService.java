@@ -9,6 +9,7 @@ import cn.didano.base.dao.Tb_address_listMapper;
 import cn.didano.base.model.Tb_address_list;
 import cn.didano.base.model.Tb_class;
 import cn.didano.base.model.Tb_parent;
+import cn.didano.base.model.Tb_studentData;
 import cn.didano.base.model.Tb_teacher;
 @Service
 public class AddressService {
@@ -19,8 +20,8 @@ public class AddressService {
 	/**
 	 * 通过名字查询小朋友
 	 */
-	public List<Tb_address_list> findByname(String name){
-		return addressMapper.findByName(name);
+	public List<Tb_address_list> findByname(Tb_studentData data){
+		return addressMapper.findByName(data);
 	}
 	/**
 	 * 通过学校查询所有老师

@@ -17,6 +17,12 @@ public class AddressService {
 	private Tb_address_listMapper addressMapper;
 	
 	/**
+	 * 通过名字查询小朋友
+	 */
+	public List<Tb_address_list> findByname(String name){
+		return addressMapper.findByName(name);
+	}
+	/**
 	 * 通过学校查询所有老师
 	 */
 	public List<Tb_teacher> findteacherByschool(Integer id){

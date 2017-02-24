@@ -10,14 +10,12 @@ public class In_Teacher_Add {
 	private String name;
 	@ApiModelProperty(value = "老师电话",required=true)
 	private String phone ;
-	@ApiModelProperty(value = "学校id",required=true)
-	private Integer schoolId;
+	
 	@ApiModelProperty(value = "员工类型",required=true)
 	private byte type;
 	@ApiModelProperty(value = "所带班级",required=true)
 	private Integer classId;
-	@ApiModelProperty(value = "是否需要签到",required=true)
-	private Integer signTypeId;
+	
 	@ApiModelProperty(value = "设置签到时间",required=true)
 	private Date setIntime;
 	@ApiModelProperty(value = "设置签退时间",required=true)
@@ -25,12 +23,7 @@ public class In_Teacher_Add {
 	@ApiModelProperty(value = "是否有效",required=true)
 	private byte status;
 	
-	public Integer getSignTypeId() {
-		return signTypeId;
-	}
-	public void setSignTypeId(Integer signTypeId) {
-		this.signTypeId = signTypeId;
-	}
+
 	public String getName() {
 		return name;
 	}
@@ -50,12 +43,7 @@ public class In_Teacher_Add {
 		this.type = type;
 	}
 	
-	public Integer getSchoolId() {
-		return schoolId;
-	}
-	public void setSchoolId(Integer schoolId) {
-		this.schoolId = schoolId;
-	}
+	
 	public Integer getClassId() {
 		return classId;
 	}

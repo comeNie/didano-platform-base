@@ -24,6 +24,15 @@ public class ClassService {
 	@Autowired
 	private Tb_classMapper classMapper;
 
+	
+	/**
+	 * 通过班级id查询所属学校
+	 */
+	public Tb_class selectById(Integer id){
+	
+		
+		return classMapper.selectByPrimaryKey(id);
+	}
 	/**
 	 * 查询所有
 	 * 

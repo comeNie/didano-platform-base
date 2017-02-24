@@ -14,8 +14,7 @@ public class In_Student_Add {
 	private String name;
 	@ApiModelProperty(value = "班级",required=true)
 	private Integer classId;
-	@ApiModelProperty(value = "学校",required=true)
-	 private Integer schoolId;
+	
 	@ApiModelProperty(value = "性别",required=true)
 	private Byte gender;
 	@ApiModelProperty(value = "生日",required=true)
@@ -42,12 +41,7 @@ public class In_Student_Add {
 	public void setClassId(Integer classId) {
 		this.classId = classId;
 	}
-	public Integer getSchoolId() {
-		return schoolId;
-	}
-	public void setSchoolId(Integer schoolId) {
-		this.schoolId = schoolId;
-	}
+	
 	public Byte getGender() {
 		return gender;
 	}
@@ -62,7 +56,7 @@ public class In_Student_Add {
 	}
 	@Override
 	public String toString() {
-		return "In_Student_Add [name=" + name + ", classId=" + classId + ", schoolId=" + schoolId + ", gender=" + gender
+		return "In_Student_Add [name=" + name + ", classId=" + classId  + ", gender=" + gender
 				+ ", birthday=" + birthday + ", parent=" + parent + "]";
 	}
 	

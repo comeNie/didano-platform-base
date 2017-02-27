@@ -483,7 +483,11 @@ public class AddressController {
 				vd_studentparent.setStudentId(list.getId());
 				vd_studentparent.setParentId(vd_parent.getId());
 				vd_studentparent.setRelationId(add.getRelation_id());
-				vd_studentparent.setRelationTitle(addressService.findrealtionById(add.getRelation_id()).getTitle());
+				if(add.getRelation_id()!=99){
+					vd_studentparent.setRelationTitle(addressService.findrealtionById(add.getRelation_id()).getTitle());
+					}else{
+						vd_studentparent.setRelationTitle(add.getParent_name());
+					}
 				vd_studentparent.setCreated(new Date());
 				newstudentService.insertStudentParentSelective(vd_studentparent);
 			  row2++;
@@ -596,7 +600,11 @@ public class AddressController {
 				vd_studentparent.setStudentId(vd_student.getId());
 				vd_studentparent.setParentId(vd_parent.getId());
 				vd_studentparent.setRelationId(add.getRelation_id());
+				if(add.getRelation_id()!=99){
 				vd_studentparent.setRelationTitle(addressService.findrealtionById(add.getRelation_id()).getTitle());
+				}else{
+					vd_studentparent.setRelationTitle(add.getParent_name());
+				}
 				vd_studentparent.setCreated(new Date());
 				newstudentService.insertStudentParentSelective(vd_studentparent);
 				rowNum3++;

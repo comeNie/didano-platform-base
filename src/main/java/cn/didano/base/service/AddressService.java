@@ -9,6 +9,7 @@ import cn.didano.base.dao.Tb_address_listMapper;
 import cn.didano.base.model.Tb_address_list;
 import cn.didano.base.model.Tb_class;
 import cn.didano.base.model.Tb_parent;
+import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_studentData;
 import cn.didano.base.model.Tb_teacher;
 @Service
@@ -17,6 +18,25 @@ public class AddressService {
 	@Autowired
 	private Tb_address_listMapper addressMapper;
 	
+	/**
+	 * 通过小朋友id删除父母信息
+	 */
+	public int deleteparent(Integer id){
+		return addressMapper.deleteparent(id);
+	}
+	/**
+	 * 通过关系id查询关系名称
+	 */
+	public Tb_relation findrealtionById(byte id){
+		return addressMapper.findrelationById(id);
+	}
+	/**
+	 * 查询家长关系
+	 * 
+	 */
+	public List<Tb_relation> findrelation(){
+		return addressMapper.findrelation();
+	}
 	/**
 	 * 通过名字查询小朋友
 	 */

@@ -2,13 +2,15 @@ package cn.didano.base.model;
 
 public class Tb_parentadd {
 
-	private String name;
+	private byte relation;
 	private String phone;
-	public String getName() {
-		return name;
+	
+	
+	public byte getRelation() {
+		return relation;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setRelation(byte relation) {
+		this.relation = relation;
 	}
 	public String getPhone() {
 		return phone;

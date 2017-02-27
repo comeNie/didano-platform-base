@@ -17,27 +17,14 @@ public class In_Teacher_Edit {
 	@ApiModelProperty(value = "员工类型",required=true)
 	private byte type;
 	@ApiModelProperty(value = "所带班级",required=true)
-	private Integer class_id;
+	private Integer classId;
 	
-	@ApiModelProperty(value = "签到时间",required=true)
-	private Date in_time;
-	@ApiModelProperty(value = "签退",required=true)
-	private Date out_time;
+	@ApiModelProperty(value = "设置签到时间",required=true)
+	private Date setIntime;
+	@ApiModelProperty(value = "设置签退时间",required=true)
+	private Date setOuttime;
 	@ApiModelProperty(value = "是否有效",required=true)
-	private byte deleted;
-	
-	public byte getDeleted() {
-		return deleted;
-	}
-	public void setDeleted(byte deleted) {
-		this.deleted = deleted;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+	private byte status;
 	public Integer getId() {
 		return id;
 	}
@@ -50,30 +37,43 @@ public class In_Teacher_Edit {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	public byte getType() {
 		return type;
 	}
 	public void setType(byte type) {
 		this.type = type;
 	}
-	public Integer getClass_id() {
-		return class_id;
+	public Integer getClassId() {
+		return classId;
 	}
-	public void setClass_id(Integer class_id) {
-		this.class_id = class_id;
+	public void setClassId(Integer classId) {
+		this.classId = classId;
+	}
+	public Date getSetIntime() {
+		return setIntime;
+	}
+	public void setSetIntime(Date setIntime) {
+		this.setIntime = setIntime;
+	}
+	public Date getSetOuttime() {
+		return setOuttime;
+	}
+	public void setSetOuttime(Date setOuttime) {
+		this.setOuttime = setOuttime;
+	}
+	public byte getStatus() {
+		return status;
+	}
+	public void setStatus(byte status) {
+		this.status = status;
 	}
 	
-	public Date getIn_time() {
-		return in_time;
-	}
-	public void setIn_time(Date in_time) {
-		this.in_time = in_time;
-	}
-	public Date getOut_time() {
-		return out_time;
-	}
-	public void setOut_time(Date out_time) {
-		this.out_time = out_time;
-	}
+	
 	
 }

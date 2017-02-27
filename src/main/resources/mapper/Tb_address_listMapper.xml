@@ -36,8 +36,8 @@ FROM tb_staff a,tb_staff_class b WHERE a.school_id=#{id} AND a.deleted=0 AND a.t
   </select>
 <select id="findParentById" parameterType="Integer" resultType="cn.didano.base.model.Tb_parent">
 SELECT tmp2.relation_id ,tmp2.title AS parent_name,p.phone AS parent_phone FROM 
-(SELECT p.relation_id,tmp1.id,tmp1.name,r.title,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 
- tb_student  AS tmp1 ,tb_student_parent p ,tb_relation r WHERE tmp1.id=p.student_id AND tmp1.id=#{id}  and p.relation_id = r.id and p.deleted=0 and tmp1.deleted=0)
+(SELECT p.relation_id,tmp1.id,tmp1.name,p.relation_title AS title,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 
+ tb_student  AS tmp1 ,tb_student_parent p  WHERE tmp1.id=p.student_id AND tmp1.id=#{id}  and p.deleted=0 and tmp1.deleted=0)
  AS tmp2 LEFT JOIN tb_school_parent p ON tmp2.parent_id=p.id
 </select>
 <select id="findByClass" parameterType="Integer" resultType="cn.didano.base.model.Tb_address_list">
@@ -50,7 +50,7 @@ SELECT tmp2.relation_id ,tmp2.title AS parent_name,p.phone AS parent_phone FROM
 	 LEFT JOIN tb_staff_signdate c ON (tmp1.id =c.staff_id   )
 	 WHERE sign_timestamp BETWEEN 1469548800 AND 1469548900 AND class_id=#{id}
 </select>
-<update id="Update" parameterType="cn.didano.base.model.Tb_address_list">UPDATE tb_student a SET a.class_id=#{class_id},a.gender=#{gender,jdbcType=TINYINT},a.birthday=#{birthday,jdbcType=DATE} where a.id=#{id}</update>
+<update id="Update" parameterType="cn.didano.base.model.Tb_address_list">UPDATE tb_student a SET a.name=#{name},a.class_id=#{class_id},a.gender=#{gender,jdbcType=TINYINT},a.birthday=#{birthday,jdbcType=DATE} where a.id=#{id}</update>
 
 <update id="delete" parameterType="Integer">UPDATE tb_student AS a,tb_student_parent AS b,tb_school_parent AS c SET a.deleted=1,b.deleted=1,c.deleted=1 WHERE a.id=#{id} AND b.student_id=#{id} AND c.id IN (SELECT id FROM(SELECT p.id FROM 
 (SELECT tmp1.id,tmp1.name,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 

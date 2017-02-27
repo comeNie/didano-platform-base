@@ -36,9 +36,7 @@ import cn.didano.base.service.ClassService;
 import cn.didano.base.service.NewStudentService;
 import cn.didano.base.service.NewTeacherService;
 import cn.didano.video.constant.BackType;
-import cn.didano.video.json.In_Student_Add;
 import cn.didano.video.json.In_Student_Edit;
-import cn.didano.video.json.In_Teacher_Add;
 import cn.didano.video.json.In_Teacher_Edit;
 import cn.didano.video.json.Out;
 import cn.didano.video.json.OutList;
@@ -194,10 +192,10 @@ public class AddressController {
 	 * @param c_channel
 	 * @return
 	 */
-	@ApiOperation(value = "新增职工", notes = "新增职工")
+	@ApiOperation(value = "新增编辑职工", notes = "新增职工")
 	@PostMapping(value = "Teacher_add")
 	@ResponseBody
-	public Out<String> Teacher_add(@ApiParam(value = "新增职工", required = true) @RequestBody In_Teacher_Add teacher_a) {
+	public Out<String> Teacher_add(@ApiParam(value = "新增编辑职工", required = true) @RequestBody In_Teacher_Edit teacher_a) {
 		logger.info("访问  PostController:Teacher_add,teacher_a=" + teacher_a);
 		Tb_newstaff vd_staff = new Tb_newstaff();
 		Tb_staff_class vd_class = new Tb_staff_class();
@@ -205,15 +203,19 @@ public class AddressController {
 		Out<String> back = new Out<String>();
 		try {
 			BeanUtils.copyProperties(vd_staff, teacher_a);
+			int rowNum=0;
+			int rowNum2=0;
+			int rowNum3=0;
+			if(vd_staff.getId()<=0){
 			vd_staff.setCreated(new Date());
 			vd_staff.setSignTypeId(1);
 			vd_staff.setSchoolId(classService.selectById(teacher_a.getClassId()).getSchoolId());
-			int rowNum = newteacherService.insertTeacherSelective(vd_staff);// insert
+			 rowNum = newteacherService.insertTeacherSelective(vd_staff);// insert
 			vd_class.setClassId(teacher_a.getClassId());
 			vd_class.setCreated(new Date());
 			vd_class.setSchoolId(vd_staff.getSchoolId());
 			vd_class.setStaffId(vd_staff.getId());
-			int rowNum2 = newteacherService.insertClassSelective(vd_class);
+			 rowNum2 = newteacherService.insertClassSelective(vd_class);
 			vd_date.setCreated(new Date());
 			vd_date.setStaffId(vd_staff.getId());
 			vd_date.setSetIntime(teacher_a.getSetIntime());
@@ -223,7 +225,22 @@ public class AddressController {
 			vd_date.setSignTimestamp(Long.parseLong(time2));
 			vd_date.setSignDate(new Date());
 			vd_date.setSignStatus((byte) 1);
-			int rowNum3 = newteacherService.insertDateSelective(vd_date);
+			 rowNum3 = newteacherService.insertDateSelective(vd_date);
+			}else{
+				rowNum = newteacherService.updatestaff(vd_staff);
+				vd_class.setClassId(teacher_a.getClassId());
+			    vd_class.setId(newteacherService.findclassidByStaffid(vd_staff.getId()).get(0).getId());
+				vd_class.setSchoolId(vd_staff.getSchoolId());
+				vd_class.setStaffId(teacher_a.getId());
+				 rowNum2 = newteacherService.updateclass(vd_class);
+				 vd_date.setCreated(new Date());
+					vd_date.setStaffId(teacher_a.getId());
+					vd_date.setSetIntime(teacher_a.getSetIntime());
+					vd_date.setSetOuttime(teacher_a.getSetOuttime());
+					vd_date.setId(newteacherService.finddateidByStaffid(vd_staff.getId()).get(0).getId());;
+					 rowNum3 = newteacherService.updatesign(vd_date);
+				
+			}
 			if (rowNum > 0 && rowNum2 > 0 && rowNum3 > 0) {
 				back.setBackTypeWithLog(BackType.SUCCESS_INSERT, "Id=" + "," + ":rowNum3=" + rowNum3);
 
@@ -240,39 +257,7 @@ public class AddressController {
 		return back;
 	}
 
-	/**
-	 * 编辑老师信息
-	 * 
-	 * @param c_channel
-	 * @return
-	 */
-	@ApiOperation(value = "编辑老师信息", notes = "编辑老师信息")
-	@PostMapping(value = "teacher_edit")
-	@ResponseBody
-	public Out<String> teacher_edit(
-			@ApiParam(value = "编辑老师信息", required = true) @RequestBody In_Teacher_Edit teacher_e) {
-		logger.info("访问 PostController:teacher_edit,teacher=" + teacher_e);
-		Tb_teacher teacher = new Tb_teacher();
-		Out<String> back = new Out<String>();
-		try {
-			BeanUtils.copyProperties(teacher, teacher_e);
-			
-			int rowNum = addressService.UpdateTeacher(teacher);// insert
-
-			if (rowNum > 0) {
-				back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "rowNum=" + rowNum);
-			} else {
-				back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, "rowNum=" + rowNum);
-			}
-		} catch (ServiceException e) {
-			// 服务层错误，包括 内部service 和 对外service
-			back.setServiceExceptionWithLog(e.getExceptionEnums());
-		} catch (Exception ex) {
-			back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, ex.getMessage());
-		}
-		return back;
-	}
-
+	
 	/**
 	 * 通过班级查找老师
 	 */
@@ -583,7 +568,7 @@ public class AddressController {
 	@ApiOperation(value = "新增小朋友", notes = "新增小朋友")
 	@PostMapping(value = "Student_add")
 	@ResponseBody
-	public Out<String> Student_add(@ApiParam(value = "新增小朋友", required = true) @RequestBody In_Student_Add student_a) {
+	public Out<String> Student_add(@ApiParam(value = "新增小朋友", required = true) @RequestBody In_Student_Edit student_a) {
 		logger.info("访问  PostController:Student_add,student_a=" + student_a);
 		Tb_newstudent vd_student = new Tb_newstudent();
 		Tb_schoolparent vd_parent = new Tb_schoolparent();
@@ -593,25 +578,25 @@ public class AddressController {
 			BeanUtils.copyProperties(vd_student, student_a);
 			vd_student.setStatus((byte) 1);
 			vd_student.setCreated(new Date());
-			vd_student.setSchoolId(classService.selectById(vd_student.getClassId()).getSchoolId());
+			vd_student.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
 			int rowNum = newstudentService.insertStudentSelective(vd_student);// insert
 			int rowNum2 = 0;
 			int rowNum3 = 0;
-			for (Tb_parentadd add : student_a.getParent()) {
-				vd_parent.setSchoolId(classService.selectById(vd_student.getClassId()).getSchoolId());
+			for (Tb_parent add : student_a.getParent()) {
+				vd_parent.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
 				
-				vd_parent.setPhone(add.getPhone());
+				vd_parent.setPhone(add.getParent_phone());
 				vd_parent.setType(1);
 				vd_parent.setStatus((byte) 1);
 				vd_parent.setCreated(new Date());
 				newstudentService.insertParentSelective(vd_parent);
 				rowNum2++;
 				vd_studentparent.setSchoolId(vd_student.getSchoolId());
-				vd_studentparent.setClassId(vd_student.getClassId());
+				vd_studentparent.setClassId(vd_student.getClass_id());
 				vd_studentparent.setStudentId(vd_student.getId());
 				vd_studentparent.setParentId(vd_parent.getId());
-				vd_studentparent.setRelationId(add.getRelation());
-				vd_studentparent.setRelationTitle(addressService.findrealtionById(add.getRelation()).getTitle());
+				vd_studentparent.setRelationId(add.getRelation_id());
+				vd_studentparent.setRelationTitle(addressService.findrealtionById(add.getRelation_id()).getTitle());
 				vd_studentparent.setCreated(new Date());
 				newstudentService.insertStudentParentSelective(vd_studentparent);
 				rowNum3++;
@@ -634,4 +619,24 @@ public class AddressController {
 		return back;
 	}
 
+	/**
+	 * 新建小朋友
+	 * 
+	 * 根据条件创建小朋友，创建小朋友之后，再根据生成的小朋友ID建立父母的联系
+	 * 
+	 * @param c_channel
+	 * @return
+	 */
+	@ApiOperation(value = "新增或编辑小朋友", notes = "新增或编辑")
+	@PostMapping(value = "Student_addoredit")
+	@ResponseBody
+	public void Student_addoredit(@ApiParam(value = "新增或编辑小朋友", required = true) @RequestBody In_Student_Edit student_a) {
+		logger.info("访问  PostController:Student_addoredit,student_a=" + student_a);
+		if(student_a.getId()>0){
+			addresslist_edit(student_a);
+		}else{
+			Student_add(student_a);
+			
+		}
+	}
 }

@@ -7,7 +7,7 @@ public class Tb_newstudent {
 
     private Integer schoolId;
 
-    private Integer classId;
+    private Integer class_id;
 
     private String name;
 
@@ -49,15 +49,17 @@ public class Tb_newstudent {
         this.schoolId = schoolId;
     }
 
-    public Integer getClassId() {
-        return classId;
-    }
+   
 
-    public void setClassId(Integer classId) {
-        this.classId = classId;
-    }
+    public Integer getClass_id() {
+		return class_id;
+	}
 
-    public String getName() {
+	public void setClass_id(Integer class_id) {
+		this.class_id = class_id;
+	}
+
+	public String getName() {
         return name;
     }
 

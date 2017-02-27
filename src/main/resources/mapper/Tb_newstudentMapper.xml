@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="cn.didano.base.model.Tb_newstudent">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="school_id" jdbcType="INTEGER" property="schoolId" />
-    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="class_id" jdbcType="INTEGER" property="class_id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="hobby" jdbcType="VARCHAR" property="hobby" />
@@ -120,7 +120,7 @@
       comment, gender, birthday, 
       device_registered, status, created, 
       updated, deleted)
-    values (#{schoolId,jdbcType=INTEGER}, #{classId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+    values (#{schoolId,jdbcType=INTEGER}, #{class_id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{nickname,jdbcType=VARCHAR}, #{hobby,jdbcType=VARCHAR}, #{dreamId,jdbcType=INTEGER}, 
       #{comment,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, #{birthday,jdbcType=DATE}, 
       #{deviceRegistered,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{created,jdbcType=TIMESTAMP}, 
@@ -135,7 +135,7 @@
       <if test="schoolId != null">
         school_id,
       </if>
-      <if test="classId != null">
+      <if test="class_id != null">
         class_id,
       </if>
       <if test="name != null">
@@ -179,8 +179,8 @@
       <if test="schoolId != null">
         #{schoolId,jdbcType=INTEGER},
       </if>
-      <if test="classId != null">
-        #{classId,jdbcType=INTEGER},
+      <if test="class_id != null">
+        #{class_id,jdbcType=INTEGER},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -235,8 +235,8 @@
       <if test="record.schoolId != null">
         school_id = #{record.schoolId,jdbcType=INTEGER},
       </if>
-      <if test="record.classId != null">
-        class_id = #{record.classId,jdbcType=INTEGER},
+      <if test="record.class_id != null">
+        class_id = #{record.class_id,jdbcType=INTEGER},
       </if>
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
@@ -283,7 +283,7 @@
     update tb_student
     set id = #{record.id,jdbcType=INTEGER},
       school_id = #{record.schoolId,jdbcType=INTEGER},
-      class_id = #{record.classId,jdbcType=INTEGER},
+      class_id = #{record.class_id,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
       nickname = #{record.nickname,jdbcType=VARCHAR},
       hobby = #{record.hobby,jdbcType=VARCHAR},
@@ -306,8 +306,8 @@
       <if test="schoolId != null">
         school_id = #{schoolId,jdbcType=INTEGER},
       </if>
-      <if test="classId != null">
-        class_id = #{classId,jdbcType=INTEGER},
+      <if test="class_id != null">
+        class_id = #{class_id,jdbcType=INTEGER},
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -351,7 +351,7 @@
   <update id="updateByPrimaryKey" parameterType="cn.didano.base.model.Tb_newstudent">
     update tb_student
     set school_id = #{schoolId,jdbcType=INTEGER},
-      class_id = #{classId,jdbcType=INTEGER},
+      class_id = #{class_id,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
       hobby = #{hobby,jdbcType=VARCHAR},

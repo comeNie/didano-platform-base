@@ -13,7 +13,9 @@ import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Tb_newstaff;
 import cn.didano.base.model.Tb_newstaffExample;
 import cn.didano.base.model.Tb_staff_class;
+import cn.didano.base.model.Tb_staff_classExample;
 import cn.didano.base.model.Tb_staff_signdate;
+import cn.didano.base.model.Tb_staff_signdateExample;
 import cn.didano.video.constant.DeletedType;
 
 
@@ -27,7 +29,53 @@ public class NewTeacherService {
 	@Autowired
 	private Tb_staff_signdateMapper dateMapper;
 	
+	/**
+	 * 查找班级表id
+	 */
+	public List<Tb_staff_class> findclassidByStaffid(Integer id){
+		Tb_staff_classExample condition = new Tb_staff_classExample();
+		Tb_staff_classExample.Criteria criteria = condition.createCriteria();
+		// 对于已经deleted=1的不显示 禁用不显示
+		criteria.andStaffIdEqualTo(id);
+		return classMapper.selectByExample(condition);
+	}
 	
+	/**
+	 * 查找时间表id
+	 */
+	public List<Tb_staff_signdate> finddateidByStaffid(Integer id){
+		Tb_staff_signdateExample condition = new Tb_staff_signdateExample();
+		Tb_staff_signdateExample.Criteria criteria = condition.createCriteria();
+		// 对于已经deleted=1的不显示 禁用不显示
+		criteria.andStaffIdEqualTo(id);
+		return dateMapper.selectByExample(condition);
+	}
+	/**
+	 * 编辑职工
+	 */
+	public int updatestaff(Tb_newstaff record){
+		if (record == null)
+			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
+		return newstaffMapper.updateByPrimaryKeySelective(record);
+	}
+	
+	/**
+	 * 编辑班级关系
+	 */
+	public int updateclass(Tb_staff_class record){
+		if (record == null)
+			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
+		return classMapper.updateByPrimaryKeySelective(record);
+	}
+	
+	/**
+	 * 编辑时间关系
+	 */
+	public int updatesign(Tb_staff_signdate record){
+		if (record == null)
+			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
+		return dateMapper.updateByPrimaryKeySelective(record);
+	}
 	/**
 	 * 通过员工姓名查询
 	 */

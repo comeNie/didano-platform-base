@@ -23,6 +23,7 @@ import cn.didano.base.model.Tb_newstaff;
 import cn.didano.base.model.Tb_newstudent;
 import cn.didano.base.model.Tb_parent;
 import cn.didano.base.model.Tb_parentadd;
+import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_schoolparent;
 import cn.didano.base.model.Tb_staff_class;
 import cn.didano.base.model.Tb_staff_signdate;
@@ -63,6 +64,31 @@ public class AddressController {
 
 	
 
+	/**
+	 * 查询家长关系对应
+	 */
+	@PostMapping(value = "relation")
+	@ApiOperation(value = "查询家长关系对应", notes = "查询家长关系对应")
+	@ResponseBody
+	public Out<OutList<Tb_relation>> relation() {
+		logger.info("访问  PostController:relation");
+		List<Tb_relation> relation = null;
+		OutList<Tb_relation> outList = null;		
+		Out<OutList<Tb_relation>> back = new Out<OutList<Tb_relation>>();
+		try {
+			relation = addressService.findrelation();
+			if (relation.size() > 0) {
+				outList = new OutList<Tb_relation>(relation.size(), relation);
+				back.setBackTypeWithLog(outList,BackType.SUCCESS_UPDATE);
+			} else {
+				back.setBackTypeWithLog(outList,BackType.FAIL_UPDATE_NORMAL);
+			}
+		} catch (ServiceException e) {
+			logger.warn(e.getMessage());
+			back.setServiceExceptionWithLog(e.getExceptionEnums());
+		}
+		return back;
+	}
 	
 	/**
 	 * 通过名字搜索
@@ -450,16 +476,34 @@ public class AddressController {
 			@ApiParam(value = "编辑小朋友信息", required = true) @RequestBody In_Student_Edit student_a) {
 		logger.info("访问  PostController:addresslist_edit,student_a=" + student_a);
 		Tb_address_list list = new Tb_address_list();
+		Tb_schoolparent vd_parent = new Tb_schoolparent();
+		Tb_studentparent vd_studentparent = new Tb_studentparent();
 		Out<String> back = new Out<String>();
 		try {
 			BeanUtils.copyProperties(list, student_a);
 			int rowNum = addressService.Update(list);// insert
-			int row = 0;
-			for (Tb_parent parent : list.getParent()) {
-				addressService.UpdateParent(parent);
-				row++;
+			int row = addressService.deleteparent(list.getId());
+			int row2=0;
+			for (Tb_parent add : student_a.getParent()) {
+				vd_parent.setSchoolId(classService.selectById(list.getClass_id()).getSchoolId());
+				
+				vd_parent.setPhone(add.getParent_phone());
+				vd_parent.setType(1);
+				vd_parent.setStatus((byte) 1);
+				vd_parent.setCreated(new Date());
+				newstudentService.insertParentSelective(vd_parent);
+				
+				vd_studentparent.setSchoolId(classService.selectById(list.getClass_id()).getSchoolId());
+				vd_studentparent.setClassId(list.getClass_id());
+				vd_studentparent.setStudentId(list.getId());
+				vd_studentparent.setParentId(vd_parent.getId());
+				vd_studentparent.setRelationId(add.getRelation_id());
+				vd_studentparent.setRelationTitle(addressService.findrealtionById(add.getRelation_id()).getTitle());
+				vd_studentparent.setCreated(new Date());
+				newstudentService.insertStudentParentSelective(vd_studentparent);
+			  row2++;
 			}
-			if (rowNum > 0 && row > 0) {
+			if (rowNum > 0 && row > 0&& row2>0) {
 				back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "rowNum=" + (rowNum + row));
 			} else {
 				back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, "rowNum=" + (rowNum + row));
@@ -555,7 +599,7 @@ public class AddressController {
 			int rowNum3 = 0;
 			for (Tb_parentadd add : student_a.getParent()) {
 				vd_parent.setSchoolId(classService.selectById(vd_student.getClassId()).getSchoolId());
-				vd_parent.setName(add.getName());
+				
 				vd_parent.setPhone(add.getPhone());
 				vd_parent.setType(1);
 				vd_parent.setStatus((byte) 1);
@@ -566,8 +610,8 @@ public class AddressController {
 				vd_studentparent.setClassId(vd_student.getClassId());
 				vd_studentparent.setStudentId(vd_student.getId());
 				vd_studentparent.setParentId(vd_parent.getId());
-				vd_studentparent.setRelationId((byte) 1);
-				vd_studentparent.setRelationTitle(vd_parent.getName());
+				vd_studentparent.setRelationId(add.getRelation());
+				vd_studentparent.setRelationTitle(addressService.findrealtionById(add.getRelation()).getTitle());
 				vd_studentparent.setCreated(new Date());
 				newstudentService.insertStudentParentSelective(vd_studentparent);
 				rowNum3++;

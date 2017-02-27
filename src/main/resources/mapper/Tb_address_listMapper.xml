@@ -9,7 +9,7 @@
   </select>
  
  <select id="findById" parameterType="Integer" resultType="cn.didano.base.model.Tb_address_list"> 
- SELECT a.id,a.class_id,a.name,a.birthday,a.gender FROM tb_student a WHERE  a.id=356 AND a.deleted =0 
+ SELECT a.id,a.class_id,a.name,a.birthday,a.gender FROM tb_student a WHERE  a.id=#{id} AND a.deleted =0 
  </select>
 
  <select id="findByName"  parameterType="cn.didano.base.model.Tb_studentData" resultType="cn.didano.base.model.Tb_address_list">
@@ -28,9 +28,18 @@ FROM tb_staff a,tb_staff_class b WHERE a.school_id=#{id} AND a.deleted=0 AND a.t
 )AS tmp1 LEFT JOIN tb_class c ON tmp1.class_id=c.id
   
  </select>
-<select id="findParentById" parameterType="Integer" resultType="cn.didano.base.model.Tb_parent">SELECT p.name AS parent_name,p.phone AS parent_phone FROM 
-(SELECT tmp1.id,tmp1.name,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 
- tb_student  AS tmp1 ,tb_student_parent p WHERE tmp1.id=p.student_id AND tmp1.id=#{id}) AS tmp2 LEFT JOIN tb_school_parent p ON tmp2.parent_id=p.id</select>
+ <select id="findrelation" resultType="cn.didano.base.model.Tb_relation">
+      select id,title from tb_relation
+  </select>
+  <select id="findrelationById" parameterType="byte" resultType="cn.didano.base.model.Tb_relation">
+     select id,title from tb_relation where id=#{id}
+  </select>
+<select id="findParentById" parameterType="Integer" resultType="cn.didano.base.model.Tb_parent">
+SELECT tmp2.relation_id ,tmp2.title AS parent_name,p.phone AS parent_phone FROM 
+(SELECT p.relation_id,tmp1.id,tmp1.name,r.title,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 
+ tb_student  AS tmp1 ,tb_student_parent p ,tb_relation r WHERE tmp1.id=p.student_id AND tmp1.id=#{id}  and p.relation_id = r.id and p.deleted=0 and tmp1.deleted=0)
+ AS tmp2 LEFT JOIN tb_school_parent p ON tmp2.parent_id=p.id
+</select>
 <select id="findByClass" parameterType="Integer" resultType="cn.didano.base.model.Tb_address_list">
   SELECT a.* FROM tb_student a WHERE  a.class_id=#{id} AND a.deleted =0 ORDER BY CONVERT( a.name USING gbk )
  </select>
@@ -55,5 +64,10 @@ FROM tb_staff a,tb_staff_class b WHERE a.school_id=#{id} AND a.deleted=0 AND a.t
 <update id="UpdateTeacher" parameterType="cn.didano.base.model.Tb_teacher">
   UPDATE TB_STAFF a,tb_staff_class b,tb_staff_signdate c SET a.type = #{type},a.name=#{name},a.phone=#{phone} ,a.deleted=#{deleted},b.class_id=#{class_id},
 c.set_intime=#{in_time},c.set_outtime=#{out_time} where a.id = #{id} 
+</update>
+<update id="deleteparent" parameterType="Integer">
+  UPDATE tb_school_parent a,tb_student_parent b SET a.deleted=1 ,b.deleted = 1 WHERE
+   a.id IN (SELECT * FROM(SELECT parent_id FROM tb_student_parent WHERE student_id=#{id})a) 
+   AND b.student_id=#{id}
 </update>
 </mapper>

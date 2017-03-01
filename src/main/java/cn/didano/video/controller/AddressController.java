@@ -233,7 +233,7 @@ public class AddressController {
 			int rowNum=0;
 			int rowNum2=0;
 			int rowNum3=0;
-			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 			if(vd_staff.getId()<=0){
 			vd_staff.setCreated(new Date());
 			vd_staff.setSignTypeId(1);

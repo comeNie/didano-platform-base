@@ -234,7 +234,7 @@ public class AddressController {
 			int rowNum2=0;
 			int rowNum3=0;
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-			if(vd_staff.getId()<=0){
+			if(vd_staff.getId()==null){
 			vd_staff.setCreated(new Date());
 			vd_staff.setSignTypeId(1);
 			vd_staff.setSchoolId(classService.selectById(teacher_a.getClassId()).getSchoolId());
@@ -254,7 +254,7 @@ public class AddressController {
 			vd_date.setSignDate(new Date());
 			vd_date.setSignStatus((byte) 1);
 			 rowNum3 = newteacherService.insertDateSelective(vd_date);
-			}else{
+			}else {
 				rowNum = newteacherService.updatestaff(vd_staff);
 				vd_class.setClassId(teacher_a.getClassId());
 			    vd_class.setId(newteacherService.findclassidByStaffid(vd_staff.getId()).get(0).getId());
@@ -668,7 +668,7 @@ public class AddressController {
 	@ResponseBody
 	public void Student_addoredit(@ApiParam(value = "新增或编辑小朋友", required = true) @RequestBody In_Student_Edit student_a) {
 		logger.info("访问  PostController:Student_addoredit,student_a=" + student_a);
-		if(student_a.getId()>0){
+		if(student_a.getId()!=null){
 			addresslist_edit(student_a);
 		}else{
 			Student_add(student_a);

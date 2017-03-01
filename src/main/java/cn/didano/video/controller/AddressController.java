@@ -63,6 +63,32 @@ public class AddressController {
 	
 
 	/**
+	 * 查询班级关系对应
+	 */
+	@PostMapping(value = "Classid_name")
+	@ApiOperation(value = "查询班级关系对应", notes = "查询家长关系对应")
+	@ResponseBody
+	public Out<OutList<Tb_class>> Classid_name() {
+		logger.info("访问  PostController:relation");
+		List<Tb_class> classs = null;
+		OutList<Tb_class> outList = null;		
+		Out<OutList<Tb_class>> back = new Out<OutList<Tb_class>>();
+		try {
+			classs = classService.findAll();
+			if (classs.size() > 0) {
+				outList = new OutList<Tb_class>(classs.size(), classs);
+				back.setBackTypeWithLog(outList,BackType.SUCCESS_UPDATE);
+			} else {
+				back.setBackTypeWithLog(outList,BackType.FAIL_UPDATE_NORMAL);
+			}
+		} catch (ServiceException e) {
+			logger.warn(e.getMessage());
+			back.setServiceExceptionWithLog(e.getExceptionEnums());
+		}
+		return back;
+	}
+	
+	/**
 	 * 查询家长关系对应
 	 */
 	@PostMapping(value = "relation")

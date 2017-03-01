@@ -65,16 +65,17 @@ public class AddressController {
 	/**
 	 * 查询班级关系对应
 	 */
-	@PostMapping(value = "Classid_name")
+	@PostMapping(value = "Classid_name/{staff_id}")
 	@ApiOperation(value = "查询班级关系对应", notes = "查询家长关系对应")
 	@ResponseBody
-	public Out<OutList<Tb_class>> Classid_name() {
-		logger.info("访问  PostController:relation");
+	public Out<OutList<Tb_class>> Classid_name(@PathVariable("staff_id") Integer id) {
+		logger.info("访问  PostController:Classid_name,staff_id="+id);
+		Tb_newstaff staff = newteacherService.findById(id);
 		List<Tb_class> classs = null;
 		OutList<Tb_class> outList = null;		
 		Out<OutList<Tb_class>> back = new Out<OutList<Tb_class>>();
 		try {
-			classs = classService.findAll();
+			classs = classService.findAll(staff.getSchoolId());
 			if (classs.size() > 0) {
 				outList = new OutList<Tb_class>(classs.size(), classs);
 				back.setBackTypeWithLog(outList,BackType.SUCCESS_UPDATE);

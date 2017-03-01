@@ -26,12 +26,13 @@ public class ClassService {
 
 	
 	/**
-	 * 查找id name对应
+	 * 查找一个学校里的id name对应
 	 */
-	public List<Tb_class> findAll(){
+	public List<Tb_class> findAll(Integer id){
 		Tb_classExample condition = new Tb_classExample();
 		Tb_classExample.Criteria criteria = condition.createCriteria();
 		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
+		criteria.andSchoolIdEqualTo(id);
 		return classMapper.selectByExample(condition);
 	}
 	/**

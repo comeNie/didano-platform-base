@@ -26,6 +26,15 @@ public class ClassService {
 
 	
 	/**
+	 * 查找id name对应
+	 */
+	public List<Tb_class> findAll(){
+		Tb_classExample condition = new Tb_classExample();
+		Tb_classExample.Criteria criteria = condition.createCriteria();
+		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
+		return classMapper.selectByExample(condition);
+	}
+	/**
 	 * 通过班级id查询所属学校
 	 */
 	public Tb_class selectById(Integer id){

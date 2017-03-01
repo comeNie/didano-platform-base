@@ -1,5 +1,6 @@
 package cn.didano.video.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +23,6 @@ import cn.didano.base.model.Tb_classStudent;
 import cn.didano.base.model.Tb_newstaff;
 import cn.didano.base.model.Tb_newstudent;
 import cn.didano.base.model.Tb_parent;
-import cn.didano.base.model.Tb_parentadd;
 import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_schoolparent;
 import cn.didano.base.model.Tb_staff_class;
@@ -233,6 +233,7 @@ public class AddressController {
 			int rowNum=0;
 			int rowNum2=0;
 			int rowNum3=0;
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 			if(vd_staff.getId()<=0){
 			vd_staff.setCreated(new Date());
 			vd_staff.setSignTypeId(1);
@@ -245,8 +246,8 @@ public class AddressController {
 			 rowNum2 = newteacherService.insertClassSelective(vd_class);
 			vd_date.setCreated(new Date());
 			vd_date.setStaffId(vd_staff.getId());
-			vd_date.setSetIntime(teacher_a.getSetIntime());
-			vd_date.setSetOuttime(teacher_a.getSetOuttime());
+			vd_date.setSetIntime(sdf.parse(teacher_a.getSetIntime()));
+			vd_date.setSetOuttime(sdf.parse(teacher_a.getSetOuttime()));
 			long time = new Date().getTime();
 			String time2 = String.valueOf(time).substring(0, 10);
 			vd_date.setSignTimestamp(Long.parseLong(time2));
@@ -262,8 +263,8 @@ public class AddressController {
 				 rowNum2 = newteacherService.updateclass(vd_class);
 				 vd_date.setCreated(new Date());
 					vd_date.setStaffId(teacher_a.getId());
-					vd_date.setSetIntime(teacher_a.getSetIntime());
-					vd_date.setSetOuttime(teacher_a.getSetOuttime());
+					vd_date.setSetIntime(sdf.parse(teacher_a.getSetIntime()));
+					vd_date.setSetOuttime(sdf.parse(teacher_a.getSetOuttime()));
 					vd_date.setId(newteacherService.finddateidByStaffid(vd_staff.getId()).get(0).getId());;
 					 rowNum3 = newteacherService.updatesign(vd_date);
 				

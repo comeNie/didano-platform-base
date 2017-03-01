@@ -20,9 +20,9 @@ public class In_Teacher_Edit {
 	private Integer classId;
 	
 	@ApiModelProperty(value = "设置签到时间",required=true)
-	private Date setIntime;
+	private String setIntime;
 	@ApiModelProperty(value = "设置签退时间",required=true)
-	private Date setOuttime;
+	private String setOuttime;
 	@ApiModelProperty(value = "是否有效",required=true)
 	private byte status;
 	public Integer getId() {
@@ -55,16 +55,17 @@ public class In_Teacher_Edit {
 	public void setClassId(Integer classId) {
 		this.classId = classId;
 	}
-	public Date getSetIntime() {
+	
+	public String getSetIntime() {
 		return setIntime;
 	}
-	public void setSetIntime(Date setIntime) {
+	public void setSetIntime(String setIntime) {
 		this.setIntime = setIntime;
 	}
-	public Date getSetOuttime() {
+	public String getSetOuttime() {
 		return setOuttime;
 	}
-	public void setSetOuttime(Date setOuttime) {
+	public void setSetOuttime(String setOuttime) {
 		this.setOuttime = setOuttime;
 	}
 	public byte getStatus() {

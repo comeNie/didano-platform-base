@@ -612,8 +612,8 @@ public class AddressController {
 			vd_student.setCreated(new Date());
 			vd_student.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
 			int rowNum = newstudentService.insertStudentSelective(vd_student);// insert
-			int rowNum2 = 0;
-			int rowNum3 = 0;
+			
+			if(student_a.getParent().size()!=0){
 			for (Tb_parent add : student_a.getParent()) {
 				vd_parent.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
 				
@@ -622,7 +622,6 @@ public class AddressController {
 				vd_parent.setStatus((byte) 1);
 				vd_parent.setCreated(new Date());
 				newstudentService.insertParentSelective(vd_parent);
-				rowNum2++;
 				vd_studentparent.setSchoolId(vd_student.getSchoolId());
 				vd_studentparent.setClassId(vd_student.getClass_id());
 				vd_studentparent.setStudentId(vd_student.getId());
@@ -635,12 +634,12 @@ public class AddressController {
 				}
 				vd_studentparent.setCreated(new Date());
 				newstudentService.insertStudentParentSelective(vd_studentparent);
-				rowNum3++;
+				
 			}
-
-			if (rowNum > 0 && rowNum2 > 0 && rowNum3 > 0) {
+			}
+			if (rowNum > 0 ) {
 				back.setBackTypeWithLog(BackType.SUCCESS_INSERT,
-						"Id=" + vd_student.getId() + "," + vd_parent.getId() + ":rowNum3=" + rowNum3);
+						"Id=" + vd_student.getId() + "," + vd_parent.getId() );
 
 			} else {
 				// 更新有问题

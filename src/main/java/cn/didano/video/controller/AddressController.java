@@ -496,7 +496,8 @@ public class AddressController {
 			BeanUtils.copyProperties(list, student_a);
 			int rowNum = addressService.Update(list);// insert
 			int row = addressService.deleteparent(list.getId());
-			int row2=0;
+			
+			if(!student_a.getParent().isEmpty()){
 			for (Tb_parent add : student_a.getParent()) {
 				vd_parent.setSchoolId(classService.selectById(list.getClass_id()).getSchoolId());
 				
@@ -518,9 +519,10 @@ public class AddressController {
 					}
 				vd_studentparent.setCreated(new Date());
 				newstudentService.insertStudentParentSelective(vd_studentparent);
-			  row2++;
+			 
 			}
-			if (rowNum > 0 && row > 0&& row2>0) {
+			}
+			if (rowNum > 0 ) {
 				back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "rowNum=" + (rowNum + row));
 			} else {
 				back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, "rowNum=" + (rowNum + row));
@@ -613,7 +615,7 @@ public class AddressController {
 			vd_student.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
 			int rowNum = newstudentService.insertStudentSelective(vd_student);// insert
 			
-			if(student_a.getParent().size()!=0){
+			if(!student_a.getParent().isEmpty()){
 			for (Tb_parent add : student_a.getParent()) {
 				vd_parent.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
 				

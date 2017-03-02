@@ -125,29 +125,29 @@ public class PostController {
 			studentall = studentService.selectById(student_id);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
 			if(studentall.size()>4){
-				student.add(new Tb_student_inf(studentall.get(0).getHeight()/1000,studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));				
+				student.add(new Tb_student_inf(studentall.get(0).getHeight()/10,studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));				
 			    Tb_student tb=studentall.get((int)(Math.random()*(studentall.size()-1)/5)+(studentall.size()-1)/5);
-			    Tb_student_inf inf = new Tb_student_inf(tb.getHeight()/1000,tb.getWeight()/1000,tb.getOrgImgUrl(),sdf.format(tb.getCreated()));
+			    Tb_student_inf inf = new Tb_student_inf(tb.getHeight()/10,tb.getWeight()/1000,tb.getOrgImgUrl(),sdf.format(tb.getCreated()));
 			    student.add(inf);			    
 				 tb=studentall.get((int)(Math.random()*(studentall.size()-1)/5)+((studentall.size()-1)*3)/5);
-				inf=new Tb_student_inf(tb.getHeight()/1000,tb.getWeight()/1000,tb.getOrgImgUrl(),sdf.format(tb.getCreated()));
+				inf=new Tb_student_inf(tb.getHeight()/10,tb.getWeight()/1000,tb.getOrgImgUrl(),sdf.format(tb.getCreated()));
 			    student.add(inf);
 			    tb=studentall.get(studentall.size()-1);
-			    student.add(new Tb_student_inf(tb.getHeight()/1000,tb.getWeight()/1000,tb.getOrgImgUrl(),sdf.format(tb.getCreated())));			
+			    student.add(new Tb_student_inf(tb.getHeight()/10,tb.getWeight()/1000,tb.getOrgImgUrl(),sdf.format(tb.getCreated())));			
 			}else if(studentall.size()==1){
 				for (int i = 0; i < 4; i++) {
-					student.add(new Tb_student_inf(studentall.get(0).getHeight()/1000,studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));
+					student.add(new Tb_student_inf(studentall.get(0).getHeight()/10,studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));
 				}
 			}else if(studentall.size()==2){
-				student.add(new Tb_student_inf(studentall.get(0).getHeight()/1000,studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));
-				student.add(new Tb_student_inf(studentall.get(0).getHeight()/1000,studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));
-				student.add(new Tb_student_inf(studentall.get(1).getHeight()/1000,studentall.get(1).getWeight()/1000,studentall.get(1).getOrgImgUrl(),sdf.format(studentall.get(1).getCreated())));
-				student.add(new Tb_student_inf(studentall.get(1).getHeight()/1000,studentall.get(1).getWeight()/1000,studentall.get(1).getOrgImgUrl(),sdf.format(studentall.get(1).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(0).getHeight()/10,studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(0).getHeight()/10,studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(1).getHeight()/10,studentall.get(1).getWeight()/1000,studentall.get(1).getOrgImgUrl(),sdf.format(studentall.get(1).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(1).getHeight()/10,studentall.get(1).getWeight()/1000,studentall.get(1).getOrgImgUrl(),sdf.format(studentall.get(1).getCreated())));
 			}else if(studentall.size()==3){
-				student.add(new Tb_student_inf(studentall.get(0).getHeight()/1000,studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));
-				student.add(new Tb_student_inf(studentall.get(1).getHeight()/1000,studentall.get(1).getWeight()/1000,studentall.get(1).getOrgImgUrl(),sdf.format(studentall.get(1).getCreated())));
-				student.add(new Tb_student_inf(studentall.get(1).getHeight()/1000,studentall.get(1).getWeight()/1000,studentall.get(1).getOrgImgUrl(),sdf.format(studentall.get(1).getCreated())));
-				student.add(new Tb_student_inf(studentall.get(2).getHeight()/1000,studentall.get(2).getWeight()/1000,studentall.get(2).getOrgImgUrl(),sdf.format(studentall.get(2).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(0).getHeight()/10,studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(1).getHeight()/10,studentall.get(1).getWeight()/1000,studentall.get(1).getOrgImgUrl(),sdf.format(studentall.get(1).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(1).getHeight()/10,studentall.get(1).getWeight()/1000,studentall.get(1).getOrgImgUrl(),sdf.format(studentall.get(1).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(2).getHeight()/10,studentall.get(2).getWeight()/1000,studentall.get(2).getOrgImgUrl(),sdf.format(studentall.get(2).getCreated())));
 			}
 
 			for(Tb_student_inf s:student){

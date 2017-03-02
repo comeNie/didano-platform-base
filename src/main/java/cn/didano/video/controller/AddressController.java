@@ -376,17 +376,20 @@ public class AddressController {
 			if (staff.getType() == 32) {
 
 				student = addressService.findByTeacher(staff.getId());
+				if(!student.isEmpty()){
 				for (Tb_address_list list : student) {
 					List<Tb_parent> parent = addressService.findparent(list.getId());
 					list.getParent().addAll(parent);
 				}
-				cs.setClassName(classService.selectNameByPrimaryKey(student.get(1).getClass_id()));
+				
+				cs.setClassName(classService.selectNameByPrimaryKey(student.get(0).getClass_id()));
 				cs.getStudent().addAll(student);
 				List<Tb_teacher> classstaff = addressService.findTeacherByClass(student.get(1).getClass_id());
 				List<Tb_newstaff> doctor = newteacherService.findByType(staff.getSchoolId());
 				data.getTeacher().addAll(classstaff);
 				data.getDoctor().addAll(doctor);
 				data.setStudentall(cs);
+			}
 			}
 
 			back.setBackTypeWithLog(data, BackType.SUCCESS_SEARCH_NORMAL);

@@ -588,16 +588,18 @@ public class AddressController {
 				}
 				vd_studentparent.setCreated(new Date());
 				newstudentService.insertStudentParentSelective(vd_studentparent);
-				if (rowNum > 0 ) {
-					back.setBackTypeWithLog(BackType.SUCCESS_INSERT,
-							"Id=" + vd_student.getId() + "," + vd_parent.getId() );
-
-				} else {
-					// 更新有问题
-					back.setBackTypeWithLog(BackType.FAIL_UPDATE_AFTER_INSERT, "rowNum=" + rowNum);
-				}
+			
 				
 			}
+			
+			}
+			if (rowNum > 0 ) {
+				back.setBackTypeWithLog(BackType.SUCCESS_INSERT,
+						"Id=" + vd_student.getId() + "," + vd_parent.getId() );
+
+			} else {
+				// 更新有问题
+				back.setBackTypeWithLog(BackType.FAIL_UPDATE_AFTER_INSERT, "rowNum=" + rowNum);
 			}
 			}else{
 				BeanUtils.copyProperties(list, student_a);
@@ -626,14 +628,15 @@ public class AddressController {
 						}
 					vd_studentparent.setCreated(new Date());
 					newstudentService.insertStudentParentSelective(vd_studentparent);
-					if (rowNum > 0 ) {
-						back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "rowNum=" + (rowNum + row));
-					} else {
-						back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, "rowNum=" + (rowNum + row));
-					}
+					
 				 
 				}
 			
+				}
+				if (rowNum > 0 ) {
+					back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "rowNum=" + (rowNum + row));
+				} else {
+					back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, "rowNum=" + (rowNum + row));
 				}
 			}
 		} catch (ServiceException e) {

@@ -254,6 +254,13 @@ public class AddressController {
 			vd_date.setSignDate(new Date());
 			vd_date.setSignStatus((byte) 1);
 			 rowNum3 = newteacherService.insertDateSelective(vd_date);
+			 if (rowNum > 0 && rowNum2 > 0 && rowNum3 > 0) {
+					back.setBackTypeWithLog(BackType.SUCCESS_INSERT, "Id=" + "," + ":rowNum3=" + rowNum3);
+
+				} else {
+					// 更新有问题
+					back.setBackTypeWithLog(BackType.FAIL_UPDATE_AFTER_INSERT, "rowNum=" + rowNum);
+				}
 			}else {
 				rowNum = newteacherService.updatestaff(vd_staff);
 				vd_class.setClassId(teacher_a.getClassId());
@@ -267,15 +274,15 @@ public class AddressController {
 					vd_date.setSetOuttime(sdf.parse(teacher_a.getSetOuttime()));
 					vd_date.setId(newteacherService.finddateidByStaffid(vd_staff.getId()).get(0).getId());;
 					 rowNum3 = newteacherService.updatesign(vd_date);
-				
-			}
-			if (rowNum > 0 && rowNum2 > 0 && rowNum3 > 0) {
-				back.setBackTypeWithLog(BackType.SUCCESS_INSERT, "Id=" + "," + ":rowNum3=" + rowNum3);
+					 if (rowNum > 0 && rowNum2 > 0 && rowNum3 > 0) {
+							back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "Id=" + "," + ":rowNum3=" + rowNum3);
 
-			} else {
-				// 更新有问题
-				back.setBackTypeWithLog(BackType.FAIL_UPDATE_AFTER_INSERT, "rowNum=" + rowNum);
+						} else {
+							// 更新有问题
+							back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, "rowNum=" + rowNum);
+						}
 			}
+			
 		} catch (ServiceException e) {
 			// 服务层错误，包括 内部service 和 对外service
 			back.setServiceExceptionWithLog(e.getExceptionEnums());
@@ -476,65 +483,7 @@ public class AddressController {
 		return back;
 	}
 
-	/**
-	 * 编辑小朋友信息
-	 * 
-	 * @param c_channel
-	 * @return
-	 */
-	@ApiOperation(value = "编辑小朋友信息", notes = "编辑小朋友信息")
-	@PostMapping(value = "addresslist_edit")
-	@ResponseBody
-	public Out<String> addresslist_edit(
-			@ApiParam(value = "编辑小朋友信息", required = true) @RequestBody In_Student_Edit student_a) {
-		logger.info("访问  PostController:addresslist_edit,student_a=" + student_a);
-		Tb_address_list list = new Tb_address_list();
-		Tb_schoolparent vd_parent = new Tb_schoolparent();
-		Tb_studentparent vd_studentparent = new Tb_studentparent();
-		Out<String> back = new Out<String>();
-		try {
-			BeanUtils.copyProperties(list, student_a);
-			int rowNum = addressService.Update(list);// insert
-			int row = addressService.deleteparent(list.getId());
-			
-			if(!student_a.getParent().isEmpty()){
-			for (Tb_parent add : student_a.getParent()) {
-				vd_parent.setSchoolId(classService.selectById(list.getClass_id()).getSchoolId());
-				
-				vd_parent.setPhone(add.getParent_phone());
-				vd_parent.setType(1);
-				vd_parent.setStatus((byte) 1);
-				vd_parent.setCreated(new Date());
-				newstudentService.insertParentSelective(vd_parent);
-				
-				vd_studentparent.setSchoolId(classService.selectById(list.getClass_id()).getSchoolId());
-				vd_studentparent.setClassId(list.getClass_id());
-				vd_studentparent.setStudentId(list.getId());
-				vd_studentparent.setParentId(vd_parent.getId());
-				vd_studentparent.setRelationId(add.getRelation_id());
-				if(add.getRelation_id()!=99){
-					vd_studentparent.setRelationTitle(addressService.findrealtionById(add.getRelation_id()).getTitle());
-					}else{
-						vd_studentparent.setRelationTitle(add.getParent_name());
-					}
-				vd_studentparent.setCreated(new Date());
-				newstudentService.insertStudentParentSelective(vd_studentparent);
-			 
-			}
-			}
-			if (rowNum > 0 ) {
-				back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "rowNum=" + (rowNum + row));
-			} else {
-				back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, "rowNum=" + (rowNum + row));
-			}
-		} catch (ServiceException e) {
-			// 服务层错误，包括 内部service 和 对外service
-			back.setServiceExceptionWithLog(e.getExceptionEnums());
-		} catch (Exception ex) {
-			back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, ex.getMessage());
-		}
-		return back;
-	}
+	
 
 	/**
 	 * 通讯录首页 通过小朋友id查询小朋友及其家长信息
@@ -591,6 +540,7 @@ public class AddressController {
 		return back;
 	}
 
+	
 	/**
 	 * 新建小朋友
 	 * 
@@ -599,17 +549,19 @@ public class AddressController {
 	 * @param c_channel
 	 * @return
 	 */
-	@ApiOperation(value = "新增小朋友", notes = "新增小朋友")
-	@PostMapping(value = "Student_add")
+	@ApiOperation(value = "新增编辑小朋友", notes = "新增编辑小朋友")
+	@PostMapping(value = "Student_add_edit")
 	@ResponseBody
-	public Out<String> Student_add(@ApiParam(value = "新增小朋友", required = true) @RequestBody In_Student_Edit student_a) {
-		logger.info("访问  PostController:Student_add,student_a=" + student_a);
+	public Out<String> Student_add_edit(@ApiParam(value = "新增编辑小朋友", required = true) @RequestBody In_Student_Edit student_a) {
+		logger.info("访问  PostController:Student_add_edit,student_a=" + student_a);
 		Tb_newstudent vd_student = new Tb_newstudent();
+		Tb_address_list list = new Tb_address_list();
 		Tb_schoolparent vd_parent = new Tb_schoolparent();
 		Tb_studentparent vd_studentparent = new Tb_studentparent();
 		Out<String> back = new Out<String>();
 		try {
 			BeanUtils.copyProperties(vd_student, student_a);
+			if(vd_student.getId()==null){
 			vd_student.setStatus((byte) 1);
 			vd_student.setCreated(new Date());
 			vd_student.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
@@ -636,16 +588,53 @@ public class AddressController {
 				}
 				vd_studentparent.setCreated(new Date());
 				newstudentService.insertStudentParentSelective(vd_studentparent);
+				if (rowNum > 0 ) {
+					back.setBackTypeWithLog(BackType.SUCCESS_INSERT,
+							"Id=" + vd_student.getId() + "," + vd_parent.getId() );
+
+				} else {
+					// 更新有问题
+					back.setBackTypeWithLog(BackType.FAIL_UPDATE_AFTER_INSERT, "rowNum=" + rowNum);
+				}
 				
 			}
 			}
-			if (rowNum > 0 ) {
-				back.setBackTypeWithLog(BackType.SUCCESS_INSERT,
-						"Id=" + vd_student.getId() + "," + vd_parent.getId() );
-
-			} else {
-				// 更新有问题
-				back.setBackTypeWithLog(BackType.FAIL_UPDATE_AFTER_INSERT, "rowNum=" + rowNum);
+			}else{
+				BeanUtils.copyProperties(list, student_a);
+				int rowNum = addressService.Update(list);// insert
+				int row = addressService.deleteparent(list.getId());
+				
+				if(!student_a.getParent().isEmpty()){
+				for (Tb_parent add : student_a.getParent()) {
+					vd_parent.setSchoolId(classService.selectById(list.getClass_id()).getSchoolId());
+					
+					vd_parent.setPhone(add.getParent_phone());
+					vd_parent.setType(1);
+					vd_parent.setStatus((byte) 1);
+					vd_parent.setCreated(new Date());
+					newstudentService.insertParentSelective(vd_parent);
+					
+					vd_studentparent.setSchoolId(classService.selectById(list.getClass_id()).getSchoolId());
+					vd_studentparent.setClassId(list.getClass_id());
+					vd_studentparent.setStudentId(list.getId());
+					vd_studentparent.setParentId(vd_parent.getId());
+					vd_studentparent.setRelationId(add.getRelation_id());
+					if(add.getRelation_id()!=99){
+						vd_studentparent.setRelationTitle(addressService.findrealtionById(add.getRelation_id()).getTitle());
+						}else{
+							vd_studentparent.setRelationTitle(add.getParent_name());
+						}
+					vd_studentparent.setCreated(new Date());
+					newstudentService.insertStudentParentSelective(vd_studentparent);
+					if (rowNum > 0 ) {
+						back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "rowNum=" + (rowNum + row));
+					} else {
+						back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, "rowNum=" + (rowNum + row));
+					}
+				 
+				}
+			
+				}
 			}
 		} catch (ServiceException e) {
 			// 服务层错误，包括 内部service 和 对外service
@@ -655,25 +644,7 @@ public class AddressController {
 		}
 		return back;
 	}
-
-	/**
-	 * 新建小朋友
-	 * 
-	 * 根据条件创建小朋友，创建小朋友之后，再根据生成的小朋友ID建立父母的联系
-	 * 
-	 * @param c_channel
-	 * @return
-	 */
-	@ApiOperation(value = "新增或编辑小朋友", notes = "新增或编辑")
-	@PostMapping(value = "Student_addoredit")
-	@ResponseBody
-	public void Student_addoredit(@ApiParam(value = "新增或编辑小朋友", required = true) @RequestBody In_Student_Edit student_a) {
-		logger.info("访问  PostController:Student_addoredit,student_a=" + student_a);
-		if(student_a.getId()!=null){
-			addresslist_edit(student_a);
-		}else{
-			Student_add(student_a);
-			
-		}
-	}
 }
+
+	
+	

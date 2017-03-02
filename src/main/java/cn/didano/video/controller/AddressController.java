@@ -384,7 +384,7 @@ public class AddressController {
 				
 				cs.setClassName(classService.selectNameByPrimaryKey(student.get(0).getClass_id()));
 				cs.getStudent().addAll(student);
-				List<Tb_teacher> classstaff = addressService.findTeacherByClass(student.get(1).getClass_id());
+				List<Tb_teacher> classstaff = addressService.findTeacherByClass(student.get(0).getClass_id());
 				List<Tb_newstaff> doctor = newteacherService.findByType(staff.getSchoolId());
 				data.getTeacher().addAll(classstaff);
 				data.getDoctor().addAll(doctor);

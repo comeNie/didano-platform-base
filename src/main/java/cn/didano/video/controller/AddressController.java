@@ -447,8 +447,13 @@ public class AddressController {
 	public Out<String> deleteByChildId(@PathVariable("student_id") Integer student_id) {
 		logger.info("访问  PostController:deleteByChildId,student_id=" + student_id);
 		Out<String> back = new Out<String>();
+		List<Tb_parent> parentall = null;
 		try {
 			int rowNum = addressService.delete(student_id);
+			parentall = addressService.findparent(student_id);
+			if(!parentall.isEmpty()){
+				addressService.deleteparent(student_id);
+			}
 			if (rowNum > 0) {
 				back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "rowNum=" + rowNum);
 			} else {

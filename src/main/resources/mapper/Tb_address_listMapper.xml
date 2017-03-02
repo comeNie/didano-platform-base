@@ -52,9 +52,11 @@ SELECT tmp2.relation_id ,tmp2.title AS parent_name,p.phone AS parent_phone FROM
 </select>
 <update id="Update" parameterType="cn.didano.base.model.Tb_address_list">UPDATE tb_student a SET a.name=#{name},a.class_id=#{class_id},a.gender=#{gender,jdbcType=TINYINT},a.birthday=#{birthday,jdbcType=DATE} where a.id=#{id}</update>
 
-<update id="delete" parameterType="Integer">UPDATE tb_student AS a,tb_student_parent AS b,tb_school_parent AS c SET a.deleted=1,b.deleted=1,c.deleted=1 WHERE a.id=#{id} AND b.student_id=#{id} AND c.id IN (SELECT id FROM(SELECT p.id FROM 
-(SELECT tmp1.id,tmp1.name,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 
- tb_student  AS tmp1 ,tb_student_parent p WHERE tmp1.id=p.student_id AND tmp1.id=#{id}) AS tmp2 LEFT JOIN tb_school_parent p ON tmp2.parent_id=p.id)a)</update>
+<update id="delete" parameterType="Integer">
+UPDATE tb_student AS a SET a.deleted=1 WHERE a.id=#{id} 
+</update>
+
+
 <update id="UpdateParent" parameterType="cn.didano.base.model.Tb_parent">
   UPDATE tb_school_parent SET phone=#{parent_phone} where id = (select id from(SELECT p.id FROM 
 (SELECT tmp1.id,tmp1.name,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 

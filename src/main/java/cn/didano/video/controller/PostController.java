@@ -830,7 +830,7 @@ public class PostController {
 					}
 					//平均身高和体重
 					if(i!=0){
-						numHeight=numHeight/i;
+						numHeight=numHeight/i/10;
 						numWeight=numWeight/i/1000;
 						//超过的百分比
 						percentageHeight=percentageHeight*100/i;
@@ -852,7 +852,7 @@ public class PostController {
 					if(Integer.parseInt(a)>81){
 						tb.setAge(81);
 					}
-					else if(Integer.parseInt(a)%3==0){
+					else if(Integer.parseInt(a)%3==0 && Integer.parseInt(a)>12){
 						tb.setAge(Integer.parseInt(a));
 					}else if(Integer.parseInt(a)<12){
 						tb.setAge(12);

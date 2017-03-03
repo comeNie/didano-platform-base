@@ -7,7 +7,8 @@ import java.util.Date;
 import io.swagger.annotations.ApiModelProperty;
 
 public class In_Teacher_Edit {
-
+	@ApiModelProperty(value = "员工id",required=true)
+	private Integer staffid;
 	@ApiModelProperty(value = "老师id",required=true)
 	private Integer id;
 	@ApiModelProperty(value = "老师名字id",required=true)
@@ -25,6 +26,13 @@ public class In_Teacher_Edit {
 	private String setOuttime;
 	@ApiModelProperty(value = "是否有效",required=true)
 	private byte status;
+	
+	public Integer getStaffid() {
+		return staffid;
+	}
+	public void setStaffid(Integer staffid) {
+		this.staffid = staffid;
+	}
 	public Integer getId() {
 		return id;
 	}

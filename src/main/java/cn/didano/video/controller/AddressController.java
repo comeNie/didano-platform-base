@@ -226,6 +226,7 @@ public class AddressController {
 	@ResponseBody
 	public Out<String> Teacher_add(@ApiParam(value = "新增编辑职工", required = true) @RequestBody In_Teacher_Edit teacher_a) {
 		logger.info("访问  PostController:Teacher_add,teacher_a=" + teacher_a);
+		Tb_newstaff s = newteacherService.findById(teacher_a.getStaffid());
 		Tb_newstaff vd_staff = new Tb_newstaff();
 		Tb_staff_class vd_class = new Tb_staff_class();
 		tb_sign_type vd_date = new tb_sign_type();
@@ -237,22 +238,23 @@ public class AddressController {
 			int rowNum3=0;
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 			if(vd_staff.getId()==null){
-		   vd_date.setSchoolId(classService.selectById(teacher_a.getClassId()).getSchoolId());
+		   vd_date.setSchoolId(s.getSchoolId());
 		   vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
 		   vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));
 		   vd_date.setCreated(new Date());
 		   rowNum3 = newteacherService.insertTypeSelective(vd_date);
 			vd_staff.setCreated(new Date());
 			vd_staff.setSignTypeId(vd_date.getId());
-			vd_staff.setSchoolId(classService.selectById(teacher_a.getClassId()).getSchoolId());
+			vd_staff.setSchoolId(s.getSchoolId());
 			 rowNum = newteacherService.insertTeacherSelective(vd_staff);// insert
+			 if(teacher_a.getType()==32){
 			vd_class.setClassId(teacher_a.getClassId());
 			vd_class.setCreated(new Date());
 			vd_class.setSchoolId(vd_staff.getSchoolId());
 			vd_class.setStaffId(vd_staff.getId());
 			 rowNum2 = newteacherService.insertClassSelective(vd_class);
-		
-			 if (rowNum > 0 && rowNum2 > 0 && rowNum3 > 0) {
+			 }
+			 if (rowNum > 0  && rowNum3 > 0) {
 					back.setBackTypeWithLog(BackType.SUCCESS_INSERT, "Id=" + "," + ":rowNum3=" + rowNum3);
 
 				} else {
@@ -261,18 +263,20 @@ public class AddressController {
 				}
 			}else {
 				rowNum = newteacherService.updatestaff(vd_staff);
+				if(teacher_a.getType()==32){
 				vd_class.setClassId(teacher_a.getClassId());
 			    vd_class.setId(newteacherService.findclassidByStaffid(vd_staff.getId()).get(0).getId());
 				vd_class.setSchoolId(vd_staff.getSchoolId());
 				vd_class.setStaffId(teacher_a.getId());
 				 rowNum2 = newteacherService.updateclass(vd_class);
+				}
 				 vd_date.setCreated(new Date());
-					vd_date.setSchoolId(classService.selectById(teacher_a.getClassId()).getSchoolId());
+					vd_date.setSchoolId(s.getSchoolId());
 					vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
 					vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));
 					vd_date.setId(newteacherService.findById(teacher_a.getId()).getSignTypeId());;
 					 rowNum3 = newteacherService.updateType(vd_date);
-					 if (rowNum > 0 && rowNum2 > 0 && rowNum3 > 0) {
+					 if (rowNum > 0  && rowNum3 > 0) {
 							back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "Id=" + "," + ":rowNum3=" + rowNum3);
 
 						} else {

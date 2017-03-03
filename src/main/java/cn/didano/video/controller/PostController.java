@@ -25,31 +25,25 @@ import com.github.pagehelper.PageInfo;
 import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Bs_good;
 import cn.didano.base.model.Hand_student;
-import cn.didano.base.model.Tb_address_list;
 import cn.didano.base.model.Tb_benchmark;
 import cn.didano.base.model.Tb_class;
-import cn.didano.base.model.Tb_newstudent;
 import cn.didano.base.model.Tb_school;
-import cn.didano.base.model.Tb_schoolparent;
 import cn.didano.base.model.Tb_student;
 import cn.didano.base.model.Tb_studentRecord;
 import cn.didano.base.model.Tb_student_detection;
 import cn.didano.base.model.Tb_student_inf;
-import cn.didano.base.model.Tb_studentparent;
 import cn.didano.base.model.Vd_auth_switch;
 import cn.didano.base.model.Vd_auth_time_control;
 import cn.didano.base.model.Vd_channel;
 import cn.didano.base.model.View_channel_info;
 import cn.didano.base.model.View_channel_info_on;
 import cn.didano.base.model.View_switch_s_c;
-import cn.didano.base.service.AddressService;
 import cn.didano.base.service.AuthSwitchService;
 import cn.didano.base.service.AuthTimeControlService;
 import cn.didano.base.service.ChannelService;
 import cn.didano.base.service.ClassService;
 import cn.didano.base.service.GoodService;
 import cn.didano.base.service.ManagerService;
-import cn.didano.base.service.NewStudentService;
 import cn.didano.base.service.SchoolService;
 import cn.didano.base.service.StudentService;
 import cn.didano.base.service.ViewChannelService;
@@ -65,7 +59,6 @@ import cn.didano.video.json.In_Channel_Edit;
 import cn.didano.video.json.In_Channel_Search;
 import cn.didano.video.json.In_Control_Add;
 import cn.didano.video.json.In_Control_Edit;
-import cn.didano.video.json.In_Parent_Add;
 import cn.didano.video.json.In_School_Search;
 import cn.didano.video.json.In_Switch_Edit4Video;
 import cn.didano.video.json.In_Switch_Search;
@@ -851,7 +844,7 @@ public class PostController {
 					String a=(dateTime.getTime()-selectstudent.get(0).getBirthday().getTime())/(1000*60*60*24)/30+"";
 					
 					//时间差得到月龄
-					System.out.println(a);
+					
 					Tb_benchmark tb=new Tb_benchmark();
 					if(Integer.parseInt(a)>81){
 						tb.setAge(81);
@@ -860,14 +853,14 @@ public class PostController {
 						tb.setAge(Integer.parseInt(a));
 					}else{
 						int b= Integer.parseInt(a)/3;
-						System.err.println(b*3);
-						
+						tb.setAge(b);
 					}
-					
 					tb.setSex((int)selectstudent.get(0).getGender());
 					List<Tb_benchmark> selectByHeightAddWeight = controlService.selectByHeightAddWeight(tb);
+					System.err.println(selectByHeightAddWeight.size());
 					String compareHeight=null;
 					String compareWeight=null;
+					
 					//和标准的比较
 					Double ght=(double) (classes.get(0).getWeight()/1000);
 					Double hgt=(double) (classes.get(0).getHeight()/10);

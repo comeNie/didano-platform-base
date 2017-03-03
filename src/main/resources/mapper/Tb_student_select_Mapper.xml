@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.didano.base.dao.Tb_student_selectMapper">
+	<resultMap id="BaseResultMap" type="cn.didano.base.model.Tb_student_detection">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="student_id" jdbcType="INTEGER" property="studentId" />
+		<result column="height" jdbcType="INTEGER" property="height" />
+		<result column="weight" jdbcType="INTEGER" property="weight" />
+		<result column="state_type" jdbcType="INTEGER" property="stateType" />
+		<result column="recognition_type" jdbcType="INTEGER" property="recognitionType" />
+		<result column="env_temperature" jdbcType="REAL" property="envTemperature" />
+		<result column="raw_temperature" jdbcType="REAL" property="rawTemperature" />
+		<result column="temperature_threshold" jdbcType="REAL"
+			property="temperatureThreshold" />
+		<result column="first" jdbcType="TINYINT" property="first" />
+		<result column="lastest" jdbcType="TINYINT" property="lastest" />
+		<result column="terminal_img_id" jdbcType="VARCHAR" property="terminalImgId" />
+		<result column="file_img_id" jdbcType="INTEGER" property="fileImgId" />
+		<result column="org_img_url" jdbcType="VARCHAR" property="orgImgUrl" />
+		<result column="weichat_num" jdbcType="INTEGER" property="weichatNum" />
+		<result column="status" jdbcType="TINYINT" property="status" />
+		<result column="created" jdbcType="TIMESTAMP" property="created" />
+		<result column="updated" jdbcType="TIMESTAMP" property="updated" />
+	</resultMap>
+	 <select id="selectByPrimaryKey_student" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+   SELECT
+		id,student_id,height,weight,temperature,state_type,recognition_type,env_temperature,raw_temperature,
+		temperature_threshold,FIRST,lastest,terminal_img_id,file_img_id,
+		org_img_url,weichat_num,STATUS,created,updated FROM
+		tb_student_detection
+		WHERE id=(SELECT MAX(id) FROM tb_student_detection WHERE student_id=#{id,jdbcType=INTEGER})
+  </select>
+</mapper>

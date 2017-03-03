@@ -1,5 +1,6 @@
 package cn.didano.video.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,12 +24,16 @@ import com.github.pagehelper.PageInfo;
 
 import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Bs_good;
+import cn.didano.base.model.Hand_student;
 import cn.didano.base.model.Tb_address_list;
+import cn.didano.base.model.Tb_benchmark;
 import cn.didano.base.model.Tb_class;
 import cn.didano.base.model.Tb_newstudent;
 import cn.didano.base.model.Tb_school;
 import cn.didano.base.model.Tb_schoolparent;
 import cn.didano.base.model.Tb_student;
+import cn.didano.base.model.Tb_studentRecord;
+import cn.didano.base.model.Tb_student_detection;
 import cn.didano.base.model.Tb_student_inf;
 import cn.didano.base.model.Tb_studentparent;
 import cn.didano.base.model.Vd_auth_switch;
@@ -768,4 +773,146 @@ public class PostController {
 		}
 		return back;
 	}
+	//查询出学生的成长记录
+		@ApiOperation(value="查询学生的成长记录", notes = "根据学生的ID进行查询学生的成长记录")
+		@PostMapping(value = "student_grow_record/{student_id}")
+		@ResponseBody
+		public Out<OutList<Hand_student>> student_grow_record(@PathVariable("student_id") int student_id) throws ParseException{
+			logger.info("访问  PostController:select_student,student_id="+student_id);
+			List<Tb_student_detection> classes = null;
+			List<Hand_student> listStudent = new ArrayList<Hand_student>();
+			OutList<Hand_student> outList = null;
+			Out<OutList<Hand_student>> back = new Out<OutList<Hand_student>>();
+			Hand_student hand=null;
+			try {
+				//获取学生的检测记录（完成）
+				classes = controlService.selectBystudent(student_id);
+				if(classes.size()!=0){
+					//获取学生信息（完成）
+					List<Tb_studentRecord> selectstudent = controlService.selectstudent(student_id);
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					String dateString = formatter.format(selectstudent.get(0).getBirthday());
+					//得到第一个时间（完成）
+					String substring = dateString.substring(0, 7);
+					//加上的时间（完成）
+					String substring1=substring.substring(6, 7);
+					int substring2=Integer.parseInt(substring1);
+					int substring3=substring2+1;
+					
+					//得到第二个时间（完成）
+					String substring4=substring.replace(substring1, substring3+"");
+					java.text.SimpleDateFormat   formatter2   = 
+							new   SimpleDateFormat( "yyyy-MM");
+							Date   date1   =   formatter2.parse(substring);
+							Date   date2   =   formatter2.parse(substring4);
+					//直接查询最新的数据
+					Tb_studentRecord tbs=new Tb_studentRecord();
+					tbs.setBirthday(date1);
+					tbs.setBirthday1(date2);
+					List<Tb_student_detection> select_student_detection = controlService.select_student_detection(date1,date2);
+					//计算同龄人的平均身高和体重（selectId中的id进行查询）
+					//统计总的身高和体重
+					int numHeight=0;
+					int numWeight=0;
+					//统计超过的了多少人
+					int percentageHeight=0;
+					int percentageWeight=0;
+					//统计身高体重有数据的有多少人
+					int i=0;
+					for (Tb_student_detection tb_student_detection : select_student_detection) {
+						if(tb_student_detection.getWeight()!=null && tb_student_detection.getHeight()!=null){
+							numHeight+=tb_student_detection.getHeight();
+							numWeight+=tb_student_detection.getWeight();
+							i+=1;
+						}
+						if(classes.get(0).getHeight()>tb_student_detection.getHeight()){
+							percentageHeight+=1;
+						}
+						if(classes.get(0).getWeight()>tb_student_detection.getWeight()){
+							percentageWeight+=1;
+						}
+					}
+					//平均身高和体重
+					if(i!=0){
+						numHeight=numHeight/i;
+						numWeight=numWeight/i/1000;
+						//超过的百分比
+						percentageHeight=percentageHeight*100/i;
+						percentageWeight=percentageWeight*100/i;
+					}else{
+						numHeight=0;
+						numWeight=0;
+					}
+					//获取国家标准
+					//计算月龄
+					//当前的时间
+					Date dateTime=new Date();
+					SimpleDateFormat dfs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String a=(dateTime.getTime()-selectstudent.get(0).getBirthday().getTime())/(1000*60*60*24)/30+"";
+					
+					//时间差得到月龄
+					System.out.println(a);
+					Tb_benchmark tb=new Tb_benchmark();
+					if(Integer.parseInt(a)>81){
+						tb.setAge(81);
+					}
+					else if(Integer.parseInt(a)%3==0){
+						tb.setAge(Integer.parseInt(a));
+					}else{
+						int b= Integer.parseInt(a)/3;
+						System.err.println(b*3);
+						
+					}
+					
+					tb.setSex((int)selectstudent.get(0).getGender());
+					List<Tb_benchmark> selectByHeightAddWeight = controlService.selectByHeightAddWeight(tb);
+					String compareHeight=null;
+					String compareWeight=null;
+					//和标准的比较
+					Double ght=(double) (classes.get(0).getWeight()/1000);
+					Double hgt=(double) (classes.get(0).getHeight()/10);
+					for (Tb_benchmark tb_benchmark : selectByHeightAddWeight) {
+						if(hgt>tb_benchmark.getHeight1() && hgt<tb_benchmark.getHeight2()){
+							compareHeight="正常";
+						}
+						if(hgt>tb_benchmark.getHeight2()){
+							compareHeight="偏高";
+						}
+						if(hgt<tb_benchmark.getHeight1()){
+							compareHeight="偏矮";
+						}
+						if(ght>tb_benchmark.getWeight1() && ght<tb_benchmark.getWeight2()){
+							compareWeight="正常";
+						}
+						if(ght>tb_benchmark.getWeight2()){
+							compareWeight="偏胖";
+						}
+						if(ght<tb_benchmark.getWeight1()){
+							compareWeight="偏瘦";
+						}
+					}
+					
+					SimpleDateFormat ter = new SimpleDateFormat("yyyy.MM.dd");
+					String time = ter.format(classes.get(0).getCreated());
+					StringBuilder builder=new StringBuilder("http://image-didanuo.oss-cn-shenzhen.aliyuncs.com/");
+					builder.append(classes.get(0).getOrgImgUrl());
+					hand=new Hand_student(selectstudent.get(0).getName(),time,
+							classes.get(0).getHeight()/10, classes.get(0).getWeight()/1000,
+							numHeight, numWeight, percentageHeight+"%", percentageWeight+"%",
+							selectByHeightAddWeight.get(0).getHeight1(),
+							selectByHeightAddWeight.get(0).getHeight2(), 
+							selectByHeightAddWeight.get(0).getWeight1(), 
+							selectByHeightAddWeight.get(0).getWeight2(),
+							compareHeight, compareWeight,builder.toString());
+					listStudent.add(0,hand);
+					outList = new OutList<Hand_student>(listStudent.size(),listStudent);
+					
+					back.setBackTypeWithLog(outList,BackType.SUCCESS_SEARCH_NORMAL);
+				}
+			} catch (ServiceException e) {
+				logger.warn(e.getMessage());
+				back.setServiceExceptionWithLog(e.getExceptionEnums());
+			}
+			return back;
+		}
 }

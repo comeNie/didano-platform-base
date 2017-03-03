@@ -842,24 +842,25 @@ public class PostController {
 					Date dateTime=new Date();
 					SimpleDateFormat dfs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					String a=(dateTime.getTime()-selectstudent.get(0).getBirthday().getTime())/(1000*60*60*24)/30+"";
-					
+					System.err.println(dateTime.getTime()-selectstudent.get(0).getBirthday().getTime()+"______");
 					//时间差得到月龄
-					
+					System.out.println((dateTime.getTime()-selectstudent.get(0).getBirthday().getTime())/(1000*60*60*24)/30+"=========");
 					Tb_benchmark tb=new Tb_benchmark();
 					if(Integer.parseInt(a)>81){
+						
 						tb.setAge(81);
 					}
 					else if(Integer.parseInt(a)%3==0){
 						tb.setAge(Integer.parseInt(a));
+					}else if(Integer.parseInt(a)<12){
+						tb.setAge(12);
 					}else{
 						int b= Integer.parseInt(a)/3;
 						tb.setAge(b);
-						
-						
 					}
 					tb.setSex((int)selectstudent.get(0).getGender());
 					List<Tb_benchmark> selectByHeightAddWeight = controlService.selectByHeightAddWeight(tb);
-					System.err.println(selectByHeightAddWeight.size());
+					
 					String compareHeight=null;
 					String compareWeight=null;
 					

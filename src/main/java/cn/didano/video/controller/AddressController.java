@@ -238,13 +238,19 @@ public class AddressController {
 			int rowNum3=0;
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 			if(vd_staff.getId()==null){
-		   vd_date.setSchoolId(s.getSchoolId());
+				 if(teacher_a.getType()!=31){
+		   vd_date.setSchoolId(s.getSchoolId());		  
 		   vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
-		   vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));
+		   vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));		   
 		   vd_date.setCreated(new Date());
 		   rowNum3 = newteacherService.insertTypeSelective(vd_date);
+				 }
 			vd_staff.setCreated(new Date());
+			if(teacher_a.getType()!=31){
 			vd_staff.setSignTypeId(vd_date.getId());
+			}else{
+				vd_staff.setSignTypeId(0);
+			}
 			vd_staff.setSchoolId(s.getSchoolId());
 			 rowNum = newteacherService.insertTeacherSelective(vd_staff);// insert
 			 if(teacher_a.getType()==32){
@@ -254,7 +260,7 @@ public class AddressController {
 			vd_class.setStaffId(vd_staff.getId());
 			 rowNum2 = newteacherService.insertClassSelective(vd_class);
 			 }
-			 if (rowNum > 0  && rowNum3 > 0) {
+			 if (rowNum > 0 ) {
 					back.setBackTypeWithLog(BackType.SUCCESS_INSERT, "Id=" + "," + ":rowNum3=" + rowNum3);
 
 				} else {
@@ -262,6 +268,9 @@ public class AddressController {
 					back.setBackTypeWithLog(BackType.FAIL_UPDATE_AFTER_INSERT, "rowNum=" + rowNum);
 				}
 			}else {
+				if(teacher_a.getType()==31){
+					vd_staff.setSignTypeId(0);
+				}
 				rowNum = newteacherService.updatestaff(vd_staff);
 				if(teacher_a.getType()==32){
 				vd_class.setClassId(teacher_a.getClassId());
@@ -270,13 +279,17 @@ public class AddressController {
 				vd_class.setStaffId(teacher_a.getId());
 				 rowNum2 = newteacherService.updateclass(vd_class);
 				}
+				if(teacher_a.getType()!=31){
 				 vd_date.setCreated(new Date());
 					vd_date.setSchoolId(s.getSchoolId());
+					 
 					vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
 					vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));
+					 
 					vd_date.setId(newteacherService.findById(teacher_a.getId()).getSignTypeId());;
 					 rowNum3 = newteacherService.updateType(vd_date);
-					 if (rowNum > 0  && rowNum3 > 0) {
+				}
+					 if (rowNum > 0  ) {
 							back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "Id=" + "," + ":rowNum3=" + rowNum3);
 
 						} else {

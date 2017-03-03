@@ -32,7 +32,18 @@ public class NewTeacherService {
 	private Tb_staff_signdateMapper dateMapper;
 	@Autowired
 	private tb_sign_typeMapper typeMapper;
-	
+	/**
+	 * 通过学校查询该学校的医生和保洁
+	 */
+	public List<Tb_newstaff> findBossByschool(Integer schoolid){
+		Tb_newstaffExample condition = new Tb_newstaffExample();
+		Tb_newstaffExample.Criteria criteria = condition.createCriteria();
+		// 对于已经deleted=1的不显示 禁用不显示
+		criteria.andTypeEqualTo((byte)31);
+		criteria.andSchoolIdEqualTo(schoolid);
+		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
+		return newstaffMapper.selectByExample(condition);
+	}
 	/**
 	 * 通过ID查询
 	 */

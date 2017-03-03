@@ -17,9 +17,15 @@ public class Tb_teacher {
 	private Date out_time;
 	private byte deleted;
 	
-
+	private Byte status;
 	
 	
+	public byte getStatus() {
+		return status;
+	}
+	public void setStatus(byte status) {
+		this.status = status;
+	}
 	public String getTitle() {
 		return title;
 	}

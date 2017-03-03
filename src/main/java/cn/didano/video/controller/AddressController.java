@@ -1,5 +1,7 @@
 package cn.didano.video.controller;
 
+import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,11 +28,11 @@ import cn.didano.base.model.Tb_parent;
 import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_schoolparent;
 import cn.didano.base.model.Tb_staff_class;
-import cn.didano.base.model.Tb_staff_signdate;
 import cn.didano.base.model.Tb_studentData;
 import cn.didano.base.model.Tb_studentparent;
 import cn.didano.base.model.Tb_teacher;
 import cn.didano.base.model.Tb_teacherAndStudent;
+import cn.didano.base.model.tb_sign_type;
 import cn.didano.base.service.AddressService;
 import cn.didano.base.service.ClassService;
 import cn.didano.base.service.NewStudentService;
@@ -224,9 +226,10 @@ public class AddressController {
 	@ResponseBody
 	public Out<String> Teacher_add(@ApiParam(value = "新增编辑职工", required = true) @RequestBody In_Teacher_Edit teacher_a) {
 		logger.info("访问  PostController:Teacher_add,teacher_a=" + teacher_a);
+		Tb_newstaff s = newteacherService.findById(teacher_a.getStaffid());
 		Tb_newstaff vd_staff = new Tb_newstaff();
 		Tb_staff_class vd_class = new Tb_staff_class();
-		Tb_staff_signdate vd_date = new Tb_staff_signdate();
+		tb_sign_type vd_date = new tb_sign_type();
 		Out<String> back = new Out<String>();
 		try {
 			BeanUtils.copyProperties(vd_staff, teacher_a);
@@ -235,26 +238,23 @@ public class AddressController {
 			int rowNum3=0;
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 			if(vd_staff.getId()==null){
+		   vd_date.setSchoolId(s.getSchoolId());
+		   vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
+		   vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));
+		   vd_date.setCreated(new Date());
+		   rowNum3 = newteacherService.insertTypeSelective(vd_date);
 			vd_staff.setCreated(new Date());
-			vd_staff.setSignTypeId(1);
-			vd_staff.setSchoolId(classService.selectById(teacher_a.getClassId()).getSchoolId());
+			vd_staff.setSignTypeId(vd_date.getId());
+			vd_staff.setSchoolId(s.getSchoolId());
 			 rowNum = newteacherService.insertTeacherSelective(vd_staff);// insert
+			 if(teacher_a.getType()==32){
 			vd_class.setClassId(teacher_a.getClassId());
 			vd_class.setCreated(new Date());
 			vd_class.setSchoolId(vd_staff.getSchoolId());
 			vd_class.setStaffId(vd_staff.getId());
 			 rowNum2 = newteacherService.insertClassSelective(vd_class);
-			vd_date.setCreated(new Date());
-			vd_date.setStaffId(vd_staff.getId());
-			vd_date.setSetIntime(sdf.parse(teacher_a.getSetIntime()));
-			vd_date.setSetOuttime(sdf.parse(teacher_a.getSetOuttime()));
-			long time = new Date().getTime();
-			String time2 = String.valueOf(time).substring(0, 10);
-			vd_date.setSignTimestamp(Long.parseLong(time2));
-			vd_date.setSignDate(new Date());
-			vd_date.setSignStatus((byte) 1);
-			 rowNum3 = newteacherService.insertDateSelective(vd_date);
-			 if (rowNum > 0 && rowNum2 > 0 && rowNum3 > 0) {
+			 }
+			 if (rowNum > 0  && rowNum3 > 0) {
 					back.setBackTypeWithLog(BackType.SUCCESS_INSERT, "Id=" + "," + ":rowNum3=" + rowNum3);
 
 				} else {
@@ -263,18 +263,20 @@ public class AddressController {
 				}
 			}else {
 				rowNum = newteacherService.updatestaff(vd_staff);
+				if(teacher_a.getType()==32){
 				vd_class.setClassId(teacher_a.getClassId());
 			    vd_class.setId(newteacherService.findclassidByStaffid(vd_staff.getId()).get(0).getId());
 				vd_class.setSchoolId(vd_staff.getSchoolId());
 				vd_class.setStaffId(teacher_a.getId());
 				 rowNum2 = newteacherService.updateclass(vd_class);
+				}
 				 vd_date.setCreated(new Date());
-					vd_date.setStaffId(teacher_a.getId());
-					vd_date.setSetIntime(sdf.parse(teacher_a.getSetIntime()));
-					vd_date.setSetOuttime(sdf.parse(teacher_a.getSetOuttime()));
-					vd_date.setId(newteacherService.finddateidByStaffid(vd_staff.getId()).get(0).getId());;
-					 rowNum3 = newteacherService.updatesign(vd_date);
-					 if (rowNum > 0 && rowNum2 > 0 && rowNum3 > 0) {
+					vd_date.setSchoolId(s.getSchoolId());
+					vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
+					vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));
+					vd_date.setId(newteacherService.findById(teacher_a.getId()).getSignTypeId());;
+					 rowNum3 = newteacherService.updateType(vd_date);
+					 if (rowNum > 0  && rowNum3 > 0) {
 							back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "Id=" + "," + ":rowNum3=" + rowNum3);
 
 						} else {
@@ -318,11 +320,13 @@ public class AddressController {
 
 	/**
 	 * 通过园长id查询小朋友并通过班级分类
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
 	 */
 	@PostMapping(value = "student_searchByBoss/{staff_id}")
 	@ApiOperation(value = "通过园长id查询小朋友并通过班级分类", notes = "园长查询小朋友并通过班级分类")
 	@ResponseBody
-	public Out<Tb_bossData> student_searchByBoss(@PathVariable("staff_id") Integer staff_id) {
+	public Out<Tb_bossData> student_searchByBoss(@PathVariable("staff_id") Integer staff_id) throws IllegalAccessException, InvocationTargetException {
 		logger.info("访问  PostController:student_searchByBoss,staff_id=" + staff_id);
 		Tb_newstaff staff = newteacherService.findById(staff_id);
 		Tb_bossData data = new Tb_bossData();
@@ -345,10 +349,34 @@ public class AddressController {
 				cs.getStudent().addAll(student);
 				student2.add(cs);
 			}
+			SimpleDateFormat sdf =new SimpleDateFormat("HH:mm");
 			List<Tb_teacher> teacherall = addressService.findteacherByschool(staff.getSchoolId());
-			List<Tb_newstaff> staffall = newteacherService.findByType(staff.getSchoolId());
+			List<Tb_newstaff> staffall = new ArrayList<Tb_newstaff>();
+		   List<Tb_newstaff> n=newteacherService.findByType(staff.getSchoolId());
+		   List<Tb_newstaff> boss=newteacherService.findBossByschool(staff.getSchoolId());
+		   staffall.addAll(boss);
+		   tb_sign_type t= null;
+			for(Tb_newstaff f:n){
+				t=newteacherService.findTypeByID(f.getSignTypeId());
+				f.setIn_time(sdf.format(t.getInTime()));
+				f.setOut_time(sdf.format(t.getOutTime()));
+				
+			}
+			Tb_newstaff staff1=null;
+			for(Tb_teacher teacher:teacherall){
+			    staff1 =new Tb_newstaff();
+			    BeanUtils.copyProperties(staff1, teacher);
+				String intime=sdf.format(teacher.getIn_time());
+				String outtime=sdf.format(teacher.getOut_time());
+				staff1.setSchoolId(teacher.getSchool_id());
+				staff1.setIn_time(intime);
+				staff1.setOut_time(outtime);
+				
+				staffall.add(staff1);
+			}
+			staffall.addAll(n);
 			data.getStaff().addAll(staffall);
-			data.getTeacher().addAll(teacherall);
+			
 			data.getStudentall().addAll(student2);
 
 			back.setBackTypeWithLog(data, BackType.SUCCESS_SEARCH_NORMAL);
@@ -361,11 +389,14 @@ public class AddressController {
 
 	/**
 	 * 通过老师id查询小朋友
+	 * @throws ParseException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
 	 */
 	@PostMapping(value = "student_searchByClass/{staff_id}")
 	@ApiOperation(value = "通过老师id查询小朋友", notes = "通过老师id查询小朋友")
 	@ResponseBody
-	public Out<Tb_teacherAndStudent> student_searchByClass(@PathVariable("staff_id") Integer staff_id) {
+	public Out<Tb_teacherAndStudent> student_searchByClass(@PathVariable("staff_id") Integer staff_id) throws ParseException, IllegalAccessException, InvocationTargetException {
 		logger.info("访问  PostController:student_searchByClass,staff_id=" + staff_id);
 		Tb_newstaff staff = newteacherService.findById(staff_id);
 		Tb_teacherAndStudent data = new Tb_teacherAndStudent();
@@ -385,8 +416,31 @@ public class AddressController {
 				cs.setClassName(classService.selectNameByPrimaryKey(student.get(0).getClass_id()));
 				cs.getStudent().addAll(student);
 				List<Tb_teacher> classstaff = addressService.findTeacherByClass(student.get(0).getClass_id());
-				List<Tb_newstaff> doctor = newteacherService.findByType(staff.getSchoolId());
-				data.getTeacher().addAll(classstaff);
+				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+				
+				List<Tb_newstaff> doctor = new ArrayList<Tb_newstaff>();
+				List<Tb_newstaff>	n=	newteacherService.findByType(staff.getSchoolId());
+				List<Tb_newstaff> boss=newteacherService.findBossByschool(staff.getSchoolId());
+				   doctor.addAll(boss);
+				tb_sign_type t= null;
+				for(Tb_newstaff f:n){
+					t=newteacherService.findTypeByID(f.getSignTypeId());
+					f.setIn_time(sdf.format(t.getInTime()));
+					f.setOut_time(sdf.format(t.getOutTime()));
+					
+				}
+				Tb_newstaff staff1=null;
+				for(Tb_teacher teacher:classstaff){
+				    staff1 =new Tb_newstaff();
+				    BeanUtils.copyProperties(staff1, teacher);
+					String intime=sdf.format(teacher.getIn_time());
+					String outtime=sdf.format(teacher.getOut_time());
+					staff1.setSchoolId(teacher.getSchool_id());
+					staff1.setIn_time(intime);
+					staff1.setOut_time(outtime);
+					doctor.add(staff1);
+				}
+				doctor.addAll(n);
 				data.getDoctor().addAll(doctor);
 				data.setStudentall(cs);
 			}

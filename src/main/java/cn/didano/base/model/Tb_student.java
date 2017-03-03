@@ -7,7 +7,7 @@ public class Tb_student {
 
     private Integer studentId;
 
-    private Double height;
+    private Integer height;
 
     private Integer weight;
 
@@ -35,11 +35,13 @@ public class Tb_student {
 
    
 
-    public Double getHeight() {
+  
+
+	public Integer getHeight() {
 		return height;
 	}
 
-	public void setHeight(Double height) {
+	public void setHeight(Integer height) {
 		this.height = height;
 	}
 

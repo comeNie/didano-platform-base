@@ -22,10 +22,12 @@
  SELECT id ,title FROM tb_class WHERE school_id=#{id} AND deleted = 0
  </select>
  <select id="findteacherByschool" parameterType="Integer" resultType="cn.didano.base.model.Tb_teacher">
-SELECT tmp1.id,tmp1.name,tmp1.phone,tmp1.class_id,c.title,tmp1.type,tmp1.school_id FROM
-(SELECT a.id,b.class_id,a.type,a.school_id,a.name,a.phone
-FROM tb_staff a,tb_staff_class b WHERE a.school_id=#{id} AND a.deleted=0 AND a.type =32 and a.id=b.staff_id
+SELECT tmp1.status,tmp1.in_time,tmp1.out_time,tmp1.id,tmp1.name,tmp1.phone,tmp1.class_id,c.title,tmp1.type,tmp1.school_id FROM
+(SELECT a.status,a.id,b.class_id,a.type,a.school_id,a.name,a.phone,c.in_time,c.out_time
+FROM tb_staff a,tb_staff_class b ,tb_sign_type c WHERE a.school_id=#{id} AND a.deleted=0 AND a.type =32 and a.id=b.staff_id and a.sign_type_id=c.id
 )AS tmp1 LEFT JOIN tb_class c ON tmp1.class_id=c.id
+
+
   
  </select>
  <select id="findrelation" resultType="cn.didano.base.model.Tb_relation">
@@ -44,11 +46,11 @@ SELECT tmp2.relation_id ,tmp2.title AS parent_name,p.phone AS parent_phone FROM
   SELECT a.* FROM tb_student a WHERE  a.class_id=#{id} AND a.deleted =0 ORDER BY CONVERT( a.name USING gbk )
  </select>
 <select id="findTeacherByClass" parameterType="Integer" resultType="cn.didano.base.model.Tb_teacher">
- SELECT  tmp1.school_id,tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id ,c.sign_timestamp,c.in_time,c.out_time FROM 
-	 (SELECT a.school_id,a.id,a.name,a.phone,a.type,b.class_id FROM tb_staff a,tb_staff_class b 
+  SELECT  tmp1.status,tmp1.school_id,tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id ,c.in_time,c.out_time FROM 
+	 (SELECT a.status,a.sign_type_id,a.school_id,a.id,a.name,a.phone,a.type,b.class_id FROM tb_staff a,tb_staff_class b 
 	 WHERE a.type=32 AND a.id=b.staff_id  AND a.deleted=0 AND b.deleted=0 ) AS tmp1 
-	 LEFT JOIN tb_staff_signdate c ON (tmp1.id =c.staff_id   )
-	 WHERE sign_timestamp BETWEEN 1469548800 AND 1469548900 AND class_id=#{id}
+	 LEFT JOIN tb_sign_type c ON (tmp1.sign_type_id =c.id)
+	 WHERE  class_id=#{id}
 </select>
 <update id="Update" parameterType="cn.didano.base.model.Tb_address_list">UPDATE tb_student a SET a.name=#{name},a.class_id=#{class_id},a.gender=#{gender,jdbcType=TINYINT},a.birthday=#{birthday,jdbcType=DATE} where a.id=#{id}</update>
 

@@ -163,25 +163,13 @@
 			selectByExampleQueryId="true">	
 		</table> -->
 		
-		<table tableName="tb_staff" domainObjectName="Tb_newstaff"
+		<table tableName="tb_sign_type" domainObjectName="tb_sign_type"
 			enableCountByExample="true" enableUpdateByExample="true"
 			enableDeleteByExample="true" enableSelectByExample="true"
 			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true">	
 			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>
 		</table>
 		
-			<table tableName="tb_staff_class" domainObjectName="Tb_staff_class"
-			enableCountByExample="true" enableUpdateByExample="true"
-			enableDeleteByExample="true" enableSelectByExample="true"
-			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true">	
-			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>
-		</table>
 		
-			<table tableName="tb_staff_signdate" domainObjectName="Tb_staff_signdate"
-			enableCountByExample="true" enableUpdateByExample="true"
-			enableDeleteByExample="true" enableSelectByExample="true"
-			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true">	
-			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>
-		</table>
 	</context>
 </generatorConfiguration>

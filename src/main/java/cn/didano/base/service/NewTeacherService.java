@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import cn.didano.base.dao.Tb_newstaffMapper;
 import cn.didano.base.dao.Tb_staff_classMapper;
 import cn.didano.base.dao.Tb_staff_signdateMapper;
+import cn.didano.base.dao.tb_sign_typeMapper;
 import cn.didano.base.exception.DBExceptionEnums;
 import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Tb_newstaff;
@@ -16,6 +17,7 @@ import cn.didano.base.model.Tb_staff_class;
 import cn.didano.base.model.Tb_staff_classExample;
 import cn.didano.base.model.Tb_staff_signdate;
 import cn.didano.base.model.Tb_staff_signdateExample;
+import cn.didano.base.model.tb_sign_type;
 import cn.didano.video.constant.DeletedType;
 
 
@@ -28,7 +30,42 @@ public class NewTeacherService {
 	private Tb_staff_classMapper classMapper;
 	@Autowired
 	private Tb_staff_signdateMapper dateMapper;
-	
+	@Autowired
+	private tb_sign_typeMapper typeMapper;
+	/**
+	 * 通过学校查询该学校的医生和保洁
+	 */
+	public List<Tb_newstaff> findBossByschool(Integer schoolid){
+		Tb_newstaffExample condition = new Tb_newstaffExample();
+		Tb_newstaffExample.Criteria criteria = condition.createCriteria();
+		// 对于已经deleted=1的不显示 禁用不显示
+		criteria.andTypeEqualTo((byte)31);
+		criteria.andSchoolIdEqualTo(schoolid);
+		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
+		return newstaffMapper.selectByExample(condition);
+	}
+	/**
+	 * 通过ID查询
+	 */
+	public tb_sign_type findTypeByID(Integer id){
+		return typeMapper.selectByPrimaryKey(id);
+	}
+	/**
+	 * 编辑签到类型
+	 */
+	public int updateType(tb_sign_type record){
+		if (record == null)
+			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
+		return typeMapper.updateByPrimaryKeySelective(record);
+	}
+	/**
+	 * 插入签到类型表
+	 */
+	public int insertTypeSelective(tb_sign_type record) {
+		if (record == null)
+			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
+		return typeMapper.insertSelective(record);
+	}
 	/**
 	 * 查找班级表id
 	 */

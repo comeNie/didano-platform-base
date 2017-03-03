@@ -13,6 +13,7 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,8 @@ import cn.didano.video.exception.VideoExceptionEnums;
  * 机器人websocket连接，该连接由http协议建立，然后由tcp协议保持通信
  * 
  * @author stephen Created on 2016年12月23日 下午6:30:26
+ * 
+ * 
  */
 @Component
 @ServerEndpoint(value = "/robot/api/ws/{service_no}", configurator = GetHttpSessionConfigurator.class)
@@ -41,8 +44,6 @@ public class RobotWebsocket {
 
 	private static ConcurrentHashMap<String, RobotSession> robotInfoMap = new ConcurrentHashMap<String, RobotSession>();
 
-	@Autowired
-	private RobotService robotService;
 
 	/**
 	 * 连接建立成功调用的方法，应该放到session里面，每个通道不论时间都可由管理员或者园长关闭
@@ -101,9 +102,12 @@ public class RobotWebsocket {
 				break;
 			case "reportVersion":
 				System.out.println("this is reportVersion....1report.getInfo()="+report.getInfo());
-				RobotVersionInfo robotVersionInfo = mapper.readValue(report.getInfo(),RobotVersionInfo.class);
-				robotService.reportVersion(robotVersionInfo);
-				System.out.println("this is reportVersion....2");
+				RobotVersionInfo robotVersionInfo = mapper.readValue(report.getInfo().toString(),RobotVersionInfo.class);
+				RobotService  robotService = new RobotService();
+				RobotVersionInfo robotVersionInfo2 = new RobotVersionInfo();
+				BeanUtils.copyProperties(robotVersionInfo2, robotVersionInfo);
+				robotService.reportVersion(robotVersionInfo2);
+				System.out.println("this is reportVersion....2"); 
 				break;
 			case "sacrificed":
 				break;

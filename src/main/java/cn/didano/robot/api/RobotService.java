@@ -2,6 +2,7 @@ package cn.didano.robot.api;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,5 +46,21 @@ public class RobotService {
 		}
 		return out;
 	}
+	
+//	@PostMapping(value = "reportVersion")
+//	@ApiOperation(value="上传版本信息", notes = "上传版本信息")
+//	@ResponseBody
+//	public Out<String> reportVersion(@ApiParam(value = "远程机器人版本信息" ,required=true) @RequestBody RobotVersionInfo robotVersionInfo) {
+//		logger.info("访问  RobotServer:uploadVersion RobotVersionInfo=" + robotVersionInfo);
+//		Out<String> out = new Out<String>();
+//		try {
+//			Object o = robotMongoDbDataService.save(robotVersionInfo);
+//			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
+//		} catch (Exception e) {
+//			logger.error(e.getMessage());
+//			out.setBackTypeWithLog(BackType.FAIL_SEARCH_NORMAL, e.getMessage());
+//		}
+//		return out;
+//	}
 	
 }

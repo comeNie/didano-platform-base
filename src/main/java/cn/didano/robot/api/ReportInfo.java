@@ -1,6 +1,7 @@
 package cn.didano.robot.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * robot websocket 上行信息
@@ -9,17 +10,17 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_EMPTY) 
 public class ReportInfo {
 	private String methodName;
-	private String info;
+	private JsonNode info;
 	public String getMethodName() {
 		return methodName;
 	}
 	public void setMethodName(String methodName) {
 		this.methodName = methodName;
 	}
-	public String getInfo() {
+	public JsonNode getInfo() {
 		return info;
 	}
-	public void setInfo(String info) {
+	public void setInfo(JsonNode info) {
 		this.info = info;
 	}
 }

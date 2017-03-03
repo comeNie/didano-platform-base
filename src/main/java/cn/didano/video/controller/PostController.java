@@ -54,6 +54,7 @@ import cn.didano.video.constant.DeletedType;
 import cn.didano.video.constant.StatusType;
 import cn.didano.video.entity.InfoChannel;
 import cn.didano.video.entity.InfoChannel_C;
+import cn.didano.video.entity.OssInfo;
 import cn.didano.video.json.In_Channel_Add;
 import cn.didano.video.json.In_Channel_Edit;
 import cn.didano.video.json.In_Channel_Search;
@@ -105,6 +106,8 @@ public class PostController {
 	private WebsocketService websocketService;
     @Autowired
     private StudentService studentService;
+    @Autowired
+	OssInfo ossInfo;
    
 
     /**
@@ -150,7 +153,7 @@ public class PostController {
 
 			for(Tb_student_inf s:student){
 				if(!s.getOrgImgUrl().equals("")){
-				StringBuilder address =new StringBuilder("http://image-didanuo.oss-cn-shenzhen.aliyuncs.com/") ;
+				StringBuilder address =new StringBuilder(ossInfo.getImgPath()) ;
 				address.append(s.getOrgImgUrl());
 				s.setOrgImgUrl(address.toString());
 				}
@@ -889,7 +892,7 @@ public class PostController {
 					
 					SimpleDateFormat ter = new SimpleDateFormat("yyyy.MM.dd");
 					String time = ter.format(classes.get(0).getCreated());
-					StringBuilder builder=new StringBuilder("http://image-didanuo.oss-cn-shenzhen.aliyuncs.com/");
+					StringBuilder builder=new StringBuilder(ossInfo.getImgPath());
 					builder.append(classes.get(0).getOrgImgUrl());
 					hand=new Hand_student(selectstudent.get(0).getName(),time,
 							classes.get(0).getHeight()/10, classes.get(0).getWeight()/1000,

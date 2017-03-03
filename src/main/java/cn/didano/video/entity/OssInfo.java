@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @author stephen
  * Created on 2016年12月19日 下午1:50:37 
  */
-@ConfigurationProperties(prefix = "video.oss")
+@ConfigurationProperties(prefix = "oss")
 @Component
 public class OssInfo {
 	private String endpoint;
@@ -20,6 +20,7 @@ public class OssInfo {
 	private String bucketname;
 	private String domain;
 	private String cdn;
+	private String imgPath;
 	
 	public String getEndpoint() {
 		return endpoint;
@@ -67,6 +68,14 @@ public class OssInfo {
 
 	public void setCdn(String cdn) {
 		this.cdn = cdn;
+	}
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
 	
 }

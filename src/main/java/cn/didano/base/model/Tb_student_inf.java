@@ -3,7 +3,7 @@ package cn.didano.base.model;
 
 public class Tb_student_inf {
 
-	private Double height;
+	private Integer height;
     private Integer weight;
     private String orgImgUrl;
     private String created;
@@ -12,7 +12,7 @@ public class Tb_student_inf {
 	
 	}
 
-	public Tb_student_inf(Double height, Integer weight, String orgImgUrl, String created) {
+	public Tb_student_inf(Integer height, Integer weight, String orgImgUrl, String created) {
 		super();
 		this.height = height;
 		this.weight = weight;
@@ -20,11 +20,13 @@ public class Tb_student_inf {
 		this.created = created;
 	}
 
-	public Double getHeight() {
+	
+
+	public Integer getHeight() {
 		return height;
 	}
 
-	public void setHeight(Double height) {
+	public void setHeight(Integer height) {
 		this.height = height;
 	}
 

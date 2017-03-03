@@ -123,7 +123,7 @@ public class PostController {
 		Out<OutList<Tb_student_inf>> back = new Out<OutList<Tb_student_inf>>();
 		try {
 			studentall = studentService.selectById(student_id);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 			if(studentall.size()>4){
 				student.add(new Tb_student_inf(studentall.get(0).getHeight()/10,studentall.get(0).getWeight()/1000,studentall.get(0).getOrgImgUrl(),sdf.format(studentall.get(0).getCreated())));				
 			    Tb_student tb=studentall.get((int)(Math.random()*(studentall.size()-1)/5)+(studentall.size()-1)/5);

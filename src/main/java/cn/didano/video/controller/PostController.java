@@ -854,6 +854,8 @@ public class PostController {
 					}
 					else if(Integer.parseInt(a)%3==0){
 						tb.setAge(Integer.parseInt(a));
+					}else if(Integer.parseInt(a)<12){
+						tb.setAge(12);
 					}else{
 						int b= Integer.parseInt(a)/3;
 						tb.setAge(b);

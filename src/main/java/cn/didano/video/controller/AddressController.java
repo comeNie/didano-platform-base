@@ -353,6 +353,8 @@ public class AddressController {
 			List<Tb_teacher> teacherall = addressService.findteacherByschool(staff.getSchoolId());
 			List<Tb_newstaff> staffall = new ArrayList<Tb_newstaff>();
 		   List<Tb_newstaff> n=newteacherService.findByType(staff.getSchoolId());
+		   List<Tb_newstaff> boss=newteacherService.findBossByschool(staff.getSchoolId());
+		   staffall.addAll(boss);
 		   tb_sign_type t= null;
 			for(Tb_newstaff f:n){
 				t=newteacherService.findTypeByID(f.getSignTypeId());
@@ -418,6 +420,8 @@ public class AddressController {
 				
 				List<Tb_newstaff> doctor = new ArrayList<Tb_newstaff>();
 				List<Tb_newstaff>	n=	newteacherService.findByType(staff.getSchoolId());
+				List<Tb_newstaff> boss=newteacherService.findBossByschool(staff.getSchoolId());
+				   doctor.addAll(boss);
 				tb_sign_type t= null;
 				for(Tb_newstaff f:n){
 					t=newteacherService.findTypeByID(f.getSignTypeId());

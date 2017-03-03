@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.didano.base.dao.Hand_auth_switchMapper;
 import cn.didano.base.dao.Vd_auth_switchMapper;
 import cn.didano.base.dao.View_switch_s_cMapper;
 import cn.didano.base.exception.DBExceptionEnums;
@@ -29,6 +30,8 @@ public class AuthSwitchService {
 	private Vd_auth_switchMapper vd_auth_switchMapper;
 	@Autowired
 	private View_switch_s_cMapper view_switch_s_cMapper;
+	@Autowired
+	private Hand_auth_switchMapper auth_switchMapper;
 	
 	/**
 	 * 查询所有
@@ -62,7 +65,7 @@ public class AuthSwitchService {
 		Vd_auth_switchExample condition = new Vd_auth_switchExample();
 		Vd_auth_switchExample.Criteria cri = condition.createCriteria();
 		cri.andSchoolIdEqualTo(schoolId);
-		return vd_auth_switchMapper.selectByExample(condition);
+		return auth_switchMapper.select_auth_switch(schoolId);
 	}
 	
 	/**

@@ -854,6 +854,8 @@ public class PostController {
 					}else{
 						int b= Integer.parseInt(a)/3;
 						tb.setAge(b);
+						
+						
 					}
 					tb.setSex((int)selectstudent.get(0).getGender());
 					List<Tb_benchmark> selectByHeightAddWeight = controlService.selectByHeightAddWeight(tb);

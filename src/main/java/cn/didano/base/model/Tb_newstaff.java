@@ -8,7 +8,9 @@ public class Tb_newstaff {
     private Byte type;
 
     private Integer schoolId;
-
+    private String title;
+	
+	private Integer class_id;
     private String name;
 
     private String phone;
@@ -33,6 +35,22 @@ public class Tb_newstaff {
 
     
     
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Integer getClass_id() {
+		return class_id;
+	}
+
+	public void setClass_id(Integer class_id) {
+		this.class_id = class_id;
+	}
 
 	public String getIn_time() {
 		return in_time;

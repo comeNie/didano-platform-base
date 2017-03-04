@@ -3,7 +3,7 @@ package cn.didano.robot.api;
 import javax.servlet.http.HttpSession;
 
 /**
- * websocket连接信息
+ * websocket事物信息
  * @author stephen.wang 2017-03-02 
  */
 public class RobotSession {

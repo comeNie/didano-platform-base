@@ -18,30 +18,35 @@ package cn.didano.robot.data;
 
 import org.springframework.data.annotation.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 
  * @author wangyi
- *
+ * @Todo 没有安卓操作系统版本号
  */
+@ApiModel
 public class RobotVersionInfo {
-//	产品硬件识别码（产品ID）
-//	安卓软件版本
-//	表情包版本
-//	语音包版本……
-//	安卓操作系统版本
-//	Linux软件版本
-//	Linux操作系统版本
-//	运动控制板软件版本
 	
-	@Id
+	@Id//自动生成唯一索引号
+	@JsonIgnore//忽略该属性
 	private String id;
-
+	@ApiModelProperty(value = "产品硬件识别码",required=true)
 	private String deviceNo;
+	@ApiModelProperty(value = "表情包版本",required=true)
 	private String emotionZipVersion;
+	@ApiModelProperty(value = "语音包版本",required=true)
 	private String voiceZipVersion;
+	@ApiModelProperty(value = "安卓软件版本",required=true)
 	private String androidVersion;
+	@ApiModelProperty(value = "linux软件版本",required=true)
 	private String linuxSoftVersion;
+	@ApiModelProperty(value = "linux操作系统版本",required=true)
 	private String linuxSystemVersion;
+	@ApiModelProperty(value = "运动控制板软件版本",required=true)
 	private String motionControlVersion;
 	
 	public RobotVersionInfo() {

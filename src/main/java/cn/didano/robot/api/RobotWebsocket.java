@@ -56,7 +56,7 @@ public class RobotWebsocket {
 	@OnOpen
 	public void onOpen(@PathParam("service_no") String service_no, Session session, EndpointConfig config)
 			throws Exception {
-		System.out.println("onOpen...........");
+		logger.debug("RobotWebsocket连接建立,连接设备号为："+service_no);
 		this.session = session;
 		// 与某个客户端的连接会话，需要通过它来给客户端发送数据
 		HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
@@ -67,7 +67,7 @@ public class RobotWebsocket {
 		info.setRobotWebsocket(this);
 		info.setService_no(service_no);
 		addOnlineCount(); // 在线数加1
-		logger.info("有新连接加入！当前在线机器人为" + getOnlineCount());
+		logger.info("当前在线机器人为：" + getOnlineCount());
 	}
 
 	/**
@@ -91,39 +91,59 @@ public class RobotWebsocket {
 	public void onMessage(String message, Session session) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			System.out.println("message=" + message);
-			System.out.println("i got message  1 ");
+			logger.info("RobotWebsocket收到消息：" + message);
 			ReportInfo report = mapper.readValue(message, ReportInfo.class);
 			// 如果不是连接，那么解析之后直接激发方法，并传输数据
-			String methodName = report.getMethodName();
-			switch (methodName) {
-			case "connect":
-				System.out.println("this is connect....");
-				break;
-			case "reportVersion":
-				System.out.println("this is reportVersion....1report.getInfo()="+report.getInfo());
-				RobotVersionInfo robotVersionInfo = mapper.readValue(report.getInfo().toString(),RobotVersionInfo.class);
-				RobotService  robotService = new RobotService();
-				RobotVersionInfo robotVersionInfo2 = new RobotVersionInfo();
-				BeanUtils.copyProperties(robotVersionInfo2, robotVersionInfo);
-				robotService.reportVersion(robotVersionInfo2);
-				System.out.println("this is reportVersion....2"); 
-				break;
-			case "sacrificed":
-				break;
-			case "die":
-				break;
-			default:
-				break;
-			}
+			RobotController robotController = new RobotController();
+			RobotDelegator delegator = new RobotDelegator();
+			delegator.exc(robotController,report);
+			logger.info("客户端汇报：" + message);
 			System.out.println("i got message  2 ");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		// 客户端不发信息
-		// 同时也不向客户端发送信息
 	}
 
+//	/**
+//	 * 收到客户端消息后调用的方法
+//	 * 
+//	 * @param message
+//	 *            客户端发送过来的消息
+//	 * @param session
+//	 *            可选的参数
+//	 */
+//	@OnMessage
+//	public void onMessage(String message, Session session) {
+//		ObjectMapper mapper = new ObjectMapper();
+//		try {
+//			logger.info("RobotWebsocket收到消息：" + message);
+//			ReportInfo report = mapper.readValue(message, ReportInfo.class);
+//			// 如果不是连接，那么解析之后直接激发方法，并传输数据
+//			String methodName = report.getMethodName();
+//			RobotController  robotController = new RobotController();
+//			logger.info("客户端汇报：" + message);
+//			switch (methodName) {
+//			case "connect":
+//				break;
+//			case "reportVersion":
+//				RobotVersionInfo robotVersionInfo = mapper.readValue(report.getInfo().toString(),RobotVersionInfo.class);
+//				robotController.reportVersion(robotVersionInfo);
+//				break;
+//			case "sacrificed":
+//				break;
+//			case "die":
+//				break;
+//			default:
+//				break;
+//			}
+//			System.out.println("i got message  2 ");
+//		} catch (Exception ex) {
+//			ex.printStackTrace();
+//		}
+//		// 客户端不发信息
+//		// 同时也不向客户端发送信息
+//	}
+	
 	/**
 	 * 发生错误时调用 此方法被自动调用，同时之后会自动调用onClose
 	 * 

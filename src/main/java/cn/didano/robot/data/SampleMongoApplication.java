@@ -29,30 +29,14 @@ public class SampleMongoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		this.repository.deleteAll();
-
+		//this.repository.deleteAll();
+		RobotVersionInfo a1 = new RobotVersionInfo();
 		// save a couple of customers
-//		this.repository.save(new RobotVersionInfo("Alice", "Smith"));
-//		this.repository.save(new RobotVersionInfo("Bob", "Smith"));
-//
-//		// fetch all customers
-//		System.out.println("Customers found with findAll():");
-//		System.out.println("-------------------------------");
-//		for (RobotVersionInfo customer : this.repository.findAll()) {
-//			System.out.println(customer);
-//		}
-//		System.out.println();
-
-		// fetch an individual customer
-//		System.out.println("Customer found with findByFirstName('Alice'):");
-//		System.out.println("--------------------------------");
-//		System.out.println(this.repository.findByFirstName("Alice"));
-//
-//		System.out.println("Customers found with findByLastName('Smith'):");
-//		System.out.println("--------------------------------");
-//		for (RobotVersionInfo customer : this.repository.findByLastName("Smith")) {
-//			System.out.println(customer);
-//		}
+//		this.repository.save(new Customer("Alice", "Smith"));
+//		this.repository.save(new Customer("Bob", "Smith"));
+		this.repository.save(a1);
+		// fetch all customers
+		
 	}
 
 	public static void main(String[] args) throws Exception {

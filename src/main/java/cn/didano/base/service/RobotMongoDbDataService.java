@@ -36,10 +36,9 @@ public class RobotMongoDbDataService {
 	 * @return 更新行数
 	 */
 	public int save(RobotVersionInfo record) {
-		
 		if (record == null)
 			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
 		this.repository.save(record);
-		return 0;
+		return 1;
 	}
 }

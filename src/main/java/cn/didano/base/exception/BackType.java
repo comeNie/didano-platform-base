@@ -1,6 +1,6 @@
-package cn.didano.base.showinfo;
+package cn.didano.base.exception;
 
-import cn.didano.base.showinfo.DBExceptionEnums;
+import cn.didano.base.exception.DBExceptionEnums;
 
 /**
  * 上层业务操作返回信息，

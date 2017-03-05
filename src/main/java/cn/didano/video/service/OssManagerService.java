@@ -36,9 +36,9 @@ import com.aliyun.oss.model.CreateLiveChannelResult;
 import com.aliyun.oss.model.LiveChannelStatus;
 import com.aliyun.oss.model.LiveChannelTarget;
 
-import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Vd_channel;
 import cn.didano.base.service.ChannelService;
+import cn.didano.base.showinfo.ServiceException;
 import cn.didano.video.entity.OssInfo;
 import cn.didano.video.exception.VideoExceptionEnums;
 import cn.didano.video.util.OssUtil;

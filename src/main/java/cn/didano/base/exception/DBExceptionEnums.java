@@ -1,4 +1,4 @@
-package cn.didano.base.showinfo;
+package cn.didano.base.exception;
 
 /**
  * 反馈信息是一个体系，包括

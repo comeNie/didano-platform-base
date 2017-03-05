@@ -1,44 +1,70 @@
 package cn.didano.base.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.didano.base.exception.DBExceptionEnums;
 import cn.didano.base.exception.ServiceException;
-import cn.didano.robot.data.RobotVersionInfo;
-import cn.didano.robot.data.RobotVersionInfoRepository;
-
+import cn.didano.robot.data.RConnectInfo;
+import cn.didano.robot.data.RVersionInfo;
+import cn.didano.robot.data.repository.RConnectInfoRepository;
+import cn.didano.robot.data.repository.RVersionInfoRepository;
 
 /**
  * 诊断平台信息服务，面对mongodb数据库
+ * 
  * @author stephen.wang
  *
  */
 @Service
 public class RobotMongoDbDataService {
 	@Autowired
-	private RobotVersionInfoRepository repository;
+	private RVersionInfoRepository v_repository;
+	@Autowired
+	private RConnectInfoRepository c_repository;
 
 	/**
-	 * 查询所有
+	 * 查询
+	 * 
 	 * @return
 	 */
-	public RobotVersionInfo find(String device_no) {
-		return this.repository.findByDeviceNo(device_no);
+	public RConnectInfo findRConnectInfo(String device_no) {
+		return this.c_repository.findByDeviceNo(device_no);
 	}
 
+	/**
+	 * 查询
+	 * 
+	 * @return
+	 */
+	public RVersionInfo findRVersionInfo(String device_no) {
+		return this.v_repository.findByDeviceNo(device_no);
+	}
 
 	/**
-	 * 保存数据
+	 * 保存连接数据
+	 * 
 	 * @param record
 	 * @return 更新行数
 	 */
-	public int save(RobotVersionInfo record) {
+	public int saveRConnectInfo(RConnectInfo record) {
 		if (record == null)
-			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
-		this.repository.save(record);
+			throw new ServiceException(DBExceptionEnums.ERROR_MONGODB_SAVE);
+		this.c_repository.save(record);
 		return 1;
 	}
+
+	/**
+	 * 保存版本数据
+	 * 
+	 * @param record
+	 * @return 更新行数
+	 */
+	public int saveRVersionInfo(RVersionInfo record) {
+		if (record == null)
+			throw new ServiceException(DBExceptionEnums.ERROR_MONGODB_SAVE);
+		this.v_repository.save(record);
+		return 1;
+	}
+
 }

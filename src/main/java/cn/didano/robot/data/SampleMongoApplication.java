@@ -21,16 +21,18 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import cn.didano.robot.data.repository.RVersionInfoRepository;
+
 @SpringBootApplication
 public class SampleMongoApplication implements CommandLineRunner {
 
 	@Autowired
-	private RobotVersionInfoRepository repository;
+	private RVersionInfoRepository repository;
 
 	@Override
 	public void run(String... args) throws Exception {
 		//this.repository.deleteAll();
-		RobotVersionInfo a1 = new RobotVersionInfo();
+		RVersionInfo a1 = new RVersionInfo();
 		// save a couple of customers
 //		this.repository.save(new Customer("Alice", "Smith"));
 //		this.repository.save(new Customer("Bob", "Smith"));

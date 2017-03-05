@@ -1,4 +1,4 @@
-package cn.didano.base.showinfo;
+package cn.didano.base.exception;
 
 /**
  * 数据层错误

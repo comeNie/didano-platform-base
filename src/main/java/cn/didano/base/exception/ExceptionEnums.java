@@ -1,4 +1,4 @@
-package cn.didano.base.showinfo;
+package cn.didano.base.exception;
 
 /**
  * @author stephen

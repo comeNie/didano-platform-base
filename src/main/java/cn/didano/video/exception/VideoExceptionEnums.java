@@ -1,6 +1,6 @@
 package cn.didano.video.exception;
 
-import cn.didano.base.exception.ExceptionEnums;
+import cn.didano.base.showinfo.ExceptionEnums;
 
 /**
  * 接口反馈信息

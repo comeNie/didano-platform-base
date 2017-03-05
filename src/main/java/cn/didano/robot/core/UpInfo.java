@@ -1,4 +1,4 @@
-package cn.didano.robot.api;
+package cn.didano.robot.core;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
  * @author stephen.wang 2017-03-02 
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY) 
-public class ReportInfo {
+public class UpInfo {
 	private String methodName;
 	private JsonNode info;
 	public String getMethodName() {

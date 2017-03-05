@@ -1,4 +1,4 @@
-package cn.didano.robot.api;
+package cn.didano.robot.core;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,7 +10,7 @@ public class RobotSession {
 	private String httpSessionId;
 	private HttpSession httpSession;
 	private String service_no;
-	private RobotWebsocket robotWebsocket;
+	private RobotWebsocketServer robotWebsocketServer;
 	public String getHttpSessionId() {
 		return httpSessionId;
 	}
@@ -29,11 +29,12 @@ public class RobotSession {
 	public void setService_no(String service_no) {
 		this.service_no = service_no;
 	}
-	public RobotWebsocket getRobotWebsocket() {
-		return robotWebsocket;
+	public RobotWebsocketServer getRobotWebsocketServer() {
+		return robotWebsocketServer;
 	}
-	public void setRobotWebsocket(RobotWebsocket robotWebsocket) {
-		this.robotWebsocket = robotWebsocket;
+	public void setRobotWebsocketServer(RobotWebsocketServer robotWebsocketServer) {
+		this.robotWebsocketServer = robotWebsocketServer;
 	}
+	
 	
 }

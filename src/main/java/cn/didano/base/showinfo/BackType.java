@@ -1,4 +1,4 @@
-package cn.didano.video.constant;
+package cn.didano.base.showinfo;
 
 import cn.didano.base.showinfo.DBExceptionEnums;
 
@@ -25,11 +25,9 @@ public enum BackType {
 	SUCCESS_DIAGNOSE_WEBSOCKET(201,"成功"),
 	SUCCESS_DIAGNOSE_INSERT(202,"保存数据成功"),
 	
-	FAIL_DIAGNOSE_WRONG(251,"服务器异常"),
-	FAIL_DIAGNOSE_WRONG_FORMAT(252,"数据格式错误"),
-	FAIL_DIAGNOSE_WRONG_METHOD(253,"错误方法名"),
-	FAIL_DIAGNOSE_CANNOT_EMPTY(254,"不能为空"),
-	
+	FAIL_DIAGNOSE_WRONG_FORMAT(251,"数据格式错误"),
+	FAIL_DIAGNOSE_WRONG_METHOD(252,"错误方法名"),
+	FAIL_DIAGNOSE_CANNOT_EMPTY(253,"不能为空"),
 	
 	SUCCESS(1000,"成功"),
 	SUCCESS_INSERT(1001,"新建成功"),

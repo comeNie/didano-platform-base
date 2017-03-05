@@ -13,51 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.didano.robot.data;
-
-import org.springframework.data.annotation.Id;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 
- * @author wangyi
+ * @author stephen.wang
  * @Todo 没有安卓操作系统版本号
  */
 @ApiModel
-public class RobotVersionInfo {
-	
-	@Id//自动生成唯一索引号
-	@JsonIgnore//忽略该属性
-	private String id;
-	@ApiModelProperty(value = "产品硬件识别码",required=true)
+public class RVersionInfo extends RInfo {
+
+	@ApiModelProperty(value = "产品硬件识别码", required = true)
 	private String deviceNo;
-	@ApiModelProperty(value = "表情包版本",required=true)
+	@ApiModelProperty(value = "表情包版本", required = true)
 	private String emotionZipVersion;
-	@ApiModelProperty(value = "语音包版本",required=true)
+	@ApiModelProperty(value = "语音包版本", required = true)
 	private String voiceZipVersion;
-	@ApiModelProperty(value = "安卓软件版本",required=true)
+	@ApiModelProperty(value = "安卓软件版本", required = true)
 	private String androidVersion;
-	@ApiModelProperty(value = "linux软件版本",required=true)
+	@ApiModelProperty(value = "linux软件版本", required = true)
 	private String linuxSoftVersion;
-	@ApiModelProperty(value = "linux操作系统版本",required=true)
+	@ApiModelProperty(value = "linux操作系统版本", required = true)
 	private String linuxSystemVersion;
-	@ApiModelProperty(value = "运动控制板软件版本",required=true)
+	@ApiModelProperty(value = "运动控制板软件版本", required = true)
 	private String motionControlVersion;
-	
-	public RobotVersionInfo() {
-	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
+	public RVersionInfo() {
 	}
 
 	public String getDeviceNo() {
@@ -118,11 +102,9 @@ public class RobotVersionInfo {
 
 	@Override
 	public String toString() {
-		return "RobotVersionInfo [id=" + id + ", deviceNo=" + deviceNo + ", emotionZipVersion=" + emotionZipVersion
+		return "RobotVersionInfo [deviceNo=" + deviceNo + ", emotionZipVersion=" + emotionZipVersion
 				+ ", voiceZipVersion=" + voiceZipVersion + ", androidVersion=" + androidVersion + ", linuxSoftVersion="
 				+ linuxSoftVersion + ", linuxSystemVersion=" + linuxSystemVersion + ", motionControlVersion="
 				+ motionControlVersion + "]";
 	}
-
-	
 }

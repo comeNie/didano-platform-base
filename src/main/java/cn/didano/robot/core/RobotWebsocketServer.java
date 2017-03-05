@@ -1,4 +1,4 @@
-package cn.didano.robot.api;
+package cn.didano.robot.core;
 
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,37 +13,39 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import cn.didano.robot.data.RobotVersionInfo;
+import cn.didano.robot.controller.RobotApiController;
+import cn.didano.util.ContextUtil;
 import cn.didano.video.auth.ws.GetHttpSessionConfigurator;
 import cn.didano.video.exception.VideoExceptionEnums;
+import cn.didano.video.json.Out;
 
 /**
  * 机器人websocket连接，该连接由http协议建立，然后由tcp协议保持通信
  * 
+ * 理论上每个设备可以有多个websocket连接,应该用wesocket httpsession id作为票据，但这里强制，每一个设备最多只有一个websocket连接，新创建一个连接后，将会把以前的冲掉，并关闭以前的连接
  * @author stephen Created on 2016年12月23日 下午6:30:26
- * 
- * 
+ * @Component
  */
 @Component
 @ServerEndpoint(value = "/robot/api/ws/{service_no}", configurator = GetHttpSessionConfigurator.class)
-public class RobotWebsocket {
-	static Logger logger = Logger.getLogger(RobotWebsocket.class);
-
+public class RobotWebsocketServer {
+	static Logger logger = Logger.getLogger(RobotWebsocketServer.class);
+	//设备编号
+	private String service_no;
 	// 静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
 	private static int onlineCount = 0;
 
-	// 与某个客户端的连接websocket Session会话，需要通过它来给客户端发送数据
+	//与某个客户端的连接Tcp Session会话，需要通过它来给客户端发送数据,一个session可能包括多个websocket会话
 	private Session session;
 
 	private static ConcurrentHashMap<String, RobotSession> robotInfoMap = new ConcurrentHashMap<String, RobotSession>();
-
 
 	/**
 	 * 连接建立成功调用的方法，应该放到session里面，每个通道不论时间都可由管理员或者园长关闭
@@ -56,7 +58,7 @@ public class RobotWebsocket {
 	@OnOpen
 	public void onOpen(@PathParam("service_no") String service_no, Session session, EndpointConfig config)
 			throws Exception {
-		logger.debug("RobotWebsocket连接建立,连接设备号为："+service_no);
+		logger.debug("RobotWebsocket连接建立,连接设备号为：" + service_no);
 		this.session = session;
 		// 与某个客户端的连接会话，需要通过它来给客户端发送数据
 		HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
@@ -64,7 +66,7 @@ public class RobotWebsocket {
 		RobotSession info = new RobotSession();
 		info.setHttpSession(httpSession);
 		info.setHttpSessionId(httpSession.getId());
-		info.setRobotWebsocket(this);
+		info.setRobotWebsocketServer(this);
 		info.setService_no(service_no);
 		addOnlineCount(); // 在线数加1
 		logger.info("当前在线机器人为：" + getOnlineCount());
@@ -80,7 +82,8 @@ public class RobotWebsocket {
 	}
 
 	/**
-	 * 收到客户端消息后调用的方法
+	 * 收到客户端消息后调用的方法 //websocket的双工，只有发送->接收，无需返回任何信息，完全异步，保持高速 这个和restful api
+	 * json同步发送不同
 	 * 
 	 * @param message
 	 *            客户端发送过来的消息
@@ -92,58 +95,16 @@ public class RobotWebsocket {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			logger.info("RobotWebsocket收到消息：" + message);
-			ReportInfo report = mapper.readValue(message, ReportInfo.class);
-			// 如果不是连接，那么解析之后直接激发方法，并传输数据
-			RobotController robotController = new RobotController();
+			UpInfo report = mapper.readValue(message, UpInfo.class);
+			RobotApiController robotController = ContextUtil.act.getBean(RobotApiController.class);
 			RobotDelegator delegator = new RobotDelegator();
-			delegator.exc(robotController,report);
-			logger.info("客户端汇报：" + message);
-			System.out.println("i got message  2 ");
+			delegator.handle(service_no,robotController, report);
 		} catch (Exception ex) {
+			logger.error(message);
 			ex.printStackTrace();
 		}
 	}
 
-//	/**
-//	 * 收到客户端消息后调用的方法
-//	 * 
-//	 * @param message
-//	 *            客户端发送过来的消息
-//	 * @param session
-//	 *            可选的参数
-//	 */
-//	@OnMessage
-//	public void onMessage(String message, Session session) {
-//		ObjectMapper mapper = new ObjectMapper();
-//		try {
-//			logger.info("RobotWebsocket收到消息：" + message);
-//			ReportInfo report = mapper.readValue(message, ReportInfo.class);
-//			// 如果不是连接，那么解析之后直接激发方法，并传输数据
-//			String methodName = report.getMethodName();
-//			RobotController  robotController = new RobotController();
-//			logger.info("客户端汇报：" + message);
-//			switch (methodName) {
-//			case "connect":
-//				break;
-//			case "reportVersion":
-//				RobotVersionInfo robotVersionInfo = mapper.readValue(report.getInfo().toString(),RobotVersionInfo.class);
-//				robotController.reportVersion(robotVersionInfo);
-//				break;
-//			case "sacrificed":
-//				break;
-//			case "die":
-//				break;
-//			default:
-//				break;
-//			}
-//			System.out.println("i got message  2 ");
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//		}
-//		// 客户端不发信息
-//		// 同时也不向客户端发送信息
-//	}
-	
 	/**
 	 * 发生错误时调用 此方法被自动调用，同时之后会自动调用onClose
 	 * 
@@ -180,19 +141,88 @@ public class RobotWebsocket {
 	}
 
 	public static synchronized void addOnlineCount() {
-		RobotWebsocket.onlineCount++;
+		RobotWebsocketServer.onlineCount++;
 	}
 
 	public static synchronized void subOnlineCount() {
-		RobotWebsocket.onlineCount--;
+		RobotWebsocketServer.onlineCount--;
+	}
+
+	/**
+	 * 给单个客户端发信息
+	 * 
+	 * @return
+	 */
+	public static synchronized void sendMessage(String service_no, DownInfo downInfo) {
+		RobotSession session = RobotWebsocketServer.getRobotInfoMap().get(service_no);
+		if (session != null) {
+			ObjectMapper mapper = new ObjectMapper();
+			String data = null;
+			try {
+				data = mapper.writeValueAsString(downInfo);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			session.getRobotWebsocketServer().sendMessage(data);
+		} else {
+			logger.warn("设备编号:" + service_no + "不存在robotWebsocket客户端连接");
+		}
+	}
+
+	/**
+	 * 给单个客户端发信息
+	 * 
+	 * @return
+	 */
+	public static synchronized void sendMessage(String service_no, Out<String> backError) {
+		DownInfo downInfo = new DownInfo();
+		downInfo.setMethodName("go_backError");
+		ObjectMapper mapper = new ObjectMapper();
+		String JsonString = null;
+		JsonNode rootNode = null;
+		String message = null;
+		try {
+			JsonString = mapper.writeValueAsString(backError);
+			rootNode = mapper.readTree(JsonString);
+		} catch (JsonProcessingException e1) {
+			message = e1.getMessage();
+			e1.printStackTrace();
+		} catch (IOException e) {
+			message = e.getMessage();
+			e.printStackTrace();
+		}
+		if(rootNode!=null){
+			downInfo.setInfo(rootNode);
+		}else{
+			downInfo.setInfo(null);
+			try{
+				rootNode = mapper.readTree("{\"code\": 0,\"data\": \"\",\"message\": \"返回信息格式转换异常:\""+message+",\"success\": false}"); 
+			}catch(Exception e1){
+				e1.printStackTrace();
+			}
+		}
+		sendMessage(service_no, downInfo);
+	}
+
+	/**
+	 * 采用简单的hashmap技术，效率不是很高，将来用netty一并改写提升 获取连接池
+	 * 
+	 * @return
+	 */
+	public static synchronized ConcurrentHashMap<String, RobotSession> getRobotInfoMap() {
+		return robotInfoMap;
 	}
 
 	/**
 	 * 增加连接
-	 * 
+	 * 理论上每个设备可以有多个websocket连接,应该用wesocket httpsession id作为票据，但这里强制，每一个设备最多只有一个websocket连接，新创建一个连接后，将会把以前的冲掉，并关闭以前的连接
 	 * @param channelId
 	 */
 	public static synchronized void addRobotInfo(RobotSession robotInfo) {
+		if(robotInfoMap.get(robotInfo.getService_no())!=null){
+			logger.warn("编号为:"+robotInfo.getService_no()+"的设备已经有连接，此socket仍然存在，但不受管理");
+		}
 		robotInfoMap.put(robotInfo.getService_no(), robotInfo);
 	}
 
@@ -201,7 +231,7 @@ public class RobotWebsocket {
 	 * 
 	 * @param websocketChannel
 	 */
-	public static synchronized void addChannel(String service_no) {
+	public static synchronized void delRobotInfo(String service_no) {
 		robotInfoMap.remove(service_no);
 	}
 }

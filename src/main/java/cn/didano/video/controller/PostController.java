@@ -819,9 +819,11 @@ public class PostController {
 							numHeight+=tb_student_detection.getHeight();
 							numWeight+=tb_student_detection.getWeight();
 							i+=1;
+							//统计自己身高超过的人数
 							if(classes.get(0).getHeight()>tb_student_detection.getHeight()){
 								percentageHeight+=1;
 							}
+							//统计体重身高超过的人数
 							if(classes.get(0).getWeight()>tb_student_detection.getWeight()){
 								percentageWeight+=1;
 							}

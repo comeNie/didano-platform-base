@@ -848,7 +848,6 @@ public class PostController {
 					System.out.println((dateTime.getTime()-selectstudent.get(0).getBirthday().getTime())/(1000*60*60*24)/30+"=====vvvvvv====");
 					Tb_benchmark tb=new Tb_benchmark();
 					if(Integer.parseInt(a)>81){
-						
 						tb.setAge(81);
 					}
 					else if(Integer.parseInt(a)%3==0 && Integer.parseInt(a)>12){

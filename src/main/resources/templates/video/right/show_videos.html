@@ -290,6 +290,7 @@ function live_edit(obj){
 		window.event.cancelBubble = true;
 		return false;
 	}else{
+		
 		document.getElementById(EnName).innerHTML="";
 		var live_edit_name_id = "live_edit_name"+$(obj).attr('id');
 	    var live_edit_name = document.getElementById(live_edit_name_id).value;

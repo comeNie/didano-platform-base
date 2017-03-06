@@ -1,0 +1,256 @@
+2017-01-16 10:41:22.439 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 10:41:22.445 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 10:41:22.445 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 10:41:26.939 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 10:41:32.944 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 11.733 seconds (JVM running for 13.234)
+2017-01-16 10:41:32.944 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 10:48:30.289 [http-nio-8080-exec-1] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 10:48:31.432 [http-nio-8080-exec-1] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 10:48:31.998 [http-nio-8080-exec-6] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 10:48:32.022 [http-nio-8080-exec-6] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 10:48:37.313 [http-nio-8080-exec-2] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 10:48:37.327 [http-nio-8080-exec-2] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 10:48:40.702 [http-nio-8080-exec-5] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 10:48:40.716 [http-nio-8080-exec-5] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 10:55:52.354 [http-nio-8080-exec-3] DEBUG cn.didano.video.auth.ws.Websocket - Websocket open one websocket,channelId=18:studentId=21:openId=xcvsdfws
+2017-01-16 10:55:52.354 [http-nio-8080-exec-3] INFO  cn.didano.video.auth.ws.Websocket - 有新连接加入！当前在线人数为1
+2017-01-16 10:56:30.063 [http-nio-8080-exec-6] INFO  cn.didano.video.controller.PostController - 访问  PostController:channel_set_status,channelStatus=ChannelStatus [channelId=19, status=1]
+2017-01-16 10:56:30.063 [http-nio-8080-exec-6] DEBUG cn.didano.video.service.WebsocketService - WebsocketManager readey oper channel[19] Status:1
+2017-01-16 10:56:30.100 [http-nio-8080-exec-6] DEBUG cn.didano.video.json.Out - 设置成功:id=19:rowNum=1
+2017-01-16 10:57:48.518 [http-nio-8080-exec-7] INFO  cn.didano.video.controller.PostController - 访问  PostController:channel_set_status,channelStatus=ChannelStatus [channelId=18, status=1]
+2017-01-16 10:57:48.518 [http-nio-8080-exec-7] DEBUG cn.didano.video.service.WebsocketService - WebsocketManager readey oper channel[18] Status:1
+2017-01-16 10:57:48.522 [http-nio-8080-exec-7] DEBUG cn.didano.video.json.Out - 成功发送websocket协议消息
+2017-01-16 10:57:48.523 [http-nio-8080-exec-7] DEBUG cn.didano.video.auth.ws.Websocket - websocket:sendMessage
+2017-01-16 10:57:48.525 [http-nio-8080-exec-7] DEBUG cn.didano.video.service.WebsocketService - sessionId=F2EC9CD4472EDBA4B3D29283631A3CC6openid=xcvsdfws
+2017-01-16 10:57:48.527 [http-nio-8080-exec-7] DEBUG cn.didano.video.json.Out - 设置成功:id=18:rowNum=1
+2017-01-16 11:00:03.791 [http-nio-8080-exec-2] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:00:03.804 [http-nio-8080-exec-2] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:00:47.958 [http-nio-8080-exec-5] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:00:47.971 [http-nio-8080-exec-5] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:20:14.827 [http-nio-8080-exec-3] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:20:14.842 [http-nio-8080-exec-3] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:21:15.537 [http-nio-8080-exec-6] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:21:15.551 [http-nio-8080-exec-6] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:26:17.005 [http-nio-8080-exec-10] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:26:17.017 [http-nio-8080-exec-10] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:27:19.239 [http-nio-8080-exec-2] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:27:19.251 [http-nio-8080-exec-2] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:27:50.592 [http-nio-8080-exec-5] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:27:50.603 [http-nio-8080-exec-5] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:30:33.750 [http-nio-8080-exec-3] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:30:33.761 [http-nio-8080-exec-3] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:31:35.363 [http-nio-8080-exec-6] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:31:35.373 [http-nio-8080-exec-6] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:32:09.044 [http-nio-8080-exec-4] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:32:09.054 [http-nio-8080-exec-4] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:37:37.368 [http-nio-8080-exec-3] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:37:37.378 [http-nio-8080-exec-3] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:37:49.731 [http-nio-8080-exec-2] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:37:49.742 [http-nio-8080-exec-2] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:37:56.490 [http-nio-8080-exec-8] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:37:56.500 [http-nio-8080-exec-8] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:39:44.637 [http-nio-8080-exec-1] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:39:44.646 [http-nio-8080-exec-1] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:40:02.136 [http-nio-8080-exec-5] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:40:02.144 [http-nio-8080-exec-5] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:40:34.950 [http-nio-8080-exec-6] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:40:34.959 [http-nio-8080-exec-6] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:43:10.061 [http-nio-8080-exec-9] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:43:10.070 [http-nio-8080-exec-9] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:43:20.299 [http-nio-8080-exec-2] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_control_add,control_Add=In_Control_Add [channelId=19, start=13:01, end=14:00]
+2017-01-16 11:43:20.312 [http-nio-8080-exec-2] DEBUG cn.didano.video.json.Out - 新建成功:Id=37:rowNum=1
+2017-01-16 11:43:22.226 [http-nio-8080-exec-8] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:43:22.236 [http-nio-8080-exec-8] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:43:33.183 [http-nio-8080-exec-4] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:43:33.194 [http-nio-8080-exec-4] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:43:43.117 [http-nio-8080-exec-1] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_control_add,control_Add=In_Control_Add [channelId=19, start=15:00, end=16:00]
+2017-01-16 11:43:43.122 [http-nio-8080-exec-1] DEBUG cn.didano.video.json.Out - 新建成功:Id=38:rowNum=1
+2017-01-16 11:43:45.164 [http-nio-8080-exec-5] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:43:45.173 [http-nio-8080-exec-5] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:43:48.543 [http-nio-8080-exec-10] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:43:48.553 [http-nio-8080-exec-10] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:43:57.144 [http-nio-8080-exec-6] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_control_add,control_Add=In_Control_Add [channelId=19, start=11:11, end=12:12]
+2017-01-16 11:43:57.150 [http-nio-8080-exec-6] DEBUG cn.didano.video.json.Out - 新建成功:Id=39:rowNum=1
+2017-01-16 11:44:00.991 [http-nio-8080-exec-7] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:44:00.999 [http-nio-8080-exec-7] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:44:04.518 [http-nio-8080-exec-9] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:44:04.526 [http-nio-8080-exec-9] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:44:41.179 [http-nio-8080-exec-3] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:44:41.188 [http-nio-8080-exec-3] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:44:44.776 [http-nio-8080-exec-8] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_control_remove,remove_id=39
+2017-01-16 11:44:44.778 [http-nio-8080-exec-8] DEBUG cn.didano.video.json.Out - 删除成功:remove_id=39:rowNum=1
+2017-01-16 11:44:46.681 [http-nio-8080-exec-4] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:44:46.689 [http-nio-8080-exec-4] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:44:48.755 [http-nio-8080-exec-1] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:44:48.765 [http-nio-8080-exec-1] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:46:36.596 [http-nio-8080-exec-10] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:46:36.605 [http-nio-8080-exec-10] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:46:50.202 [http-nio-8080-exec-6] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_control_add,control_Add=In_Control_Add [channelId=19, start=16:00, end=17:30]
+2017-01-16 11:46:50.207 [http-nio-8080-exec-6] DEBUG cn.didano.video.json.Out - 新建成功:Id=40:rowNum=1
+2017-01-16 11:46:55.255 [http-nio-8080-exec-7] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:46:55.263 [http-nio-8080-exec-7] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:49:50.140 [http-nio-8080-exec-3] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:49:50.148 [http-nio-8080-exec-3] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:49:54.012 [http-nio-8080-exec-2] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:49:54.020 [http-nio-8080-exec-2] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:50:07.735 [http-nio-8080-exec-8] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:50:07.743 [http-nio-8080-exec-8] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:50:13.693 [http-nio-8080-exec-4] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:50:13.701 [http-nio-8080-exec-4] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 11:50:23.505 [http-nio-8080-exec-1] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_control_add,control_Add=In_Control_Add [channelId=20, start=13:00, end=14:00]
+2017-01-16 11:50:23.510 [http-nio-8080-exec-1] DEBUG cn.didano.video.json.Out - 新建成功:Id=41:rowNum=1
+2017-01-16 11:50:25.553 [http-nio-8080-exec-5] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 11:50:25.560 [http-nio-8080-exec-5] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 12:48:34.484 [http-nio-8080-exec-7] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 12:48:34.540 [http-nio-8080-exec-7] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 12:48:38.855 [http-nio-8080-exec-9] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 12:48:38.863 [http-nio-8080-exec-9] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 12:49:29.760 [http-nio-8080-exec-8] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_control_add,control_Add=In_Control_Add [channelId=20, start=11:11, end=12:12]
+2017-01-16 12:49:29.802 [http-nio-8080-exec-8] DEBUG cn.didano.video.json.Out - 新建成功:Id=42:rowNum=1
+2017-01-16 12:49:31.591 [http-nio-8080-exec-4] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 12:49:31.599 [http-nio-8080-exec-4] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 12:50:08.878 [http-nio-8080-exec-5] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_control_remove,remove_id=19
+2017-01-16 12:50:08.881 [http-nio-8080-exec-5] DEBUG cn.didano.video.json.Out - 删除成功:remove_id=19:rowNum=1
+2017-01-16 12:50:10.914 [http-nio-8080-exec-10] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 12:50:10.922 [http-nio-8080-exec-10] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 12:50:50.850 [http-nio-8080-exec-6] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 12:50:50.858 [http-nio-8080-exec-6] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 14:52:56.134 [http-nio-8080-exec-3] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 14:52:56.194 [http-nio-8080-exec-3] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 15:04:10.995 [http-nio-8080-exec-4] INFO  cn.didano.video.controller.PostController - 访问  PostController:time_controls_search_by_schoolid school_id = 4
+2017-01-16 15:04:11.003 [http-nio-8080-exec-4] DEBUG cn.didano.video.json.Out - 查询成功
+2017-01-16 15:47:02.689 [localhost-startStop-2] INFO  cn.didano.video.auth.ws.Websocket - 有一连接关闭！当前在线人数为0
+2017-01-16 15:47:03.003 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 15:47:03.003 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 15:47:03.003 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 15:47:03.771 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 15:47:05.454 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 2.504 seconds (JVM running for 18346.575)
+2017-01-16 15:47:05.455 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 15:47:13.025 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 15:47:13.025 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 15:47:13.025 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 15:47:13.554 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 15:47:14.910 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 1.92 seconds (JVM running for 18356.03)
+2017-01-16 15:47:14.910 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 15:47:53.207 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 15:47:53.207 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 15:47:53.207 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 15:47:53.723 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 15:47:55.016 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 1.838 seconds (JVM running for 18396.138)
+2017-01-16 15:47:55.016 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 15:48:13.725 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 15:48:13.725 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 15:48:13.725 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 15:48:14.216 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 15:48:15.471 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 1.777 seconds (JVM running for 18416.594)
+2017-01-16 15:48:15.471 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 15:49:13.986 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 15:49:14.018 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 15:49:14.018 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 15:49:14.488 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 15:49:15.739 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 1.976 seconds (JVM running for 18476.865)
+2017-01-16 15:49:15.739 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 15:49:25.317 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 15:49:25.317 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 15:49:25.317 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 15:49:25.802 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 15:49:26.927 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 1.634 seconds (JVM running for 18488.054)
+2017-01-16 15:49:26.927 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 15:49:34.634 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 15:49:34.634 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 15:49:34.634 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 15:49:35.065 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 15:49:36.201 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 1.591 seconds (JVM running for 18497.328)
+2017-01-16 15:49:36.201 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 15:49:47.913 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 15:49:47.913 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 15:49:47.913 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 15:49:48.339 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 15:49:49.447 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 1.557 seconds (JVM running for 18510.575)
+2017-01-16 15:49:49.447 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 15:50:20.402 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 15:50:20.402 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 15:50:20.402 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 15:50:20.885 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 15:50:22.267 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 1.887 seconds (JVM running for 18543.396)
+2017-01-16 15:50:22.267 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 15:50:49.253 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 15:50:49.267 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 15:50:49.267 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 15:50:49.687 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 15:50:50.756 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 1.523 seconds (JVM running for 18571.887)
+2017-01-16 15:50:50.757 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 15:51:25.005 [http-nio-8080-exec-3] INFO  cn.didano.video.api.PostClient - 访问  PostClient:channel_get_by_staff staffId=7
+2017-01-16 15:51:25.235 [http-nio-8080-exec-3] DEBUG cn.didano.video.json.Out - 成功
+2017-01-16 15:54:02.425 [http-nio-8080-exec-9] INFO  cn.didano.video.api.PostClient - 访问  PostClient:channel_get_by_student studentId=324
+2017-01-16 15:54:02.534 [http-nio-8080-exec-9] DEBUG cn.didano.video.json.Out - 成功
+2017-01-16 15:56:35.038 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 15:56:35.038 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 15:56:35.038 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 15:56:35.611 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 15:56:36.802 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 2.001 seconds (JVM running for 18917.948)
+2017-01-16 15:56:36.802 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 15:57:07.882 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 15:57:07.882 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 15:57:07.882 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 15:57:08.327 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 15:57:09.496 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 1.637 seconds (JVM running for 18950.644)
+2017-01-16 15:57:09.496 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 15:57:21.356 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 15:57:21.356 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 15:57:21.356 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 15:57:21.794 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 15:57:22.828 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 1.496 seconds (JVM running for 18963.977)
+2017-01-16 15:57:22.828 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 15:57:39.984 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 15:57:39.984 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 15:57:39.984 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 15:57:40.426 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 15:57:42.024 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 2.069 seconds (JVM running for 18983.173)
+2017-01-16 15:57:42.024 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 15:59:05.423 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 791 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 15:59:05.423 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 15:59:05.423 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 15:59:05.866 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 15:59:07.002 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 1.804 seconds (JVM running for 19068.155)
+2017-01-16 15:59:07.002 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 15:59:34.590 [http-nio-8080-exec-8] INFO  cn.didano.video.api.PostClient - 访问  PostClient:channel_get_by_student studentId=324
+2017-01-16 15:59:34.681 [http-nio-8080-exec-8] DEBUG cn.didano.video.json.Out - 成功
+2017-01-16 16:01:07.648 [http-nio-8080-exec-4] INFO  cn.didano.video.api.PostClient - 访问  PostClient:channel_get_by_student studentId=324
+2017-01-16 16:01:07.657 [http-nio-8080-exec-4] DEBUG cn.didano.video.json.Out - 成功
+2017-01-16 16:01:18.363 [http-nio-8080-exec-2] INFO  cn.didano.video.api.PostClient - 访问  PostClient:channel_get_by_student studentId=324
+2017-01-16 16:01:18.370 [http-nio-8080-exec-2] DEBUG cn.didano.video.json.Out - 成功
+2017-01-16 16:02:22.807 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 2811 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 16:02:22.809 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 16:02:22.810 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 16:02:25.101 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 16:02:29.557 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 7.225 seconds (JVM running for 8.287)
+2017-01-16 16:02:29.557 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 16:03:04.683 [http-nio-8080-exec-1] INFO  cn.didano.video.api.PostClient - 访问  PostClient:channel_get_by_student studentId=324
+2017-01-16 16:03:05.176 [http-nio-8080-exec-1] DEBUG cn.didano.video.json.Out - 成功
+2017-01-16 16:03:26.201 [http-nio-8080-exec-2] INFO  cn.didano.video.api.PostClient - 访问  PostClient:channel_get_by_student studentId=324
+2017-01-16 16:03:26.215 [http-nio-8080-exec-2] DEBUG cn.didano.video.json.Out - 成功
+2017-01-16 16:03:59.755 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 2827 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 16:03:59.772 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 16:03:59.773 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 16:04:02.561 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 16:04:08.014 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 8.726 seconds (JVM running for 9.618)
+2017-01-16 16:04:08.014 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 16:04:44.713 [http-nio-8080-exec-1] INFO  cn.didano.video.api.PostClient - 访问  PostClient:channel_get_by_student studentId=324
+2017-01-16 16:06:26.441 [http-nio-8080-exec-1] DEBUG cn.didano.video.json.Out - 成功
+2017-01-16 16:07:32.749 [http-nio-8080-exec-3] INFO  cn.didano.video.api.PostClient - 访问  PostClient:channel_get_by_student studentId=324
+2017-01-16 16:07:37.749 [http-nio-8080-exec-3] DEBUG cn.didano.video.json.Out - 成功
+2017-01-16 18:02:34.480 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Starting StartVideoApplication on wangyideiMac.local with PID 3843 (/Users/wangyi/Documents/QuickWorkspace/didano_video/target/classes started by wangyi in /Users/wangyi/Documents/QuickWorkspace/didano_video)
+2017-01-16 18:02:34.497 [restartedMain] DEBUG cn.didano.video.app.StartVideoApplication - Running with Spring Boot v1.4.2.RELEASE, Spring v4.3.4.RELEASE
+2017-01-16 18:02:34.498 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - No active profile set, falling back to default profiles: default
+2017-01-16 18:02:38.624 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-01-16 18:02:44.919 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - Started StartVideoApplication in 11.316 seconds (JVM running for 12.726)
+2017-01-16 18:02:44.919 [restartedMain] INFO  cn.didano.video.app.StartVideoApplication - StartVideoApplication Started.............................
+2017-01-16 18:03:08.085 [http-nio-8080-exec-5] DEBUG cn.didano.video.auth.ws.Websocket - Websocket open one websocket,channelId=18:studentId=21:openId=xcvsdfws
+2017-01-16 18:03:08.086 [http-nio-8080-exec-5] INFO  cn.didano.video.auth.ws.Websocket - 有新连接加入！当前在线人数为1
+2017-01-16 18:03:30.643 [http-nio-8080-exec-4] INFO  cn.didano.video.api.PostClient - 访问  PostClient:channel_set_status,in_ChannelStatus=ChannelStatus4Client [channelId=18, status=1, staffId=0]
+2017-01-16 18:03:30.708 [http-nio-8080-exec-4] DEBUG cn.didano.video.service.WebsocketService - WebsocketManager readey oper channel[18] Status:1
+2017-01-16 18:03:31.568 [http-nio-8080-exec-4] DEBUG cn.didano.video.json.Out - 成功发送websocket协议消息
+2017-01-16 18:03:31.596 [http-nio-8080-exec-4] DEBUG cn.didano.video.auth.ws.Websocket - websocket:sendMessage
+2017-01-16 18:03:31.599 [http-nio-8080-exec-4] DEBUG cn.didano.video.service.WebsocketService - sessionId=F39F2B231F42960B8A112DB98F05AC20openid=xcvsdfws
+2017-01-16 18:03:31.612 [http-nio-8080-exec-4] INFO  cn.didano.video.api.PostClient - 设置视频频道开关成功:教职工ID[0]设置频道状态1

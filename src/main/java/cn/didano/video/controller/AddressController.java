@@ -433,9 +433,11 @@ public class AddressController {
 		   tb_sign_type t= null;
 		   if(!n.isEmpty()){
 			for(Tb_newstaff f:n){
+				if(f.getSignTypeId()!=0){
 				t=newteacherService.findTypeByID(f.getSignTypeId());
 				f.setIn_time(sdf.format(t.getInTime()));
 				f.setOut_time(sdf.format(t.getOutTime()));
+				}
 				
 			}
 		   }

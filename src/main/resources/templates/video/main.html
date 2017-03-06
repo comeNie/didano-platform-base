@@ -15,7 +15,14 @@
 <script src="../video/js/jquery.min.js"></script>
 <script src="../video/js/bootstrap.min.js"></script>
 <script src="../video/js/didano.js"></script>
-
+<style type="text/css">
+	.sidebar-xian{
+		border-bottom: 1px #aaa solid;
+		margin-left: 30px;
+		margin-right: 30px;
+		font-size: 17px;
+	}
+</style>
 </head>
 <body>
 	<div id="wrapper">
@@ -23,9 +30,9 @@
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> 谛达诺视频系统 </a></li>
-				<li><a th:href="@{~/video/show_videos}">视频详情</a></li>
-				<li><a th:href="@{~/video/paymentAuthorization}">付费授权</a></li>
-				<li><a th:href="@{~/video/test_websocket}">测试websocket</a></li>
+				<li class="sidebar-xian"><a th:href="@{~/video/show_videos}">视频详情</a></li>
+				<li class="sidebar-xian"><a th:href="@{~/video/paymentAuthorization}">付费授权</a></li>
+				<li class="sidebar-xian"><a th:href="@{~/video/test_websocket}">测试websocket</a></li>
 			</ul>
 		</div>
 		<!-- /#sidebar-wrapper -->

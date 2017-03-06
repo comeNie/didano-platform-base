@@ -167,6 +167,7 @@ public class PostController {
 			logger.warn(e.getMessage());
 			back.setServiceExceptionWithLog(e.getExceptionEnums());
 		}
+		
 		return back;
 	}
 	
@@ -256,7 +257,6 @@ public class PostController {
 
 	/**
 	 * 编辑视频频道
-	 * 
 	 * @param c_channel
 	 * @return
 	 */
@@ -461,6 +461,7 @@ public class PostController {
 		Out<PageInfo<View_switch_s_c>> back = new Out<PageInfo<View_switch_s_c>>();
 		PageInfo<View_switch_s_c> data = null;
 		try {
+			System.err.println("3");
 			data = authSwitchService.selectAll(page, size, iss);
 			back.setBackTypeWithLog(data,BackType.SUCCESS);
 		} catch (ServiceException e) {
@@ -484,6 +485,7 @@ public class PostController {
 		Vd_auth_switch vd_autu_swtich = new Vd_auth_switch();
 		Out<String> back = new Out<String>();
 		try {
+			System.err.println("4");
 			BeanUtils.copyProperties(vd_autu_swtich, swi);
 			int rowNum = authSwitchService.updateUse(swi.getId(), swi.getIsUse());
 			if (rowNum < 1) {// 没更新到数据
@@ -820,12 +822,14 @@ public class PostController {
 							numHeight+=tb_student_detection.getHeight();
 							numWeight+=tb_student_detection.getWeight();
 							i+=1;
-						}
-						if(classes.get(0).getHeight()>tb_student_detection.getHeight()){
-							percentageHeight+=1;
-						}
-						if(classes.get(0).getWeight()>tb_student_detection.getWeight()){
-							percentageWeight+=1;
+							//统计自己身高超过的人数
+							if(classes.get(0).getHeight()>tb_student_detection.getHeight()){
+								percentageHeight+=1;
+							}
+							//统计体重身高超过的人数
+							if(classes.get(0).getWeight()>tb_student_detection.getWeight()){
+								percentageWeight+=1;
+							}
 						}
 					}
 					//平均身高和体重
@@ -845,9 +849,8 @@ public class PostController {
 					Date dateTime=new Date();
 					SimpleDateFormat dfs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					String a=(dateTime.getTime()-selectstudent.get(0).getBirthday().getTime())/(1000*60*60*24)/30+"";
-					
 					//时间差得到月龄
-					
+					System.out.println((dateTime.getTime()-selectstudent.get(0).getBirthday().getTime())/(1000*60*60*24)/30+"=====vvvvvv====");
 					Tb_benchmark tb=new Tb_benchmark();
 					if(Integer.parseInt(a)>81){
 						tb.setAge(81);
@@ -864,7 +867,7 @@ public class PostController {
 					}
 					tb.setSex((int)selectstudent.get(0).getGender());
 					List<Tb_benchmark> selectByHeightAddWeight = controlService.selectByHeightAddWeight(tb);
-					System.err.println(selectByHeightAddWeight.size());
+					
 					String compareHeight=null;
 					String compareWeight=null;
 					
@@ -896,6 +899,7 @@ public class PostController {
 					String time = ter.format(classes.get(0).getCreated());
 					StringBuilder builder=new StringBuilder(ossInfo.getImgPath());
 					builder.append(classes.get(0).getOrgImgUrl());
+					//為对象复制
 					hand=new Hand_student(selectstudent.get(0).getName(),time,
 							classes.get(0).getHeight()/10, classes.get(0).getWeight()/1000,
 							numHeight, numWeight, percentageHeight+"%", percentageWeight+"%",

@@ -13,7 +13,7 @@
 		</commentGenerator>
 		<!--数据库链接地址账号密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost/xiaonuo_test" userId="root"
+			connectionURL="jdbc:mysql://localhost/test_xiaonuo" userId="root"
 			password="123456">
 		</jdbcConnection>
 		<javaTypeResolver>
@@ -163,12 +163,19 @@
 			selectByExampleQueryId="true">	
 		</table> -->
 		
-		<table tableName="tb_sign_type" domainObjectName="tb_sign_type"
+		<!-- <table tableName="tb_sign_type" domainObjectName="tb_sign_type"
 			enableCountByExample="true" enableUpdateByExample="true"
 			enableDeleteByExample="true" enableSelectByExample="true"
 			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true">	
 			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>
+		</table> -->
+		
+		<table tableName="tb_benchmark" domainObjectName="Tb_benchmark"
+			enableCountByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true" >
+			<ignoreColumn column="deleted" />
 		</table>
+		
 		
 		
 	</context>

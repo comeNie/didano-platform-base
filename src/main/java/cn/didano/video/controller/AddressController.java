@@ -319,14 +319,23 @@ public class AddressController {
 				}
 				rowNum = newteacherService.updatestaff(vd_staff);
 				if(teacher_a.getType()==32){
+			   if(!newteacherService.findclassidByStaffid(vd_staff.getId()).isEmpty()){
 				vd_class.setClassId(teacher_a.getClassId());
+				
 			    vd_class.setId(newteacherService.findclassidByStaffid(vd_staff.getId()).get(0).getId());
 				vd_class.setSchoolId(vd_staff.getSchoolId());
 				vd_class.setStaffId(teacher_a.getId());
 				 rowNum2 = newteacherService.updateclass(vd_class);
+			   }else{
+				   vd_class.setClassId(teacher_a.getClassId());
+					vd_class.setCreated(new Date());
+					vd_class.setSchoolId(vd_staff.getSchoolId());
+					vd_class.setStaffId(vd_staff.getId());
+					 rowNum2 = newteacherService.insertClassSelective(vd_class); 
+			   }
 				}
 				if(teacher_a.getType()!=31){
-				 vd_date.setCreated(new Date());
+				 if(newteacherService.findById(teacher_a.getId())!=null){
 					vd_date.setSchoolId(s.getSchoolId());
 					 
 					vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
@@ -334,6 +343,13 @@ public class AddressController {
 					 
 					vd_date.setId(newteacherService.findById(teacher_a.getId()).getSignTypeId());;
 					 rowNum3 = newteacherService.updateType(vd_date);
+				 }else{
+					 vd_date.setSchoolId(s.getSchoolId());		  
+					   vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
+					   vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));		   
+					   vd_date.setCreated(new Date());
+					   rowNum3 = newteacherService.insertTypeSelective(vd_date);
+				 }
 				}
 					 if (rowNum > 0  ) {
 							back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "Id=" + "," + ":rowNum3=" + rowNum3);

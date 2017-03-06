@@ -63,7 +63,53 @@ public class AddressController {
 	private ClassService classService;
 
 	
+	/**
+	 * 家长查看本班老师
+	 * @throws ParseException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 */
+	@PostMapping(value = "Parent_findteacher/{student_id}")
+	@ApiOperation(value = "家长查看本班老师", notes = "通过老师id查询小朋友")
+	@ResponseBody
+	public Out<OutList<Tb_newstaff>> Parent_findteacher(@PathVariable("student_id") Integer student_id) throws ParseException, IllegalAccessException, InvocationTargetException {
+		logger.info("访问  PostController:Parent_findteacher,student_id=" + student_id);
+		
+		Tb_address_list student = null;
+		List<Tb_teacher> classstaff = null;
+		OutList<Tb_newstaff> outList = null;	
+		Out<OutList<Tb_newstaff>> back = new Out<OutList<Tb_newstaff>>();
+		try {
+				student = addressService.findById(student_id);				
+				classstaff = addressService.findTeacherByClass(student.getClass_id());
+	
+				
+				List<Tb_newstaff> doctor = new ArrayList<Tb_newstaff>();
+				
+				
+				Tb_newstaff staff1=null;
+				for(Tb_teacher teacher:classstaff){
+				    staff1 =new Tb_newstaff();
+				    BeanUtils.copyProperties(staff1, teacher);
+				
+					staff1.setSchoolId(teacher.getSchool_id());
+					
+					doctor.add(staff1);
+				}
+				outList = new OutList<Tb_newstaff>(doctor.size(), doctor);
+				
+			
+			
 
+			back.setBackTypeWithLog(outList, BackType.SUCCESS_SEARCH_NORMAL);
+		} catch (ServiceException e) {
+			logger.warn(e.getMessage());
+			back.setServiceExceptionWithLog(e.getExceptionEnums());
+		}
+		return back;
+	}
+	
+	
 	/**
 	 * 查询班级关系对应
 	 */

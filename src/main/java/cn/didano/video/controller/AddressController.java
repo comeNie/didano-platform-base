@@ -323,13 +323,13 @@ public class AddressController {
 				vd_class.setClassId(teacher_a.getClassId());
 				
 			    vd_class.setId(newteacherService.findclassidByStaffid(vd_staff.getId()).get(0).getId());
-				vd_class.setSchoolId(vd_staff.getSchoolId());
+				vd_class.setSchoolId(s.getSchoolId());
 				vd_class.setStaffId(teacher_a.getId());
 				 rowNum2 = newteacherService.updateclass(vd_class);
 			   }else{
 				   vd_class.setClassId(teacher_a.getClassId());
 					vd_class.setCreated(new Date());
-					vd_class.setSchoolId(vd_staff.getSchoolId());
+					vd_class.setSchoolId(s.getSchoolId());
 					vd_class.setStaffId(vd_staff.getId());
 					 rowNum2 = newteacherService.insertClassSelective(vd_class); 
 			   }

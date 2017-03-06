@@ -164,6 +164,7 @@ public class PostController {
 			logger.warn(e.getMessage());
 			back.setServiceExceptionWithLog(e.getExceptionEnums());
 		}
+		
 		return back;
 	}
 	
@@ -458,6 +459,7 @@ public class PostController {
 		Out<PageInfo<View_switch_s_c>> back = new Out<PageInfo<View_switch_s_c>>();
 		PageInfo<View_switch_s_c> data = null;
 		try {
+			System.err.println("3");
 			data = authSwitchService.selectAll(page, size, iss);
 			back.setBackTypeWithLog(data,BackType.SUCCESS);
 		} catch (ServiceException e) {
@@ -481,6 +483,7 @@ public class PostController {
 		Vd_auth_switch vd_autu_swtich = new Vd_auth_switch();
 		Out<String> back = new Out<String>();
 		try {
+			System.err.println("4");
 			BeanUtils.copyProperties(vd_autu_swtich, swi);
 			int rowNum = authSwitchService.updateUse(swi.getId(), swi.getIsUse());
 			if (rowNum < 1) {// 没更新到数据
@@ -842,15 +845,14 @@ public class PostController {
 					Date dateTime=new Date();
 					SimpleDateFormat dfs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					String a=(dateTime.getTime()-selectstudent.get(0).getBirthday().getTime())/(1000*60*60*24)/30+"";
-					System.err.println(dateTime.getTime()-selectstudent.get(0).getBirthday().getTime()+"______");
 					//时间差得到月龄
-					System.out.println((dateTime.getTime()-selectstudent.get(0).getBirthday().getTime())/(1000*60*60*24)/30+"=========");
+					System.out.println((dateTime.getTime()-selectstudent.get(0).getBirthday().getTime())/(1000*60*60*24)/30+"=====vvvvvv====");
 					Tb_benchmark tb=new Tb_benchmark();
 					if(Integer.parseInt(a)>81){
 						
 						tb.setAge(81);
 					}
-					else if(Integer.parseInt(a)%3==0){
+					else if(Integer.parseInt(a)%3==0 && Integer.parseInt(a)>12){
 						tb.setAge(Integer.parseInt(a));
 					}else if(Integer.parseInt(a)<12){
 						tb.setAge(12);

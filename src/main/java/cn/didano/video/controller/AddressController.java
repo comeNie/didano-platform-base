@@ -431,12 +431,14 @@ public class AddressController {
 		   List<Tb_newstaff> boss=newteacherService.findBossByschool(staff.getSchoolId());
 		   staffall.addAll(boss);
 		   tb_sign_type t= null;
+		   if(!n.isEmpty()){
 			for(Tb_newstaff f:n){
 				t=newteacherService.findTypeByID(f.getSignTypeId());
 				f.setIn_time(sdf.format(t.getInTime()));
 				f.setOut_time(sdf.format(t.getOutTime()));
 				
 			}
+		   }
 			Tb_newstaff staff1=null;
 			for(Tb_teacher teacher:teacherall){
 			    staff1 =new Tb_newstaff();

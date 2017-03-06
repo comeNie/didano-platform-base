@@ -63,7 +63,53 @@ public class AddressController {
 	private ClassService classService;
 
 	
+	/**
+	 * 家长查看本班老师
+	 * @throws ParseException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 */
+	@PostMapping(value = "Parent_findteacher/{student_id}")
+	@ApiOperation(value = "家长查看本班老师", notes = "通过老师id查询小朋友")
+	@ResponseBody
+	public Out<OutList<Tb_newstaff>> Parent_findteacher(@PathVariable("student_id") Integer student_id) throws ParseException, IllegalAccessException, InvocationTargetException {
+		logger.info("访问  PostController:Parent_findteacher,student_id=" + student_id);
+		
+		Tb_address_list student = null;
+		List<Tb_teacher> classstaff = null;
+		OutList<Tb_newstaff> outList = null;	
+		Out<OutList<Tb_newstaff>> back = new Out<OutList<Tb_newstaff>>();
+		try {
+				student = addressService.findById(student_id);				
+				classstaff = addressService.findTeacherByClass(student.getClass_id());
+	
+				
+				List<Tb_newstaff> doctor = new ArrayList<Tb_newstaff>();
+				
+				
+				Tb_newstaff staff1=null;
+				for(Tb_teacher teacher:classstaff){
+				    staff1 =new Tb_newstaff();
+				    BeanUtils.copyProperties(staff1, teacher);
+				
+					staff1.setSchoolId(teacher.getSchool_id());
+					
+					doctor.add(staff1);
+				}
+				outList = new OutList<Tb_newstaff>(doctor.size(), doctor);
+				
+			
+			
 
+			back.setBackTypeWithLog(outList, BackType.SUCCESS_SEARCH_NORMAL);
+		} catch (ServiceException e) {
+			logger.warn(e.getMessage());
+			back.setServiceExceptionWithLog(e.getExceptionEnums());
+		}
+		return back;
+	}
+	
+	
 	/**
 	 * 查询班级关系对应
 	 */
@@ -238,13 +284,19 @@ public class AddressController {
 			int rowNum3=0;
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 			if(vd_staff.getId()==null){
-		   vd_date.setSchoolId(s.getSchoolId());
+				 if(teacher_a.getType()!=31){
+		   vd_date.setSchoolId(s.getSchoolId());		  
 		   vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
-		   vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));
+		   vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));		   
 		   vd_date.setCreated(new Date());
 		   rowNum3 = newteacherService.insertTypeSelective(vd_date);
+				 }
 			vd_staff.setCreated(new Date());
+			if(teacher_a.getType()!=31){
 			vd_staff.setSignTypeId(vd_date.getId());
+			}else{
+				vd_staff.setSignTypeId(0);
+			}
 			vd_staff.setSchoolId(s.getSchoolId());
 			 rowNum = newteacherService.insertTeacherSelective(vd_staff);// insert
 			 if(teacher_a.getType()==32){
@@ -254,7 +306,7 @@ public class AddressController {
 			vd_class.setStaffId(vd_staff.getId());
 			 rowNum2 = newteacherService.insertClassSelective(vd_class);
 			 }
-			 if (rowNum > 0  && rowNum3 > 0) {
+			 if (rowNum > 0 ) {
 					back.setBackTypeWithLog(BackType.SUCCESS_INSERT, "Id=" + "," + ":rowNum3=" + rowNum3);
 
 				} else {
@@ -262,6 +314,9 @@ public class AddressController {
 					back.setBackTypeWithLog(BackType.FAIL_UPDATE_AFTER_INSERT, "rowNum=" + rowNum);
 				}
 			}else {
+				if(teacher_a.getType()==31){
+					vd_staff.setSignTypeId(0);
+				}
 				rowNum = newteacherService.updatestaff(vd_staff);
 				if(teacher_a.getType()==32){
 				vd_class.setClassId(teacher_a.getClassId());
@@ -270,13 +325,17 @@ public class AddressController {
 				vd_class.setStaffId(teacher_a.getId());
 				 rowNum2 = newteacherService.updateclass(vd_class);
 				}
+				if(teacher_a.getType()!=31){
 				 vd_date.setCreated(new Date());
 					vd_date.setSchoolId(s.getSchoolId());
+					 
 					vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
 					vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));
+					 
 					vd_date.setId(newteacherService.findById(teacher_a.getId()).getSignTypeId());;
 					 rowNum3 = newteacherService.updateType(vd_date);
-					 if (rowNum > 0  && rowNum3 > 0) {
+				}
+					 if (rowNum > 0  ) {
 							back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "Id=" + "," + ":rowNum3=" + rowNum3);
 
 						} else {

@@ -46,9 +46,9 @@ SELECT tmp2.relation_id ,tmp2.title AS parent_name,p.phone AS parent_phone FROM
   SELECT a.* FROM tb_student a WHERE  a.class_id=#{id} AND a.deleted =0 ORDER BY CONVERT( a.name USING gbk )
  </select>
 <select id="findTeacherByClass" parameterType="Integer" resultType="cn.didano.base.model.Tb_teacher">
-  SELECT  tmp1.status,tmp1.school_id,tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id ,c.in_time,c.out_time FROM 
-	 (SELECT a.status,a.sign_type_id,a.school_id,a.id,a.name,a.phone,a.type,b.class_id FROM tb_staff a,tb_staff_class b 
-	 WHERE a.type=32 AND a.id=b.staff_id  AND a.deleted=0 AND b.deleted=0 ) AS tmp1 
+  SELECT  tmp1.title,tmp1.status,tmp1.school_id,tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id ,c.in_time,c.out_time FROM 
+	 (SELECT c.title,a.status,a.sign_type_id,a.school_id,a.id,a.name,a.phone,a.type,b.class_id FROM tb_staff a,tb_staff_class b ,tb_class c
+	 WHERE a.type=32 AND a.id=b.staff_id  AND a.deleted=0 AND b.deleted=0 AND b.class_id=c.id ) AS tmp1 
 	 LEFT JOIN tb_sign_type c ON (tmp1.sign_type_id =c.id)
 	 WHERE  class_id=#{id}
 </select>

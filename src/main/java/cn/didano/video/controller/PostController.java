@@ -892,6 +892,7 @@ public class PostController {
 					String time = ter.format(classes.get(0).getCreated());
 					StringBuilder builder=new StringBuilder("http://image-didanuo.oss-cn-shenzhen.aliyuncs.com/");
 					builder.append(classes.get(0).getOrgImgUrl());
+					//為对象复制
 					hand=new Hand_student(selectstudent.get(0).getName(),time,
 							classes.get(0).getHeight()/10, classes.get(0).getWeight()/1000,
 							numHeight, numWeight, percentageHeight+"%", percentageWeight+"%",

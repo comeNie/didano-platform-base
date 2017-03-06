@@ -316,6 +316,25 @@ public class AddressController {
 			}else {
 				if(teacher_a.getType()==31){
 					vd_staff.setSignTypeId(0);
+				}else{
+					
+						 if(newteacherService.findById(teacher_a.getId()).getSignTypeId()!=0){
+							vd_date.setSchoolId(s.getSchoolId());
+							 
+							vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
+							vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));
+							 
+							vd_date.setId(newteacherService.findById(teacher_a.getId()).getSignTypeId());;
+							 rowNum3 = newteacherService.updateType(vd_date);
+						 }else{
+							 vd_date.setSchoolId(s.getSchoolId());		  
+							   vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
+							   vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));		   
+							   vd_date.setCreated(new Date());
+							   rowNum3 = newteacherService.insertTypeSelective(vd_date);
+							   vd_staff.setSignTypeId(vd_date.getId());
+						 }
+						
 				}
 				rowNum = newteacherService.updatestaff(vd_staff);
 				if(teacher_a.getType()==32){
@@ -334,23 +353,7 @@ public class AddressController {
 					 rowNum2 = newteacherService.insertClassSelective(vd_class); 
 			   }
 				}
-				if(teacher_a.getType()!=31){
-				 if(newteacherService.findById(teacher_a.getId())!=null){
-					vd_date.setSchoolId(s.getSchoolId());
-					 
-					vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
-					vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));
-					 
-					vd_date.setId(newteacherService.findById(teacher_a.getId()).getSignTypeId());;
-					 rowNum3 = newteacherService.updateType(vd_date);
-				 }else{
-					 vd_date.setSchoolId(s.getSchoolId());		  
-					   vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
-					   vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));		   
-					   vd_date.setCreated(new Date());
-					   rowNum3 = newteacherService.insertTypeSelective(vd_date);
-				 }
-				}
+				
 					 if (rowNum > 0  ) {
 							back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "Id=" + "," + ":rowNum3=" + rowNum3);
 

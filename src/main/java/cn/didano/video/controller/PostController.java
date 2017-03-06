@@ -254,7 +254,6 @@ public class PostController {
 
 	/**
 	 * 编辑视频频道
-	 * 
 	 * @param c_channel
 	 * @return
 	 */
@@ -820,12 +819,12 @@ public class PostController {
 							numHeight+=tb_student_detection.getHeight();
 							numWeight+=tb_student_detection.getWeight();
 							i+=1;
-						}
-						if(classes.get(0).getHeight()>tb_student_detection.getHeight()){
-							percentageHeight+=1;
-						}
-						if(classes.get(0).getWeight()>tb_student_detection.getWeight()){
-							percentageWeight+=1;
+							if(classes.get(0).getHeight()>tb_student_detection.getHeight()){
+								percentageHeight+=1;
+							}
+							if(classes.get(0).getWeight()>tb_student_detection.getWeight()){
+								percentageWeight+=1;
+							}
 						}
 					}
 					//平均身高和体重

@@ -809,8 +809,6 @@ public class PostController {
 					tbs.setBirthday1(date2);
 					
 					List<Tb_student_detection> select_student_detection = controlService.select_student_detection(date1,date2);
-					
-					
 					//计算同龄人的平均身高和体重（selectId中的id进行查询）
 					//统计总的身高和体重
 					int numHeight=0;

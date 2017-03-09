@@ -11,5 +11,6 @@
     SELECT height,weight FROM tb_student_detection WHERE student_id IN(
 	SELECT tmp1.id FROM tb_student tmp1,tb_class tmp2 WHERE <![CDATA[birthday >= #{birthday,jdbcType=DATE} AND birthday <= #{birthday1,jdbcType=DATE}]]>
     AND tmp1.class_id=tmp2.id AND tmp2.test=0 AND tmp2.deleted=0)GROUP BY student_id;
+    
   </select>
 </mapper>

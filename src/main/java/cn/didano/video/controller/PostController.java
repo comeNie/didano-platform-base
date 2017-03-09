@@ -460,7 +460,6 @@ public class PostController {
 		Out<PageInfo<View_switch_s_c>> back = new Out<PageInfo<View_switch_s_c>>();
 		PageInfo<View_switch_s_c> data = null;
 		try {
-			System.err.println("3");
 			data = authSwitchService.selectAll(page, size, iss);
 			back.setBackTypeWithLog(data,BackType.SUCCESS);
 		} catch (ServiceException e) {
@@ -484,7 +483,6 @@ public class PostController {
 		Vd_auth_switch vd_autu_swtich = new Vd_auth_switch();
 		Out<String> back = new Out<String>();
 		try {
-			System.err.println("4");
 			BeanUtils.copyProperties(vd_autu_swtich, swi);
 			int rowNum = authSwitchService.updateUse(swi.getId(), swi.getIsUse());
 			if (rowNum < 1) {// 没更新到数据
@@ -806,7 +804,6 @@ public class PostController {
 					Tb_studentRecord tbs=new Tb_studentRecord();
 					tbs.setBirthday(date1);
 					tbs.setBirthday1(date2);
-					
 					List<Tb_student_detection> select_student_detection = controlService.select_student_detection(date1,date2);
 					//计算同龄人的平均身高和体重（selectId中的id进行查询）
 					//统计总的身高和体重
@@ -850,7 +847,6 @@ public class PostController {
 					SimpleDateFormat dfs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					String a=(dateTime.getTime()-selectstudent.get(0).getBirthday().getTime())/(1000*60*60*24)/30+"";
 					//时间差得到月龄
-					System.out.println((dateTime.getTime()-selectstudent.get(0).getBirthday().getTime())/(1000*60*60*24)/30+"=====vvvvvv====");
 					Tb_benchmark tb=new Tb_benchmark();
 					//判断月龄在哪个阶段
 					if(Integer.parseInt(a)>81){
@@ -875,25 +871,29 @@ public class PostController {
 					String compareWeight=null;
 					
 					//和标准的比较
-					Double ght=(double) (classes.get(0).getWeight()/1000);
-					Double hgt=(double) (classes.get(0).getHeight()/10);
+					
+					Double CompareHeight=(double) (classes.get(0).getHeight()/10);
+					Double CompareWeight=(double) (classes.get(0).getWeight()/1000);
 					for (Tb_benchmark tb_benchmark : selectByHeightAddWeight) {
-						if(hgt>tb_benchmark.getHeight1() && hgt<tb_benchmark.getHeight2()){
+						
+						//判断身高
+						if(CompareHeight>=tb_benchmark.getHeight1() && CompareHeight<=tb_benchmark.getHeight2()){
 							compareHeight="正常";
 						}
-						if(hgt>tb_benchmark.getHeight2()){
+						if(CompareHeight>tb_benchmark.getHeight2()){
 							compareHeight="偏高";
 						}
-						if(hgt<tb_benchmark.getHeight1()){
+						if(CompareHeight<tb_benchmark.getHeight1()){
 							compareHeight="偏矮";
 						}
-						if(ght>tb_benchmark.getWeight1() && ght<tb_benchmark.getWeight2()){
+						//判断体重
+						if(CompareWeight>=tb_benchmark.getWeight1() && CompareWeight<=tb_benchmark.getWeight2()){
 							compareWeight="正常";
 						}
-						if(ght>tb_benchmark.getWeight2()){
+						if(CompareWeight>tb_benchmark.getWeight2()){
 							compareWeight="偏胖";
 						}
-						if(ght<tb_benchmark.getWeight1()){
+						if(CompareWeight<tb_benchmark.getWeight1()){
 							compareWeight="偏瘦";
 						}
 					}

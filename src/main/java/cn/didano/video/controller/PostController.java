@@ -855,16 +855,18 @@ public class PostController {
 					Tb_benchmark tb=new Tb_benchmark();
 					if(Integer.parseInt(a)>81){
 						tb.setAge(81);
-					}
-					else if(Integer.parseInt(a)%3==0 && Integer.parseInt(a)>12){
-						tb.setAge(Integer.parseInt(a));
 					}else if(Integer.parseInt(a)<12){
 						tb.setAge(12);
+					}else if(Integer.parseInt(a)%3==0 && Integer.parseInt(a)>12){
+						tb.setAge(Integer.parseInt(a));
 					}else{
-						int b= Integer.parseInt(a)/3;
-						tb.setAge(b);
-						
-						
+						if(Integer.parseInt(a)%3==1){
+							int b= (Integer.parseInt(a)/3)*3;
+							tb.setAge(b);
+						}else{
+							int b= ((Integer.parseInt(a)/3)+1)*3;
+							tb.setAge(b);
+						}
 					}
 					tb.setSex((int)selectstudent.get(0).getGender());
 					List<Tb_benchmark> selectByHeightAddWeight = controlService.selectByHeightAddWeight(tb);

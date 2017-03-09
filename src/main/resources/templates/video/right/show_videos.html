@@ -234,13 +234,13 @@ function setting1(obj){
 function channel_edit(obj){
 	var channel_edit_enName_id = "channel_edit_enName"+$(obj).attr('id');
 	var channel_edit_enName = document.getElementById(channel_edit_enName_id).value;
+	var EnName="labelEnName"+$(obj).attr('id');
 	if(channel_edit_enName==""){
-		var EnName="labelEnName"+$(obj).attr('id');
 		document.getElementById(EnName).innerHTML="请将英文名称填写完整";
 		window.event.cancelBubble = true;
 		return false;
 	}else{
-		
+		document.getElementById(EnName).innerHTML="";
 		var channel_edit_name_id = "channel_edit_name"+$(obj).attr('id');
 	    var channel_edit_name = document.getElementById(channel_edit_name_id).value;
 	    var channel_edit_classId_id = "channel_edit_classId"+$(obj).attr('id');
@@ -272,7 +272,7 @@ function channel_edit(obj){
 	                alert("配置成功");
 	                $('#'+channelOldId).parent().siblings().text(channel_edit_name+'监控');
 	                // var num = ($('#'+channelOldId).siblings().attr('id').split('-')[1]);
-	
+
 	            }
 	        },
 	        error:function(){
@@ -284,12 +284,14 @@ function channel_edit(obj){
 function live_edit(obj){
 	var live_edit_enName_id = "live_edit_enName"+$(obj).attr('id');
     var live_edit_enName = document.getElementById(live_edit_enName_id).value;
-	if(live_edit_enName==""){
-		var EnName="labelEnName"+$(obj).attr('id');
+    var EnName="labelEnName"+$(obj).attr('id');
+    if(live_edit_enName==""){
 		document.getElementById(EnName).innerHTML="请将英文名称填写完整";
 		window.event.cancelBubble = true;
 		return false;
 	}else{
+		
+		document.getElementById(EnName).innerHTML="";
 		var live_edit_name_id = "live_edit_name"+$(obj).attr('id');
 	    var live_edit_name = document.getElementById(live_edit_name_id).value;
 	    var live_edit_classId_id = "live_edit_classId"+$(obj).attr('id');

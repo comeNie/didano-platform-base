@@ -518,7 +518,7 @@ public class AddressController {
 					List<Tb_parent> parent = addressService.findparent(list.getId());
 					list.getParent().addAll(parent);
 				}
-				
+				cs.setClassId(student.get(0).getClass_id());
 				cs.setClassName(classService.selectNameByPrimaryKey(student.get(0).getClass_id()));
 				cs.getStudent().addAll(student);
 				List<Tb_teacher> classstaff = addressService.findTeacherByClass(student.get(0).getClass_id());

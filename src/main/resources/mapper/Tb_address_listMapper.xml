@@ -13,7 +13,7 @@
  </select>
 
  <select id="findByName"  parameterType="cn.didano.base.model.Tb_studentData" resultType="cn.didano.base.model.Tb_address_list">
-   select * from tb_student where name=#{name} and school_id=#{schoolid} 
+   select * from tb_student where name like #{name} and school_id=#{schoolid} and deleted=0
  </select>
  <select id="findByschool" parameterType="Integer" resultType="cn.didano.base.model.Tb_address_list">
   SELECT * FROM tb_student WHERE school_id=#{id} ORDER BY class_id

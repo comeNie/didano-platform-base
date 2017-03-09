@@ -1,11 +1,14 @@
 package cn.didano.video.controller;
-
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
@@ -81,12 +84,8 @@ public class AddressController {
 		Out<OutList<Tb_newstaff>> back = new Out<OutList<Tb_newstaff>>();
 		try {
 				student = addressService.findById(student_id);				
-				classstaff = addressService.findTeacherByClass(student.getClass_id());
-	
-				
-				List<Tb_newstaff> doctor = new ArrayList<Tb_newstaff>();
-				
-				
+				classstaff = addressService.findTeacherByClass(student.getClass_id());				
+				List<Tb_newstaff> doctor = new ArrayList<Tb_newstaff>();								
 				Tb_newstaff staff1=null;
 				for(Tb_teacher teacher:classstaff){
 				    staff1 =new Tb_newstaff();
@@ -172,13 +171,14 @@ public class AddressController {
 	public Out<Tb_bossData> studentstaff_searchByName(@PathVariable("name") String name,@PathVariable("id") Integer id) {
 		logger.info("访问  PostController:studentstaff_searchByName,name=" + name+",id="+id);		
 		Tb_newstaff s0 = newteacherService.findById(id);
-		List<Tb_newstaff> staff = newteacherService.findByName(name,s0.getSchoolId());
+		//按名字查询老师集合
+		List<Tb_newstaff> staff = newteacherService.findByName("%"+name+"%",s0.getSchoolId());
 		Tb_bossData data = new Tb_bossData();
 		List<Tb_address_list> student = null;
 		List<Tb_classStudent> student2 = new ArrayList<Tb_classStudent>();
-		Tb_classStudent s = new Tb_classStudent();
-		Tb_classStudent s2 = new Tb_classStudent();
-		Tb_classStudent s3 = new Tb_classStudent();
+		//学生同名顶多三次
+		
+		
 		
 		Out<Tb_bossData> back = new Out<Tb_bossData>();
 		try {
@@ -187,43 +187,45 @@ public class AddressController {
 				data.getStaff().addAll(staff);
 			}
 			Tb_studentData data1 = new Tb_studentData();
-			data1.setName(name);
+			data1.setName("%"+name+"%");
 			data1.setSchoolid(s0.getSchoolId());
+			//按名字查询学生集合
 			student = addressService.findByname(data1);
-			if(student.size()!=0){
-			s.setClassName(classService.selectNameByPrimaryKey(student.get(0).getClass_id()));
+			//hashmap1 key=class_id value= list object=hashmap2
+			//循环，取每个
+			
+			//当出现一个新的class 创建一个hashmap2 key=student_id value= list
+			//循环将处理，当getkey by student_id =null,创建一个list，并将家长写入list中
+			
+			//如果有，通过hashmap 的key获取这个家长list，然后写入
+			//组装我所需要的数据格式
+			//循环，按
+			
+			Map<Integer,List<Tb_address_list>> map = new HashMap<Integer,List<Tb_address_list>>();
 			for (Tb_address_list list : student) {
-				List<Tb_parent> parent = addressService.findparent(list.getId());
+    			List<Tb_parent> parent = addressService.findparent(list.getId());
 				list.getParent().addAll(parent);
-				if(classService.selectNameByPrimaryKey(list.getClass_id()).equals(s.getClassName())){
-					s.getStudent().add(list);
-				}else {
-					if(s2.getClassName()==null){
-					s2.setClassName(classService.selectNameByPrimaryKey(list.getClass_id()));
-					}
-					if(classService.selectNameByPrimaryKey(list.getClass_id()).equals(s2.getClassName())){
-						s2.getStudent().add(list);
-					}else{
-						if(s3.getClassName()==null){
-							s3.setClassName(classService.selectNameByPrimaryKey(list.getClass_id()));
-						}
-						if(classService.selectNameByPrimaryKey(list.getClass_id()).equals(s3.getClassName())){
-							s3.getStudent().add(list);
-						}
-					}
-					
-					
+				if(map.containsKey(list.getClass_id())){
+					map.get(list.getClass_id()).add(list);
+				}else{
+					List<Tb_address_list> address=new ArrayList<Tb_address_list>();
+					address.add(list);
+					map.put(list.getClass_id(),address);
 				}
 			}
-			student2.add(s);
-			if(s2.getStudent().size()!=0){
-			student2.add(s2);		
+			
+			Set<Integer> keys = map.keySet();
+			Iterator<Integer> it = keys.iterator();
+			while(it.hasNext()){
+				Integer key = it.next();
+				List<Tb_address_list> val = map.get(key);
+				Tb_classStudent s = new Tb_classStudent();
+				s.setClassName(classService.selectNameByPrimaryKey(key));
+				s.setStudent(val);
+				student2.add(s);
 			}
-			if(s3.getStudent().size()!=0){
-				student2.add(s3);
-			}
-			data.getStudentall().addAll(student2);
-			}
+			data.setStudentall(student2);
+
 			back.setBackTypeWithLog(data, BackType.SUCCESS_SEARCH_NORMAL);
 		} catch (ServiceException e) {
 			logger.warn(e.getMessage());

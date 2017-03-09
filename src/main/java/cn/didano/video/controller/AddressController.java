@@ -442,6 +442,7 @@ public class AddressController {
 			for (Tb_class c : classall) {
 				student = addressService.findByClass(c.getId());
 				cs = new Tb_classStudent();
+				cs.setClassId(c.getId());
 				cs.setClassName(c.getTitle());
 				for (Tb_address_list list : student) {
 					List<Tb_parent> parent = addressService.findparent(list.getId());

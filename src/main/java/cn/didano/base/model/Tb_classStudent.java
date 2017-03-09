@@ -6,7 +6,15 @@ import java.util.List;
 public class Tb_classStudent {
 
 	private String className;
+	private Integer classId;
 	private List<Tb_address_list> student = new ArrayList<Tb_address_list>();
+	
+	public Integer getClassId() {
+		return classId;
+	}
+	public void setClassId(Integer classId) {
+		this.classId = classId;
+	}
 	public String getClassName() {
 		return className;
 	}

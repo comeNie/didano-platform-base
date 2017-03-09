@@ -852,18 +852,21 @@ public class PostController {
 					//时间差得到月龄
 					System.out.println((dateTime.getTime()-selectstudent.get(0).getBirthday().getTime())/(1000*60*60*24)/30+"=====vvvvvv====");
 					Tb_benchmark tb=new Tb_benchmark();
+					//判断月龄在哪个阶段
 					if(Integer.parseInt(a)>81){
 						tb.setAge(81);
-					}
-					else if(Integer.parseInt(a)%3==0 && Integer.parseInt(a)>12){
-						tb.setAge(Integer.parseInt(a));
 					}else if(Integer.parseInt(a)<12){
 						tb.setAge(12);
+					}else if(Integer.parseInt(a)%3==0 && Integer.parseInt(a)>12){
+						tb.setAge(Integer.parseInt(a));
 					}else{
-						int b= Integer.parseInt(a)/3;
-						tb.setAge(b);
-						
-						
+						if(Integer.parseInt(a)%3==1){
+							int b= (Integer.parseInt(a)/3)*3;
+							tb.setAge(b);
+						}else{
+							int b= ((Integer.parseInt(a)/3)+1)*3;
+							tb.setAge(b);
+						}
 					}
 					tb.setSex((int)selectstudent.get(0).getGender());
 					List<Tb_benchmark> selectByHeightAddWeight = controlService.selectByHeightAddWeight(tb);

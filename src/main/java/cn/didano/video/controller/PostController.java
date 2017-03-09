@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
-
 import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Bs_good;
 import cn.didano.base.model.Hand_student;
@@ -807,6 +806,7 @@ public class PostController {
 					Tb_studentRecord tbs=new Tb_studentRecord();
 					tbs.setBirthday(date1);
 					tbs.setBirthday1(date2);
+					
 					List<Tb_student_detection> select_student_detection = controlService.select_student_detection(date1,date2);
 					//计算同龄人的平均身高和体重（selectId中的id进行查询）
 					//统计总的身高和体重

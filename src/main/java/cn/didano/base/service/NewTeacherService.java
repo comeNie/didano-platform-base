@@ -114,9 +114,9 @@ public class NewTeacherService {
 		return dateMapper.updateByPrimaryKeySelective(record);
 	}
 	/**
-	 * 通过员工姓名查询
+	 * 校长通过员工姓名查询
 	 */
-	public List<Tb_newstaff> findByName(String name,Integer id){
+	public List<Tb_newstaff> findByNameSchool(String name,Integer id){
 		Tb_newstaffExample condition = new Tb_newstaffExample();
 		Tb_newstaffExample.Criteria criteria = condition.createCriteria();
 		// 对于已经deleted=1的不显示 禁用不显示
@@ -125,6 +125,7 @@ public class NewTeacherService {
 		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
 		return newstaffMapper.selectByExample(condition);
 	}
+	
 	/**
 	 * 通过员工id查询
 	 */

@@ -30,6 +30,7 @@ import cn.didano.base.model.Tb_newstudent;
 import cn.didano.base.model.Tb_parent;
 import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_schoolparent;
+import cn.didano.base.model.Tb_staffData;
 import cn.didano.base.model.Tb_staff_class;
 import cn.didano.base.model.Tb_studentData;
 import cn.didano.base.model.Tb_studentparent;
@@ -171,15 +172,24 @@ public class AddressController {
 	public Out<Tb_bossData> studentstaff_searchByName(@PathVariable("name") String name,@PathVariable("id") Integer id) {
 		logger.info("访问  PostController:studentstaff_searchByName,name=" + name+",id="+id);		
 		Tb_newstaff s0 = newteacherService.findById(id);
+		Tb_newstaff s1 = addressService.findbystaffbyid(id);
 		//按名字查询老师集合
-		List<Tb_newstaff> staff = newteacherService.findByName("%"+name+"%",s0.getSchoolId());
+		List<Tb_newstaff> staff = null;
+		if(s0.getType()==31){
+				staff=newteacherService.findByNameSchool("%"+name+"%",s0.getSchoolId());
+		}else{
+			
+			Tb_staffData data2 = new Tb_staffData();
+			data2.setName("%"+name+"%");
+			data2.setClass_id(s1.getClass_id());
+			staff=addressService.findTeacherByNameClass(data2);
+		}
+		
 		Tb_bossData data = new Tb_bossData();
 		List<Tb_address_list> student = null;
 		List<Tb_classStudent> student2 = new ArrayList<Tb_classStudent>();
 		//学生同名顶多三次
-		
-		
-		
+	
 		Out<Tb_bossData> back = new Out<Tb_bossData>();
 		try {
 
@@ -187,10 +197,18 @@ public class AddressController {
 				data.getStaff().addAll(staff);
 			}
 			Tb_studentData data1 = new Tb_studentData();
+			if(s0.getType()==31){
+			
 			data1.setName("%"+name+"%");
 			data1.setSchoolid(s0.getSchoolId());
 			//按名字查询学生集合
 			student = addressService.findByname(data1);
+			}else{
+				data1.setName("%"+name+"%");
+				data1.setSchoolid(s1.getClass_id());
+				student = addressService.findBynameClass(data1);
+			}
+			
 			//hashmap1 key=class_id value= list object=hashmap2
 			//循环，取每个
 			

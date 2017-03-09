@@ -15,6 +15,9 @@
  <select id="findByName"  parameterType="cn.didano.base.model.Tb_studentData" resultType="cn.didano.base.model.Tb_address_list">
    select * from tb_student where name like #{name} and school_id=#{schoolid} and deleted=0
  </select>
+ <select id="findByNameClass"  parameterType="cn.didano.base.model.Tb_studentData" resultType="cn.didano.base.model.Tb_address_list">
+   select * from tb_student where name like #{name} and class_id=#{schoolid} and deleted=0
+ </select>
  <select id="findByschool" parameterType="Integer" resultType="cn.didano.base.model.Tb_address_list">
   SELECT * FROM tb_student WHERE school_id=#{id} ORDER BY class_id
  </select>
@@ -51,6 +54,17 @@ SELECT tmp2.relation_id ,tmp2.title AS parent_name,p.phone AS parent_phone FROM
 	 WHERE a.type=32 AND a.id=b.staff_id  AND a.deleted=0 AND b.deleted=0 AND b.class_id=c.id ) AS tmp1 
 	 LEFT JOIN tb_sign_type c ON (tmp1.sign_type_id =c.id)
 	 WHERE  class_id=#{id}
+</select>
+<select id="findBystaffbyId" parameterType="Integer" resultType="cn.didano.base.model.Tb_newstaff">
+ SELECT c.title,a.status,a.sign_type_id,a.school_id,a.id,a.name,a.phone,a.type,b.class_id FROM tb_staff a,tb_staff_class b ,tb_class c
+	 WHERE a.type=32 AND a.id=b.staff_id  AND a.deleted=0  AND b.class_id=c.id AND a.id=#{id}
+</select>
+<select id="findTeacherByNameClass" parameterType="cn.didano.base.model.Tb_staffData" resultType="cn.didano.base.model.Tb_newstaff"> 
+    SELECT  tmp1.title,tmp1.status,tmp1.school_id,tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id ,c.in_time,c.out_time FROM 
+	 (SELECT c.title,a.status,a.sign_type_id,a.school_id,a.id,a.name,a.phone,a.type,b.class_id FROM tb_staff a,tb_staff_class b ,tb_class c
+	 WHERE a.type=32 AND a.id=b.staff_id  AND a.deleted=0 AND b.deleted=0 AND b.class_id=c.id AND a.name LIKE #{name}) AS tmp1 
+	 LEFT JOIN tb_sign_type c ON (tmp1.sign_type_id =c.id)
+	 WHERE  class_id=#{class_id}
 </select>
 <update id="Update" parameterType="cn.didano.base.model.Tb_address_list">UPDATE tb_student a SET a.name=#{name},a.class_id=#{class_id},a.gender=#{gender,jdbcType=TINYINT},a.birthday=#{birthday,jdbcType=DATE} where a.id=#{id}</update>
 

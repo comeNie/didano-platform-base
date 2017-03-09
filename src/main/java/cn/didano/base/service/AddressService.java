@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import cn.didano.base.dao.Tb_address_listMapper;
 import cn.didano.base.model.Tb_address_list;
 import cn.didano.base.model.Tb_class;
+import cn.didano.base.model.Tb_newstaff;
 import cn.didano.base.model.Tb_parent;
 import cn.didano.base.model.Tb_relation;
+import cn.didano.base.model.Tb_staffData;
 import cn.didano.base.model.Tb_studentData;
 import cn.didano.base.model.Tb_teacher;
 @Service
@@ -18,7 +20,12 @@ public class AddressService {
 	@Autowired
 	private Tb_address_listMapper addressMapper;
 	
-	
+	/**
+	 * 查询
+	 */
+	public Tb_newstaff findbystaffbyid(Integer id){
+		return addressMapper.findBystaffbyId(id);
+	}
 	
 	/**
 	 * 通过小朋友id删除父母信息
@@ -44,6 +51,12 @@ public class AddressService {
 	 */
 	public List<Tb_address_list> findByname(Tb_studentData data){
 		return addressMapper.findByName(data);
+	}
+	/**
+	 * 通过名字班级查询小朋友
+	 */
+	public List<Tb_address_list> findBynameClass(Tb_studentData data){
+		return addressMapper.findByNameClass(data);
 	}
 	/**
 	 * 通过学校查询所有老师
@@ -74,6 +87,12 @@ public class AddressService {
 	 */
 	public List<Tb_teacher> findTeacherByClass(Integer id){
 		return addressMapper.findTeacherByClass(id);
+	}
+	/**
+	 * 通过名字班级查询该班的老师
+	 */
+	public List<Tb_newstaff> findTeacherByNameClass(Tb_staffData data2){
+		return addressMapper.findTeacherByNameClass(data2);
 	}
 	/**
 	 * 通过班级查询该班的所有小朋友

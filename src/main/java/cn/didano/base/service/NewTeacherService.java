@@ -44,6 +44,20 @@ public class NewTeacherService {
 		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
 		return newstaffMapper.selectByExample(condition);
 	}
+	
+	/**
+	 * 通过学校查询该学校的医生和保洁
+	 */
+	public List<Tb_newstaff> findBossByNameschool(String name,Integer schoolid){
+		Tb_newstaffExample condition = new Tb_newstaffExample();
+		Tb_newstaffExample.Criteria criteria = condition.createCriteria();
+		// 对于已经deleted=1的不显示 禁用不显示
+		criteria.andNameLike(name);
+		criteria.andTypeEqualTo((byte)31);
+		criteria.andSchoolIdEqualTo(schoolid);
+		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
+		return newstaffMapper.selectByExample(condition);
+	}
 	/**
 	 * 通过ID查询
 	 */
@@ -148,6 +162,19 @@ public class NewTeacherService {
 		Tb_newstaffExample condition = new Tb_newstaffExample();
 		Tb_newstaffExample.Criteria criteria = condition.createCriteria();
 		// 对于已经deleted=1的不显示 禁用不显示
+		criteria.andTypeBetween((byte)33, (byte)34);
+		criteria.andSchoolIdEqualTo(schoolid);
+		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
+		return newstaffMapper.selectByExample(condition);
+	}
+	/**
+	 * 通过学校查询该学校的医生和保洁
+	 */
+	public List<Tb_newstaff> findByNameType(String name,Integer schoolid){
+		Tb_newstaffExample condition = new Tb_newstaffExample();
+		Tb_newstaffExample.Criteria criteria = condition.createCriteria();
+		// 对于已经deleted=1的不显示 禁用不显示
+		criteria.andNameLike(name);
 		criteria.andTypeBetween((byte)33, (byte)34);
 		criteria.andSchoolIdEqualTo(schoolid);
 		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());

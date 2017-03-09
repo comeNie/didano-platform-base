@@ -463,6 +463,7 @@ public class PostController {
 			data = authSwitchService.selectAll(page, size, iss);
 			back.setBackTypeWithLog(data,BackType.SUCCESS);
 		} catch (ServiceException e) {
+			
 			logger.warn(e.getMessage());
 			back.setBackTypeWithLog(BackType.FAIL_SEARCH_NORMAL);
 		}

@@ -813,7 +813,7 @@ public class PostController {
 					//统计总的身高和体重
 					int numHeight=0;
 					int numWeight=0;
-					//统计超过的了多少人
+					//统计该学生超过的人数
 					int percentageHeight=0;
 					int percentageWeight=0;
 					//统计身高体重有数据的有多少人
@@ -853,6 +853,7 @@ public class PostController {
 					//时间差得到月龄
 					System.out.println((dateTime.getTime()-selectstudent.get(0).getBirthday().getTime())/(1000*60*60*24)/30+"=====vvvvvv====");
 					Tb_benchmark tb=new Tb_benchmark();
+					//判断月龄在哪个阶段
 					if(Integer.parseInt(a)>81){
 						tb.setAge(81);
 					}else if(Integer.parseInt(a)<12){

@@ -831,6 +831,7 @@ public class PostController {
 							if(classes.get(0).getWeight()>tb_student_detection.getWeight()){
 								percentageWeight+=1;
 							}
+							
 						}
 					}
 					//平均身高和体重
@@ -838,7 +839,9 @@ public class PostController {
 						numHeight=numHeight/i/10;
 						numWeight=numWeight/i/1000;
 						//超过的百分比
+						System.err.println(percentageHeight+","+i);
 						percentageHeight=percentageHeight*100/i;
+						System.err.println(percentageHeight);
 						percentageWeight=percentageWeight*100/i;
 					}else{
 						numHeight=0;

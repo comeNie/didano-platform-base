@@ -174,15 +174,18 @@ public class AddressController {
 		Tb_newstaff s0 = newteacherService.findById(id);
 		Tb_newstaff s1 = addressService.findbystaffbyid(id);
 		//按名字查询老师集合
-		List<Tb_newstaff> staff = null;
+		List<Tb_newstaff> staff = new ArrayList<Tb_newstaff>();
 		if(s0.getType()==31){
 				staff=newteacherService.findByNameSchool("%"+name+"%",s0.getSchoolId());
 		}else{
-			
+			List<Tb_newstaff>	n=	newteacherService.findByNameType("%"+name+"%",s0.getSchoolId());
+			List<Tb_newstaff> boss=newteacherService.findBossByNameschool("%"+name+"%",s0.getSchoolId());
 			Tb_staffData data2 = new Tb_staffData();
 			data2.setName("%"+name+"%");
 			data2.setClass_id(s1.getClass_id());
-			staff=addressService.findTeacherByNameClass(data2);
+			staff.addAll(boss);
+			staff.addAll(addressService.findTeacherByNameClass(data2));
+			staff.addAll(n);
 		}
 		
 		Tb_bossData data = new Tb_bossData();

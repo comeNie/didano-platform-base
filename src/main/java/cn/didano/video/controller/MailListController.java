@@ -510,11 +510,13 @@ public class MailListController {
 				List<Tb_parent> parentall = new ArrayList<Tb_parent>();
 				Tb_parent parent = null;
 				for (Tb_class c : val) {
+					if(c.getParent_name()!=null){
 					parent = new Tb_parent();
 					parent.setParent_name(c.getParent_name());
 					parent.setParent_phone(c.getParent_phone());
 					parent.setRelation_id(c.getRelation_id());
 					parentall.add(parent);
+					}
 				}
 				Tb_classStudentParent csp = new Tb_classStudentParent();
 				BeanUtils.copyProperties(csp, val.get(0));

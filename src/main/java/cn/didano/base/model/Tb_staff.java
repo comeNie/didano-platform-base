@@ -11,6 +11,7 @@ public class Tb_staff {
 
     private String name;
 
+    private String title;
     private String phone;
 
     private String rfid;
@@ -29,7 +30,15 @@ public class Tb_staff {
 
     private Boolean deleted;
 
-    public Integer getId() {
+    public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Integer getId() {
         return id;
     }
 

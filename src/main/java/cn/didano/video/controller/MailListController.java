@@ -547,6 +547,7 @@ public class MailListController {
 			while (it.hasNext()) {
 				Integer key = it.next();
 				List<Tb_mailList_list> val = map.get(key);
+				
 				cs = new Tb_classStudent();
 				cs.setClassId(key);
 				if (!val.isEmpty()) {

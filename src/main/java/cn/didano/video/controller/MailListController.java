@@ -217,19 +217,20 @@ public class MailListController {
 					staffAll.add(target0);
 				}
 
-				List<Tb_staff> n = newteacherService.findByNameType("%" + name + "%", s0.getSchoolId());
-				tb_sign_type t1 = null;
-				if (!n.isEmpty()) {
-					for (Tb_staff one : n) {
-						Tb_staff4MailList target1 = new Tb_staff4MailList();
-						BeanUtils.copyProperties(target1, one);
-						if (target1.getSignTypeId() != 0) {
-							t1 = newteacherService.findTypeByID(target1.getSignTypeId());
-							target1.setIn_time(sdf.format(t1.getInTime()));
-							target1.setOut_time(sdf.format(t1.getOutTime()));
-						}
-						staffAll.add(target1);
+				
+			}
+			List<Tb_staff> n = newteacherService.findByNameType("%" + name + "%", s0.getSchoolId());
+			tb_sign_type t1 = null;
+			if (!n.isEmpty()) {
+				for (Tb_staff one : n) {
+					Tb_staff4MailList target1 = new Tb_staff4MailList();
+					BeanUtils.copyProperties(target1, one);
+					if (target1.getSignTypeId() != 0) {
+						t1 = newteacherService.findTypeByID(target1.getSignTypeId());
+						target1.setIn_time(sdf.format(t1.getInTime()));
+						target1.setOut_time(sdf.format(t1.getOutTime()));
 					}
+					staffAll.add(target1);
 				}
 			}
 		}

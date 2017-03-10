@@ -166,30 +166,73 @@ public class MailListController {
 
 	/**
 	 * 通过名字搜索
+	 * 
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
 	 */
 	@PostMapping(value = "studentstaff_searchByName/{name}/{id}")
 	@ApiOperation(value = "通过名字搜索", notes = "通过名字搜索")
 	@ResponseBody
-	public Out<Tb_bossData> studentstaff_searchByName(@PathVariable("name") String name,
-			@PathVariable("id") Integer id) {
+	public Out<Tb_bossData> studentstaff_searchByName(@PathVariable("name") String name, @PathVariable("id") Integer id)
+			throws IllegalAccessException, InvocationTargetException {
 		logger.info("访问  MailListController:studentstaff_searchByName,name=" + name + ",id=" + id);
 		Tb_staff s0 = newteacherService.findById(id);
 		Tb_staff4MailList s1 = mailListService.findbystaffbyid(id);
 		// 按名字查询老师集合
-		List<Tb_staff> staff = new ArrayList<Tb_staff>();
+		List<Tb_staff> staffAll = new ArrayList<Tb_staff>();
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 		if (s0.getType() == StaffType.SCHOOLMASTER.getIndex()) {
-			staff = newteacherService.findByNameSchool("%" + name + "%", s0.getSchoolId());
+			List<Tb_staff> staffA = newteacherService.findByNameSchool("%" + name + "%", s0.getSchoolId());
+			// 取教职工（老师）
+			Tb_staff4MailList target = null;
+			tb_sign_type t = null;
+			for (Tb_staff staff : staffA) {
+				target = new Tb_staff4MailList();
+				BeanUtils.copyProperties(target, staff);
+				if (target.getSignTypeId() != 0) {
+					t = newteacherService.findTypeByID(target.getSignTypeId());
+					target.setIn_time(sdf.format(t.getInTime()));
+					target.setOut_time(sdf.format(t.getOutTime()));
+				}
+				staffAll.add(target);
+			}
+
 		} else {
-			List<Tb_staff> n = newteacherService.findByNameType("%" + name + "%", s0.getSchoolId());
 			List<Tb_staff> boss = newteacherService.findBossByNameschool("%" + name + "%", s0.getSchoolId());
 			Tb_staffData data2 = new Tb_staffData();
 			data2.setName("%" + name + "%");
 			data2.setClass_id(s1.getClass_id());
-			staff.addAll(boss);
-			staff.addAll(mailListService.findTeacherByNameClass(data2));
-			staff.addAll(n);
-		}
+			staffAll.addAll(boss);
+			List<Tb_staff> teacherAll = mailListService.findTeacherByNameClass(data2);
+			tb_sign_type t0 = null;
+			if (!teacherAll.isEmpty()) {
+				for (Tb_staff one : teacherAll) {
+					Tb_staff4MailList target0 = new Tb_staff4MailList();
+					BeanUtils.copyProperties(target0, one);
+					if (target0.getSignTypeId() != 0) {
+						t0 = newteacherService.findTypeByID(target0.getSignTypeId());
+						target0.setIn_time(sdf.format(t0.getInTime()));
+						target0.setOut_time(sdf.format(t0.getOutTime()));
+					}
+					staffAll.add(target0);
+				}
 
+				List<Tb_staff> n = newteacherService.findByNameType("%" + name + "%", s0.getSchoolId());
+				tb_sign_type t1 = null;
+				if (!n.isEmpty()) {
+					for (Tb_staff one : n) {
+						Tb_staff4MailList target1 = new Tb_staff4MailList();
+						BeanUtils.copyProperties(target1, one);
+						if (target1.getSignTypeId() != 0) {
+							t1 = newteacherService.findTypeByID(target1.getSignTypeId());
+							target1.setIn_time(sdf.format(t1.getInTime()));
+							target1.setOut_time(sdf.format(t1.getOutTime()));
+						}
+						staffAll.add(target1);
+					}
+				}
+			}
+		}
 		Tb_bossData data = new Tb_bossData();
 		List<Tb_mailList_list> student = null;
 		List<Tb_classStudent> student2 = new ArrayList<Tb_classStudent>();
@@ -198,8 +241,8 @@ public class MailListController {
 		Out<Tb_bossData> back = new Out<Tb_bossData>();
 		try {
 
-			if (staff.size() != 0) {
-				data.getStaff().addAll(staff);
+			if (staffAll.size() != 0) {
+				data.getStaff().addAll(staffAll);
 			}
 			Tb_studentData data1 = new Tb_studentData();
 			if (s0.getType() == StaffType.SCHOOLMASTER.getIndex()) {
@@ -255,6 +298,7 @@ public class MailListController {
 			logger.warn(e.getMessage());
 			back.setServiceExceptionWithLog(e.getExceptionEnums());
 		}
+
 		return back;
 	}
 
@@ -444,7 +488,7 @@ public class MailListController {
 		try {
 			// 取该学校所有班级对应的学生
 			List<Tb_class> classall = mailListService.findClassByschool(staff.getSchoolId());
-			//按学生分类存进一个map
+			// 按学生分类存进一个map
 			Map<Integer, List<Tb_class>> m = new HashMap<Integer, List<Tb_class>>();
 			for (Tb_class c : classall) {
 				if (m.containsKey(c.getId())) {
@@ -455,7 +499,7 @@ public class MailListController {
 					m.put(c.getId(), newOne);
 				}
 			}
-			//循环遍历成一个学生家长集合
+			// 循环遍历成一个学生家长集合
 			List<Tb_classStudentParent> cspAll = new ArrayList<Tb_classStudentParent>();
 			Set<Integer> keys1 = m.keySet();
 			Iterator<Integer> it1 = keys1.iterator();
@@ -476,7 +520,7 @@ public class MailListController {
 				csp.setParent(parentall);
 				cspAll.add(csp);
 			}
-			//将学生家长集合通过班级分类
+			// 将学生家长集合通过班级分类
 			Map<Integer, List<Tb_mailList_list>> map = new HashMap<Integer, List<Tb_mailList_list>>();
 			Tb_mailList_list mailList = null;
 
@@ -497,7 +541,7 @@ public class MailListController {
 					map.put(c.getClass_id(), student);
 				}
 			}
-			//循环map将数据返回给总返回数据
+			// 循环map将数据返回给总返回数据
 			Set<Integer> keys = map.keySet();
 			Iterator<Integer> it = keys.iterator();
 			while (it.hasNext()) {
@@ -511,7 +555,7 @@ public class MailListController {
 				cs.setStudent(val);
 				student2.add(cs);
 			}
-		
+
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 			// 返回数据集合
 			List<Tb_staff4MailList> staffall = new ArrayList<Tb_staff4MailList>();

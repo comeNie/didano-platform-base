@@ -1,5 +1,12 @@
 package cn.didano.base.model;
 
+/**
+ * @author Administrator
+ *Rewrite Date：<修改日期:2017-03-09>
+ *Log ID：<1>
+ *Depiction：<查询tb_student_detelent表的数据封装类>
+ *Writer：杨朝强
+ */
 public class Hand_student_detection {
     private Integer height;
 

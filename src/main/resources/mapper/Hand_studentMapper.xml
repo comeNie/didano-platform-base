@@ -8,9 +8,18 @@
 		<result column="weight" jdbcType="INTEGER" property="weight" />
 	</resultMap>
   <select id="select_student_detection" resultMap="BaseResultMap">
-    SELECT height,weight FROM tb_student_detection WHERE student_id IN(
-	SELECT tmp1.id FROM tb_student tmp1,tb_class tmp2 WHERE <![CDATA[birthday >= #{birthday,jdbcType=DATE} AND birthday <= #{birthday1,jdbcType=DATE}]]>
-    AND tmp1.class_id=tmp2.id AND tmp2.tested=0 AND tmp2.deleted=0)GROUP BY student_id;
-    
+SELECT
+	tb_student_detection.height,
+	tb_student_detection.weight
+FROM tb_student tmp1
+INNER JOIN tb_student_detection ON tmp1.id = tb_student_detection.student_id
+INNER JOIN tb_class tmp2 ON tmp1.class_id = tmp2.id
+WHERE
+		<![CDATA[tmp1.birthday >= #{birthday,jdbcType=DATE} 
+	AND tmp1.birthday <= #{birthday1,jdbcType=DATE}]]>
+		AND tmp2.tested = 0
+		AND tmp2.deleted = 0
+		AND tb_student_detection.deleted = 0		
+GROUP BY tmp1.id;
   </select>
 </mapper>

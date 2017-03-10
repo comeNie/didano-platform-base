@@ -1,17 +1,47 @@
 package cn.didano.base.model;
 
+import java.sql.Date;
+
 public class Tb_class {
     private Integer id;
 
-    private Integer schoolId;
-
+    private Integer SchoolId;
+    private Integer class_id;
     private String title;
-
+    private String name;
+    private Date birthday;
+	private Byte gender;
     private Byte status;
-
+	private byte relation_id;
+	private String parent_name;
+	private String parent_phone;
     private Boolean deleted;
 
-    public Integer getId() {
+    public byte getRelation_id() {
+		return relation_id;
+	}
+
+	public void setRelation_id(byte relation_id) {
+		this.relation_id = relation_id;
+	}
+
+	public String getParent_name() {
+		return parent_name;
+	}
+
+	public void setParent_name(String parent_name) {
+		this.parent_name = parent_name;
+	}
+
+	public String getParent_phone() {
+		return parent_phone;
+	}
+
+	public void setParent_phone(String parent_phone) {
+		this.parent_phone = parent_phone;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -19,15 +49,50 @@ public class Tb_class {
         this.id = id;
     }
 
-    public Integer getSchoolId() {
-        return schoolId;
-    }
+  
+   
 
-    public void setSchoolId(Integer schoolId) {
-        this.schoolId = schoolId;
-    }
+	public Integer getSchoolId() {
+		return SchoolId;
+	}
 
-    public String getTitle() {
+	public void setSchoolId(Integer schoolId) {
+		SchoolId = schoolId;
+	}
+
+	public Integer getClass_id() {
+		return class_id;
+	}
+
+	public void setClass_id(Integer class_id) {
+		this.class_id = class_id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public Byte getGender() {
+		return gender;
+	}
+
+	public void setGender(Byte gender) {
+		this.gender = gender;
+	}
+
+	public String getTitle() {
         return title;
     }
 

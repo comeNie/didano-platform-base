@@ -6,14 +6,14 @@ import java.util.List;
 public class Tb_bossData {
 
 	
-	private List<Tb_newstaff> staff =new ArrayList<Tb_newstaff>();
+	private List<Tb_staff> staff =new ArrayList<Tb_staff>();
 	private List<Tb_classStudent> studentall = new ArrayList<Tb_classStudent>();
 	
 	
-	public List<Tb_newstaff> getStaff() {
+	public List<Tb_staff> getStaff() {
 		return staff;
 	}
-	public void setStaff(List<Tb_newstaff> staff) {
+	public void setStaff(List<Tb_staff> staff) {
 		this.staff = staff;
 	}
 	

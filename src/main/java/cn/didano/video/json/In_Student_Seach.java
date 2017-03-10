@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel
-public class In_Student_Serach {
+public class In_Student_Seach {
 	@ApiModelProperty(value = "id",required=false)
 	private Integer id;
 

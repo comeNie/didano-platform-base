@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Tb_teacherAndStudent {
 	
-	private List<Tb_newstaff> doctor =new ArrayList<Tb_newstaff>();
+	private List<Tb_staff> doctor =new ArrayList<Tb_staff>();
 	private Tb_classStudent studentall = new Tb_classStudent();
 	
-	public List<Tb_newstaff> getDoctor() {
+	public List<Tb_staff> getDoctor() {
 		return doctor;
 	}
-	public void setDoctor(List<Tb_newstaff> doctor) {
+	public void setDoctor(List<Tb_staff> doctor) {
 		this.doctor = doctor;
 	}
 	public Tb_classStudent getStudentall() {

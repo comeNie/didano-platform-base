@@ -5,27 +5,29 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.didano.base.dao.Tb_newstaffMapper;
+import cn.didano.base.dao.Tb_staffMapper;
 import cn.didano.base.dao.Tb_staff_classMapper;
 import cn.didano.base.dao.Tb_staff_signdateMapper;
 import cn.didano.base.dao.tb_sign_typeMapper;
 import cn.didano.base.exception.DBExceptionEnums;
 import cn.didano.base.exception.ServiceException;
-import cn.didano.base.model.Tb_newstaff;
-import cn.didano.base.model.Tb_newstaffExample;
+import cn.didano.base.model.Tb_staff;
+import cn.didano.base.model.Tb_staff4MailList;
+import cn.didano.base.model.Tb_staffExample;
 import cn.didano.base.model.Tb_staff_class;
 import cn.didano.base.model.Tb_staff_classExample;
 import cn.didano.base.model.Tb_staff_signdate;
 import cn.didano.base.model.Tb_staff_signdateExample;
 import cn.didano.base.model.tb_sign_type;
 import cn.didano.video.constant.DeletedType;
+import cn.didano.video.constant.StaffType;
 
 
 @Service
 public class NewTeacherService {
 
 	@Autowired
-	private Tb_newstaffMapper newstaffMapper;
+	private Tb_staffMapper staffMapper;
 	@Autowired
 	private Tb_staff_classMapper classMapper;
 	@Autowired
@@ -35,28 +37,28 @@ public class NewTeacherService {
 	/**
 	 * 通过学校查询该学校的医生和保洁
 	 */
-	public List<Tb_newstaff> findBossByschool(Integer schoolid){
-		Tb_newstaffExample condition = new Tb_newstaffExample();
-		Tb_newstaffExample.Criteria criteria = condition.createCriteria();
+	public List<Tb_staff> findBossByschool(Integer schoolid){
+		Tb_staffExample condition = new Tb_staffExample();
+		Tb_staffExample.Criteria criteria = condition.createCriteria();
 		// 对于已经deleted=1的不显示 禁用不显示
-		criteria.andTypeEqualTo((byte)31);
+		criteria.andTypeEqualTo(StaffType.SCHOOLMASTER.getIndex());
 		criteria.andSchoolIdEqualTo(schoolid);
 		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
-		return newstaffMapper.selectByExample(condition);
+		return staffMapper.selectByExample(condition);
 	}
 	
 	/**
 	 * 通过学校查询该学校的医生和保洁
 	 */
-	public List<Tb_newstaff> findBossByNameschool(String name,Integer schoolid){
-		Tb_newstaffExample condition = new Tb_newstaffExample();
-		Tb_newstaffExample.Criteria criteria = condition.createCriteria();
+	public List<Tb_staff> findBossByNameschool(String name,Integer schoolid){
+		Tb_staffExample condition = new Tb_staffExample();
+		Tb_staffExample.Criteria criteria = condition.createCriteria();
 		// 对于已经deleted=1的不显示 禁用不显示
 		criteria.andNameLike(name);
-		criteria.andTypeEqualTo((byte)31);
+		criteria.andTypeEqualTo(StaffType.SCHOOLMASTER.getIndex());
 		criteria.andSchoolIdEqualTo(schoolid);
 		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
-		return newstaffMapper.selectByExample(condition);
+		return staffMapper.selectByExample(condition);
 	}
 	/**
 	 * 通过ID查询
@@ -104,10 +106,10 @@ public class NewTeacherService {
 	/**
 	 * 编辑职工
 	 */
-	public int updatestaff(Tb_newstaff record){
+	public int updatestaff(Tb_staff record){
 		if (record == null)
 			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
-		return newstaffMapper.updateByPrimaryKeySelective(record);
+		return staffMapper.updateByPrimaryKeySelective(record);
 	}
 	
 	/**
@@ -130,55 +132,55 @@ public class NewTeacherService {
 	/**
 	 * 校长通过员工姓名查询
 	 */
-	public List<Tb_newstaff> findByNameSchool(String name,Integer id){
-		Tb_newstaffExample condition = new Tb_newstaffExample();
-		Tb_newstaffExample.Criteria criteria = condition.createCriteria();
+	public List<Tb_staff> findByNameSchool(String name,Integer id){
+		Tb_staffExample condition = new Tb_staffExample();
+		Tb_staffExample.Criteria criteria = condition.createCriteria();
 		// 对于已经deleted=1的不显示 禁用不显示
 		criteria.andNameLike(name);
 		criteria.andSchoolIdEqualTo(id);
 		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
-		return newstaffMapper.selectByExample(condition);
+		return staffMapper.selectByExample(condition);
 	}
 	
 	/**
 	 * 通过员工id查询
 	 */
-	public Tb_newstaff findById(Integer id){
+	public Tb_staff findById(Integer id){
 		
-		return newstaffMapper.selectByPrimaryKey(id);
+		return staffMapper.selectByPrimaryKey(id);
 	}
 	/**
 	 * 删除员工
 	 */
 	public int delete(Integer id){
-		Tb_newstaff staff=newstaffMapper.selectByPrimaryKey(id);
-		staff.setDeleted((byte)1);
-		return newstaffMapper.updateByPrimaryKeySelective(staff);
+		Tb_staff staff=staffMapper.selectByPrimaryKey(id);
+		staff.setDeleted(true);
+		return staffMapper.updateByPrimaryKeySelective(staff);
 	}
 	/**
 	 * 通过学校查询该学校的医生和保洁
 	 */
-	public List<Tb_newstaff> findByType(Integer schoolid){
-		Tb_newstaffExample condition = new Tb_newstaffExample();
-		Tb_newstaffExample.Criteria criteria = condition.createCriteria();
+	public List<Tb_staff> findByType(Integer schoolid){
+		Tb_staffExample condition = new Tb_staffExample();
+		Tb_staffExample.Criteria criteria = condition.createCriteria();
 		// 对于已经deleted=1的不显示 禁用不显示
-		criteria.andTypeBetween((byte)33, (byte)34);
+		criteria.andTypeBetween(StaffType.DOCTOR.getIndex(), StaffType.SUPPORT.getIndex());
 		criteria.andSchoolIdEqualTo(schoolid);
 		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
-		return newstaffMapper.selectByExample(condition);
+		return staffMapper.selectByExample(condition);
 	}
 	/**
 	 * 通过学校查询该学校的医生和保洁
 	 */
-	public List<Tb_newstaff> findByNameType(String name,Integer schoolid){
-		Tb_newstaffExample condition = new Tb_newstaffExample();
-		Tb_newstaffExample.Criteria criteria = condition.createCriteria();
+	public List<Tb_staff> findByNameType(String name,Integer schoolid){
+		Tb_staffExample condition = new Tb_staffExample();
+		Tb_staffExample.Criteria criteria = condition.createCriteria();
 		// 对于已经deleted=1的不显示 禁用不显示
 		criteria.andNameLike(name);
-		criteria.andTypeBetween((byte)33, (byte)34);
+		criteria.andTypeBetween(StaffType.DOCTOR.getIndex(), StaffType.SUPPORT.getIndex());
 		criteria.andSchoolIdEqualTo(schoolid);
 		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
-		return newstaffMapper.selectByExample(condition);
+		return staffMapper.selectByExample(condition);
 	}
 	/**
 	 * 插入老师
@@ -186,10 +188,10 @@ public class NewTeacherService {
 	 * @param record
 	 * @return 有值，id ,否则返回-1
 	 */
-	public int insertTeacherSelective(Tb_newstaff record) {
+	public int insertTeacherSelective(Tb_staff record) {
 		if (record == null)
 			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
-		return newstaffMapper.insertSelective(record);
+		return staffMapper.insertSelective(record);
 	}
 	
 	/**

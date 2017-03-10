@@ -7,7 +7,7 @@ public class Tb_classStudent {
 
 	private String className;
 	private Integer classId;
-	private List<Tb_address_list> student = new ArrayList<Tb_address_list>();
+	private List<Tb_mailList_list> student = new ArrayList<Tb_mailList_list>();
 	
 	public Integer getClassId() {
 		return classId;
@@ -21,10 +21,10 @@ public class Tb_classStudent {
 	public void setClassName(String className) {
 		this.className = className;
 	}
-	public List<Tb_address_list> getStudent() {
+	public List<Tb_mailList_list> getStudent() {
 		return student;
 	}
-	public void setStudent(List<Tb_address_list> student) {
+	public void setStudent(List<Tb_mailList_list> student) {
 		this.student = student;
 	}
 	@Override

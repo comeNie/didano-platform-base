@@ -1,5 +1,7 @@
 package cn.didano.base.model;
 
+import java.util.Date;
+
 public class Tb_staff {
     private Integer id;
 
@@ -11,7 +13,19 @@ public class Tb_staff {
 
     private String phone;
 
+    private String rfid;
+
+    private String qrcodeUrl;
+
+    private String qrcodeSchoolKey;
+
+    private Integer signTypeId;
+
     private Byte status;
+
+    private Date created;
+
+    private Date updated;
 
     private Boolean deleted;
 
@@ -55,12 +69,60 @@ public class Tb_staff {
         this.phone = phone == null ? null : phone.trim();
     }
 
+    public String getRfid() {
+        return rfid;
+    }
+
+    public void setRfid(String rfid) {
+        this.rfid = rfid == null ? null : rfid.trim();
+    }
+
+    public String getQrcodeUrl() {
+        return qrcodeUrl;
+    }
+
+    public void setQrcodeUrl(String qrcodeUrl) {
+        this.qrcodeUrl = qrcodeUrl == null ? null : qrcodeUrl.trim();
+    }
+
+    public String getQrcodeSchoolKey() {
+        return qrcodeSchoolKey;
+    }
+
+    public void setQrcodeSchoolKey(String qrcodeSchoolKey) {
+        this.qrcodeSchoolKey = qrcodeSchoolKey == null ? null : qrcodeSchoolKey.trim();
+    }
+
+    public Integer getSignTypeId() {
+        return signTypeId;
+    }
+
+    public void setSignTypeId(Integer signTypeId) {
+        this.signTypeId = signTypeId;
+    }
+
     public Byte getStatus() {
         return status;
     }
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
     }
 
     public Boolean getDeleted() {

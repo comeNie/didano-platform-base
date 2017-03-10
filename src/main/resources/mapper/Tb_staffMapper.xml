@@ -7,7 +7,13 @@
     <result column="school_id" jdbcType="INTEGER" property="schoolId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="rfid" jdbcType="VARCHAR" property="rfid" />
+    <result column="qrcode_url" jdbcType="VARCHAR" property="qrcodeUrl" />
+    <result column="qrcode_school_key" jdbcType="VARCHAR" property="qrcodeSchoolKey" />
+    <result column="sign_type_id" jdbcType="INTEGER" property="signTypeId" />
     <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -69,7 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, type, school_id, name, phone, status, deleted
+    id, type, school_id, name, phone, rfid, qrcode_url, qrcode_school_key, sign_type_id, 
+    status, created, updated, deleted
   </sql>
   <select id="selectByExample" parameterType="cn.didano.base.model.Tb_staffExample" resultMap="BaseResultMap">
     select
@@ -103,19 +110,26 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.didano.base.model.Tb_staff">
-    insert into tb_staff (id, type, school_id, 
-      name, phone, status, 
-      deleted)
-    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, #{schoolId,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
-      #{deleted,jdbcType=BIT})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_staff (type, school_id, name, 
+      phone, rfid, qrcode_url, 
+      qrcode_school_key, sign_type_id, status, 
+      created, updated, deleted
+      )
+    values (#{type,jdbcType=TINYINT}, #{schoolId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{rfid,jdbcType=VARCHAR}, #{qrcodeUrl,jdbcType=VARCHAR}, 
+      #{qrcodeSchoolKey,jdbcType=VARCHAR}, #{signTypeId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.didano.base.model.Tb_staff">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into tb_staff
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="type != null">
         type,
       </if>
@@ -128,17 +142,32 @@
       <if test="phone != null">
         phone,
       </if>
+      <if test="rfid != null">
+        rfid,
+      </if>
+      <if test="qrcodeUrl != null">
+        qrcode_url,
+      </if>
+      <if test="qrcodeSchoolKey != null">
+        qrcode_school_key,
+      </if>
+      <if test="signTypeId != null">
+        sign_type_id,
+      </if>
       <if test="status != null">
         status,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="updated != null">
+        updated,
       </if>
       <if test="deleted != null">
         deleted,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="type != null">
         #{type,jdbcType=TINYINT},
       </if>
@@ -151,8 +180,26 @@
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="rfid != null">
+        #{rfid,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeUrl != null">
+        #{qrcodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeSchoolKey != null">
+        #{qrcodeSchoolKey,jdbcType=VARCHAR},
+      </if>
+      <if test="signTypeId != null">
+        #{signTypeId,jdbcType=INTEGER},
+      </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=TIMESTAMP},
       </if>
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
@@ -183,8 +230,26 @@
       <if test="record.phone != null">
         phone = #{record.phone,jdbcType=VARCHAR},
       </if>
+      <if test="record.rfid != null">
+        rfid = #{record.rfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qrcodeUrl != null">
+        qrcode_url = #{record.qrcodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qrcodeSchoolKey != null">
+        qrcode_school_key = #{record.qrcodeSchoolKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signTypeId != null">
+        sign_type_id = #{record.signTypeId,jdbcType=INTEGER},
+      </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=TIMESTAMP},
       </if>
       <if test="record.deleted != null">
         deleted = #{record.deleted,jdbcType=BIT},
@@ -201,7 +266,13 @@
       school_id = #{record.schoolId,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
+      rfid = #{record.rfid,jdbcType=VARCHAR},
+      qrcode_url = #{record.qrcodeUrl,jdbcType=VARCHAR},
+      qrcode_school_key = #{record.qrcodeSchoolKey,jdbcType=VARCHAR},
+      sign_type_id = #{record.signTypeId,jdbcType=INTEGER},
       status = #{record.status,jdbcType=TINYINT},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP},
       deleted = #{record.deleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -222,8 +293,26 @@
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="rfid != null">
+        rfid = #{rfid,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeUrl != null">
+        qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeSchoolKey != null">
+        qrcode_school_key = #{qrcodeSchoolKey,jdbcType=VARCHAR},
+      </if>
+      <if test="signTypeId != null">
+        sign_type_id = #{signTypeId,jdbcType=INTEGER},
+      </if>
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=TIMESTAMP},
       </if>
       <if test="deleted != null">
         deleted = #{deleted,jdbcType=BIT},
@@ -237,7 +326,13 @@
       school_id = #{schoolId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
+      rfid = #{rfid,jdbcType=VARCHAR},
+      qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
+      qrcode_school_key = #{qrcodeSchoolKey,jdbcType=VARCHAR},
+      sign_type_id = #{signTypeId,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP},
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>

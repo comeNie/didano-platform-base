@@ -4,14 +4,22 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tb_address_list {
+public class Tb_mailList_list {
  
 	private Integer id;
 	private Integer class_id;
 	private String name;
+	private String class_name;
 	private Date birthday;
 	private Byte gender;
 	private List<Tb_parent> parent = new ArrayList<Tb_parent>();
+	
+	public String getClass_name() {
+		return class_name;
+	}
+	public void setClass_name(String class_name) {
+		this.class_name = class_name;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -51,7 +59,7 @@ public class Tb_address_list {
 	}
 	@Override
 	public String toString() {
-		return "Tb_address_list [id=" + id + ", class_id=" + class_id + ", name=" + name + ", birthday=" + birthday
+		return "Tb_maillist_list [id=" + id + ", class_id=" + class_id + ", name=" + name + ", birthday=" + birthday
 				+ ", gender=" + gender + ", parent=" + parent + "]";
 	}
 	

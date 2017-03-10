@@ -9,29 +9,29 @@
   </select>
  
  <select id="findById" parameterType="Integer" resultType="cn.didano.base.model.Tb_mailList_list"> 
- SELECT a.id,a.class_id,a.name,a.birthday,a.gender FROM tb_student a WHERE  a.id=#{id} AND a.deleted =0 
+ SELECT a.id,a.class_id,a.name,a.birthday,a.gender FROM tb_student a WHERE  a.id=#{id} AND a.deleted =0 ORDER BY CONVERT( a.name USING gbk )
  </select>
 
  <select id="findByName"  parameterType="cn.didano.base.model.Tb_studentData" resultType="cn.didano.base.model.Tb_mailList_list">
-   select * from tb_student where name like #{name} and school_id=#{schoolid} and deleted=0
+   select * from tb_student where name like #{name} and school_id=#{schoolid} and deleted=0 ORDER BY CONVERT( NAME USING gbk )
  </select>
  <select id="findByNameClass"  parameterType="cn.didano.base.model.Tb_studentData" resultType="cn.didano.base.model.Tb_mailList_list">
-   select * from tb_student where name like #{name} and class_id=#{schoolid} and deleted=0
+   select * from tb_student where name like #{name} and class_id=#{schoolid} and deleted=0 ORDER BY CONVERT( NAME USING gbk )
  </select>
  <select id="findByschool" parameterType="Integer" resultType="cn.didano.base.model.Tb_mailList_list">
-  SELECT * FROM tb_student WHERE school_id=#{id} ORDER BY class_id
+  SELECT * FROM tb_student WHERE school_id=#{id} ORDER BY class_id ORDER BY CONVERT( NAME USING gbk )
  </select>
  <select id="findClassByschool" parameterType="Integer" resultType="cn.didano.base.model.Tb_class">
   SELECT tmp1.relation_id,tmp1.id,tmp1.SchoolId,tmp1.class_id ,tmp1.title,tmp1.name,tmp1.gender,tmp1.birthday ,tmp1.relation_title AS parent_name ,d.phone AS parent_phone FROM (SELECT c.relation_id,a.id,c.parent_id,c.relation_title,a.school_id AS SchoolId,a.class_id ,b.title,a.name,a.gender,a.birthday 
  FROM tb_student a,tb_class b ,tb_student_parent c WHERE a.school_id = #{id} and a.deleted=0 and a.class_id=b.id and a.id = c.student_id and c.deleted=0)
- AS tmp1 LEFT JOIN tb_school_parent d ON tmp1.parent_id = d.id 
+ AS tmp1 LEFT JOIN tb_school_parent d ON tmp1.parent_id = d.id ORDER BY CONVERT( tmp1.name USING gbk )
  
  </select>
  <select id="findteacherByschool" parameterType="Integer" resultType="cn.didano.base.model.Tb_teacher">
 SELECT tmp1.status,tmp1.in_time,tmp1.out_time,tmp1.id,tmp1.name,tmp1.phone,tmp1.class_id,c.title,tmp1.type,tmp1.school_id FROM
 (SELECT a.status,a.id,b.class_id,a.type,a.school_id,a.name,a.phone,c.in_time,c.out_time
 FROM tb_staff a,tb_staff_class b ,tb_sign_type c WHERE a.school_id=#{id} AND a.deleted=0 AND a.type =32 and a.id=b.staff_id and a.sign_type_id=c.id
-)AS tmp1 LEFT JOIN tb_class c ON tmp1.class_id=c.id
+)AS tmp1 LEFT JOIN tb_class c ON tmp1.class_id=c.id ORDER BY CONVERT( tmp1.name USING gbk )
 
 
   
@@ -56,18 +56,18 @@ SELECT tmp2.relation_id ,tmp2.title AS parent_name,p.phone AS parent_phone FROM
 	 (SELECT c.title,a.status,a.sign_type_id,a.school_id,a.id,a.name,a.phone,a.type,b.class_id FROM tb_staff a,tb_staff_class b ,tb_class c
 	 WHERE a.type=32 AND a.id=b.staff_id  AND a.deleted=0 AND b.deleted=0 AND b.class_id=c.id ) AS tmp1 
 	 LEFT JOIN tb_sign_type c ON (tmp1.sign_type_id =c.id)
-	 WHERE  class_id=#{id}
+	 WHERE  class_id=#{id} ORDER BY CONVERT( tmp1.name USING gbk )
 </select>
 <select id="findBystaffbyId" parameterType="Integer" resultType="cn.didano.base.model.Tb_staff4MailList">
  SELECT c.title,a.status,a.sign_type_id,a.school_id,a.id,a.name,a.phone,a.type,b.class_id FROM tb_staff a,tb_staff_class b ,tb_class c
-	 WHERE a.type=32 AND a.id=b.staff_id  AND a.deleted=0  AND b.class_id=c.id AND a.id=#{id}
+	 WHERE a.type=32 AND a.id=b.staff_id  AND a.deleted=0  AND b.class_id=c.id AND a.id=#{id} ORDER BY CONVERT( a.name USING gbk )
 </select>
 <select id="findTeacherByNameClass" parameterType="cn.didano.base.model.Tb_staffData" resultType="cn.didano.base.model.Tb_staff"> 
     SELECT  tmp1.title,tmp1.status,tmp1.school_id,tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id ,c.in_time,c.out_time FROM 
 	 (SELECT c.title,a.status,a.sign_type_id,a.school_id,a.id,a.name,a.phone,a.type,b.class_id FROM tb_staff a,tb_staff_class b ,tb_class c
 	 WHERE a.type=32 AND a.id=b.staff_id  AND a.deleted=0 AND b.deleted=0 AND b.class_id=c.id AND a.name LIKE #{name}) AS tmp1 
 	 LEFT JOIN tb_sign_type c ON (tmp1.sign_type_id =c.id)
-	 WHERE  class_id=#{class_id}
+	 WHERE  class_id=#{class_id} ORDER BY CONVERT( tmp1.name USING gbk )
 </select>
 <update id="Update" parameterType="cn.didano.base.model.Tb_mailList_list">UPDATE tb_student a SET a.name=#{name},a.class_id=#{class_id},a.gender=#{gender,jdbcType=TINYINT},a.birthday=#{birthday,jdbcType=DATE} where a.id=#{id}</update>
 

@@ -22,9 +22,11 @@
   SELECT * FROM tb_student WHERE school_id=#{id} ORDER BY class_id ORDER BY CONVERT( NAME USING gbk )
  </select>
  <select id="findClassByschool" parameterType="Integer" resultType="cn.didano.base.model.Tb_class">
-  SELECT tmp1.relation_id,tmp1.id,tmp1.SchoolId,tmp1.class_id ,tmp1.title,tmp1.name,tmp1.gender,tmp1.birthday ,tmp1.relation_title AS parent_name ,d.phone AS parent_phone FROM (SELECT c.relation_id,a.id,c.parent_id,c.relation_title,a.school_id AS SchoolId,a.class_id ,b.title,a.name,a.gender,a.birthday 
- FROM tb_student a,tb_class b ,tb_student_parent c WHERE a.school_id = #{id} and a.deleted=0 and a.class_id=b.id and a.id = c.student_id and c.deleted=0)
- AS tmp1 LEFT JOIN tb_school_parent d ON tmp1.parent_id = d.id ORDER BY CONVERT( tmp1.name USING gbk )
+  SELECT tmp2.relation_id, tmp2.parent_id,tmp2.id,tmp2.SchoolId,tmp2.class_id ,tmp2.title,tmp2.name,tmp2.gender,tmp2.birthday ,tmp2.parent_name ,d.phone AS parent_phone FROM (SELECT c.relation_id, c.parent_id,tmp1.id,tmp1.SchoolId,tmp1.class_id ,tmp1.title,tmp1.name,tmp1.gender,tmp1.birthday ,c.relation_title AS parent_name 
+    FROM (SELECT a.id,a.school_id AS SchoolId,a.class_id ,b.title,a.name,a.gender,a.birthday 
+ FROM tb_student a,tb_class b  WHERE a.school_id = #{id} AND a.deleted=0 AND a.class_id=b.id  )
+ AS tmp1 LEFT JOIN tb_student_parent c ON tmp1.id = c.student_id AND c.deleted=0 ORDER BY CONVERT( tmp1.name USING gbk )) AS tmp2 LEFT JOIN tb_school_parent d
+ ON tmp2.parent_id = d.id
  
  </select>
  <select id="findteacherByschool" parameterType="Integer" resultType="cn.didano.base.model.Tb_teacher">

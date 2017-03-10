@@ -518,7 +518,9 @@ public class MailListController {
 				}
 				Tb_classStudentParent csp = new Tb_classStudentParent();
 				BeanUtils.copyProperties(csp, val.get(0));
+				if(!parentall.isEmpty()){
 				csp.setParent(parentall);
+				}
 				cspAll.add(csp);
 			}
 			// 将学生家长集合通过班级分类
@@ -843,12 +845,14 @@ public class MailListController {
 	 * 
 	 * @param c_channel
 	 * @return
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
 	 */
 	@ApiOperation(value = "新增编辑小朋友", notes = "新增编辑小朋友")
 	@PostMapping(value = "Student_add_edit")
 	@ResponseBody
 	public Out<String> Student_add_edit(
-			@ApiParam(value = "新增编辑小朋友", required = true) @RequestBody In_Student_Edit student_a) {
+			@ApiParam(value = "新增编辑小朋友", required = true) @RequestBody In_Student_Edit student_a) throws IllegalAccessException, InvocationTargetException {
 		logger.info("访问  MailListController:Student_add_edit,student_a=" + student_a);
 		Tb_newstudent vd_student = new Tb_newstudent();
 		Tb_mailList_list list = new Tb_mailList_list();
@@ -862,8 +866,10 @@ public class MailListController {
 				vd_student.setCreated(new Date());
 				vd_student.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
 				int rowNum = newstudentService.insertStudentSelective(vd_student);// insert
-
-				if (!student_a.getParent().isEmpty()) {
+                int rowNUM2= 0;
+				
+				
+				if (student_a.getParent()!=null) {
 					for (Tb_parent add : student_a.getParent()) {
 						vd_parent.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
 
@@ -871,7 +877,7 @@ public class MailListController {
 						vd_parent.setType(1);
 						vd_parent.setStatus((byte) 1);
 						vd_parent.setCreated(new Date());
-						newstudentService.insertParentSelective(vd_parent);
+						rowNUM2=newstudentService.insertParentSelective(vd_parent);
 						vd_studentparent.setSchoolId(vd_student.getSchoolId());
 						vd_studentparent.setClassId(vd_student.getClass_id());
 						vd_studentparent.setStudentId(vd_student.getId());
@@ -884,14 +890,14 @@ public class MailListController {
 							vd_studentparent.setRelationTitle(add.getParent_name());
 						}
 						vd_studentparent.setCreated(new Date());
-						newstudentService.insertStudentParentSelective(vd_studentparent);
+						rowNUM2=newstudentService.insertStudentParentSelective(vd_studentparent);
 
 					}
 
 				}
-				if (rowNum > 0) {
-					back.setBackTypeWithLog(BackType.SUCCESS_INSERT,
-							"Id=" + vd_student.getId() + "," + vd_parent.getId());
+
+				if (rowNum >= 0) {
+					back.setBackTypeWithLog(BackType.SUCCESS_INSERT,"成功");
 
 				} else {
 					// 更新有问题
@@ -938,9 +944,7 @@ public class MailListController {
 		} catch (ServiceException e) {
 			// 服务层错误，包括 内部service 和 对外service
 			back.setServiceExceptionWithLog(e.getExceptionEnums());
-		} catch (Exception ex) {
-			back.setBackTypeWithLog(BackType.FAIL_INSERT_NORMAL, ex.getMessage());
-		}
+		} 
 		return back;
 	}
 }

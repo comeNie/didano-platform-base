@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import cn.didano.base.exception.ServiceException;
+import cn.didano.video.app.config.GetHttpSessionConfigurator;
 import cn.didano.video.auth.AuthVideoInfo;
 import cn.didano.video.exception.VideoExceptionEnums;
 import cn.didano.video.service.WebsocketService;

@@ -27,7 +27,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 视频启动程序
+ * 启动程序
+ * 必须放在根部目录，放到低级目录，将导致很多注释解析不了
  * @TODO 缓存容器没加上，目前只能做到使用spring cache查单个，而且list没有加上，需要更多了解spring cache细节，同时，将来采用redis可能还会大变
  * @TODO 操作记录，一律写日志，不写入库，优化数据库速度，将来采用相关大数据技术做统计
  * @author stephen
@@ -37,7 +38,9 @@ import org.springframework.context.annotation.Configuration;
 //Configures component scanning directives for use with @{@link Configuration} classes.
 //@EnableConfigurationProperties({OssInfo.class})
 //@SpringBootApplication(scanBasePackages="cn.didano")//Base packages to scan for annotated components. Use {@link #scanBasePackageClasses}
+
 @SpringBootApplication
+@ServletComponentScan //配置websocket必须
 @ComponentScan({"cn.didano"})
 @EnableCaching
 public class StartVideoApplication {

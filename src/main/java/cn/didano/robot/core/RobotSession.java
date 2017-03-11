@@ -35,6 +35,4 @@ public class RobotSession {
 	public void setRobotWebsocketServer(RobotWebsocketServer robotWebsocketServer) {
 		this.robotWebsocketServer = robotWebsocketServer;
 	}
-	
-	
 }

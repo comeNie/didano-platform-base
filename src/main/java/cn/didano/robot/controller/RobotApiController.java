@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.didano.robot.data.RConnectInfo;
 import cn.didano.robot.data.RVersionInfo;
 import cn.didano.robot.data.repository.RVersionInfoRepository;
+import cn.didano.robot.service.RobotMongoDbDataService;
 import cn.didano.video.constant.BackType;
 import cn.didano.video.json.Out;
 import io.swagger.annotations.Api;
@@ -26,10 +27,8 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping(value = "/robot/api/")
 public class RobotApiController{
 	static Logger logger = Logger.getLogger(RobotApiController.class);
-//	@Autowired
-//	private RobotMongoDbDataService robotMongoDbDataService;
 	@Autowired
-	private RVersionInfoRepository v_repository;
+	private RobotMongoDbDataService robotMongoDbDataService;
 	
 	/**
 	 * 连接服务器，报备设备编码，无此值，无法向客户端推送
@@ -45,8 +44,8 @@ public class RobotApiController{
 		try {
 			RConnectInfo info = new RConnectInfo();
 			info.setDeviceNo(device_no);
-//			Object o = robotMongoDbDataService.saveRConnectInfo(info);
-//			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
+			Object o = robotMongoDbDataService.saveRConnectInfo(info);
+			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			out.setBackTypeWithLog(BackType.FAIL_INSERT_NORMAL, e.getMessage());
@@ -62,9 +61,7 @@ public class RobotApiController{
 		logger.info("访问  RobotController :reportVersion RobotVersionInfo=" + robotVersionInfo);
 		Out<String> out = new Out<String>();
 		try {
-//			Object o = robotMongoDbDataService.saveRVersionInfo(robotVersionInfo);
-//			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
-			Object o = v_repository.save(robotVersionInfo);
+			Object o = robotMongoDbDataService.saveRVersionInfo(robotVersionInfo);
 			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage());

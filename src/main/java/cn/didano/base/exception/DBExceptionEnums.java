@@ -11,28 +11,27 @@ package cn.didano.base.exception;
  * Created on 2016年12月26日 上午11:24:32 
  */
 public enum DBExceptionEnums implements ExceptionEnums {
-	ERROR_DB_SELECT(-1,"查询错误"),
-	ERROR_DB_UPDATE(-2,"更新错误"),
-	ERROR_DB_INSERT(-3,"插入错误"),
-	ERROR_DB_DELETE(-4,"删除错误"),
-	ERROR_DB_COUNT(-5,"求和错误"),
+	ERROR_DB_SELECT("查询错误",-1),
+	ERROR_DB_UPDATE("更新错误",-2),
+	ERROR_DB_INSERT("插入错误",-3),
+	ERROR_DB_DELETE("删除错误",-4),
+	ERROR_DB_COUNT("求和错误",-5),
 	
-	ERROR_DB_LESS_1(-10,"id参数小于1"),
-	ERROR_DB_ID(-11,"ID非法"),
-	ERROR_DB_CONTENT_NULL(-13,"内容为空"),
-	ERROR_DB_OTHER(-14,"其他错误"),
+	ERROR_MONGODB_SELECT("查询错误",-11),
+	ERROR_MONGODB_UPDATE("更新错误",-12),
+	ERROR_MONGODB_SAVE("保存错误",-13),
+	ERROR_MONGODB_DELETE("删除错误",-14),
+	ERROR_MONGODB_COUNT("求和错误",-15),
 	
-	
-	ERROR_MONGODB_SELECT(-21,"mongodb查询错误"),
-	ERROR_MONGODB_UPDATE(-22,"mongodb更新错误"),
-	ERROR_MONGODB_SAVE(-23,"mongodb保存错误"),
-	ERROR_MONGODB_DELETE(-24,"mongodb删除错误"),
-	ERROR_MONGODB_COUNT(-25,"mongodb求和错误");
+	ERROR_DB_LESS_1("id参数小于1",-10),
+	ERROR_DB_ID("ID非法",-11),
+	ERROR_DB_CONTENT_NULL("内容为空",-13),
+	ERROR_DB_OTHER("其他错误",-14);
 	
 	public int code;
 	public String message;
 
-	private DBExceptionEnums(int code, String message) {
+	private DBExceptionEnums(String message,int code) {
 		this.code = code;
 		this.message = message;
 	}

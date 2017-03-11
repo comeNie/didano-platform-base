@@ -21,13 +21,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class Swagger2Configuration {
 	@Bean
 	public Docket buildDocket() {
-		System.out.println("----------------------Swagger2Configuration-------------------");
 		return new Docket(DocumentationType.SWAGGER_2).apiInfo(buildApiInf()).select()
 				.apis(RequestHandlerSelectors.basePackage("cn.didano"))// 要扫描的对内API(Controller)基础包,要扫描的对外API(Controller)基础包
 				.paths(PathSelectors.any()).build();
 		
 	}
 	private ApiInfo buildApiInf() {
-		return new ApiInfoBuilder().title("Didano VideoAPI文档").contact("didano").version("1.0").build();
+		return new ApiInfoBuilder().title("Didano API文档").contact("didano").version("1.0").build();
 	}
 }

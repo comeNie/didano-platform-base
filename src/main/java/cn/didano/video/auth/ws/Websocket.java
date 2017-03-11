@@ -36,7 +36,6 @@ public class Websocket {
 	// 与某个客户端的连接会话，需要通过它来给客户端发送数据
 	private Session session;
 
-	// websocket 会话
 	private HttpSession httpSession;
 
 	private int studentId;

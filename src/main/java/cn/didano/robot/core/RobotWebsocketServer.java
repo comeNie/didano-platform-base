@@ -20,7 +20,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import cn.didano.robot.controller.RobotApiController;
 import cn.didano.util.ContextUtil;
 import cn.didano.video.auth.ws.GetHttpSessionConfigurator;
 import cn.didano.video.exception.VideoExceptionEnums;
@@ -96,9 +95,9 @@ public class RobotWebsocketServer {
 		try {
 			logger.info("RobotWebsocket收到消息：" + message);
 			UpInfo report = mapper.readValue(message, UpInfo.class);
-			RobotApiController robotController = ContextUtil.act.getBean(RobotApiController.class);
-			RobotDelegator delegator = new RobotDelegator();
-			delegator.handle(service_no,robotController, report);
+//			RobotApiController robotController = ContextUtil.act.getBean(RobotApiController.class);
+//			RobotDelegator delegator = new RobotDelegator();
+//			delegator.handle(service_no,robotController, report);
 		} catch (Exception ex) {
 			logger.error(message);
 			ex.printStackTrace();

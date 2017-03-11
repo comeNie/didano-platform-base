@@ -1,5 +1,4 @@
 /*
- * Copyright 2012-2016 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +13,18 @@
  * limitations under the License.
  */
 
-package cn.didano.video.app;
+package cn.didano;
+
+import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * 视频启动程序
@@ -30,15 +33,24 @@ import org.springframework.context.annotation.ComponentScan;
  * @author stephen
  * Created on 2016年12月25日 上午11:48:46 
  */
+//@ServletComponentScan
+//Configures component scanning directives for use with @{@link Configuration} classes.
+//@EnableConfigurationProperties({OssInfo.class})
+//@SpringBootApplication(scanBasePackages="cn.didano")//Base packages to scan for annotated components. Use {@link #scanBasePackageClasses}
 @SpringBootApplication
-@ServletComponentScan
-@ComponentScan({"cn.didano"})//@EnableConfigurationProperties({OssInfo.class})
+@ComponentScan({"cn.didano"})
 @EnableCaching
 public class StartVideoApplication {
 	static Logger logger = Logger.getLogger(StartVideoApplication.class);
 	
 	public static void main(String[] args) throws Exception {
-		SpringApplication.run(StartVideoApplication.class, args);
+		ApplicationContext ctx =  SpringApplication.run(StartVideoApplication.class, args);
+		//ApplicationContext ctx = SpringApplication.run(Application.class, args);
+//		String[] beanNames = ctx.getBeanDefinitionNames();
+//		Arrays.sort(beanNames);
+//		for (String beanName : beanNames) {
+//		    System.out.println(beanName);
+//		}
         logger.info("StartVideoApplication Started.............................");
 	}
 

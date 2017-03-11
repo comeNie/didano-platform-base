@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import cn.didano.base.exception.ServiceException;
 import cn.didano.base.service.AuthTimeControlService;
-import cn.didano.base.showinfo.ServiceException;
 import cn.didano.video.auth.AuthVideoInfo;
 import cn.didano.video.auth.channel.ChannelStatus;
 import cn.didano.video.auth.ws.WebsocketChannel;

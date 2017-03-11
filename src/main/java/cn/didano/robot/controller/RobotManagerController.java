@@ -15,7 +15,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import cn.didano.base.service.RobotMongoDbDataService;
 import cn.didano.robot.core.DownInfo;
 import cn.didano.robot.core.RobotWebsocketServer;
 import cn.didano.video.json.Out;
@@ -27,14 +26,11 @@ import io.swagger.annotations.ApiOperation;
  * 
  * @author stephen Created on 2016年12月17日 下午6:38:30
  */
-@Api(value = "诊断平台服务", tags = "诊断平台服务")
+@Api(value = "诊断控制服务", tags = "诊断控制服务")
 @RestController
 @RequestMapping(value = "/robot/manager/")
-@Service
 public class RobotManagerController {
 	static Logger logger = Logger.getLogger(RobotManagerController.class);
-	@Autowired
-	private RobotMongoDbDataService robotMongoDbDataService;
 
 	@PostMapping(value = "go_reportVersion")
 	@ApiOperation(value = "要求，上传版本信息", notes = "要求，上传版本信息")

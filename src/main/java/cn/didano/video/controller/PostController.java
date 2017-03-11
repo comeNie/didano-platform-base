@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
 
+import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Bs_good;
 import cn.didano.base.model.Tb_address_list;
 import cn.didano.base.model.Tb_class;
@@ -47,7 +48,6 @@ import cn.didano.base.service.NewStudentService;
 import cn.didano.base.service.SchoolService;
 import cn.didano.base.service.StudentService;
 import cn.didano.base.service.ViewChannelService;
-import cn.didano.base.showinfo.ServiceException;
 import cn.didano.video.auth.channel.ChannelStatus;
 import cn.didano.video.constant.BackType;
 import cn.didano.video.constant.ChannelType;

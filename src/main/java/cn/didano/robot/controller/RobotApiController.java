@@ -2,16 +2,15 @@ package cn.didano.robot.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.didano.base.service.RobotMongoDbDataService;
 import cn.didano.robot.data.RConnectInfo;
 import cn.didano.robot.data.RVersionInfo;
+import cn.didano.robot.data.repository.RVersionInfoRepository;
 import cn.didano.video.constant.BackType;
 import cn.didano.video.json.Out;
 import io.swagger.annotations.Api;
@@ -22,14 +21,15 @@ import io.swagger.annotations.ApiParam;
  * 
  * @author stephen Created on 2016年12月17日 下午6:38:30
  */
-@Api(value = "诊断平台服务", tags = "诊断平台服务")
+@Api(value = "诊断rest服务", tags = "诊断rest服务")
 @RestController
 @RequestMapping(value = "/robot/api/")
-@Service
 public class RobotApiController{
 	static Logger logger = Logger.getLogger(RobotApiController.class);
+//	@Autowired
+//	private RobotMongoDbDataService robotMongoDbDataService;
 	@Autowired
-	private RobotMongoDbDataService robotMongoDbDataService;
+	private RVersionInfoRepository v_repository;
 	
 	/**
 	 * 连接服务器，报备设备编码，无此值，无法向客户端推送
@@ -45,8 +45,8 @@ public class RobotApiController{
 		try {
 			RConnectInfo info = new RConnectInfo();
 			info.setDeviceNo(device_no);
-			Object o = robotMongoDbDataService.saveRConnectInfo(info);
-			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
+//			Object o = robotMongoDbDataService.saveRConnectInfo(info);
+//			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			out.setBackTypeWithLog(BackType.FAIL_INSERT_NORMAL, e.getMessage());
@@ -62,7 +62,9 @@ public class RobotApiController{
 		logger.info("访问  RobotController :reportVersion RobotVersionInfo=" + robotVersionInfo);
 		Out<String> out = new Out<String>();
 		try {
-			Object o = robotMongoDbDataService.saveRVersionInfo(robotVersionInfo);
+//			Object o = robotMongoDbDataService.saveRVersionInfo(robotVersionInfo);
+//			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
+			Object o = v_repository.save(robotVersionInfo);
 			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage());

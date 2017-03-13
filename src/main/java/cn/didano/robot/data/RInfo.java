@@ -16,13 +16,15 @@
 
 package cn.didano.robot.data;
 
-import java.util.Date;
+import java.time.Instant;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
+import org.springframework.data.domain.Persistable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Date;
 
 import io.swagger.annotations.ApiModel;
 
@@ -32,15 +34,17 @@ import io.swagger.annotations.ApiModel;
  */
 @ApiModel
 public class RInfo {
+
 	@Id // 自动生成唯一索引号
 	@JsonIgnore // json转换，忽略该属性
 	private String id;
-	
+
 	@CreatedDate // 自动生成时间
 	@JsonIgnore // json转换，忽略该属性
 	private Date createDate;
-	
+
 	@Version // 自动生成自然数
 	@JsonIgnore // json转换，忽略该属性
 	private int version;
+
 }

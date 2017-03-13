@@ -3,7 +3,7 @@ package cn.didano.robot.core;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
- * robot websocket 上行信息
+ * robot websocket 下行信息
  * @author stephen.wang 2017-03-02 
  */
 public class DownInfo {

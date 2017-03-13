@@ -20,7 +20,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import cn.didano.robot.controller.RobotApiController;
+import cn.didano.base.exception.DBExceptionEnums;
+import cn.didano.base.exception.ServiceException;
+import cn.didano.robot.controller.RobotUpController;
 import cn.didano.util.ContextUtil;
 import cn.didano.video.app.config.GetHttpSessionConfigurator;
 import cn.didano.video.exception.VideoExceptionEnums;
@@ -99,7 +101,7 @@ public class RobotWebsocketServer {
 		try {
 			logger.info("RobotWebsocket收到消息：" + message);
 			UpInfo report = mapper.readValue(message, UpInfo.class);
-			RobotApiController robotController = ContextUtil.act.getBean(RobotApiController.class);
+			RobotUpController robotController = ContextUtil.act.getBean(RobotUpController.class);
 			RobotDelegator delegator = new RobotDelegator();
 			delegator.handle(service_no,robotController, report);
 		} catch (Exception ex) {
@@ -156,7 +158,8 @@ public class RobotWebsocketServer {
 	 * 
 	 * @return
 	 */
-	public static synchronized void sendMessage(String service_no, DownInfo downInfo) {
+	public static synchronized void sendMessage(String service_no, DownInfo downInfo) throws ServiceException{
+		ConcurrentHashMap<String, RobotSession> tmp = RobotWebsocketServer.getRobotInfoMap();
 		RobotSession session = RobotWebsocketServer.getRobotInfoMap().get(service_no);
 		if (session != null) {
 			ObjectMapper mapper = new ObjectMapper();
@@ -169,7 +172,8 @@ public class RobotWebsocketServer {
 			}
 			session.getRobotWebsocketServer().sendMessage(data);
 		} else {
-			logger.warn("设备编号:" + service_no + "不存在robotWebsocket客户端连接");
+			logger.warn("设备编号:" + service_no + "，不存在robotWebsocket客户端连接");
+			throw new ServiceException(DBExceptionEnums.ERROR_DIAGNOSE_DIVICENO_NOT_EXIST);
 		}
 	}
 

@@ -8,6 +8,7 @@ package cn.didano.base.exception;
  * Created on 2016年12月26日 上午11:24:32 
  */
 public enum DBExceptionEnums implements ExceptionEnums {
+	ERROR_DIAGNOSE_DIVICENO_NOT_EXIST("不存在的设备编号",-9),
 	ERROR_DB_LESS_1("id参数小于1",-10),
 	ERROR_DB_ID("ID非法",-11),
 	ERROR_DB_CONTENT_NULL("内容为空",-13),

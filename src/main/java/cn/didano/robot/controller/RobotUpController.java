@@ -23,9 +23,9 @@ import io.swagger.annotations.ApiParam;
  */
 @Api(value = "诊断rest服务", tags = "诊断rest服务")
 @RestController
-@RequestMapping(value = "/robot/api/")
-public class RobotApiController{
-	static Logger logger = Logger.getLogger(RobotApiController.class);
+@RequestMapping(value = "/robot/up/")
+public class RobotUpController{
+	static Logger logger = Logger.getLogger(RobotUpController.class);
 	@Autowired
 	private RobotMongoDbDataService robotMongoDbDataService;
 	

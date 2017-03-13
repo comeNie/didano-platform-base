@@ -20,12 +20,7 @@ import cn.didano.base.exception.DBExceptionEnums;
  */
 public enum BackType {
 	//负数以下是底层数据库检测错误
-	ERROR_DB_LESS_1(-10,"id参数小于1"),
-	ERROR_DB_ID(-11,"ID非法"),
-	ERROR_DB_CONTENT_NULL(-13,"内容为空"),
-	ERROR_DB_OTHER(-14,"其他错误"),
-	
-	
+
 	// 视频反馈信息，视频应用，1000-1100 视频成功信息 1100-1200视频错误信息  
 	SUCCESS(1000,"成功"),
 	SUCCESS_INSERT(1001,"新建成功"),
@@ -40,6 +35,7 @@ public enum BackType {
 	//1301-1400诊断平台信息
 	SUCCESS_DIAGNOSE_WEBSOCKET_CONNECT(1201,"成功"),
 	SUCCESS_DIAGNOSE_SAVE(1202,"保存数据成功"),
+	SUCCESS_DIAGNOSE_EXCUTE(1203,"执行控制命令成功"),
 
 	// 数据库操作异常信息不能直接暴露给前端，采用FAIL_DB翻译
 	FAIL_DOWN_LINE(2000,"异常范围底值"),
@@ -63,6 +59,7 @@ public enum BackType {
 	FAIL_DIAGNOSE_WRONG_FORMAT(2202,"数据格式错误"),
 	FAIL_DIAGNOSE_WRONG_METHOD(2203,"错误方法名"),
 	FAIL_DIAGNOSE_CANNOT_EMPTY(2204,"不能为空"),
+	FAIL_DIAGNOSE_EXCUTE(2204,"执行控制命令失败"),
 	
 	FAIL_DIAGNOSE_MONGO_SAVE(2220,"保存数据失败"),
 	FAIL_DIAGNOSE_MONGO_UPDATE(2221,"更新数据失败"),

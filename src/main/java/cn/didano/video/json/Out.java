@@ -19,7 +19,7 @@ public class Out<T> {
 	private boolean success;
 	@ApiModelProperty(value = "返回提示信息",required=true)
 	private String message;
-	@ApiModelProperty(value = "返回编码，1000-2000视频成功信息,2000-3000视频错误信息;成功-1000,新建成功-1001,更新成功-1002,删除成功-1003,设置成功-1004,查询成功-1007"
+	@ApiModelProperty(value = "返回编码，1000-2000成功信息,2000-3000错误信息;成功-1000,新建成功-1001,更新成功-1002,删除成功-1003,设置成功-1004,查询成功-1007"
 	+"数据库操作异常-2101,插入异常-2112,更新异常-2161,查询失败-2181",required=true,example="1000")
 	private int code;
 	@ApiModelProperty(value = "实体信息，例如列表或者对象")

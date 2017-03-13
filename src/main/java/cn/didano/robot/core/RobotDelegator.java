@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.didano.base.exception.BackType;
-import cn.didano.robot.controller.RobotApiController;
+import cn.didano.robot.controller.RobotUpController;
 import cn.didano.video.json.Out;
 
 /**
@@ -27,7 +27,7 @@ public class RobotDelegator {
 	 * @param robot
 	 * @param report
 	 */
-	public void handle(String service_no, RobotApiController robot, UpInfo upInfo) {
+	public void handle(String service_no, RobotUpController robot, UpInfo upInfo) {
 		Object back = null;
 		Out<String> out = null;
 		try {

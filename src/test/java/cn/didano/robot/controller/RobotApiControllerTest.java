@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RobotApiControllerTest {
 
 	@Autowired
-	private RobotApiController robotApiController;
+	private RobotUpController robotApiController;
 
 	@Test
 	public void contexLoads() throws Exception {

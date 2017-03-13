@@ -1,20 +1,14 @@
 package cn.didano.robot.controller;
 
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import cn.didano.base.exception.BackType;
+import cn.didano.base.exception.ServiceException;
 import cn.didano.robot.core.DownInfo;
 import cn.didano.robot.core.RobotWebsocketServer;
 import cn.didano.video.json.Out;
@@ -28,19 +22,30 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(value = "诊断控制服务", tags = "诊断控制服务")
 @RestController
-@RequestMapping(value = "/robot/manager/")
-public class RobotManagerController {
-	static Logger logger = Logger.getLogger(RobotManagerController.class);
+@RequestMapping(value = "/robot/down/")
+public class RobotDownController {
+	static Logger logger = Logger.getLogger(RobotDownController.class);
 
-	@PostMapping(value = "go_reportVersion")
-	@ApiOperation(value = "要求，上传版本信息", notes = "要求，上传版本信息")
+	/**
+	 * 执行,上传版本信息
+	 * @param service_no
+	 */
+	@PostMapping(value = "excute_reportVersion")
+	@ApiOperation(value = "执行,上传版本信息", notes = "执行,上传版本信息")
 	@ResponseBody
-	public void go_reportVersion(@RequestBody String service_no) {
+	public Out<String> excute_reportVersion(@RequestBody String service_no) {
+		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			DownInfo downInfo = new DownInfo();
-			downInfo.setMethodName("go_reportVersion");
-			RobotWebsocketServer.sendMessage(service_no, downInfo);
+			downInfo.setMethodName("excute_reportVersion");
+			back.setBackTypeWithLog(BackType.SUCCESS_DIAGNOSE_EXCUTE);
+			try{
+				RobotWebsocketServer.sendMessage(service_no, downInfo);
+			}catch(ServiceException ex){
+				back.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_EXCUTE,ex.getExceptionEnums().getMessage());
+			}
 		}
+		return back;
 	}
 
 	/**
@@ -48,10 +53,10 @@ public class RobotManagerController {
 	 * 没有异常时，客户端传送数据上来，不做回复
 	 * @param service_no
 	 */
-	@PostMapping(value = "go_backError")
-	@ApiOperation(value = "回复，异常信息", notes = "要求，上传版本信息")
+	@PostMapping(value = "error")
+	@ApiOperation(value = "回复，异常信息", notes = "回复，异常信息")
 	@ResponseBody
-	public void go_backError(@RequestBody String service_no,@RequestBody Out<String> backError) {
+	public void error(@RequestBody String service_no,@RequestBody Out<String> backError) {
 		RobotWebsocketServer.sendMessage(service_no, backError);
 	}
 

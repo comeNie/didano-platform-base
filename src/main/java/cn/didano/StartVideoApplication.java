@@ -15,8 +15,6 @@
 
 package cn.didano;
 
-import java.util.Arrays;
-
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,7 +22,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 
 /**
  * 启动程序
@@ -43,6 +41,7 @@ import org.springframework.context.annotation.Configuration;
 @ServletComponentScan //配置websocket必须
 @ComponentScan({"cn.didano"})
 @EnableCaching
+@EnableMongoAuditing
 public class StartVideoApplication {
 	static Logger logger = Logger.getLogger(StartVideoApplication.class);
 	

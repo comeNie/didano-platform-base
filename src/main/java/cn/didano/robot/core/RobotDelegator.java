@@ -1,11 +1,13 @@
 package cn.didano.robot.core;
 
 import java.lang.reflect.Method;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.log4j.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import cn.didano.base.exception.BackType;
 import cn.didano.robot.controller.RobotApiController;
-import cn.didano.video.constant.BackType;
 import cn.didano.video.json.Out;
 
 /**
@@ -35,8 +37,8 @@ public class RobotDelegator {
 				String jsonString = mapper.writeValueAsString(upInfo.getInfo());
 				Object[] o = new Object[] { mapper.readValue(jsonString, para) };
 				back = invokeMethod(robot, upInfo.getMethodName(), o);
-			}else{
-				//para 参数找不到，说明method没找到
+			} else {
+				// para 参数找不到，说明method没找到
 				out = new Out<String>();
 				out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_WRONG_METHOD);
 			}
@@ -45,23 +47,23 @@ public class RobotDelegator {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		if(back==null){//说明出现了异常
+		if (back == null) {// 说明出现了异常
 			out = new Out<String>();
 			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_WRONG);
-		}else{
-			out = (Out<String>)back;
+		} else {
+			out = (Out<String>) back;
 		}
-		//有异常，反馈客户端信息
-		if(out.isSuccess()){
-			//do nothing 正确无需返回信息
-		}else{
+		// 有异常，反馈客户端信息
+		if (out.isSuccess()) {
+			// do nothing 正确无需返回信息
+		} else {
 			RobotSession session = RobotWebsocketServer.getRobotInfoMap().get(service_no);
-			RobotWebsocketServer server = session.getRobotWebsocketServer();
-			server.sendMessage(service_no, out);
+			if (session != null) {
+				RobotWebsocketServer server = session.getRobotWebsocketServer();
+				server.sendMessage(service_no, out);
+			}
 		}
 	}
-	
-	
 
 	/**
 	 * 触发control方法

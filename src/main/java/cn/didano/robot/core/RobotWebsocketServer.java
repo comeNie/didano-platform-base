@@ -60,6 +60,7 @@ public class RobotWebsocketServer {
 			throws Exception {
 		logger.debug("RobotWebsocket连接建立,连接设备号为：" + service_no);
 		this.session = session;
+		this.service_no = service_no;
 		// 与某个客户端的连接会话，需要通过它来给客户端发送数据
 		HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
 		// 如果正在看视频已经存在，那么将被替换
@@ -69,6 +70,8 @@ public class RobotWebsocketServer {
 		info.setRobotWebsocketServer(this);
 		info.setService_no(service_no);
 		addOnlineCount(); // 在线数加1
+		//增加连接
+		RobotWebsocketServer.addRobotInfo(info);
 		logger.info("当前在线机器人为：" + getOnlineCount());
 	}
 
@@ -125,7 +128,7 @@ public class RobotWebsocketServer {
 	 */
 	public void sendMessage(String message) {
 		try {
-			logger.debug("websocket:sendMessage");
+			logger.debug("websocket:sendMessage="+message);
 			this.session.getBasicRemote().sendText(message);
 		} catch (IOException e) {
 			logger.debug(VideoExceptionEnums.FAIL_WEBSOCKET_SEND + ":websocket已经关闭sessionid[" + session.getId() + "]"

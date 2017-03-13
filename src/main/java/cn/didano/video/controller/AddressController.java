@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.didano.base.exception.BackType;
 import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Tb_address_list;
 import cn.didano.base.model.Tb_bossData;
@@ -35,7 +36,6 @@ import cn.didano.base.service.AddressService;
 import cn.didano.base.service.ClassService;
 import cn.didano.base.service.NewStudentService;
 import cn.didano.base.service.NewTeacherService;
-import cn.didano.video.constant.BackType;
 import cn.didano.video.json.In_Student_Edit;
 import cn.didano.video.json.In_Teacher_Edit;
 import cn.didano.video.json.Out;

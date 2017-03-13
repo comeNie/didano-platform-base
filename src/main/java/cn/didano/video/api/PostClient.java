@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.didano.base.exception.BackType;
 import cn.didano.base.model.Vd_auth_time_control;
 import cn.didano.base.model.Vd_channel;
 import cn.didano.base.model.Vd_channelExample;
@@ -23,7 +24,6 @@ import cn.didano.base.service.ChannelService;
 import cn.didano.base.service.StaffService;
 import cn.didano.base.service.ViewChannelService;
 import cn.didano.video.auth.channel.ChannelStatus;
-import cn.didano.video.constant.BackType;
 import cn.didano.video.constant.DeletedType;
 import cn.didano.video.json.In_Channel_Status;
 import cn.didano.video.json.In_Channel_Status_All;

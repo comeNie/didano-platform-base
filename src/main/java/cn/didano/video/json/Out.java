@@ -2,8 +2,8 @@ package cn.didano.video.json;
 
 import org.apache.log4j.Logger;
 
+import cn.didano.base.exception.BackType;
 import cn.didano.base.exception.ExceptionEnums;
-import cn.didano.video.constant.BackType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

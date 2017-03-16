@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.didano.base.dao.Hand_ic_cardMapper">
+ <resultMap id="BaseResultMap" type="cn.didano.base.model.Tb_ic_card">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="ic_type" jdbcType="INTEGER" property="icType" />
+    <result column="ic_number" jdbcType="VARCHAR" property="icNumber" />
+    <result column="school_id" jdbcType="INTEGER" property="schoolId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+  </resultMap>
+  <select id="selectNoeIcInfo" parameterType="cn.didano.base.model.Tb_ic_card" resultMap="BaseResultMap">
+    SELECT id,ic_type,ic_number,school_id,STATUS,created,updated,deleted from tb_ic_card where ic_number=#{icNumber} and school_id=#{schoolId}
+  </select> 
+  
+  <select id="select_between_icInfo" parameterType="cn.didano.base.model.Hand_icCardAndSchool_id" resultMap="BaseResultMap">
+    SELECT id,ic_type,ic_number,school_id,STATUS,created,updated,deleted from tb_ic_card where <![CDATA[ic_number >= #{icNumberNoe} AND ic_number <= #{icNumberTow} AND school_id=#{school_id} AND deleted=0]]> 
+  </select> 
+  
+   <select id="select_ICMaxNumber" parameterType="INTEGER" resultMap="BaseResultMap">
+    SELECT id,ic_type,MAX(id),ic_number,school_id,STATUS,created,updated,deleted FROM tb_ic_card WHERE school_id=#{school_id}
+  </select> 
+
+<!-- <update id="Update" parameterType="cn.didano.base.model.Tb_mailList_list">UPDATE tb_student a SET a.name=#{name},a.class_id=#{class_id},a.gender=#{gender,jdbcType=TINYINT},a.birthday=#{birthday,jdbcType=DATE} where a.id=#{id}</update>
+
+<update id="delete" parameterType="Integer">
+UPDATE tb_student AS a SET a.deleted=1 WHERE a.id=#{id} 
+</update>
+
+
+<update id="UpdateParent" parameterType="cn.didano.base.model.Tb_parent">
+  UPDATE tb_school_parent SET phone=#{parent_phone} where id = (select id from(SELECT p.id FROM 
+(SELECT tmp1.id,tmp1.name,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 
+ tb_student  AS tmp1 ,tb_student_parent p WHERE tmp1.id=p.student_id AND tmp1.id=#{id}) AS tmp2 LEFT JOIN tb_school_parent p ON tmp2.parent_id=p.id WHERE p.name=#{parent_name})a )
+</update>
+
+<update id="UpdateTeacher" parameterType="cn.didano.base.model.Tb_teacher">
+  UPDATE TB_STAFF a,tb_staff_class b,tb_staff_signdate c SET a.type = #{type},a.name=#{name},a.phone=#{phone} ,a.deleted=#{deleted},b.class_id=#{class_id},
+c.set_intime=#{in_time},c.set_outtime=#{out_time} where a.id = #{id} 
+</update>
+<update id="deleteparent" parameterType="Integer">
+  UPDATE tb_school_parent a,tb_student_parent b SET a.deleted=1 ,b.deleted = 1 WHERE
+   a.id IN (SELECT * FROM(SELECT parent_id FROM tb_student_parent WHERE student_id=#{id})a) 
+   AND b.student_id=#{id}
+</update> -->
+
+</mapper>

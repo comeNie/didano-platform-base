@@ -27,6 +27,8 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel
 public class TemperatureInfo extends RInfo {
 
+	@ApiModelProperty(value = "产品硬件识别码", required = true)
+	private String deviceNo;
 	@ApiModelProperty(value = "环境温度", required = true)
 	private String environmentTemperature;
 	@ApiModelProperty(value = "CPU温度", required = true)
@@ -47,16 +49,6 @@ public class TemperatureInfo extends RInfo {
 	public void setCPUTemperature(String cPUTemperature) {
 		CPUTemperature = cPUTemperature;
 	}
-
-	/**
-	 * 
-	 */
-	/**
-	 * 
-	 */
-	/**
-	 * 
-	 */
 	public TemperatureInfo() {
 		super();
 		// TODO Auto-generated constructor stub

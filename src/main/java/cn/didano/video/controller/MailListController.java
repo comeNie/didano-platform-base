@@ -53,6 +53,7 @@ import cn.didano.base.service.ClassService;
 import cn.didano.base.service.MailListService;
 import cn.didano.base.service.NewStudentService;
 import cn.didano.base.service.NewTeacherService;
+import cn.didano.video.app.config.AppConfigProperties;
 import cn.didano.video.constant.BackType;
 import cn.didano.video.constant.StaffType;
 import cn.didano.video.json.In_Student_Edit;
@@ -79,6 +80,8 @@ public class MailListController {
 	private NewTeacherService newteacherService;
 	@Autowired
 	private ClassService classService;
+	@Autowired
+	AppConfigProperties appConfigProperties;
 
 	/**
 	 * 家长查看本班老师
@@ -387,7 +390,7 @@ public class MailListController {
 					vd_class.setStaffId(vd_staff.getId());
 					newteacherService.insertClassSelective(vd_class);
 				}
-				HttpPost httpPost = new HttpPost("http://cs.didano.com/api/service/createQrcode");
+				HttpPost httpPost = new HttpPost(appConfigProperties.getQrcodePath());
 		        CloseableHttpClient client = HttpClients.createDefault();
 		        String respContent = null;
 		        

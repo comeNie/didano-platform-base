@@ -931,11 +931,12 @@ public class MailListController {
 						vd_studentparent.setCreated(new Date());
 						rowNUM2=newstudentService.insertStudentParentSelective(vd_studentparent);
 						
-						HttpPost httpPost = new HttpPost("http://cs.didano.com/api/service/createQrcode");
+						HttpPost httpPost = new HttpPost(appConfigProperties.getQrcodePath());
+						logger.info("appConfigProperties.getQrcodePath()="+appConfigProperties.getQrcodePath());
 				        CloseableHttpClient client = HttpClients.createDefault();
 				        String respContent = null;
 				        
-//				        json方式
+				        //json方式
 				        JSONObject jsonParam = new JSONObject();  
 				        jsonParam.put("school_id", vd_parent.getSchoolId());
 				        jsonParam.put("type", 1);
@@ -949,12 +950,12 @@ public class MailListController {
 				          
       
 				        HttpResponse resp = client.execute(httpPost);
+				        logger.info("resp.getStatusLine().getStatusCode()="+resp.getStatusLine().getStatusCode());
 				        if(resp.getStatusLine().getStatusCode() == 200) {
 				            HttpEntity he = resp.getEntity();
 				            respContent = EntityUtils.toString(he,"UTF-8");
 				        }
-
-				        System.out.println(respContent);
+				        logger.info("respContent="+respContent);
 					}
 				}
 				

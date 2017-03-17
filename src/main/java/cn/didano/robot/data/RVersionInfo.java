@@ -33,6 +33,7 @@ public class RVersionInfo extends RInfo {
 	@ApiModelProperty(value = "语音包版本", required = true)
 	private String voiceZipVersion;
 	@ApiModelProperty(value = "安卓软件版本", required = true)
+	
 	private String androidVersion;
 	@ApiModelProperty(value = "linux软件版本", required = true)
 	private String linuxSoftVersion;
@@ -42,6 +43,7 @@ public class RVersionInfo extends RInfo {
 	private String motionControlVersion;
 
 	public RVersionInfo() {
+		
 	}
 
 	public String getDeviceNo() {

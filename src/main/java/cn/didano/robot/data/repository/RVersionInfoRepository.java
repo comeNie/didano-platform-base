@@ -10,3 +10,4 @@ import cn.didano.robot.data.RVersionInfo;
 public interface RVersionInfoRepository extends MongoRepository<RVersionInfo, String> {
 	RVersionInfo findByDeviceNo(String device_no);
 }
+

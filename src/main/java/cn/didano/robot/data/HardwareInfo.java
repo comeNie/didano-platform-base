@@ -19,14 +19,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * 
- * @author stephen.wang
  * 硬件信息
  * @Todo 将两个摄像头分开
  */
 @ApiModel
 public class HardwareInfo extends RInfo {
 
+	@ApiModelProperty(value = "产品硬件识别码", required = true)
+	private String deviceNo;
 	@ApiModelProperty(value = "安卓核心板", required = true)
 	private String androidCoreBoard;
 	@ApiModelProperty(value = "linux核心板", required = true)
@@ -41,6 +41,7 @@ public class HardwareInfo extends RInfo {
 	private String rfidCardReader;
 	@ApiModelProperty(value = "液晶屏", required = true)
 	private String LiquidCrystalDisplay;
+	
 	public String getAndroidCoreBoard() {
 		return androidCoreBoard;
 	}
@@ -81,17 +82,6 @@ public class HardwareInfo extends RInfo {
 		return LiquidCrystalDisplay;
 	}
 	public void setLiquidCrystalDisplay(String liquidCrystalDisplay) {
-		LiquidCrystalDisplay = liquidCrystalDisplay;
-	}
-	public HardwareInfo(String androidCoreBoard, String linuxCoreBoard, String oneCamera, String twoCamera,
-			String thermalImager, String rfidCardReader, String liquidCrystalDisplay) {
-		super();
-		this.androidCoreBoard = androidCoreBoard;
-		this.linuxCoreBoard = linuxCoreBoard;
-		this.oneCamera = oneCamera;
-		this.twoCamera = twoCamera;
-		this.thermalImager = thermalImager;
-		this.rfidCardReader = rfidCardReader;
 		LiquidCrystalDisplay = liquidCrystalDisplay;
 	}
 	public HardwareInfo() {

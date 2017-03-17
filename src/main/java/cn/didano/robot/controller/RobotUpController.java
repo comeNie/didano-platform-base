@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.didano.base.exception.BackType;
+import cn.didano.robot.data.HardwareInfo;
 import cn.didano.robot.data.RVersionInfo;
-import cn.didano.robot.data.repository.RVersionInfoRepository;
 import cn.didano.robot.service.RobotMongoDbDataService;
 import cn.didano.video.json.Out;
 import io.swagger.annotations.Api;
@@ -34,9 +34,30 @@ public class RobotUpController{
 	@ResponseBody
 	public Out<String> reportVersion(@ApiParam(value = "远程机器人版本信息" ,required=true) @RequestBody RVersionInfo robotVersionInfo) {
 		logger.info("访问  RobotController :reportVersion RobotVersionInfo=" + robotVersionInfo);
+		System.err.println("上报版本信息");
 		Out<String> out = new Out<String>();
 		try {
 			Object o = robotMongoDbDataService.saveRVersionInfo(robotVersionInfo);
+			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_MONGO_SAVE, e.getMessage());
+		}
+		return out;
+	}
+	
+	
+	@PostMapping(value = "reportHardwareInfo")
+	@ApiOperation(value="上报硬件信息", notes = "上报硬件信息")
+	@ResponseBody
+	public Out<String> reportHardwareInfo(@ApiParam(value = "远程机器人硬件信息" ,required=true) @RequestBody HardwareInfo hardwareInfo) {
+		logger.info("访问  RobotController :reportHardwareInfo HardwareInfo=" + hardwareInfo);
+		System.err.println("上报硬件信息");
+		Out<String> out = new Out<String>();
+	
+		try {
+			//直接保存信息
+			Object o = robotMongoDbDataService.saveHardwareInfo(hardwareInfo);
 			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage());

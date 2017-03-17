@@ -32,7 +32,7 @@ public class TemperatureInfo extends RInfo {
 	@ApiModelProperty(value = "环境温度", required = true)
 	private String environmentTemperature;
 	@ApiModelProperty(value = "CPU温度", required = true)
-	private String CPUTemperature;
+	private String cPUTemperature;
 
 	public String getEnvironmentTemperature() {
 		return environmentTemperature;
@@ -42,27 +42,39 @@ public class TemperatureInfo extends RInfo {
 		this.environmentTemperature = environmentTemperature;
 	}
 
-	public String getCPUTemperature() {
-		return CPUTemperature;
+	
+	public String getDeviceNo() {
+		return deviceNo;
 	}
 
-	public void setCPUTemperature(String cPUTemperature) {
-		CPUTemperature = cPUTemperature;
+	public void setDeviceNo(String deviceNo) {
+		this.deviceNo = deviceNo;
 	}
+
+	public String getcPUTemperature() {
+		return cPUTemperature;
+	}
+
+	public void setcPUTemperature(String cPUTemperature) {
+		this.cPUTemperature = cPUTemperature;
+	}
+
 	public TemperatureInfo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public TemperatureInfo(String environmentTemperature, String cPUTemperature) {
+	public TemperatureInfo(String deviceNo, String environmentTemperature, String cPUTemperature) {
 		super();
+		this.deviceNo = deviceNo;
 		this.environmentTemperature = environmentTemperature;
-		CPUTemperature = cPUTemperature;
+		this.cPUTemperature = cPUTemperature;
 	}
 
 	@Override
 	public String toString() {
-		return "TemperatureInfo [environmentTemperature=" + environmentTemperature + ", CPUTemperature="
-				+ CPUTemperature + "]";
+		return "{\"deviceNo\":\"" + deviceNo + "\",\"environmentTemperature\":\"" + environmentTemperature
+				+ "\",\"cPUTemperature\":\"" + cPUTemperature + "\"}  ";
 	}
+	
 }

@@ -40,7 +40,7 @@ public class HardwareInfo extends RInfo {
 	@ApiModelProperty(value = "RFID读卡器", required = true)
 	private String rfidCardReader;
 	@ApiModelProperty(value = "液晶屏", required = true)
-	private String LiquidCrystalDisplay;
+	private String liquidCrystalDisplay;
 	
 	public String getAndroidCoreBoard() {
 		return androidCoreBoard;
@@ -78,11 +78,17 @@ public class HardwareInfo extends RInfo {
 	public void setRfidCardReader(String rfidCardReader) {
 		this.rfidCardReader = rfidCardReader;
 	}
+	public String getDeviceNo() {
+		return deviceNo;
+	}
+	public void setDeviceNo(String deviceNo) {
+		this.deviceNo = deviceNo;
+	}
 	public String getLiquidCrystalDisplay() {
-		return LiquidCrystalDisplay;
+		return liquidCrystalDisplay;
 	}
 	public void setLiquidCrystalDisplay(String liquidCrystalDisplay) {
-		LiquidCrystalDisplay = liquidCrystalDisplay;
+		this.liquidCrystalDisplay = liquidCrystalDisplay;
 	}
 	public HardwareInfo() {
 		super();
@@ -92,6 +98,6 @@ public class HardwareInfo extends RInfo {
 	public String toString() {
 		return "HardwareInfo [androidCoreBoard=" + androidCoreBoard + ", linuxCoreBoard=" + linuxCoreBoard
 				+ ", oneCamera=" + oneCamera + ", twoCamera=" + twoCamera + ", thermalImager=" + thermalImager
-				+ ", rfidCardReader=" + rfidCardReader + ", LiquidCrystalDisplay=" + LiquidCrystalDisplay + "]";
+				+ ", rfidCardReader=" + rfidCardReader + ", liquidCrystalDisplay=" + liquidCrystalDisplay + "]";
 	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.didano.base.dao.tb_sign_typeMapper">
-  <resultMap id="BaseResultMap" type="cn.didano.base.model.tb_sign_type">
+<mapper namespace="cn.didano.base.dao.Tb_sign_typeMapper">
+  <resultMap id="BaseResultMap" type="cn.didano.base.model.Tb_sign_type">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="school_id" jdbcType="INTEGER" property="schoolId" />
     <result column="title" jdbcType="VARCHAR" property="title" />

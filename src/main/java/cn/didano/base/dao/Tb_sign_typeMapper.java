@@ -5,7 +5,7 @@ import cn.didano.base.model.tb_sign_typeExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface tb_sign_typeMapper {
+public interface Tb_sign_typeMapper {
     long countByExample(tb_sign_typeExample example);
 
     int deleteByExample(tb_sign_typeExample example);

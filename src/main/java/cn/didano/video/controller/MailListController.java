@@ -51,8 +51,8 @@ import cn.didano.base.model.Tb_teacherAndStudent;
 import cn.didano.base.model.tb_sign_type;
 import cn.didano.base.service.ClassService;
 import cn.didano.base.service.MailListService;
-import cn.didano.base.service.NewStudentService;
-import cn.didano.base.service.NewTeacherService;
+import cn.didano.base.service.StudentService;
+import cn.didano.base.service.StaffService;
 import cn.didano.video.app.config.AppConfigProperties;
 import cn.didano.video.constant.BackType;
 import cn.didano.video.constant.StaffType;
@@ -75,9 +75,9 @@ public class MailListController {
 	@Autowired
 	private MailListService mailListService;
 	@Autowired
-	private NewStudentService newstudentService;
+	private StudentService studentService;
 	@Autowired
-	private NewTeacherService newteacherService;
+	private StaffService staffService;
 	@Autowired
 	private ClassService classService;
 	@Autowired
@@ -132,7 +132,7 @@ public class MailListController {
 	@ResponseBody
 	public Out<OutList<Tb_class>> findStaff_ClassInfo(@PathVariable("staff_id") Integer id) {
 		logger.info("访问  MailListController : findStaff_ClassInfo,staff_id=" + id);
-		Tb_staff staff = newteacherService.findById(id);
+		Tb_staff staff = staffService.findById(id);
 		List<Tb_class> classs = null;
 		OutList<Tb_class> outList = null;
 		Out<OutList<Tb_class>> back = new Out<OutList<Tb_class>>();
@@ -189,13 +189,13 @@ public class MailListController {
 	public Out<Tb_bossData> studentstaff_searchByName(@PathVariable("name") String name, @PathVariable("id") Integer id)
 			throws IllegalAccessException, InvocationTargetException {
 		logger.info("访问  MailListController:studentstaff_searchByName,name=" + name + ",id=" + id);
-		Tb_staff s0 = newteacherService.findById(id);
+		Tb_staff s0 = staffService.findById(id);
 		Tb_staff4MailList s1 = mailListService.findbystaffbyid(id);
 		// 按名字查询老师集合
 		List<Tb_staff> staffAll = new ArrayList<Tb_staff>();
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 		if (s0.getType() == StaffType.SCHOOLMASTER.getIndex()) {
-			List<Tb_staff> staffA = newteacherService.findByNameSchool("%" + name + "%", s0.getSchoolId());
+			List<Tb_staff> staffA = staffService.findByNameSchool("%" + name + "%", s0.getSchoolId());
 			// 取教职工（老师）
 			Tb_staff4MailList target = null;
 			tb_sign_type t = null;
@@ -203,7 +203,7 @@ public class MailListController {
 				target = new Tb_staff4MailList();
 				BeanUtils.copyProperties(target, staff);
 				if (target.getSignTypeId() != 0) {
-					t = newteacherService.findTypeByID(target.getSignTypeId());
+					t = staffService.findTypeByID(target.getSignTypeId());
 					target.setIn_time(sdf.format(t.getInTime()));
 					target.setOut_time(sdf.format(t.getOutTime()));
 				}
@@ -211,7 +211,7 @@ public class MailListController {
 			}
 
 		} else {
-			List<Tb_staff> boss = newteacherService.findBossByNameschool("%" + name + "%", s0.getSchoolId());
+			List<Tb_staff> boss = staffService.findBossByNameschool("%" + name + "%", s0.getSchoolId());
 			Tb_staffData data2 = new Tb_staffData();
 			data2.setName("%" + name + "%");
 			data2.setClass_id(s1.getClass_id());
@@ -223,23 +223,21 @@ public class MailListController {
 					Tb_staff4MailList target0 = new Tb_staff4MailList();
 					BeanUtils.copyProperties(target0, one);
 					if (target0.getSignTypeId() != 0) {
-						t0 = newteacherService.findTypeByID(target0.getSignTypeId());
+						t0 = staffService.findTypeByID(target0.getSignTypeId());
 						target0.setIn_time(sdf.format(t0.getInTime()));
 						target0.setOut_time(sdf.format(t0.getOutTime()));
 					}
 					staffAll.add(target0);
 				}
-
-				
 			}
-			List<Tb_staff> n = newteacherService.findByNameType("%" + name + "%", s0.getSchoolId());
+			List<Tb_staff> n = staffService.findByNameType("%" + name + "%", s0.getSchoolId());
 			tb_sign_type t1 = null;
 			if (!n.isEmpty()) {
 				for (Tb_staff one : n) {
 					Tb_staff4MailList target1 = new Tb_staff4MailList();
 					BeanUtils.copyProperties(target1, one);
 					if (target1.getSignTypeId() != 0) {
-						t1 = newteacherService.findTypeByID(target1.getSignTypeId());
+						t1 = staffService.findTypeByID(target1.getSignTypeId());
 						target1.setIn_time(sdf.format(t1.getInTime()));
 						target1.setOut_time(sdf.format(t1.getOutTime()));
 					}
@@ -251,7 +249,6 @@ public class MailListController {
 		List<Tb_mailList_list> student = null;
 		List<Tb_classStudent> student2 = new ArrayList<Tb_classStudent>();
 		// 学生同名顶多三次
-
 		Out<Tb_bossData> back = new Out<Tb_bossData>();
 		try {
 
@@ -271,16 +268,11 @@ public class MailListController {
 				student = mailListService.findBynameClass(data1);
 			}
 
-			// hashmap1 key=class_id value= list object=hashmap2
 			// 循环，取每个
-
 			// 当出现一个新的class 创建一个hashmap2 key=student_id value= list
 			// 循环将处理，当getkey by student_id =null,创建一个list，并将家长写入list中
-
 			// 如果有，通过hashmap 的key获取这个家长list，然后写入
 			// 组装我所需要的数据格式
-			// 循环，按
-
 			Map<Integer, List<Tb_mailList_list>> map = new HashMap<Integer, List<Tb_mailList_list>>();
 			for (Tb_mailList_list list : student) {
 				List<Tb_parent> parent = mailListService.findparent(list.getId());
@@ -330,7 +322,7 @@ public class MailListController {
 		logger.info("访问  MailListController:deleteStaff,staff_id=" + staff_id);
 		Out<String> back = new Out<String>();
 		try {
-			int rowNum = newteacherService.delete(staff_id);
+			int rowNum = staffService.delete(staff_id);
 			if (rowNum > 0) {
 				back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "rowNum=" + rowNum);
 			} else {
@@ -357,7 +349,7 @@ public class MailListController {
 	public Out<String> Teacher_add(
 			@ApiParam(value = "新增编辑职工", required = true) @RequestBody In_Teacher_Edit teacher_a) {
 		logger.info("访问  MailListController:Teacher_add,teacher_a=" + teacher_a);
-		Tb_staff s = newteacherService.findById(teacher_a.getStaffid());
+		Tb_staff s = staffService.findById(teacher_a.getStaffid());
 		Tb_staff vd_staff = new Tb_staff();
 		Tb_staff_class vd_class = new Tb_staff_class();
 		tb_sign_type vd_date = new tb_sign_type();
@@ -373,7 +365,7 @@ public class MailListController {
 					vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
 					vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));
 					vd_date.setCreated(new Date());
-					rowNum3 = newteacherService.insertTypeSelective(vd_date);
+					rowNum3 = staffService.insertTypeSelective(vd_date);
 				}
 				vd_staff.setCreated(new Date());
 				if (teacher_a.getType() != StaffType.SCHOOLMASTER.getIndex()) {
@@ -382,19 +374,19 @@ public class MailListController {
 					vd_staff.setSignTypeId(0);
 				}
 				vd_staff.setSchoolId(s.getSchoolId());
-				rowNum = newteacherService.insertTeacherSelective(vd_staff);// insert
+				rowNum = staffService.insertTeacherSelective(vd_staff);// insert
 				if (teacher_a.getType() == 32) {
 					vd_class.setClassId(teacher_a.getClassId());
 					vd_class.setCreated(new Date());
 					vd_class.setSchoolId(vd_staff.getSchoolId());
 					vd_class.setStaffId(vd_staff.getId());
-					newteacherService.insertClassSelective(vd_class);
+					staffService.insertClassSelective(vd_class);
 				}
 				HttpPost httpPost = new HttpPost(appConfigProperties.getQrcodePath());
 		        CloseableHttpClient client = HttpClients.createDefault();
 		        String respContent = null;
 		        
-//		        json方式
+		        //新增家长json方式
 		        JSONObject jsonParam = new JSONObject();  
 		        jsonParam.put("school_id", vd_staff.getSchoolId());
 		        jsonParam.put("type", 2);
@@ -424,40 +416,40 @@ public class MailListController {
 				if (teacher_a.getType() == StaffType.SCHOOLMASTER.getIndex()) {
 					vd_staff.setSignTypeId(0);
 				} else {
-					if (newteacherService.findById(teacher_a.getId()).getSignTypeId() != 0) {
+					if (staffService.findById(teacher_a.getId()).getSignTypeId() != 0) {
 						vd_date.setSchoolId(s.getSchoolId());
 
 						vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
 						vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));
 
-						vd_date.setId(newteacherService.findById(teacher_a.getId()).getSignTypeId());
+						vd_date.setId(staffService.findById(teacher_a.getId()).getSignTypeId());
 						
-						rowNum3 = newteacherService.updateType(vd_date);
+						rowNum3 = staffService.updateType(vd_date);
 					} else {
 						vd_date.setSchoolId(s.getSchoolId());
 						vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
 						vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));
 						vd_date.setCreated(new Date());
-						rowNum3 = newteacherService.insertTypeSelective(vd_date);
+						rowNum3 = staffService.insertTypeSelective(vd_date);
 						vd_staff.setSignTypeId(vd_date.getId());
 					}
 
 				}
-				rowNum = newteacherService.updatestaff(vd_staff);
+				rowNum = staffService.updatestaff(vd_staff);
 				if (teacher_a.getType() == 32) {
-					if (!newteacherService.findclassidByStaffid(vd_staff.getId()).isEmpty()) {
+					if (!staffService.findclassidByStaffid(vd_staff.getId()).isEmpty()) {
 						vd_class.setClassId(teacher_a.getClassId());
 
-						vd_class.setId(newteacherService.findclassidByStaffid(vd_staff.getId()).get(0).getId());
+						vd_class.setId(staffService.findclassidByStaffid(vd_staff.getId()).get(0).getId());
 						vd_class.setSchoolId(s.getSchoolId());
 						vd_class.setStaffId(teacher_a.getId());
-						newteacherService.updateclass(vd_class);
+						staffService.updateclass(vd_class);
 					} else {
 						vd_class.setClassId(teacher_a.getClassId());
 						vd_class.setCreated(new Date());
 						vd_class.setSchoolId(s.getSchoolId());
 						vd_class.setStaffId(vd_staff.getId());
-						newteacherService.insertClassSelective(vd_class);
+						staffService.insertClassSelective(vd_class);
 					}
 				}
 
@@ -514,7 +506,7 @@ public class MailListController {
 	public Out<Tb_bossData> student_searchByBoss(@PathVariable("staff_id") Integer staff_id)
 			throws IllegalAccessException, InvocationTargetException {
 		logger.info("访问  MailListController:student_searchByBoss,staff_id=" + staff_id);
-		Tb_staff staff = newteacherService.findById(staff_id);
+		Tb_staff staff = staffService.findById(staff_id);
 		Tb_bossData data = new Tb_bossData();
 		List<Tb_mailList_list> student = null;
 		List<Tb_classStudent> student2 = new ArrayList<Tb_classStudent>();
@@ -602,7 +594,7 @@ public class MailListController {
 			// 返回数据集合
 			List<Tb_staff4MailList> staffall = new ArrayList<Tb_staff4MailList>();
 			// 校长
-			List<Tb_staff> bosses = newteacherService.findBossByschool(staff.getSchoolId());
+			List<Tb_staff> bosses = staffService.findBossByschool(staff.getSchoolId());
 			if (!bosses.isEmpty()) {
 				for (Tb_staff one : bosses) {
 					Tb_staff4MailList target = new Tb_staff4MailList();
@@ -624,14 +616,14 @@ public class MailListController {
 				staffall.add(staff1);
 			}
 			// 取教职工（医生、勤务）
-			List<Tb_staff> workers = newteacherService.findByType(staff.getSchoolId());
+			List<Tb_staff> workers = staffService.findByType(staff.getSchoolId());
 			tb_sign_type t = null;
 			if (!workers.isEmpty()) {
 				for (Tb_staff one : workers) {
 					Tb_staff4MailList target = new Tb_staff4MailList();
 					BeanUtils.copyProperties(target, one);
 					if (target.getSignTypeId() != 0) {
-						t = newteacherService.findTypeByID(target.getSignTypeId());
+						t = staffService.findTypeByID(target.getSignTypeId());
 						target.setIn_time(sdf.format(t.getInTime()));
 						target.setOut_time(sdf.format(t.getOutTime()));
 					}
@@ -661,7 +653,7 @@ public class MailListController {
 	public Out<Tb_teacherAndStudent> student_searchByClass(@PathVariable("staff_id") Integer staff_id)
 			throws ParseException, IllegalAccessException, InvocationTargetException {
 		logger.info("访问  MailListController:student_searchByClass,staff_id=" + staff_id);
-		Tb_staff staff = newteacherService.findById(staff_id);
+		Tb_staff staff = staffService.findById(staff_id);
 		Tb_teacherAndStudent data = new Tb_teacherAndStudent();
 		List<Tb_mailList_list> students = null;
 		Tb_classStudent cs = new Tb_classStudent();
@@ -681,7 +673,7 @@ public class MailListController {
 					SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
 					List<Tb_staff4MailList> all = new ArrayList<Tb_staff4MailList>();
-					List<Tb_staff> bosses = newteacherService.findBossByschool(staff.getSchoolId());
+					List<Tb_staff> bosses = staffService.findBossByschool(staff.getSchoolId());
 					// 校长
 					if (!bosses.isEmpty()) {
 						for (Tb_staff one : bosses) {
@@ -704,14 +696,14 @@ public class MailListController {
 						all.add(staff1);
 					}
 					// 教职工（后勤）
-					List<Tb_staff> workers = newteacherService.findByType(staff.getSchoolId());
+					List<Tb_staff> workers = staffService.findByType(staff.getSchoolId());
 					tb_sign_type t = null;
 					if (!workers.isEmpty()) {
 						for (Tb_staff one : workers) {
 							Tb_staff4MailList target = new Tb_staff4MailList();
 							BeanUtils.copyProperties(target, one);
 							if (target.getSignTypeId() != 0) {
-								t = newteacherService.findTypeByID(target.getSignTypeId());
+								t = staffService.findTypeByID(target.getSignTypeId());
 								target.setIn_time(sdf.format(t.getInTime()));
 								target.setOut_time(sdf.format(t.getOutTime()));
 							}
@@ -905,7 +897,7 @@ public class MailListController {
 				vd_student.setStatus((byte) 1);
 				vd_student.setCreated(new Date());
 				vd_student.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
-				int rowNum = newstudentService.insertStudentSelective(vd_student);// insert
+				int rowNum = studentService.insertStudentSelective(vd_student);// insert
                 int rowNUM2= 0;
 			
 				if (student_a.getParent()!=null) {
@@ -916,7 +908,7 @@ public class MailListController {
 						vd_parent.setType(1);
 						vd_parent.setStatus((byte) 1);
 						vd_parent.setCreated(new Date());
-						rowNUM2=newstudentService.insertParentSelective(vd_parent);
+						rowNUM2=studentService.insertParentSelective(vd_parent);
 						vd_studentparent.setSchoolId(vd_student.getSchoolId());
 						vd_studentparent.setClassId(vd_student.getClass_id());
 						vd_studentparent.setStudentId(vd_student.getId());
@@ -929,7 +921,7 @@ public class MailListController {
 							vd_studentparent.setRelationTitle(add.getParent_name());
 						}
 						vd_studentparent.setCreated(new Date());
-						rowNUM2=newstudentService.insertStudentParentSelective(vd_studentparent);
+						rowNUM2=studentService.insertStudentParentSelective(vd_studentparent);
 						
 						HttpPost httpPost = new HttpPost(appConfigProperties.getQrcodePath());
 						logger.info("appConfigProperties.getQrcodePath()="+appConfigProperties.getQrcodePath());
@@ -981,7 +973,7 @@ public class MailListController {
 						vd_parent.setType(1);
 						vd_parent.setStatus((byte) 1);
 						vd_parent.setCreated(new Date());
-						newstudentService.insertParentSelective(vd_parent);
+						studentService.insertParentSelective(vd_parent);
 						vd_studentparent.setSchoolId(classService.selectById(list.getClass_id()).getSchoolId());
 						vd_studentparent.setClassId(list.getClass_id());
 						vd_studentparent.setStudentId(list.getId());
@@ -994,7 +986,7 @@ public class MailListController {
 							vd_studentparent.setRelationTitle(add.getParent_name());
 						}
 						vd_studentparent.setCreated(new Date());
-						newstudentService.insertStudentParentSelective(vd_studentparent);
+						studentService.insertStudentParentSelective(vd_studentparent);
 
 					}
 

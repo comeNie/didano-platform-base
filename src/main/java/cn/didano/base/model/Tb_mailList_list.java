@@ -11,7 +11,7 @@ public class Tb_mailList_list {
 	private String name;
 	private String class_name;
 	private Date birthday;
-	private Byte gender;
+	private byte gender;
 	private List<Tb_parent> parent = new ArrayList<Tb_parent>();
 	
 	public String getClass_name() {
@@ -45,10 +45,10 @@ public class Tb_mailList_list {
 		this.birthday = birthday;
 	}
 
-	public Byte getGender() {
+	public byte getGender() {
 		return gender;
 	}
-	public void setGender(Byte gender) {
+	public void setGender(byte gender) {
 		this.gender = gender;
 	}
 	public List<Tb_parent> getParent() {

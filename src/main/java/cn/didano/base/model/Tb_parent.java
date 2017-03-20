@@ -7,8 +7,15 @@ public class Tb_parent {
 	private byte relation_id;
 	private String parent_name;
 	private String parent_phone;
+	private String rfid;
 	
 	
+	public String getRfid() {
+		return rfid;
+	}
+	public void setRfid(String rfid) {
+		this.rfid = rfid;
+	}
 	public String getParent_name() {
 		return parent_name;
 	}
@@ -28,6 +35,4 @@ public class Tb_parent {
 	public void setParent_phone(String parent_phone) {
 		this.parent_phone = parent_phone;
 	}
-	
-	
 }

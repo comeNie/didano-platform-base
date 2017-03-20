@@ -16,8 +16,17 @@ public class Tb_class {
 	private String parent_name;
 	private String parent_phone;
     private Boolean deleted;
+    private String rfid;
 
-    public byte getRelation_id() {
+	public String getRfid() {
+		return rfid;
+	}
+
+	public void setRfid(String rfid) {
+		this.rfid = rfid;
+	}
+
+	public byte getRelation_id() {
 		return relation_id;
 	}
 

@@ -478,6 +478,7 @@ public class MailListController {
 	public Out<Tb_bossData> student_searchByBoss(@PathVariable("staff_id") Integer staff_id)
 			throws IllegalAccessException, InvocationTargetException {
 		logger.info("访问  MailListController:student_searchByBoss,staff_id=" + staff_id);
+		//查询该学生的id
 		Tb_staff staff = newteacherService.findById(staff_id);
 		Tb_bossData data = new Tb_bossData();
 		List<Tb_mailList_list> student = null;
@@ -511,11 +512,12 @@ public class MailListController {
 				Tb_parent parent = null;
 				for (Tb_class c : val) {
 					if(c.getParent_name()!=null){
-					parent = new Tb_parent();
-					parent.setParent_name(c.getParent_name());
-					parent.setParent_phone(c.getParent_phone());
-					parent.setRelation_id(c.getRelation_id());
-					parentall.add(parent);
+						parent = new Tb_parent();
+						parent.setParent_name(c.getParent_name());
+						parent.setParent_phone(c.getParent_phone());
+						parent.setRelation_id(c.getRelation_id());
+						parent.setRfid(c.getRfid());
+						parentall.add(parent);
 					}
 				}
 				Tb_classStudentParent csp = new Tb_classStudentParent();
@@ -869,8 +871,6 @@ public class MailListController {
 				vd_student.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
 				int rowNum = newstudentService.insertStudentSelective(vd_student);// insert
                 int rowNUM2= 0;
-				
-				
 				if (student_a.getParent()!=null) {
 					for (Tb_parent add : student_a.getParent()) {
 						vd_parent.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
@@ -885,6 +885,7 @@ public class MailListController {
 						vd_studentparent.setStudentId(vd_student.getId());
 						vd_studentparent.setParentId(vd_parent.getId());
 						vd_studentparent.setRelationId(add.getRelation_id());
+						vd_studentparent.setRfid(student_a.getParent().get(0).getRfid());
 						if (add.getRelation_id() != 99) {
 							vd_studentparent.setRelationTitle(
 									mailListService.findrealtionById(add.getRelation_id()).getTitle());
@@ -925,6 +926,7 @@ public class MailListController {
 						vd_studentparent.setStudentId(list.getId());
 						vd_studentparent.setParentId(vd_parent.getId());
 						vd_studentparent.setRelationId(add.getRelation_id());
+						vd_studentparent.setRfid(list.getParent().get(0).getRfid());
 						if (add.getRelation_id() != 99) {
 							vd_studentparent.setRelationTitle(
 									mailListService.findrealtionById(add.getRelation_id()).getTitle());

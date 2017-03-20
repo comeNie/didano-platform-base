@@ -22,6 +22,12 @@ public class MailListService {
 	private Tb_MailList_listMapper mailList_listMapper;
 	
 	/**
+	 * 通过家长id查询家长
+	 */
+	public Tb_parent findParentByPid(Integer id){
+		return mailList_listMapper.findParentByPid(id);
+	}
+	/**
 	 * 查询
 	 */
 	public Tb_staff4MailList findbystaffbyid(Integer id){

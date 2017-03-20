@@ -29,6 +29,7 @@ public interface Tb_MailList_listMapper {
 	List<Tb_mailList_list> findByNameClass(Tb_studentData data);
 	List<Tb_relation> findrelation();
 	Tb_relation findrelationById(byte id);
+	Tb_parent findParentByPid(Integer id);
 	int UpdateTeacher(Tb_teacher teacher);
 	int Update( Tb_mailList_list list); 
 	int UpdateParent(Tb_parent parent);

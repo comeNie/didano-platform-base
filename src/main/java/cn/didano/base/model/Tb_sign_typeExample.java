@@ -5,14 +5,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class tb_sign_typeExample {
+public class Tb_sign_typeExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public tb_sign_typeExample() {
+    public Tb_sign_typeExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

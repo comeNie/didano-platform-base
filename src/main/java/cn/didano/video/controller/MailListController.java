@@ -48,7 +48,7 @@ import cn.didano.base.model.Tb_studentData;
 import cn.didano.base.model.Tb_studentparent;
 import cn.didano.base.model.Tb_teacher;
 import cn.didano.base.model.Tb_teacherAndStudent;
-import cn.didano.base.model.tb_sign_type;
+import cn.didano.base.model.Tb_sign_type;
 import cn.didano.base.service.ClassService;
 import cn.didano.base.service.MailListService;
 import cn.didano.base.service.StudentService;
@@ -198,7 +198,7 @@ public class MailListController {
 			List<Tb_staff> staffA = staffService.findByNameSchool("%" + name + "%", s0.getSchoolId());
 			// 取教职工（老师）
 			Tb_staff4MailList target = null;
-			tb_sign_type t = null;
+			Tb_sign_type t = null;
 			for (Tb_staff staff : staffA) {
 				target = new Tb_staff4MailList();
 				BeanUtils.copyProperties(target, staff);
@@ -217,7 +217,7 @@ public class MailListController {
 			data2.setClass_id(s1.getClass_id());
 			staffAll.addAll(boss);
 			List<Tb_staff> teacherAll = mailListService.findTeacherByNameClass(data2);
-			tb_sign_type t0 = null;
+			Tb_sign_type t0 = null;
 			if (!teacherAll.isEmpty()) {
 				for (Tb_staff one : teacherAll) {
 					Tb_staff4MailList target0 = new Tb_staff4MailList();
@@ -231,7 +231,7 @@ public class MailListController {
 				}
 			}
 			List<Tb_staff> n = staffService.findByNameType("%" + name + "%", s0.getSchoolId());
-			tb_sign_type t1 = null;
+			Tb_sign_type t1 = null;
 			if (!n.isEmpty()) {
 				for (Tb_staff one : n) {
 					Tb_staff4MailList target1 = new Tb_staff4MailList();
@@ -352,7 +352,7 @@ public class MailListController {
 		Tb_staff s = staffService.findById(teacher_a.getStaffid());
 		Tb_staff vd_staff = new Tb_staff();
 		Tb_staff_class vd_class = new Tb_staff_class();
-		tb_sign_type vd_date = new tb_sign_type();
+		Tb_sign_type vd_date = new Tb_sign_type();
 		Out<String> back = new Out<String>();
 		try {
 			BeanUtils.copyProperties(vd_staff, teacher_a);
@@ -617,7 +617,7 @@ public class MailListController {
 			}
 			// 取教职工（医生、勤务）
 			List<Tb_staff> workers = staffService.findByType(staff.getSchoolId());
-			tb_sign_type t = null;
+			Tb_sign_type t = null;
 			if (!workers.isEmpty()) {
 				for (Tb_staff one : workers) {
 					Tb_staff4MailList target = new Tb_staff4MailList();
@@ -697,7 +697,7 @@ public class MailListController {
 					}
 					// 教职工（后勤）
 					List<Tb_staff> workers = staffService.findByType(staff.getSchoolId());
-					tb_sign_type t = null;
+					Tb_sign_type t = null;
 					if (!workers.isEmpty()) {
 						for (Tb_staff one : workers) {
 							Tb_staff4MailList target = new Tb_staff4MailList();
@@ -963,12 +963,12 @@ public class MailListController {
 			} else {
 				BeanUtils.copyProperties(list, student_a);
 				int rowNum = mailListService.Update(list);// insert
-				int row = mailListService.deleteparent(list.getId());
+				
 
 				if (!student_a.getParent().isEmpty()) {
 					for (Tb_parent add : student_a.getParent()) {
+						if(add.getId()==null){
 						vd_parent.setSchoolId(classService.selectById(list.getClass_id()).getSchoolId());
-
 						vd_parent.setPhone(add.getParent_phone());
 						vd_parent.setType(1);
 						vd_parent.setStatus((byte) 1);
@@ -987,14 +987,50 @@ public class MailListController {
 						}
 						vd_studentparent.setCreated(new Date());
 						studentService.insertStudentParentSelective(vd_studentparent);
+						
+						
+						HttpPost httpPost = new HttpPost(appConfigProperties.getQrcodePath());
+						logger.info("appConfigProperties.getQrcodePath()="+appConfigProperties.getQrcodePath());
+				        CloseableHttpClient client = HttpClients.createDefault();
+				        String respContent = null;
+				        
+				        //json方式
+				        JSONObject jsonParam = new JSONObject();  
+							jsonParam.put("school_id", vd_parent.getSchoolId());
+				        jsonParam.put("type", 1);
+				        jsonParam.put("parent_id", vd_parent.getId());
+				        jsonParam.put("student_id", list.getId());
+				       
+				        StringEntity entity = new StringEntity(jsonParam.toString(),"utf-8");//解决中文乱码问题    
+				        entity.setContentEncoding("UTF-8");    
+				        entity.setContentType("application/json");    
+				        httpPost.setEntity(entity);
+				          
+      
+				        HttpResponse resp = client.execute(httpPost);
+				        logger.info("resp.getStatusLine().getStatusCode()="+resp.getStatusLine().getStatusCode());
+				        if(resp.getStatusLine().getStatusCode() == 200) {
+				            HttpEntity he = resp.getEntity();
+				            respContent = EntityUtils.toString(he,"UTF-8");
+				        }
+				        logger.info("respContent="+respContent);
 
+					}else{
+						Tb_parent p = mailListService.findParentByPid(add.getId());
+						p.setParent_phone(add.getParent_phone());
+						p.setRelation_id(add.getRelation_id());
+						p.setParent_name(mailListService.findrealtionById(add.getRelation_id()).getTitle());
+						mailListService.UpdateParent(p);
+					}
 					}
 
+				}else{
+					mailListService.deleteparent(list.getId());
 				}
 				if (rowNum > 0) {
-					back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "rowNum=" + (rowNum + row));
+					back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "rowNum=" + (rowNum + rowNum));
 				} else {
-					back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, "rowNum=" + (rowNum + row));
+					back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, "rowNum=" + (rowNum + rowNum));
 				}
 			}
 		} catch (ServiceException e) {

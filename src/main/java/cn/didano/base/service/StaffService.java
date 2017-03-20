@@ -20,7 +20,7 @@ import cn.didano.base.model.Tb_staff_class;
 import cn.didano.base.model.Tb_staff_classExample;
 import cn.didano.base.model.Tb_staff_signdate;
 import cn.didano.base.model.Tb_staff_signdateExample;
-import cn.didano.base.model.tb_sign_type;
+import cn.didano.base.model.Tb_sign_type;
 import cn.didano.video.constant.DeletedType;
 import cn.didano.video.constant.StaffType;
 
@@ -113,13 +113,13 @@ public class StaffService {
 	/**
 	 * 通过ID查询
 	 */
-	public tb_sign_type findTypeByID(Integer id){
+	public Tb_sign_type findTypeByID(Integer id){
 		return typeMapper.selectByPrimaryKey(id);
 	}
 	/**
 	 * 编辑签到类型
 	 */
-	public int updateType(tb_sign_type record){
+	public int updateType(Tb_sign_type record){
 		if (record == null)
 			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
 		return typeMapper.updateByPrimaryKeySelective(record);
@@ -127,7 +127,7 @@ public class StaffService {
 	/**
 	 * 插入签到类型表
 	 */
-	public int insertTypeSelective(tb_sign_type record) {
+	public int insertTypeSelective(Tb_sign_type record) {
 		if (record == null)
 			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
 		return typeMapper.insertSelective(record);

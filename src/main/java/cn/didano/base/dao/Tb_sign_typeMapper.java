@@ -1,30 +1,30 @@
 package cn.didano.base.dao;
 
-import cn.didano.base.model.tb_sign_type;
-import cn.didano.base.model.tb_sign_typeExample;
+import cn.didano.base.model.Tb_sign_type;
+import cn.didano.base.model.Tb_sign_typeExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface Tb_sign_typeMapper {
-    long countByExample(tb_sign_typeExample example);
+    long countByExample(Tb_sign_typeExample example);
 
-    int deleteByExample(tb_sign_typeExample example);
+    int deleteByExample(Tb_sign_typeExample example);
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(tb_sign_type record);
+    int insert(Tb_sign_type record);
 
-    int insertSelective(tb_sign_type record);
+    int insertSelective(Tb_sign_type record);
 
-    List<tb_sign_type> selectByExample(tb_sign_typeExample example);
+    List<Tb_sign_type> selectByExample(Tb_sign_typeExample example);
 
-    tb_sign_type selectByPrimaryKey(Integer id);
+    Tb_sign_type selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") tb_sign_type record, @Param("example") tb_sign_typeExample example);
+    int updateByExampleSelective(@Param("record") Tb_sign_type record, @Param("example") Tb_sign_typeExample example);
 
-    int updateByExample(@Param("record") tb_sign_type record, @Param("example") tb_sign_typeExample example);
+    int updateByExample(@Param("record") Tb_sign_type record, @Param("example") Tb_sign_typeExample example);
 
-    int updateByPrimaryKeySelective(tb_sign_type record);
+    int updateByPrimaryKeySelective(Tb_sign_type record);
 
-    int updateByPrimaryKey(tb_sign_type record);
+    int updateByPrimaryKey(Tb_sign_type record);
 }

@@ -3,12 +3,18 @@ package cn.didano.base.model;
 public class Tb_parent {
 
 	
-
+    private Integer id;
 	private byte relation_id;
 	private String parent_name;
 	private String parent_phone;
 	
 	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getParent_name() {
 		return parent_name;
 	}

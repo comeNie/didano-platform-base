@@ -2,7 +2,7 @@ package cn.didano.base.model;
 
 import java.util.Date;
 
-public class tb_sign_type {
+public class Tb_sign_type {
     private Integer id;
 
     private Integer schoolId;

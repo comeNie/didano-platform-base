@@ -24,16 +24,8 @@ public class In_Student_Edit {
 	@ApiModelProperty(value = "删除了的家长id",required=true)
 	private String deleteParents;
 	
-	private String rfid;
-	
 	private String student_rfid;
 	
-	public String getRfid() {
-		return rfid;
-	}
-	public void setRfid(String rfid) {
-		this.rfid = rfid;
-	}
 	public String getStudent_rfid() {
 		return student_rfid;
 	}

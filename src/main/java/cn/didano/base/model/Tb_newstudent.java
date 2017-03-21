@@ -1,6 +1,8 @@
 package cn.didano.base.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Tb_newstudent {
     private Integer id;
@@ -37,8 +39,20 @@ public class Tb_newstudent {
     
     private String student_rfid;
     
+    private List<Tb_parent> parent = new ArrayList<Tb_parent>();
+    
+    
+    
+    
+    public List<Tb_parent> getParent() {
+		return parent;
+	}
 
-    public String getStudent_rfid() {
+	public void setParent(List<Tb_parent> parent) {
+		this.parent = parent;
+	}
+
+	public String getStudent_rfid() {
 		return student_rfid;
 	}
 

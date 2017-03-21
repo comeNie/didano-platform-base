@@ -296,6 +296,7 @@ public class MailListController {
 				s.setClassId(key);
 				s.setClassName(classService.selectNameByPrimaryKey(key));
 				s.setStudent(val);
+				
 				student2.add(s);
 			}
 			data.setStudentall(student2);
@@ -905,6 +906,7 @@ public class MailListController {
 				vd_student.setStatus((byte) 1);
 				vd_student.setCreated(new Date());
 				vd_student.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
+				System.err.println(vd_student.getRfid()+"----------------");
 				int rowNum = studentService.insertStudentSelective(vd_student);// insert
                 int rowNUM2= 0;
 			
@@ -913,17 +915,16 @@ public class MailListController {
 						vd_parent.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
 
 						vd_parent.setPhone(add.getParent_phone());
+						vd_parent.setRfid(add.getRfid());
 						vd_parent.setType(1);
 						vd_parent.setStatus((byte) 1);
 						vd_parent.setCreated(new Date());
+						vd_parent.setRfid(add.getRfid());
 						rowNUM2=studentService.insertParentSelective(vd_parent);
 						vd_studentparent.setSchoolId(vd_student.getSchoolId());
 						vd_studentparent.setClassId(vd_student.getClass_id());
 						vd_studentparent.setStudentId(vd_student.getId());
 						vd_studentparent.setParentId(vd_parent.getId());
-						vd_studentparent.setRelationId(add.getRelation_id());
-						vd_studentparent.setRfid(vd_student.getRfid());
-						vd_studentparent.setStudent_rfid(vd_student.getStudent_rfid());
 						if (add.getRelation_id() != 99) {
 							vd_studentparent.setRelationTitle(
 									mailListService.findrealtionById(add.getRelation_id()).getTitle());
@@ -973,7 +974,7 @@ public class MailListController {
 			} else {
 				BeanUtils.copyProperties(list, student_a);
 				int rowNum = mailListService.Update(list);// insert
-				
+				System.err.println("修改学生成功");
 				if(!"".equals(student_a.getDeleteParents())){
 				String[] arr = student_a.getDeleteParents().split("_");
 				Tb_deleteParentDate date =null;
@@ -990,6 +991,7 @@ public class MailListController {
 						if(add.getId()==null){
 						vd_parent.setSchoolId(classService.selectById(list.getClass_id()).getSchoolId());
 						vd_parent.setPhone(add.getParent_phone());
+						
 						vd_parent.setType(1);
 						vd_parent.setStatus((byte) 1);
 						vd_parent.setCreated(new Date());
@@ -1001,8 +1003,6 @@ public class MailListController {
 						vd_studentparent.setRelationId(add.getRelation_id());
 						vd_studentparent.setRfid(list.getParent().get(0).getRfid());
 						vd_studentparent.setStudent_rfid(list.getStudent_rfid());
-						System.err.println(list.getParent().get(0).getRfid());
-						System.err.println(list.getStudent_rfid());
 						if (add.getRelation_id() != 99) {
 							vd_studentparent.setRelationTitle(
 									mailListService.findrealtionById(add.getRelation_id()).getTitle());

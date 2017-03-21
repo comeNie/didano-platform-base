@@ -16,7 +16,18 @@ public class Tb_schoolparent {
     private Byte status;
     private Date created;
     
-    @Override
+    private String rfid;
+    
+    
+    public String getRfid() {
+		return rfid;
+	}
+
+	public void setRfid(String rfid) {
+		this.rfid = rfid;
+	}
+
+	@Override
 	public String toString() {
 		return "Tb_schoolparent [id=" + id + ", schoolId=" + schoolId + ", name=" + name + ", phone=" + phone
 				+ ", type=" + type + ", status=" + status + ", created=" + created + "]";

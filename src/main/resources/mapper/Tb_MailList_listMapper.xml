@@ -62,7 +62,7 @@ FROM
           tb_class b
         WHERE
           a.school_id =#{id}
-        AND a.deleted = 0 and a.student_rfid!=""
+        AND a.deleted = 0
         AND a.class_id = b.id
       ) AS tmp1
     LEFT JOIN tb_student_parent c ON tmp1.id = c.student_id
@@ -140,7 +140,9 @@ LEFT JOIN tb_school_parent p ON tmp2.parent_id = p.id
 <select id="findParentByPid" parameterType="Integer" resultType="cn.didano.base.model.Tb_parent">
    SELECT * FROM tb_school_parent where id=#{id}
 </select>
-<update id="Update" parameterType="cn.didano.base.model.Tb_mailList_list">UPDATE tb_student a SET a.name=#{name},a.class_id=#{class_id},a.gender=#{gender,jdbcType=TINYINT},a.birthday=#{birthday,jdbcType=DATE} where a.id=#{id}</update>
+<update id="Update" parameterType="cn.didano.base.model.Tb_mailList_list">
+	UPDATE tb_student a SET a.student_rfid=#{student_rfid},a.name=#{name},a.class_id=#{class_id},a.gender=#{gender,jdbcType=TINYINT},a.birthday=#{birthday,jdbcType=DATE} where a.id=#{id}
+</update>
 
 <update id="delete" parameterType="Integer">
 UPDATE tb_student AS a SET a.deleted=1 WHERE a.id=#{id} 

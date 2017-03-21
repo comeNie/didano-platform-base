@@ -590,6 +590,7 @@ public class MailListController {
 				staff1.setRfid(teacher.getRfid());
 				staffall.add(staff1);
 			}
+			
 			// 取教职工（医生、勤务）
 			List<Tb_staff> workers = newteacherService.findByType(staff.getSchoolId());
 			tb_sign_type t = null;

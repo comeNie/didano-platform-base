@@ -18,7 +18,14 @@ public class Tb_classStudentParent {
 	    private Boolean deleted;
 	    //家长ic卡号
 	    private String parent_ic;
+	    private String student_rfid;
 	    
+		public String getStudent_rfid() {
+			return student_rfid;
+		}
+		public void setStudent_rfid(String student_rfid) {
+			this.student_rfid = student_rfid;
+		}
 		public String getParent_ic() {
 			return parent_ic;
 		}

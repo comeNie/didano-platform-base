@@ -12,6 +12,8 @@ public class Tb_mailList_list {
 	private String class_name;
 	private Date birthday;
 	private byte gender;
+	private String student_rfid; 
+	
 	private List<Tb_parent> parent = new ArrayList<Tb_parent>();
 	
 	public String getClass_name() {
@@ -57,17 +59,17 @@ public class Tb_mailList_list {
 	public void setParent(List<Tb_parent> parent) {
 		this.parent = parent;
 	}
+	
+	public String getStudent_rfid() {
+		return student_rfid;
+	}
+	public void setStudent_rfid(String student_rfid) {
+		this.student_rfid = student_rfid;
+	}
 	@Override
 	public String toString() {
-		return "Tb_maillist_list [id=" + id + ", class_id=" + class_id + ", name=" + name + ", birthday=" + birthday
-				+ ", gender=" + gender + ", parent=" + parent + "]";
-	}
-	
-	
-	
-	
-	
-	
-	
-	
+		return "{\"id\":\"" + id + "\",\"class_id\":\"" + class_id + "\",\"name\":\"" + name + "\",\"class_name\":\""
+				+ class_name + "\",\"birthday\":\"" + birthday + "\",\"gender\":\"" + gender + "\",\"student_rfid\":\""
+				+ student_rfid + "\",\"parent\":\"" + parent + "\"}  ";
+	}	
 }

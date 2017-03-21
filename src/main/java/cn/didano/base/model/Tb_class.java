@@ -18,10 +18,20 @@ public class Tb_class {
 	private String parent_phone;
     private Boolean deleted;
     private String rfid;
+    private String student_rfid;
+    
 
 
     
-    public Integer getParent_id() {
+    public String getStudent_rfid() {
+		return student_rfid;
+	}
+
+	public void setStudent_rfid(String student_rfid) {
+		this.student_rfid = student_rfid;
+	}
+
+	public Integer getParent_id() {
 		return parent_id;
 	}
 

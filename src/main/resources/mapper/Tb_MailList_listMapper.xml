@@ -24,10 +24,48 @@
   SELECT * FROM tb_student WHERE school_id=#{id} ORDER BY class_id ORDER BY CONVERT( NAME USING gbk )
  </select>
  <select id="findClassByschool" parameterType="Integer" resultType="cn.didano.base.model.Tb_class">
- SELECT tmp2.relation_id, tmp2.parent_id,tmp2.id,tmp2.SchoolId,tmp2.class_id,tmp2.title,tmp2. NAME,tmp2.gender,tmp2.birthday,tmp2.parent_name,tmp2.rfid,d.phone AS parent_phone FROM
-  (SELECT tmp1.*, c.relation_id, c.parent_id, c.relation_title AS parent_name, c.rfid FROM ( SELECT a.id, a.school_id AS SchoolId, a.class_id, b.title,
-  a. NAME, a.gender, a.birthday FROM tb_student a, tb_class b WHERE a.school_id = #{id}
-  AND a.deleted = 0 AND a.class_id = b.id ) AS tmp1 LEFT JOIN tb_student_parent c ON tmp1.id = c.student_id
+ SELECT
+  tmp2.relation_id,
+  tmp2.parent_id,
+  tmp2.id,
+  tmp2.SchoolId,
+  tmp2.class_id,
+  tmp2.title,
+  tmp2. NAME,
+  tmp2.gender,
+  tmp2.birthday,
+  tmp2.parent_name,
+  tmp2.rfid,
+  tmp2.student_rfid,
+  d.phone AS parent_phone
+FROM
+  (
+    SELECT
+      tmp1.*,
+      c.relation_id,
+      c.parent_id,
+      c.relation_title AS parent_name,
+      c.rfid
+    FROM
+      (
+        SELECT
+          a.id,
+          a.school_id AS SchoolId,
+          a.class_id,
+          b.title,
+          a. NAME,
+          a.gender,
+          a.birthday,
+          a.student_rfid
+        FROM
+          tb_student a,
+          tb_class b
+        WHERE
+          a.school_id =#{id}
+        AND a.deleted = 0 and a.student_rfid!=""
+        AND a.class_id = b.id
+      ) AS tmp1
+    LEFT JOIN tb_student_parent c ON tmp1.id = c.student_id
     AND c.deleted = 0
     ORDER BY
       CONVERT (tmp1. NAME USING gbk)
@@ -48,10 +86,35 @@ LEFT JOIN tb_school_parent d ON tmp2.parent_id = d.id
      select id,title from tb_relation where id=#{id}
   </select>
 <select id="findParentById" parameterType="Integer" resultType="cn.didano.base.model.Tb_parent">
-SELECT p.id,tmp2.relation_id ,tmp2.title AS parent_name,p.phone AS parent_phone FROM 
-(SELECT p.relation_id,tmp1.id,tmp1.name,p.relation_title AS title,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 
- tb_student  AS tmp1 ,tb_student_parent p  WHERE tmp1.id=p.student_id AND tmp1.id=#{id}  and p.deleted=0 and tmp1.deleted=0)
- AS tmp2 LEFT JOIN tb_school_parent p ON tmp2.parent_id=p.id
+SELECT
+  p.id,
+  tmp2.relation_id,
+  tmp2.title AS parent_name,tmp2.student_rfid,
+  tmp2.rfid,
+  p.phone AS parent_phone
+FROM
+  (
+    SELECT
+      p.relation_id,
+      tmp1.id,
+      tmp1. NAME,
+      p.relation_title AS title,
+      tmp1.birthday,
+      tmp1.gender,
+      tmp1.class_id,
+      p.parent_id AS parent_id,
+      p.rfid,
+      tmp1.student_rfid
+    FROM
+      tb_student AS tmp1,
+      tb_student_parent p
+    WHERE
+      tmp1.id = p.student_id
+    AND tmp1.id = #{id}
+    AND p.deleted = 0
+    AND tmp1.deleted = 0
+  ) AS tmp2
+LEFT JOIN tb_school_parent p ON tmp2.parent_id = p.id
 </select>
 <select id="findByClass" parameterType="Integer" resultType="cn.didano.base.model.Tb_mailList_list">
   SELECT a.* FROM tb_student a WHERE  a.class_id=#{id} AND a.deleted =0 ORDER BY CONVERT( a.name USING gbk )

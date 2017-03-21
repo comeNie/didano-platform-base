@@ -545,6 +545,8 @@ public class MailListController {
 					parent.setParent_phone(c.getParent_phone());
 					parent.setRelation_id(c.getRelation_id());
 					parent.setId(c.getParent_id());
+					// 编辑家长的rfid
+					parent.setRfid(c.getRfid());
 					parentall.add(parent);
 					}
 				}
@@ -568,6 +570,7 @@ public class MailListController {
 				mailList.setName(c.getName());
 				mailList.setClass_name(c.getTitle());
 				mailList.setParent(c.getParent());
+				mailList.setStudent_rfid(c.getStudent_rfid());
 				if (map.containsKey(c.getClass_id())) {
 					map.get(c.getClass_id()).add(mailList);
 				} else {
@@ -918,6 +921,8 @@ public class MailListController {
 						vd_studentparent.setStudentId(vd_student.getId());
 						vd_studentparent.setParentId(vd_parent.getId());
 						vd_studentparent.setRelationId(add.getRelation_id());
+						vd_studentparent.setRfid(vd_student.getRfid());
+						vd_studentparent.setStudent_rfid(vd_student.getStudent_rfid());
 						if (add.getRelation_id() != 99) {
 							vd_studentparent.setRelationTitle(
 									mailListService.findrealtionById(add.getRelation_id()).getTitle());
@@ -993,6 +998,10 @@ public class MailListController {
 						vd_studentparent.setStudentId(list.getId());
 						vd_studentparent.setParentId(vd_parent.getId());
 						vd_studentparent.setRelationId(add.getRelation_id());
+						vd_studentparent.setRfid(list.getParent().get(0).getRfid());
+						vd_studentparent.setStudent_rfid(list.getStudent_rfid());
+						System.err.println(list.getParent().get(0).getRfid());
+						System.err.println(list.getStudent_rfid());
 						if (add.getRelation_id() != 99) {
 							vd_studentparent.setRelationTitle(
 									mailListService.findrealtionById(add.getRelation_id()).getTitle());

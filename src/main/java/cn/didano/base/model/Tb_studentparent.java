@@ -24,8 +24,19 @@ public class Tb_studentparent {
     private String qrcodeSchoolKey;
 
     private Date created;
+    
+    private String student_rfid;
+    
 
-    public Integer getId() {
+    public String getStudent_rfid() {
+		return student_rfid;
+	}
+
+	public void setStudent_rfid(String student_rfid) {
+		this.student_rfid = student_rfid;
+	}
+
+	public Integer getId() {
         return id;
     }
 

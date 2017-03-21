@@ -34,8 +34,19 @@ public class Tb_newstudent {
     private Boolean deleted;
     
     private String rfid;
+    
+    private String student_rfid;
+    
 
-    public String getRfid() {
+    public String getStudent_rfid() {
+		return student_rfid;
+	}
+
+	public void setStudent_rfid(String student_rfid) {
+		this.student_rfid = student_rfid;
+	}
+
+	public String getRfid() {
 		return rfid;
 	}
 

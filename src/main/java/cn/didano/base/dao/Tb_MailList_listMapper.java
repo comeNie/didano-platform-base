@@ -2,8 +2,9 @@ package cn.didano.base.dao;
 
 import java.util.List;
 
-import cn.didano.base.model.Tb_mailList_list;
 import cn.didano.base.model.Tb_class;
+import cn.didano.base.model.Tb_deleteParentDate;
+import cn.didano.base.model.Tb_mailList_list;
 import cn.didano.base.model.Tb_parent;
 import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_staff;
@@ -30,9 +31,11 @@ public interface Tb_MailList_listMapper {
 	List<Tb_relation> findrelation();
 	Tb_relation findrelationById(byte id);
 	Tb_parent findParentByPid(Integer id);
+	Tb_staff findClassIdBySid(Integer id);
 	int UpdateTeacher(Tb_teacher teacher);
 	int Update( Tb_mailList_list list); 
 	int UpdateParent(Tb_parent parent);
 	int delete(Integer id);
 	int deleteparent(Integer id);
+	int deleteparentByid(Tb_deleteParentDate date);
 }

@@ -11,7 +11,9 @@
  <select id="findById" parameterType="Integer" resultType="cn.didano.base.model.Tb_mailList_list"> 
  SELECT a.id,a.class_id,a.name,a.birthday,a.gender FROM tb_student a WHERE  a.id=#{id} AND a.deleted =0 ORDER BY CONVERT( a.name USING gbk )
  </select>
-
+<select id="findClassIdBySid" parameterType="Integer" resultType="cn.didano.base.model.Tb_staff">
+   SELECT class_id FROM tb_staff_class WHERE staff_id = #{id}
+</select> 
  <select id="findByName"  parameterType="cn.didano.base.model.Tb_studentData" resultType="cn.didano.base.model.Tb_mailList_list">
    select * from tb_student where name like #{name} and school_id=#{schoolid} and deleted=0 ORDER BY CONVERT( NAME USING gbk )
  </select>
@@ -93,5 +95,9 @@ c.set_intime=#{in_time},c.set_outtime=#{out_time} where a.id = #{id}
   UPDATE tb_school_parent a,tb_student_parent b SET a.deleted=1 ,b.deleted = 1 WHERE
    a.id IN (SELECT * FROM(SELECT parent_id FROM tb_student_parent WHERE student_id=#{id})a) 
    AND b.student_id=#{id}
+</update>
+<update id="deleteparentByid" parameterType="cn.didano.base.model.Tb_deleteParentDate">
+ UPDATE tb_school_parent a,tb_student_parent b SET a.deleted=1 ,b.deleted = 1 WHERE
+   a.id =#{parent_id} and b.parent_id=#{parent_id} and b.student_id = #{student_id}
 </update>
 </mapper>

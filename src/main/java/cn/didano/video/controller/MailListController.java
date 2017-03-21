@@ -35,11 +35,13 @@ import cn.didano.base.model.Tb_bossData;
 import cn.didano.base.model.Tb_class;
 import cn.didano.base.model.Tb_classStudent;
 import cn.didano.base.model.Tb_classStudentParent;
+import cn.didano.base.model.Tb_deleteParentDate;
 import cn.didano.base.model.Tb_mailList_list;
 import cn.didano.base.model.Tb_newstudent;
 import cn.didano.base.model.Tb_parent;
 import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_schoolparent;
+import cn.didano.base.model.Tb_sign_type;
 import cn.didano.base.model.Tb_staff;
 import cn.didano.base.model.Tb_staff4MailList;
 import cn.didano.base.model.Tb_staffData;
@@ -48,11 +50,10 @@ import cn.didano.base.model.Tb_studentData;
 import cn.didano.base.model.Tb_studentparent;
 import cn.didano.base.model.Tb_teacher;
 import cn.didano.base.model.Tb_teacherAndStudent;
-import cn.didano.base.model.Tb_sign_type;
 import cn.didano.base.service.ClassService;
 import cn.didano.base.service.MailListService;
-import cn.didano.base.service.StudentService;
 import cn.didano.base.service.StaffService;
+import cn.didano.base.service.StudentService;
 import cn.didano.video.app.config.AppConfigProperties;
 import cn.didano.video.constant.BackType;
 import cn.didano.video.constant.StaffType;
@@ -543,6 +544,7 @@ public class MailListController {
 					parent.setParent_name(c.getParent_name());
 					parent.setParent_phone(c.getParent_phone());
 					parent.setRelation_id(c.getRelation_id());
+					parent.setId(c.getParent_id());
 					parentall.add(parent);
 					}
 				}
@@ -654,6 +656,7 @@ public class MailListController {
 			throws ParseException, IllegalAccessException, InvocationTargetException {
 		logger.info("访问  MailListController:student_searchByClass,staff_id=" + staff_id);
 		Tb_staff staff = staffService.findById(staff_id);
+		Tb_staff classid = mailListService.findClassIdBySid(staff_id);
 		Tb_teacherAndStudent data = new Tb_teacherAndStudent();
 		List<Tb_mailList_list> students = null;
 		Tb_classStudent cs = new Tb_classStudent();
@@ -666,10 +669,11 @@ public class MailListController {
 						List<Tb_parent> parent = mailListService.findparent(list.getId());
 						list.getParent().addAll(parent);
 					}
-					cs.setClassId(students.get(0).getClass_id());
-					cs.setClassName(classService.selectNameByPrimaryKey(students.get(0).getClass_id()));
+					
 					cs.getStudent().addAll(students);
-
+				}
+				cs.setClassId(classid.getClass_id());
+				cs.setClassName(classService.selectNameByPrimaryKey(classid.getClass_id()));
 					SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
 					List<Tb_staff4MailList> all = new ArrayList<Tb_staff4MailList>();
@@ -683,7 +687,7 @@ public class MailListController {
 						}
 					}
 					// 取教职工（老师）
-					List<Tb_teacher> classstaff = mailListService.findTeacherByClass(students.get(0).getClass_id());
+					List<Tb_teacher> classstaff = mailListService.findTeacherByClass(classid.getClass_id());
 					Tb_staff4MailList staff1 = null;
 					for (Tb_teacher teacher : classstaff) {
 						staff1 = new Tb_staff4MailList();
@@ -712,7 +716,7 @@ public class MailListController {
 					}
 					data.getDoctor().addAll(all);
 					data.setStudentall(cs);
-				}
+				
 			}
 			back.setBackTypeWithLog(data, BackType.SUCCESS_SEARCH_NORMAL);
 		} catch (ServiceException e) {
@@ -900,7 +904,7 @@ public class MailListController {
 				int rowNum = studentService.insertStudentSelective(vd_student);// insert
                 int rowNUM2= 0;
 			
-				if (student_a.getParent()!=null) {
+				if (!student_a.getParent().isEmpty()) {
 					for (Tb_parent add : student_a.getParent()) {
 						vd_parent.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
 
@@ -922,7 +926,7 @@ public class MailListController {
 						}
 						vd_studentparent.setCreated(new Date());
 						rowNUM2=studentService.insertStudentParentSelective(vd_studentparent);
-						
+						System.out.println("插入从父母成功:"+vd_parent.getId()+vd_student.getId());
 						HttpPost httpPost = new HttpPost(appConfigProperties.getQrcodePath());
 						logger.info("appConfigProperties.getQrcodePath()="+appConfigProperties.getQrcodePath());
 				        CloseableHttpClient client = HttpClients.createDefault();
@@ -964,6 +968,16 @@ public class MailListController {
 				BeanUtils.copyProperties(list, student_a);
 				int rowNum = mailListService.Update(list);// insert
 				
+				if(!"".equals(student_a.getDeleteParents())){
+				String[] arr = student_a.getDeleteParents().split("_");
+				Tb_deleteParentDate date =null;
+				for (int i = 0; i < arr.length; i++) {
+					date = new Tb_deleteParentDate();
+					date.setStudent_id(list.getId());
+					date.setParent_id(Integer.parseInt(arr[i]));
+					mailListService.deleteparentByid(date);
+				}
+				}
 
 				if (!student_a.getParent().isEmpty()) {
 					for (Tb_parent add : student_a.getParent()) {
@@ -987,7 +1001,7 @@ public class MailListController {
 						}
 						vd_studentparent.setCreated(new Date());
 						studentService.insertStudentParentSelective(vd_studentparent);
-						
+						System.out.println("插入从父母成功:"+vd_parent.getId()+ list.getId());
 						
 						HttpPost httpPost = new HttpPost(appConfigProperties.getQrcodePath());
 						logger.info("appConfigProperties.getQrcodePath()="+appConfigProperties.getQrcodePath());
@@ -1024,8 +1038,6 @@ public class MailListController {
 					}
 					}
 
-				}else{
-					mailListService.deleteparent(list.getId());
 				}
 				if (rowNum > 0) {
 					back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "rowNum=" + (rowNum + rowNum));

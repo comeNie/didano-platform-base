@@ -13,11 +13,21 @@ public class Tb_class {
 	private Byte gender;
     private Byte status;
 	private byte relation_id;
+	private Integer parent_id;
 	private String parent_name;
 	private String parent_phone;
     private Boolean deleted;
 
-    public byte getRelation_id() {
+    
+    public Integer getParent_id() {
+		return parent_id;
+	}
+
+	public void setParent_id(Integer parent_id) {
+		this.parent_id = parent_id;
+	}
+
+	public byte getRelation_id() {
 		return relation_id;
 	}
 

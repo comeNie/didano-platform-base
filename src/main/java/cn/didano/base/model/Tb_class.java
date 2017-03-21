@@ -17,6 +17,8 @@ public class Tb_class {
 	private String parent_name;
 	private String parent_phone;
     private Boolean deleted;
+    private String rfid;
+
 
     
     public Integer getParent_id() {
@@ -25,6 +27,14 @@ public class Tb_class {
 
 	public void setParent_id(Integer parent_id) {
 		this.parent_id = parent_id;
+
+	public String getRfid() {
+		return rfid;
+	}
+
+	public void setRfid(String rfid) {
+		this.rfid = rfid;
+
 	}
 
 	public byte getRelation_id() {

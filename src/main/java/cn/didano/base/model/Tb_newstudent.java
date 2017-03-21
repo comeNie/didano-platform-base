@@ -32,8 +32,18 @@ public class Tb_newstudent {
     private Date updated;
 
     private Boolean deleted;
+    
+    private String rfid;
 
-    public Integer getId() {
+    public String getRfid() {
+		return rfid;
+	}
+
+	public void setRfid(String rfid) {
+		this.rfid = rfid;
+	}
+
+	public Integer getId() {
         return id;
     }
 

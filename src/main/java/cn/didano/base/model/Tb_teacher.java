@@ -18,8 +18,19 @@ public class Tb_teacher {
 	private byte deleted;
 	
 	private Byte status;
+	private String rfid;
 	
 	
+	
+	public String getRfid() {
+		return rfid;
+	}
+	public void setRfid(String rfid) {
+		this.rfid = rfid;
+	}
+	public void setStatus(Byte status) {
+		this.status = status;
+	}
 	public byte getStatus() {
 		return status;
 	}

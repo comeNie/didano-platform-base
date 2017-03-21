@@ -570,6 +570,7 @@ public class MailListController {
 				mailList.setName(c.getName());
 				mailList.setClass_name(c.getTitle());
 				mailList.setParent(c.getParent());
+				// 学生的rfid
 				mailList.setStudent_rfid(c.getStudent_rfid());
 				if (map.containsKey(c.getClass_id())) {
 					map.get(c.getClass_id()).add(mailList);

@@ -873,6 +873,7 @@ public class MailListController {
 				vd_student.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
 				int rowNum = newstudentService.insertStudentSelective(vd_student);// insert
                 int rowNUM2= 0;
+                
 				if (student_a.getParent()!=null) {
 					for (Tb_parent add : student_a.getParent()) {
 						vd_parent.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());

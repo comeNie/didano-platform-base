@@ -27,7 +27,7 @@ public class Tb_class {
 
 	public void setParent_id(Integer parent_id) {
 		this.parent_id = parent_id;
-
+	}
 	public String getRfid() {
 		return rfid;
 	}

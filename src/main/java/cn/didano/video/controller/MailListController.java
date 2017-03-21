@@ -511,7 +511,7 @@ public class MailListController {
 		Tb_staff staff = staffService.findById(staff_id);
 
 		//查询该学生的id
-		Tb_staff staff = newteacherService.findById(staff_id);
+		
 
 		Tb_bossData data = new Tb_bossData();
 		List<Tb_mailList_list> student = null;
@@ -987,7 +987,7 @@ public class MailListController {
 				}
 			} else {
 				BeanUtils.copyProperties(list, student_a);
-				int rowNum = mailListService.Update(list);// insert
+				 rowNum = mailListService.Update(list);// insert
 				
 				if(!"".equals(student_a.getDeleteParents())){
 				String[] arr = student_a.getDeleteParents().split("_");
@@ -1066,6 +1066,7 @@ public class MailListController {
 				} else {
 					back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, "rowNum=" + (rowNum + rowNum));
 				}
+			}
 			}
 		} catch (ServiceException e) {
 			// 服务层错误，包括 内部service 和 对外service

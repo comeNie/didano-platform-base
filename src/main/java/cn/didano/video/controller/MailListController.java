@@ -1,5 +1,6 @@
 package cn.didano.video.controller;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +13,14 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +53,7 @@ import cn.didano.base.service.ClassService;
 import cn.didano.base.service.MailListService;
 import cn.didano.base.service.NewStudentService;
 import cn.didano.base.service.NewTeacherService;
+import cn.didano.video.app.config.AppConfigProperties;
 import cn.didano.video.constant.BackType;
 import cn.didano.video.constant.StaffType;
 import cn.didano.video.json.In_Student_Edit;
@@ -53,6 +63,7 @@ import cn.didano.video.json.OutList;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import net.sf.json.JSONObject;
 
 @Api(value = "通讯录服务", tags = "通讯录服务，提供给表现层")
 @RestController
@@ -69,6 +80,8 @@ public class MailListController {
 	private NewTeacherService newteacherService;
 	@Autowired
 	private ClassService classService;
+	@Autowired
+	AppConfigProperties appConfigProperties;
 
 	/**
 	 * 家长查看本班老师
@@ -377,6 +390,29 @@ public class MailListController {
 					vd_class.setStaffId(vd_staff.getId());
 					newteacherService.insertClassSelective(vd_class);
 				}
+				HttpPost httpPost = new HttpPost(appConfigProperties.getQrcodePath());
+		        CloseableHttpClient client = HttpClients.createDefault();
+		        String respContent = null;
+		        
+//		        json方式
+		        JSONObject jsonParam = new JSONObject();  
+		        jsonParam.put("school_id", vd_staff.getSchoolId());
+		        jsonParam.put("type", 2);
+		        jsonParam.put("staff_id", vd_staff.getId());
+		       
+		        StringEntity entity = new StringEntity(jsonParam.toString(),"utf-8");//解决中文乱码问题    
+		        entity.setContentEncoding("UTF-8");    
+		        entity.setContentType("application/json");    
+		        httpPost.setEntity(entity);
+		          
+
+		        HttpResponse resp = client.execute(httpPost);
+		        if(resp.getStatusLine().getStatusCode() == 200) {
+		            HttpEntity he = resp.getEntity();
+		            respContent = EntityUtils.toString(he,"UTF-8");
+		        }
+
+		        System.out.println(respContent);
 				if (rowNum > 0) {
 					back.setBackTypeWithLog(BackType.SUCCESS_INSERT, "Id=" + "," + ":rowNum3=" + rowNum3);
 
@@ -395,7 +431,7 @@ public class MailListController {
 						vd_date.setOutTime(sdf.parse(teacher_a.getSetOuttime()));
 
 						vd_date.setId(newteacherService.findById(teacher_a.getId()).getSignTypeId());
-						;
+						
 						rowNum3 = newteacherService.updateType(vd_date);
 					} else {
 						vd_date.setSchoolId(s.getSchoolId());
@@ -506,7 +542,7 @@ public class MailListController {
 			Set<Integer> keys1 = m.keySet();
 			Iterator<Integer> it1 = keys1.iterator();
 			while (it1.hasNext()) {
-				Integer key = it1.next();
+				Integer key = it1.next(); 
 				List<Tb_class> val = m.get(key);
 				List<Tb_parent> parentall = new ArrayList<Tb_parent>();
 				Tb_parent parent = null;
@@ -853,12 +889,14 @@ public class MailListController {
 	 * @return
 	 * @throws InvocationTargetException 
 	 * @throws IllegalAccessException 
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	 */
 	@ApiOperation(value = "新增编辑小朋友", notes = "新增编辑小朋友")
 	@PostMapping(value = "Student_add_edit")
 	@ResponseBody
 	public Out<String> Student_add_edit(
-			@ApiParam(value = "新增编辑小朋友", required = true) @RequestBody In_Student_Edit student_a) throws IllegalAccessException, InvocationTargetException {
+			@ApiParam(value = "新增编辑小朋友", required = true) @RequestBody In_Student_Edit student_a) throws IllegalAccessException, InvocationTargetException, ClientProtocolException, IOException {
 		logger.info("访问  MailListController:Student_add_edit,student_a=" + student_a);
 		Tb_newstudent vd_student = new Tb_newstudent();
 		Tb_mailList_list list = new Tb_mailList_list();
@@ -873,7 +911,6 @@ public class MailListController {
 				vd_student.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
 				int rowNum = newstudentService.insertStudentSelective(vd_student);// insert
                 int rowNUM2= 0;
-                
 				if (student_a.getParent()!=null) {
 					for (Tb_parent add : student_a.getParent()) {
 						vd_parent.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
@@ -897,10 +934,36 @@ public class MailListController {
 						}
 						vd_studentparent.setCreated(new Date());
 						rowNUM2=newstudentService.insertStudentParentSelective(vd_studentparent);
-
+						
+						HttpPost httpPost = new HttpPost(appConfigProperties.getQrcodePath());
+						logger.info("appConfigProperties.getQrcodePath()="+appConfigProperties.getQrcodePath());
+				        CloseableHttpClient client = HttpClients.createDefault();
+				        String respContent = null;
+				        
+				        //json方式
+				        JSONObject jsonParam = new JSONObject();  
+				        jsonParam.put("school_id", vd_parent.getSchoolId());
+				        jsonParam.put("type", 1);
+				        jsonParam.put("parent_id", vd_parent.getId());
+				        jsonParam.put("student_id", vd_student.getId());
+				       
+				        StringEntity entity = new StringEntity(jsonParam.toString(),"utf-8");//解决中文乱码问题    
+				        entity.setContentEncoding("UTF-8");    
+				        entity.setContentType("application/json");    
+				        httpPost.setEntity(entity);
+				          
+      
+				        HttpResponse resp = client.execute(httpPost);
+				        logger.info("resp.getStatusLine().getStatusCode()="+resp.getStatusLine().getStatusCode());
+				        if(resp.getStatusLine().getStatusCode() == 200) {
+				            HttpEntity he = resp.getEntity();
+				            respContent = EntityUtils.toString(he,"UTF-8");
+				        }
+				        logger.info("respContent="+respContent);
 					}
-
 				}
+				
+		       
 
 				if (rowNum >= 0) {
 					back.setBackTypeWithLog(BackType.SUCCESS_INSERT,"成功");
@@ -923,7 +986,6 @@ public class MailListController {
 						vd_parent.setStatus((byte) 1);
 						vd_parent.setCreated(new Date());
 						newstudentService.insertParentSelective(vd_parent);
-
 						vd_studentparent.setSchoolId(classService.selectById(list.getClass_id()).getSchoolId());
 						vd_studentparent.setClassId(list.getClass_id());
 						vd_studentparent.setStudentId(list.getId());

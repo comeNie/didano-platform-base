@@ -11,7 +11,9 @@
  <select id="findById" parameterType="Integer" resultType="cn.didano.base.model.Tb_mailList_list"> 
  SELECT a.id,a.class_id,a.name,a.birthday,a.gender FROM tb_student a WHERE  a.id=#{id} AND a.deleted =0 ORDER BY CONVERT( a.name USING gbk )
  </select>
-
+<select id="findClassIdBySid" parameterType="Integer" resultType="cn.didano.base.model.Tb_staff">
+   SELECT class_id FROM tb_staff_class WHERE staff_id = #{id}
+</select> 
  <select id="findByName"  parameterType="cn.didano.base.model.Tb_studentData" resultType="cn.didano.base.model.Tb_mailList_list">
    select * from tb_student where name like #{name} and school_id=#{schoolid} and deleted=0 ORDER BY CONVERT( NAME USING gbk )
  </select>
@@ -46,7 +48,7 @@ LEFT JOIN tb_school_parent d ON tmp2.parent_id = d.id
      select id,title from tb_relation where id=#{id}
   </select>
 <select id="findParentById" parameterType="Integer" resultType="cn.didano.base.model.Tb_parent">
-SELECT tmp2.relation_id ,tmp2.title AS parent_name,p.phone AS parent_phone FROM 
+SELECT p.id,tmp2.relation_id ,tmp2.title AS parent_name,p.phone AS parent_phone FROM 
 (SELECT p.relation_id,tmp1.id,tmp1.name,p.relation_title AS title,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 
  tb_student  AS tmp1 ,tb_student_parent p  WHERE tmp1.id=p.student_id AND tmp1.id=#{id}  and p.deleted=0 and tmp1.deleted=0)
  AS tmp2 LEFT JOIN tb_school_parent p ON tmp2.parent_id=p.id
@@ -72,6 +74,9 @@ SELECT tmp2.relation_id ,tmp2.title AS parent_name,p.phone AS parent_phone FROM
 	 LEFT JOIN tb_sign_type c ON (tmp1.sign_type_id =c.id)
 	 WHERE  class_id=#{class_id} ORDER BY CONVERT( tmp1.name USING gbk )
 </select>
+<select id="findParentByPid" parameterType="Integer" resultType="cn.didano.base.model.Tb_parent">
+   SELECT * FROM tb_school_parent where id=#{id}
+</select>
 <update id="Update" parameterType="cn.didano.base.model.Tb_mailList_list">UPDATE tb_student a SET a.name=#{name},a.class_id=#{class_id},a.gender=#{gender,jdbcType=TINYINT},a.birthday=#{birthday,jdbcType=DATE} where a.id=#{id}</update>
 
 <update id="delete" parameterType="Integer">
@@ -80,9 +85,7 @@ UPDATE tb_student AS a SET a.deleted=1 WHERE a.id=#{id}
 
 
 <update id="UpdateParent" parameterType="cn.didano.base.model.Tb_parent">
-  UPDATE tb_school_parent SET phone=#{parent_phone} where id = (select id from(SELECT p.id FROM 
-(SELECT tmp1.id,tmp1.name,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 
- tb_student  AS tmp1 ,tb_student_parent p WHERE tmp1.id=p.student_id AND tmp1.id=#{id}) AS tmp2 LEFT JOIN tb_school_parent p ON tmp2.parent_id=p.id WHERE p.name=#{parent_name})a )
+  UPDATE tb_school_parent a,tb_student_parent b SET a.phone=#{parent_phone}, b.relation_id =#{relation_id},b.relation_title=#{parent_name} where a.id = #{id} and b.parent_id=#{id}
 </update>
 
 <update id="UpdateTeacher" parameterType="cn.didano.base.model.Tb_teacher">
@@ -93,5 +96,9 @@ c.set_intime=#{in_time},c.set_outtime=#{out_time} where a.id = #{id}
   UPDATE tb_school_parent a,tb_student_parent b SET a.deleted=1 ,b.deleted = 1 WHERE
    a.id IN (SELECT * FROM(SELECT parent_id FROM tb_student_parent WHERE student_id=#{id})a) 
    AND b.student_id=#{id}
+</update>
+<update id="deleteparentByid" parameterType="cn.didano.base.model.Tb_deleteParentDate">
+ UPDATE tb_school_parent a,tb_student_parent b SET a.deleted=1 ,b.deleted = 1 WHERE
+   a.id =#{parent_id} and b.parent_id=#{parent_id} and b.student_id = #{student_id}
 </update>
 </mapper>

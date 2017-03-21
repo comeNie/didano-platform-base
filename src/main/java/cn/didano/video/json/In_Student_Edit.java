@@ -21,6 +21,15 @@ public class In_Student_Edit {
 	private Date birthday;
 	@ApiModelProperty(value = "家长信息",required=true)
 	private List<Tb_parent> parent;
+	@ApiModelProperty(value = "删除了的家长id",required=true)
+	private String deleteParents;
+	
+	public String getDeleteParents() {
+		return deleteParents;
+	}
+	public void setDeleteParents(String deleteParents) {
+		this.deleteParents = deleteParents;
+	}
 	public Integer getId() {
 		return id;
 	}

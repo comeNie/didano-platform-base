@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.didano.base.dao.Tb_MailList_listMapper;
-import cn.didano.base.model.Tb_mailList_list;
 import cn.didano.base.model.Tb_class;
+import cn.didano.base.model.Tb_deleteParentDate;
+import cn.didano.base.model.Tb_mailList_list;
 import cn.didano.base.model.Tb_parent;
 import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_staff;
@@ -21,6 +22,24 @@ public class MailListService {
 	@Autowired
 	private Tb_MailList_listMapper mailList_listMapper;
 	
+	/**
+	 * 通过员工id查询该班级
+	 */
+	public Tb_staff findClassIdBySid(Integer id){
+		return mailList_listMapper.findClassIdBySid(id);
+	}
+	/**
+	 * 通过家长id删除家长
+	 */
+	public int deleteparentByid(Tb_deleteParentDate date){
+		return mailList_listMapper.deleteparentByid(date);
+	}
+	/**
+	 * 通过家长id查询家长
+	 */
+	public Tb_parent findParentByPid(Integer id){
+		return mailList_listMapper.findParentByPid(id);
+	}
 	/**
 	 * 查询
 	 */

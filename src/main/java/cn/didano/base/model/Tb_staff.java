@@ -8,6 +8,7 @@ public class Tb_staff {
     private Byte type;
 
     private Integer schoolId;
+    private Integer class_id;
 
     private String name;
 
@@ -29,8 +30,20 @@ public class Tb_staff {
     private Date updated;
 
     private Boolean deleted;
+    
+    
 
-    public String getTitle() {
+   
+
+	public Integer getClass_id() {
+		return class_id;
+	}
+
+	public void setClass_id(Integer class_id) {
+		this.class_id = class_id;
+	}
+
+	public String getTitle() {
 		return title;
 	}
 

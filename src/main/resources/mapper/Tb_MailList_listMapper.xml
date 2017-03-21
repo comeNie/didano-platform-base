@@ -33,13 +33,11 @@
 LEFT JOIN tb_school_parent d ON tmp2.parent_id = d.id
  </select>
  <select id="findteacherByschool" parameterType="Integer" resultType="cn.didano.base.model.Tb_teacher">
-SELECT tmp1.status,tmp1.in_time,tmp1.out_time,tmp1.id,tmp1.name,tmp1.phone,tmp1.class_id,c.title,tmp1.type,tmp1.school_id FROM
-(SELECT a.status,a.id,b.class_id,a.type,a.school_id,a.name,a.phone,c.in_time,c.out_time
-FROM tb_staff a,tb_staff_class b ,tb_sign_type c WHERE a.school_id=#{id} AND a.deleted=0 AND a.type =32 and a.id=b.staff_id and a.sign_type_id=c.id
-)AS tmp1 LEFT JOIN tb_class c ON tmp1.class_id=c.id ORDER BY CONVERT( tmp1.name USING gbk )
-
-
-  
+	SELECT tmp1.status,tmp1.in_time,tmp1.out_time,tmp1.id,tmp1.name,tmp1.phone,tmp1.class_id,c.title,tmp1.type,tmp1.school_id ,tmp1.rfid
+	FROM
+	(SELECT a.status,a.id,b.class_id,a.type,a.school_id,a.name,a.phone,c.in_time,c.out_time,a.rfid
+	FROM tb_staff a,tb_staff_class b ,tb_sign_type c WHERE a.school_id=#{id} AND a.deleted=0 AND a.type =32 and a.id=b.staff_id and a.sign_type_id=c.id
+	)AS tmp1 LEFT JOIN tb_class c ON tmp1.class_id=c.id ORDER BY CONVERT( tmp1.name USING gbk )
  </select>
  <select id="findrelation" resultType="cn.didano.base.model.Tb_relation">
       select id,title from tb_relation

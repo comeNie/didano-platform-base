@@ -587,6 +587,7 @@ public class MailListController {
 				staff1.setSchoolId(teacher.getSchool_id());
 				staff1.setIn_time(intime);
 				staff1.setOut_time(outtime);
+				staff1.setRfid(teacher.getRfid());
 				staffall.add(staff1);
 			}
 			// 取教职工（医生、勤务）

@@ -16,6 +16,15 @@ public class Tb_classStudentParent {
 	    private Byte status;
 		private List<Tb_parent> parent = new ArrayList<Tb_parent>();
 	    private Boolean deleted;
+	    //家长ic卡号
+	    private String parent_ic;
+	    
+		public String getParent_ic() {
+			return parent_ic;
+		}
+		public void setParent_ic(String parent_ic) {
+			this.parent_ic = parent_ic;
+		}
 		public Integer getId() {
 			return id;
 		}

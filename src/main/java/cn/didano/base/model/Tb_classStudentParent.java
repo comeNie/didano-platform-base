@@ -14,7 +14,7 @@ public class Tb_classStudentParent {
 	    private Date birthday;
 		private Byte gender;
 	    private Byte status;
-		private List<Tb_parent> parent = new ArrayList<Tb_parent>();
+		private List<Tb_parent4mailList> parent = new ArrayList<Tb_parent4mailList>();
 	    private Boolean deleted;
 	    //家长ic卡号
 	    private String parent_ic;
@@ -80,10 +80,10 @@ public class Tb_classStudentParent {
 		public void setStatus(Byte status) {
 			this.status = status;
 		}
-		public List<Tb_parent> getParent() {
+		public List<Tb_parent4mailList> getParent() {
 			return parent;
 		}
-		public void setParent(List<Tb_parent> parent) {
+		public void setParent(List<Tb_parent4mailList> parent) {
 			this.parent = parent;
 		}
 		public Boolean getDeleted() {

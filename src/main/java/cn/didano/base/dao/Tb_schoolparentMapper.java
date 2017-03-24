@@ -1,6 +1,7 @@
 package cn.didano.base.dao;
 
 import cn.didano.base.model.Tb_schoolparent;
+import cn.didano.base.model.Tb_schoolparent4;
 import cn.didano.base.model.Tb_schoolparentExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -27,4 +28,6 @@ public interface Tb_schoolparentMapper {
     int updateByPrimaryKeySelective(Tb_schoolparent record);
 
     int updateByPrimaryKey(Tb_schoolparent record);
+
+	int insertSelective(Tb_schoolparent4 record);
 }

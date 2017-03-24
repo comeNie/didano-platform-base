@@ -9,7 +9,7 @@ import cn.didano.base.dao.Tb_MailList_listMapper;
 import cn.didano.base.model.Tb_class;
 import cn.didano.base.model.Tb_deleteParentDate;
 import cn.didano.base.model.Tb_mailList_list;
-import cn.didano.base.model.Tb_parent;
+import cn.didano.base.model.Tb_parent4mailList;
 import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_staff;
 import cn.didano.base.model.Tb_staff4MailList;
@@ -37,7 +37,7 @@ public class MailListService {
 	/**
 	 * 通过家长id查询家长
 	 */
-	public Tb_parent findParentByPid(Integer id){
+	public Tb_parent4mailList findParentByPid(Integer id){
 		return mailList_listMapper.findParentByPid(id);
 	}
 	/**
@@ -123,7 +123,7 @@ public class MailListService {
 	/**
 	 * 通过小朋友id编辑父母信息
 	 */
-	public int UpdateParent(Tb_parent parent){
+	public int UpdateParent(Tb_parent4mailList parent){
 		return mailList_listMapper.UpdateParent(parent);
 	}
 	/**
@@ -135,7 +135,7 @@ public class MailListService {
 	/**
 	 * 通过小朋友id查找其所有父母联系方式
 	 */
-	public List<Tb_parent> findparent(Integer id){
+	public List<Tb_parent4mailList> findparent(Integer id){
 		return mailList_listMapper.findParentById(id);
 	}
 	/**

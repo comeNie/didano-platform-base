@@ -3,12 +3,21 @@
 <mapper namespace="cn.didano.base.dao.Tb_studentMapper">
   <resultMap id="BaseResultMap" type="cn.didano.base.model.Tb_student">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="student_id" jdbcType="INTEGER" property="studentId" />
-    <result column="height" jdbcType="INTEGER" property="height" />
-    <result column="weight" jdbcType="INTEGER" property="weight" />
-    <result column="temperature" jdbcType="REAL" property="temperature" />
-    <result column="org_img_url" jdbcType="VARCHAR" property="orgImgUrl" />
+    <result column="school_id" jdbcType="INTEGER" property="schoolId" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="hobby" jdbcType="VARCHAR" property="hobby" />
+    <result column="dream_id" jdbcType="INTEGER" property="dreamId" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="gender" jdbcType="TINYINT" property="gender" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="device_registered" jdbcType="TINYINT" property="deviceRegistered" />
+    <result column="status" jdbcType="TINYINT" property="status" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+    <result column="rfid" jdbcType="VARCHAR" property="rfid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +78,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, student_id, height, weight, temperature, org_img_url, created
+    id, school_id, class_id, name, nickname, hobby, dream_id, comment, gender, birthday, 
+    device_registered, status, created, updated, deleted, rfid
   </sql>
   <select id="selectByExample" parameterType="cn.didano.base.model.Tb_studentExample" resultMap="BaseResultMap">
     select
@@ -78,7 +88,7 @@
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from tb_student_detection
+    from tb_student
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,47 +99,71 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from tb_student_detection
+    from tb_student
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tb_student_detection
+    delete from tb_student
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="cn.didano.base.model.Tb_studentExample">
-    delete from tb_student_detection
+    delete from tb_student
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="cn.didano.base.model.Tb_student">
-    insert into tb_student_detection (id, student_id, height, 
-      weight, temperature, org_img_url, 
-      created)
-    values (#{id,jdbcType=INTEGER}, #{studentId,jdbcType=INTEGER}, #{height,jdbcType=INTEGER}, 
-      #{weight,jdbcType=INTEGER}, #{temperature,jdbcType=REAL}, #{orgImgUrl,jdbcType=VARCHAR}, 
-      #{created,jdbcType=TIMESTAMP})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_student (school_id, class_id, name, 
+      nickname, hobby, dream_id, 
+      comment, gender, birthday, 
+      device_registered, status, created, 
+      updated, deleted, rfid
+      )
+    values (#{schoolId,jdbcType=INTEGER}, #{classId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{hobby,jdbcType=VARCHAR}, #{dreamId,jdbcType=INTEGER}, 
+      #{comment,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, #{birthday,jdbcType=DATE}, 
+      #{deviceRegistered,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{created,jdbcType=TIMESTAMP}, 
+      #{updated,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{rfid,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.didano.base.model.Tb_student">
-    insert into tb_student_detection
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_student
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
+      <if test="schoolId != null">
+        school_id,
       </if>
-      <if test="studentId != null">
-        student_id,
+      <if test="classId != null">
+        class_id,
       </if>
-      <if test="height != null">
-        height,
+      <if test="name != null">
+        name,
       </if>
-      <if test="weight != null">
-        weight,
+      <if test="nickname != null">
+        nickname,
       </if>
-      <if test="temperature != null">
-        temperature,
+      <if test="hobby != null">
+        hobby,
       </if>
-      <if test="orgImgUrl != null">
-        org_img_url,
+      <if test="dreamId != null">
+        dream_id,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="deviceRegistered != null">
+        device_registered,
       </if>
       <if test="status != null">
         status,
@@ -137,60 +171,120 @@
       <if test="created != null">
         created,
       </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="rfid != null">
+        rfid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=INTEGER},
       </if>
-      <if test="studentId != null">
-        #{studentId,jdbcType=INTEGER},
+      <if test="classId != null">
+        #{classId,jdbcType=INTEGER},
       </if>
-      <if test="height != null">
-        #{height,jdbcType=INTEGER},
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
       </if>
-      <if test="weight != null">
-        #{weight,jdbcType=INTEGER},
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="temperature != null">
-        #{temperature,jdbcType=REAL},
+      <if test="hobby != null">
+        #{hobby,jdbcType=VARCHAR},
       </if>
-      <if test="orgImgUrl != null">
-        #{orgImgUrl,jdbcType=VARCHAR},
+      <if test="dreamId != null">
+        #{dreamId,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="deviceRegistered != null">
+        #{deviceRegistered,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
       </if>
       <if test="created != null">
         #{created,jdbcType=TIMESTAMP},
       </if>
+      <if test="updated != null">
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
+      </if>
+      <if test="rfid != null">
+        #{rfid,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="cn.didano.base.model.Tb_studentExample" resultType="java.lang.Long">
-    select count(*) from tb_student_detection
+    select count(*) from tb_student
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update tb_student_detection
+    update tb_student
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.studentId != null">
-        student_id = #{record.studentId,jdbcType=INTEGER},
+      <if test="record.schoolId != null">
+        school_id = #{record.schoolId,jdbcType=INTEGER},
       </if>
-      <if test="record.height != null">
-        height = #{record.height,jdbcType=INTEGER},
+      <if test="record.classId != null">
+        class_id = #{record.classId,jdbcType=INTEGER},
       </if>
-      <if test="record.weight != null">
-        weight = #{record.weight,jdbcType=INTEGER},
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.temperature != null">
-        temperature = #{record.temperature,jdbcType=REAL},
+      <if test="record.nickname != null">
+        nickname = #{record.nickname,jdbcType=VARCHAR},
       </if>
-      <if test="record.orgImgUrl != null">
-        org_img_url = #{record.orgImgUrl,jdbcType=VARCHAR},
+      <if test="record.hobby != null">
+        hobby = #{record.hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dreamId != null">
+        dream_id = #{record.dreamId,jdbcType=INTEGER},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=TINYINT},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.deviceRegistered != null">
+        device_registered = #{record.deviceRegistered,jdbcType=TINYINT},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
       </if>
       <if test="record.created != null">
         created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=BIT},
+      </if>
+      <if test="record.rfid != null">
+        rfid = #{record.rfid,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -198,50 +292,95 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update tb_student_detection
+    update tb_student
     set id = #{record.id,jdbcType=INTEGER},
-      student_id = #{record.studentId,jdbcType=INTEGER},
-      height = #{record.height,jdbcType=INTEGER},
-      weight = #{record.weight,jdbcType=INTEGER},
-      temperature = #{record.temperature,jdbcType=REAL},
-      org_img_url = #{record.orgImgUrl,jdbcType=VARCHAR},
-      created = #{record.created,jdbcType=TIMESTAMP}
+      school_id = #{record.schoolId,jdbcType=INTEGER},
+      class_id = #{record.classId,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      hobby = #{record.hobby,jdbcType=VARCHAR},
+      dream_id = #{record.dreamId,jdbcType=INTEGER},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=TINYINT},
+      birthday = #{record.birthday,jdbcType=DATE},
+      device_registered = #{record.deviceRegistered,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=TINYINT},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      deleted = #{record.deleted,jdbcType=BIT},
+      rfid = #{record.rfid,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="cn.didano.base.model.Tb_student">
-    update tb_student_detection
+    update tb_student
     <set>
-      <if test="studentId != null">
-        student_id = #{studentId,jdbcType=INTEGER},
+      <if test="schoolId != null">
+        school_id = #{schoolId,jdbcType=INTEGER},
       </if>
-      <if test="height != null">
-        height = #{height,jdbcType=INTEGER},
+      <if test="classId != null">
+        class_id = #{classId,jdbcType=INTEGER},
       </if>
-      <if test="weight != null">
-        weight = #{weight,jdbcType=INTEGER},
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="temperature != null">
-        temperature = #{temperature,jdbcType=REAL},
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="orgImgUrl != null">
-        org_img_url = #{orgImgUrl,jdbcType=VARCHAR},
+      <if test="hobby != null">
+        hobby = #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="dreamId != null">
+        dream_id = #{dreamId,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="deviceRegistered != null">
+        device_registered = #{deviceRegistered,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
       </if>
       <if test="created != null">
         created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+      <if test="rfid != null">
+        rfid = #{rfid,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.didano.base.model.Tb_student">
-    update tb_student_detection
-    set student_id = #{studentId,jdbcType=INTEGER},
-      height = #{height,jdbcType=INTEGER},
-      weight = #{weight,jdbcType=INTEGER},
-      temperature = #{temperature,jdbcType=REAL},
-      org_img_url = #{orgImgUrl,jdbcType=VARCHAR},
-      created = #{created,jdbcType=TIMESTAMP}
+    update tb_student
+    set school_id = #{schoolId,jdbcType=INTEGER},
+      class_id = #{classId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      hobby = #{hobby,jdbcType=VARCHAR},
+      dream_id = #{dreamId,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      birthday = #{birthday,jdbcType=DATE},
+      device_registered = #{deviceRegistered,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT},
+      rfid = #{rfid,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

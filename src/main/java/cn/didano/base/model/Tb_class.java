@@ -3,32 +3,37 @@ package cn.didano.base.model;
 import java.sql.Date;
 
 public class Tb_class {
-    private Integer id;
+	private Integer id;
 
-    private Integer SchoolId;
-    private Integer class_id;
-    private String title;
-    private String name;
-    private Date birthday;
+	private Integer SchoolId;
+	private Integer class_id;
+	private String title;
+	private String name;
+	private Date birthday;
 	private Byte gender;
-    private Byte status;
+	private Byte status;
 	private byte relation_id;
 	private Integer parent_id;
 	private String parent_name;
 	private String parent_phone;
-    private Boolean deleted;
-    private String rfid;
-    private String student_rfid;
-    
+	private Boolean deleted;
+	private String parent_ic_number;
+	private String student_ic_number;
 
-
-    
-    public String getStudent_rfid() {
-		return student_rfid;
+	public String getParent_ic_number() {
+		return parent_ic_number;
 	}
 
-	public void setStudent_rfid(String student_rfid) {
-		this.student_rfid = student_rfid;
+	public void setParent_ic_number(String parent_ic_number) {
+		this.parent_ic_number = parent_ic_number;
+	}
+
+	public String getStudent_ic_number() {
+		return student_ic_number;
+	}
+
+	public void setStudent_ic_number(String student_ic_number) {
+		this.student_ic_number = student_ic_number;
 	}
 
 	public Integer getParent_id() {
@@ -37,14 +42,6 @@ public class Tb_class {
 
 	public void setParent_id(Integer parent_id) {
 		this.parent_id = parent_id;
-	}
-	public String getRfid() {
-		return rfid;
-	}
-
-	public void setRfid(String rfid) {
-		this.rfid = rfid;
-
 	}
 
 	public byte getRelation_id() {
@@ -72,15 +69,12 @@ public class Tb_class {
 	}
 
 	public Integer getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-  
-   
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public Integer getSchoolId() {
 		return SchoolId;
@@ -123,26 +117,26 @@ public class Tb_class {
 	}
 
 	public String getTitle() {
-        return title;
-    }
+		return title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
+	public void setTitle(String title) {
+		this.title = title == null ? null : title.trim();
+	}
 
-    public Byte getStatus() {
-        return status;
-    }
+	public Byte getStatus() {
+		return status;
+	}
 
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
+	public void setStatus(Byte status) {
+		this.status = status;
+	}
 
-    public Boolean getDeleted() {
-        return deleted;
-    }
+	public Boolean getDeleted() {
+		return deleted;
+	}
 
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
 }

@@ -5,17 +5,35 @@ import java.util.Date;
 public class Tb_student {
     private Integer id;
 
-    private Integer studentId;
+    private Integer schoolId;
 
-    private Integer height;
+    private Integer classId;
 
-    private Integer weight;
+    private String name;
 
-    private Float temperature;
+    private String nickname;
 
-    private String orgImgUrl;
+    private String hobby;
+
+    private Integer dreamId;
+
+    private String comment;
+
+    private Byte gender;
+
+    private Date birthday;
+
+    private Byte deviceRegistered;
+
+    private Byte status;
 
     private Date created;
+
+    private Date updated;
+
+    private Boolean deleted;
+
+    private String rfid;
 
     public Integer getId() {
         return id;
@@ -25,48 +43,92 @@ public class Tb_student {
         this.id = id;
     }
 
-    public Integer getStudentId() {
-        return studentId;
+    public Integer getSchoolId() {
+        return schoolId;
     }
 
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
+    public void setSchoolId(Integer schoolId) {
+        this.schoolId = schoolId;
     }
 
-   
-
-  
-
-	public Integer getHeight() {
-		return height;
-	}
-
-	public void setHeight(Integer height) {
-		this.height = height;
-	}
-
-	public Integer getWeight() {
-        return weight;
+    public Integer getClassId() {
+        return classId;
     }
 
-    public void setWeight(Integer weight) {
-        this.weight = weight;
+    public void setClassId(Integer classId) {
+        this.classId = classId;
     }
 
-    public Float getTemperature() {
-        return temperature;
+    public String getName() {
+        return name;
     }
 
-    public void setTemperature(Float temperature) {
-        this.temperature = temperature;
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
-    public String getOrgImgUrl() {
-        return orgImgUrl;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setOrgImgUrl(String orgImgUrl) {
-        this.orgImgUrl = orgImgUrl == null ? null : orgImgUrl.trim();
+    public void setNickname(String nickname) {
+        this.nickname = nickname == null ? null : nickname.trim();
+    }
+
+    public String getHobby() {
+        return hobby;
+    }
+
+    public void setHobby(String hobby) {
+        this.hobby = hobby == null ? null : hobby.trim();
+    }
+
+    public Integer getDreamId() {
+        return dreamId;
+    }
+
+    public void setDreamId(Integer dreamId) {
+        this.dreamId = dreamId;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment == null ? null : comment.trim();
+    }
+
+    public Byte getGender() {
+        return gender;
+    }
+
+    public void setGender(Byte gender) {
+        this.gender = gender;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public Byte getDeviceRegistered() {
+        return deviceRegistered;
+    }
+
+    public void setDeviceRegistered(Byte deviceRegistered) {
+        this.deviceRegistered = deviceRegistered;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 
     public Date getCreated() {
@@ -75,5 +137,29 @@ public class Tb_student {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getRfid() {
+        return rfid;
+    }
+
+    public void setRfid(String rfid) {
+        this.rfid = rfid == null ? null : rfid.trim();
     }
 }

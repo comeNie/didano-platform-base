@@ -3,7 +3,7 @@ package cn.didano.video.json;
 import java.util.Date;
 import java.util.List;
 
-import cn.didano.base.model.Tb_parent;
+import cn.didano.base.model.Tb_parent4mailList;
 import io.swagger.annotations.ApiModelProperty;
 
 public class In_Student_Edit {
@@ -19,18 +19,20 @@ public class In_Student_Edit {
 	private Byte gender;
 	@ApiModelProperty(value = "生日",required=true)
 	private Date birthday;
-	@ApiModelProperty(value = "家长信息",required=true)
-	private List<Tb_parent> parent;
 	@ApiModelProperty(value = "删除了的家长id",required=true)
 	private String deleteParents;
+	@ApiModelProperty(value = "学生的ic卡编号",required=true)
+	private String rfid;
+	@ApiModelProperty(value = "家长信息",required=true)
+	private List<Tb_parent4mailList> parent;
 	
-	private String student_rfid;
 	
-	public String getStudent_rfid() {
-		return student_rfid;
+	
+	public String getRfid() {
+		return rfid;
 	}
-	public void setStudent_rfid(String student_rfid) {
-		this.student_rfid = student_rfid;
+	public void setRfid(String rfid) {
+		this.rfid = rfid;
 	}
 	public String getDeleteParents() {
 		return deleteParents;
@@ -68,10 +70,10 @@ public class In_Student_Edit {
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
-	public List<Tb_parent> getParent() {
+	public List<Tb_parent4mailList> getParent() {
 		return parent;
 	}
-	public void setParent(List<Tb_parent> parent) {
+	public void setParent(List<Tb_parent4mailList> parent) {
 		this.parent = parent;
 	}
 	

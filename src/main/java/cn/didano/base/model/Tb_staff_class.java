@@ -17,7 +17,7 @@ public class Tb_staff_class {
 
     private Boolean deleted;
 
-    public Integer getId() {
+	public Integer getId() {
         return id;
     }
 

@@ -16,6 +16,7 @@ import cn.didano.base.model.Hand_icCardAndSchool_id;
 import cn.didano.base.model.Tb_ic_card;
 import cn.didano.base.model.Tb_ic_cardExample;
 import cn.didano.video.constant.DeletedType;
+import cn.didano.video.constant.IcCardType;
 
 /**
  * 
@@ -23,7 +24,7 @@ import cn.didano.video.constant.DeletedType;
  *
  */
 @Service
-public class ICCardService {
+public class IcCardService {
 	@Autowired
 	private Tb_ic_cardMapper tb_ic_card;
 	@Autowired
@@ -52,6 +53,27 @@ public class ICCardService {
 	 */
 	public List<Tb_ic_card> selectNoeIcInfo(Tb_ic_card ic) {
 		return hand_ic_cardMapper.selectNoeIcInfo(ic);
+	}
+	
+	/**
+	 * 根据卡的类型进行查询ic卡信息
+	 * 
+	 * @return
+	 */
+	public Tb_ic_card selectIcByNumber(String number,int school_id,int ic_type) {
+		
+		Tb_ic_cardExample tb_ic_cardExample = new Tb_ic_cardExample();
+		Tb_ic_cardExample.Criteria criteria = tb_ic_cardExample.createCriteria();
+		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
+		criteria.andIcTypeEqualTo(ic_type);
+		criteria.andIcNumberEqualTo(number);
+		criteria.andSchoolIdEqualTo(school_id);
+		List<Tb_ic_card> list = tb_ic_card.selectByExample(tb_ic_cardExample);
+		Tb_ic_card tb_ic_card = null;
+		if(list!=null && list.size()>0){
+			tb_ic_card = list.get(0);
+		}
+		return tb_ic_card;
 	}
 
 	/**

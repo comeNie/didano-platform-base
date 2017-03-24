@@ -2,24 +2,28 @@ package cn.didano.base.model;
 
 import java.util.Date;
 
-public class Tb_staff {
+public class View_staff_ic_card {
+    private String icNumber;
+
     private Integer id;
 
     private Byte type;
 
     private Integer schoolId;
-    private Integer class_id;
 
     private String name;
 
-    private String title;
     private String phone;
 
     private String rfid;
 
     private String qrcodeUrl;
 
+    private String qrcodeUrlOld;
+
     private String qrcodeSchoolKey;
+
+    private String qrcodeSchoolKeyOld;
 
     private Integer signTypeId;
 
@@ -30,30 +34,16 @@ public class Tb_staff {
     private Date updated;
 
     private Boolean deleted;
-    
-    
-    
-    
 
-   
+    public String getIcNumber() {
+        return icNumber;
+    }
 
-	public Integer getClass_id() {
-		return class_id;
-	}
+    public void setIcNumber(String icNumber) {
+        this.icNumber = icNumber == null ? null : icNumber.trim();
+    }
 
-	public void setClass_id(Integer class_id) {
-		this.class_id = class_id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public Integer getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -109,12 +99,28 @@ public class Tb_staff {
         this.qrcodeUrl = qrcodeUrl == null ? null : qrcodeUrl.trim();
     }
 
+    public String getQrcodeUrlOld() {
+        return qrcodeUrlOld;
+    }
+
+    public void setQrcodeUrlOld(String qrcodeUrlOld) {
+        this.qrcodeUrlOld = qrcodeUrlOld == null ? null : qrcodeUrlOld.trim();
+    }
+
     public String getQrcodeSchoolKey() {
         return qrcodeSchoolKey;
     }
 
     public void setQrcodeSchoolKey(String qrcodeSchoolKey) {
         this.qrcodeSchoolKey = qrcodeSchoolKey == null ? null : qrcodeSchoolKey.trim();
+    }
+
+    public String getQrcodeSchoolKeyOld() {
+        return qrcodeSchoolKeyOld;
+    }
+
+    public void setQrcodeSchoolKeyOld(String qrcodeSchoolKeyOld) {
+        this.qrcodeSchoolKeyOld = qrcodeSchoolKeyOld == null ? null : qrcodeSchoolKeyOld.trim();
     }
 
     public Integer getSignTypeId() {

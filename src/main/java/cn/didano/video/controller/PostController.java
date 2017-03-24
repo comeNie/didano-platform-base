@@ -21,15 +21,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
+
 import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Bs_good;
 import cn.didano.base.model.Hand_student;
 import cn.didano.base.model.Tb_benchmark;
 import cn.didano.base.model.Tb_class;
 import cn.didano.base.model.Tb_school;
-import cn.didano.base.model.Tb_student;
 import cn.didano.base.model.Tb_studentRecord;
 import cn.didano.base.model.Tb_student_detection;
+import cn.didano.base.model.Tb_student_detection4photoWall;
 import cn.didano.base.model.Tb_student_inf;
 import cn.didano.base.model.Vd_auth_switch;
 import cn.didano.base.model.Vd_auth_time_control;
@@ -116,7 +117,7 @@ public class PostController {
 	@ResponseBody
 	public Out<OutList<Tb_student_inf>> student_search(@PathVariable("student_id") Integer student_id) {
 		logger.info("访问  PostController:student_search_by_studentid student_id =" + student_id);
-		List<Tb_student> studentall = null;
+		List<Tb_student_detection4photoWall> studentall = null;
 		List<Tb_student_inf> student = new ArrayList<Tb_student_inf>();
 		OutList<Tb_student_inf> outList = null;
 		Out<OutList<Tb_student_inf>> back = new Out<OutList<Tb_student_inf>>();
@@ -126,7 +127,7 @@ public class PostController {
 			if (studentall.size() > 4) {
 				student.add(new Tb_student_inf(studentall.get(0).getHeight() / 10, studentall.get(0).getWeight() / 1000,
 						studentall.get(0).getOrgImgUrl(), sdf.format(studentall.get(0).getCreated())));
-				Tb_student tb = studentall
+				Tb_student_detection4photoWall tb = studentall
 						.get((int) (Math.random() * (studentall.size() - 1) / 5) + (studentall.size() - 1) / 5);
 				Tb_student_inf inf = new Tb_student_inf(tb.getHeight() / 10, tb.getWeight() / 1000, tb.getOrgImgUrl(),
 						sdf.format(tb.getCreated()));

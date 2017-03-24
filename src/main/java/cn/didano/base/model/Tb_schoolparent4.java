@@ -2,7 +2,7 @@ package cn.didano.base.model;
 
 import java.util.Date;
 
-public class Tb_schoolparent {
+public class Tb_schoolparent4 extends Tb_schoolparent{
     private Integer id;
 
     private Integer schoolId;

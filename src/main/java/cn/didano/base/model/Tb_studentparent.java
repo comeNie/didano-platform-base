@@ -13,7 +13,7 @@ public class Tb_studentparent {
 
     private Integer parentId;
 
-    private String rfid;
+    private String parent_ic_number;
 
     private Byte relationId;
 
@@ -25,15 +25,26 @@ public class Tb_studentparent {
 
     private Date created;
     
-    private String student_rfid;
+    private String student_ic_number;
     
-
-    public String getStudent_rfid() {
-		return student_rfid;
+	public String getParent_ic_number() {
+		return parent_ic_number;
 	}
 
-	public void setStudent_rfid(String student_rfid) {
-		this.student_rfid = student_rfid;
+	public void setParent_ic_number(String parent_ic_number) {
+		this.parent_ic_number = parent_ic_number;
+	}
+
+	public String getStudent_ic_number() {
+		return student_ic_number;
+	}
+
+	public void setStudent_ic_number(String student_ic_number) {
+		this.student_ic_number = student_ic_number;
+	}
+
+	public Byte getRelationId() {
+		return relationId;
 	}
 
 	public Integer getId() {
@@ -74,18 +85,6 @@ public class Tb_studentparent {
 
     public void setParentId(Integer parentId) {
         this.parentId = parentId;
-    }
-
-    public String getRfid() {
-        return rfid;
-    }
-
-    public void setRfid(String rfid) {
-        this.rfid = rfid == null ? null : rfid.trim();
-    }
-
-    public Byte getRelationId() {
-        return relationId;
     }
 
     public void setRelationId(Byte relationId) {

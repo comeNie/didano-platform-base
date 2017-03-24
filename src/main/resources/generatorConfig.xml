@@ -5,7 +5,7 @@
 <generatorConfiguration>
 	<!--数据库驱动 -->
 	<classPathEntry
-		location="C:/.m2/repository/mysql/mysql-connector-java/5.1.40/mysql-connector-java-5.1.40.jar" />
+		location="/Users/wangyi/.m2/repository/mysql/mysql-connector-java/5.1.40/mysql-connector-java-5.1.40.jar" />
 	<context id="video_didano" targetRuntime="MyBatis3" defaultModelType="flat">
 		<commentGenerator>
 			<property name="suppressDate" value="true" />
@@ -13,7 +13,7 @@
 		</commentGenerator>
 		<!--数据库链接地址账号密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost/xiaonuo_test" userId="root"
+			connectionURL="jdbc:mysql://localhost/xiaonuo" userId="root"
 			password="123456">
 		</jdbcConnection>
 		<javaTypeResolver>
@@ -175,9 +175,19 @@
 			<ignoreColumn column="deleted" />
 		</table>-->
 		
-		<table tableName="tb_staff" domainObjectName="Tb_staff"
+		<!-- <table tableName="tb_ic_card" domainObjectName="Tb_ic_card"
 			enableCountByExample="true" enableSelectByExample="true"
-			selectByExampleQueryId="true" >
+			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
+			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
+		</table> -->
+		<!-- <table tableName="tb_student" domainObjectName="Tb_student"
+			enableCountByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
+			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
+		</table> -->
+		<table tableName="view_staff_ic_card" domainObjectName="View_staff_ic_card"
+			enableCountByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
 			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
 		</table>
 		

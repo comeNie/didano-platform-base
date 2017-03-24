@@ -20,7 +20,7 @@ import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Hand_icCardAndSchool_id;
 import cn.didano.base.model.Tb_ic_card;
 import cn.didano.base.model.Tb_school;
-import cn.didano.base.service.ICCardService;
+import cn.didano.base.service.IcCardService;
 import cn.didano.base.service.SchoolService;
 import cn.didano.video.auth.channel.ChannelStatus;
 import cn.didano.video.constant.BackType;
@@ -33,10 +33,10 @@ import io.swagger.annotations.ApiParam;
 @Api(value = "IC卡服务", tags = "IC卡服务，提供给表现层")
 @RestController
 @RequestMapping(value = "/base/ICCard/post/")
-public class ICCardController {
-	static Logger logger = Logger.getLogger(ICCardController.class);
+public class IcCardController {
+	static Logger logger = Logger.getLogger(IcCardController.class);
 	@Autowired
-	private ICCardService icCardServices;
+	private IcCardService icCardServices;
 	@Autowired
 	private SchoolService schoolService;
 
@@ -412,7 +412,7 @@ public class ICCardController {
 		Out<String> back = new Out<String>();
 		Tb_ic_card ic_card=new Tb_ic_card();
 		ic_card.setId(remove_id);
-		ic_card.setDeleted(1);
+		ic_card.setDeleted(true);
 		try {
 			int rowNum = icCardServices.updateByPrimaryKeySelective(ic_card);
 			if (rowNum > 0) {

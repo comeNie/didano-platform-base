@@ -22,6 +22,7 @@
    <select id="select_ICMaxNumber" parameterType="INTEGER" resultMap="BaseResultMap">
     SELECT id,ic_type,MAX(id),ic_number,school_id,STATUS,created,updated,deleted FROM tb_ic_card WHERE school_id=#{school_id}
   </select> 
+  
 
 <!-- <update id="Update" parameterType="cn.didano.base.model.Tb_mailList_list">UPDATE tb_student a SET a.name=#{name},a.class_id=#{class_id},a.gender=#{gender,jdbcType=TINYINT},a.birthday=#{birthday,jdbcType=DATE} where a.id=#{id}</update>
 
@@ -30,7 +31,7 @@ UPDATE tb_student AS a SET a.deleted=1 WHERE a.id=#{id}
 </update>
 
 
-<update id="UpdateParent" parameterType="cn.didano.base.model.Tb_parent">
+<update id="UpdateParent" parameterType="cn.didano.base.model.Tb_parent4mailList">
   UPDATE tb_school_parent SET phone=#{parent_phone} where id = (select id from(SELECT p.id FROM 
 (SELECT tmp1.id,tmp1.name,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 
  tb_student  AS tmp1 ,tb_student_parent p WHERE tmp1.id=p.student_id AND tmp1.id=#{id}) AS tmp2 LEFT JOIN tb_school_parent p ON tmp2.parent_id=p.id WHERE p.name=#{parent_name})a )
@@ -47,3 +48,4 @@ c.set_intime=#{in_time},c.set_outtime=#{out_time} where a.id = #{id}
 </update> -->
 
 </mapper>
+

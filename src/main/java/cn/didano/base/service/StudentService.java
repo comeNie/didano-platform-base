@@ -5,25 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-
 import cn.didano.base.dao.Tb_newstudentMapper;
 import cn.didano.base.dao.Tb_schoolparentMapper;
-import cn.didano.base.dao.Tb_studentMapper;
+import cn.didano.base.dao.Tb_student_detection4photoWallMapper;
 import cn.didano.base.dao.Tb_studentparentMapper;
 import cn.didano.base.exception.DBExceptionEnums;
 import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Tb_newstudent;
 import cn.didano.base.model.Tb_newstudentExample;
-import cn.didano.base.model.Tb_schoolparent;
-import cn.didano.base.model.Tb_student;
-import cn.didano.base.model.Tb_studentExample;
+import cn.didano.base.model.Tb_schoolparent4;
+import cn.didano.base.model.Tb_student_detection4photoWall;
+import cn.didano.base.model.Tb_student_detection4photoWallExample;
 import cn.didano.base.model.Tb_studentparent;
-import cn.didano.base.model.Vd_channel;
-import cn.didano.base.model.Vd_channelExample;
-import cn.didano.base.model.View_student_channel;
-import cn.didano.base.model.View_student_channelExample;
 import cn.didano.video.constant.DeletedType;
 import cn.didano.video.constant.StatusType;
 
@@ -36,7 +29,7 @@ import cn.didano.video.constant.StatusType;
 public class StudentService {
 
 	@Autowired
-	private Tb_studentMapper studentMapper;
+	private Tb_student_detection4photoWallMapper photoWallMapper;
 	@Autowired
 	private Tb_newstudentMapper newstudentMapper;
 	@Autowired
@@ -47,15 +40,14 @@ public class StudentService {
 	/**
 	 * 通过id查询
 	 */
-	public List<Tb_student> selectById(Integer student_id) {
+	public List<Tb_student_detection4photoWall> selectById(Integer student_id) {
 
-		Tb_studentExample condition = new Tb_studentExample();
-		Tb_studentExample.Criteria criteria = condition.createCriteria();
+		Tb_student_detection4photoWallExample condition = new Tb_student_detection4photoWallExample();
+		Tb_student_detection4photoWallExample.Criteria criteria = condition.createCriteria();
 		criteria.andStudentIdEqualTo(student_id);
 		condition.setOrderByClause("created");
 		criteria.andOrgImgUrlNotLike("");
-
-		return studentMapper.selectByExample(condition);
+		return photoWallMapper.selectByExample(condition);
 	}
 
 	/**
@@ -100,7 +92,7 @@ public class StudentService {
 	 * @param record
 	 * @return 有值，id ,否则返回-1
 	 */
-	public int insertParentSelective(Tb_schoolparent record) {
+	public int insertParentSelective(Tb_schoolparent4 record) {
 		if (record == null)
 			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
 		return schoolparentMapper.insertSelective(record);

@@ -7,7 +7,7 @@ import java.util.Date;
 import io.swagger.annotations.ApiModelProperty;
 
 public class In_Teacher_Edit {
-	@ApiModelProperty(value = "员工id",required=true)
+	@ApiModelProperty(value = "操作人员工id",required=true)
 	private Integer staffid;
 	@ApiModelProperty(value = "老师id",required=true)
 	private Integer id;
@@ -27,6 +27,16 @@ public class In_Teacher_Edit {
 	@ApiModelProperty(value = "是否有效",required=true)
 	private byte status;
 	
+	//杨超强添加教师rfid  本来是ic_number 为了方便统一前台传过来的都命名为rfid
+	@ApiModelProperty(value = "IC卡编号",required=true)
+	private String rfid;
+	
+	public String getRfid() {
+		return rfid;
+	}
+	public void setRfid(String rfid) {
+		this.rfid = rfid;
+	}
 	public Integer getStaffid() {
 		return staffid;
 	}

@@ -38,6 +38,9 @@ public enum BackType {
 	FAIL_INSERT_NO_INSERT("没有插入数据", 2114),
 	// fail oper 2161-2170  
 	FAIL_OPER_SWITCH("设置视频频道开关失败", 2121),
+	FAIL_OPER_NO_MATCH_CARD("请输入正确的编号", 2122),
+	FAIL_OPER_NO_PARENT_CARD("请输入正确的家长ic卡编号", 2123),
+	FAIL_OPER_NO_STUDENT_CARD("请输入正确的学生ic卡编号", 2124),
 	// fail update 2161-2180  
 	FAIL_UPDATE_NORMAL("更新异常", 2161),
 	FAIL_UPDATE_NO_KEY("没有主键", 2162),

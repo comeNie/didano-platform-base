@@ -37,27 +37,17 @@ public class Tb_newstudent {
     
     private String rfid;
     
-    private String student_rfid;
-    
-    private List<Tb_parent> parent = new ArrayList<Tb_parent>();
+    private List<Tb_parent4mailList> parent = new ArrayList<Tb_parent4mailList>();
     
     
     
     
-    public List<Tb_parent> getParent() {
+    public List<Tb_parent4mailList> getParent() {
 		return parent;
 	}
 
-	public void setParent(List<Tb_parent> parent) {
+	public void setParent(List<Tb_parent4mailList> parent) {
 		this.parent = parent;
-	}
-
-	public String getStudent_rfid() {
-		return student_rfid;
-	}
-
-	public void setStudent_rfid(String student_rfid) {
-		this.student_rfid = student_rfid;
 	}
 
 	public String getRfid() {

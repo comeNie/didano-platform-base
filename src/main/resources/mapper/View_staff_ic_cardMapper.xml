@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.didano.base.dao.Tb_ic_cardMapper">
-  <resultMap id="BaseResultMap" type="cn.didano.base.model.Tb_ic_card">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="ic_type" jdbcType="INTEGER" property="icType" />
+<mapper namespace="cn.didano.base.dao.View_staff_ic_cardMapper">
+  <resultMap id="BaseResultMap" type="cn.didano.base.model.View_staff_ic_card">
     <result column="ic_number" jdbcType="VARCHAR" property="icNumber" />
-    <result column="rfid" jdbcType="VARCHAR" property="rfid" />
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="type" jdbcType="TINYINT" property="type" />
     <result column="school_id" jdbcType="INTEGER" property="schoolId" />
-    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="rfid" jdbcType="VARCHAR" property="rfid" />
+    <result column="qrcode_url" jdbcType="VARCHAR" property="qrcodeUrl" />
+    <result column="qrcode_url_old" jdbcType="VARCHAR" property="qrcodeUrlOld" />
+    <result column="qrcode_school_key" jdbcType="VARCHAR" property="qrcodeSchoolKey" />
+    <result column="qrcode_school_key_old" jdbcType="VARCHAR" property="qrcodeSchoolKeyOld" />
+    <result column="sign_type_id" jdbcType="INTEGER" property="signTypeId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
@@ -71,16 +78,17 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, ic_type, ic_number, rfid, school_id, status, created, updated, deleted
+    ic_number, id, type, school_id, name, phone, rfid, qrcode_url, qrcode_url_old, qrcode_school_key, 
+    qrcode_school_key_old, sign_type_id, status, created, updated, deleted
   </sql>
-  <select id="selectByExample" parameterType="cn.didano.base.model.Tb_ic_cardExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.didano.base.model.View_staff_ic_cardExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from tb_ic_card
+    from view_staff_ic_card
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -88,50 +96,67 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from tb_ic_card
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tb_ic_card
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="cn.didano.base.model.Tb_ic_cardExample">
-    delete from tb_ic_card
+  <delete id="deleteByExample" parameterType="cn.didano.base.model.View_staff_ic_cardExample">
+    delete from view_staff_ic_card
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.didano.base.model.Tb_ic_card">
+  <insert id="insert" parameterType="cn.didano.base.model.View_staff_ic_card">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into tb_ic_card (ic_type, ic_number, rfid, 
-      school_id, status, created, 
-      updated, deleted)
-    values (#{icType,jdbcType=INTEGER}, #{icNumber,jdbcType=VARCHAR}, #{rfid,jdbcType=VARCHAR}, 
-      #{schoolId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, 
-      #{updated,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
+    insert into view_staff_ic_card (ic_number, type, school_id, 
+      name, phone, rfid, 
+      qrcode_url, qrcode_url_old, qrcode_school_key, 
+      qrcode_school_key_old, sign_type_id, status, 
+      created, updated, deleted
+      )
+    values (#{icNumber,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{schoolId,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{rfid,jdbcType=VARCHAR}, 
+      #{qrcodeUrl,jdbcType=VARCHAR}, #{qrcodeUrlOld,jdbcType=VARCHAR}, #{qrcodeSchoolKey,jdbcType=VARCHAR}, 
+      #{qrcodeSchoolKeyOld,jdbcType=VARCHAR}, #{signTypeId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="cn.didano.base.model.Tb_ic_card">
+  <insert id="insertSelective" parameterType="cn.didano.base.model.View_staff_ic_card">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into tb_ic_card
+    insert into view_staff_ic_card
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="icType != null">
-        ic_type,
-      </if>
       <if test="icNumber != null">
         ic_number,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="schoolId != null">
+        school_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="phone != null">
+        phone,
       </if>
       <if test="rfid != null">
         rfid,
       </if>
-      <if test="schoolId != null">
-        school_id,
+      <if test="qrcodeUrl != null">
+        qrcode_url,
+      </if>
+      <if test="qrcodeUrlOld != null">
+        qrcode_url_old,
+      </if>
+      <if test="qrcodeSchoolKey != null">
+        qrcode_school_key,
+      </if>
+      <if test="qrcodeSchoolKeyOld != null">
+        qrcode_school_key_old,
+      </if>
+      <if test="signTypeId != null">
+        sign_type_id,
       </if>
       <if test="status != null">
         status,
@@ -147,20 +172,41 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="icType != null">
-        #{icType,jdbcType=INTEGER},
-      </if>
       <if test="icNumber != null">
         #{icNumber,jdbcType=VARCHAR},
       </if>
-      <if test="rfid != null">
-        #{rfid,jdbcType=VARCHAR},
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
       </if>
       <if test="schoolId != null">
         #{schoolId,jdbcType=INTEGER},
       </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="rfid != null">
+        #{rfid,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeUrl != null">
+        #{qrcodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeUrlOld != null">
+        #{qrcodeUrlOld,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeSchoolKey != null">
+        #{qrcodeSchoolKey,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeSchoolKeyOld != null">
+        #{qrcodeSchoolKeyOld,jdbcType=VARCHAR},
+      </if>
+      <if test="signTypeId != null">
+        #{signTypeId,jdbcType=INTEGER},
+      </if>
       <if test="status != null">
-        #{status,jdbcType=INTEGER},
+        #{status,jdbcType=TINYINT},
       </if>
       <if test="created != null">
         #{created,jdbcType=TIMESTAMP},
@@ -173,32 +219,53 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.didano.base.model.Tb_ic_cardExample" resultType="java.lang.Long">
-    select count(*) from tb_ic_card
+  <select id="countByExample" parameterType="cn.didano.base.model.View_staff_ic_cardExample" resultType="java.lang.Long">
+    select count(*) from view_staff_ic_card
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update tb_ic_card
+    update view_staff_ic_card
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.icType != null">
-        ic_type = #{record.icType,jdbcType=INTEGER},
-      </if>
       <if test="record.icNumber != null">
         ic_number = #{record.icNumber,jdbcType=VARCHAR},
       </if>
-      <if test="record.rfid != null">
-        rfid = #{record.rfid,jdbcType=VARCHAR},
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=TINYINT},
       </if>
       <if test="record.schoolId != null">
         school_id = #{record.schoolId,jdbcType=INTEGER},
       </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rfid != null">
+        rfid = #{record.rfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qrcodeUrl != null">
+        qrcode_url = #{record.qrcodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qrcodeUrlOld != null">
+        qrcode_url_old = #{record.qrcodeUrlOld,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qrcodeSchoolKey != null">
+        qrcode_school_key = #{record.qrcodeSchoolKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qrcodeSchoolKeyOld != null">
+        qrcode_school_key_old = #{record.qrcodeSchoolKeyOld,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signTypeId != null">
+        sign_type_id = #{record.signTypeId,jdbcType=INTEGER},
+      </if>
       <if test="record.status != null">
-        status = #{record.status,jdbcType=INTEGER},
+        status = #{record.status,jdbcType=TINYINT},
       </if>
       <if test="record.created != null">
         created = #{record.created,jdbcType=TIMESTAMP},
@@ -215,60 +282,25 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update tb_ic_card
-    set id = #{record.id,jdbcType=INTEGER},
-      ic_type = #{record.icType,jdbcType=INTEGER},
-      ic_number = #{record.icNumber,jdbcType=VARCHAR},
-      rfid = #{record.rfid,jdbcType=VARCHAR},
+    update view_staff_ic_card
+    set ic_number = #{record.icNumber,jdbcType=VARCHAR},
+      id = #{record.id,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=TINYINT},
       school_id = #{record.schoolId,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      rfid = #{record.rfid,jdbcType=VARCHAR},
+      qrcode_url = #{record.qrcodeUrl,jdbcType=VARCHAR},
+      qrcode_url_old = #{record.qrcodeUrlOld,jdbcType=VARCHAR},
+      qrcode_school_key = #{record.qrcodeSchoolKey,jdbcType=VARCHAR},
+      qrcode_school_key_old = #{record.qrcodeSchoolKeyOld,jdbcType=VARCHAR},
+      sign_type_id = #{record.signTypeId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP},
       deleted = #{record.deleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.didano.base.model.Tb_ic_card">
-    update tb_ic_card
-    <set>
-      <if test="icType != null">
-        ic_type = #{icType,jdbcType=INTEGER},
-      </if>
-      <if test="icNumber != null">
-        ic_number = #{icNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="rfid != null">
-        rfid = #{rfid,jdbcType=VARCHAR},
-      </if>
-      <if test="schoolId != null">
-        school_id = #{schoolId,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="created != null">
-        created = #{created,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updated != null">
-        updated = #{updated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleted != null">
-        deleted = #{deleted,jdbcType=BIT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.didano.base.model.Tb_ic_card">
-    update tb_ic_card
-    set ic_type = #{icType,jdbcType=INTEGER},
-      ic_number = #{icNumber,jdbcType=VARCHAR},
-      rfid = #{rfid,jdbcType=VARCHAR},
-      school_id = #{schoolId,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      created = #{created,jdbcType=TIMESTAMP},
-      updated = #{updated,jdbcType=TIMESTAMP},
-      deleted = #{deleted,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

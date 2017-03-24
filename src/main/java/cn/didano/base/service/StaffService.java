@@ -8,19 +8,22 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.didano.base.dao.Hand_Staff_icMapper;
+import cn.didano.base.dao.Tb_sign_typeMapper;
 import cn.didano.base.dao.Tb_staffMapper;
 import cn.didano.base.dao.Tb_staff_classMapper;
 import cn.didano.base.dao.Tb_staff_signdateMapper;
-import cn.didano.base.dao.Tb_sign_typeMapper;
+import cn.didano.base.dao.View_staff_ic_cardMapper;
 import cn.didano.base.exception.DBExceptionEnums;
 import cn.didano.base.exception.ServiceException;
+import cn.didano.base.model.Tb_sign_type;
 import cn.didano.base.model.Tb_staff;
 import cn.didano.base.model.Tb_staffExample;
 import cn.didano.base.model.Tb_staff_class;
 import cn.didano.base.model.Tb_staff_classExample;
 import cn.didano.base.model.Tb_staff_signdate;
 import cn.didano.base.model.Tb_staff_signdateExample;
-import cn.didano.base.model.Tb_sign_type;
+import cn.didano.base.model.View_staff_ic_card;
 import cn.didano.video.constant.DeletedType;
 import cn.didano.video.constant.StaffType;
 
@@ -39,6 +42,11 @@ public class StaffService {
 	private Tb_staff_signdateMapper dateMapper;
 	@Autowired
 	private Tb_sign_typeMapper typeMapper;
+	@Autowired
+	private View_staff_ic_cardMapper view_staff_ic_cardMapper;
+	
+	@Autowired
+	private Hand_Staff_icMapper hand_Staff_icMapper;
 
 	/**
 	 * 查询所有
@@ -88,13 +96,7 @@ public class StaffService {
 	 * 通过学校查询该学校的医生和保洁
 	 */
 	public List<Tb_staff> findBossByschool(Integer schoolid){
-		Tb_staffExample condition = new Tb_staffExample();
-		Tb_staffExample.Criteria criteria = condition.createCriteria();
-		// 对于已经deleted=1的不显示 禁用不显示
-		criteria.andTypeEqualTo(StaffType.SCHOOLMASTER.getIndex());
-		criteria.andSchoolIdEqualTo(schoolid);
-		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
-		return staffMapper.selectByExample(condition);
+		return hand_Staff_icMapper.selectStaff_icCard(schoolid);
 	}
 	
 	/**
@@ -182,14 +184,14 @@ public class StaffService {
 	/**
 	 * 校长通过员工姓名查询
 	 */
-	public List<Tb_staff> findByNameSchool(String name,Integer id){
-		Tb_staffExample condition = new Tb_staffExample();
-		Tb_staffExample.Criteria criteria = condition.createCriteria();
-		// 对于已经deleted=1的不显示 禁用不显示
-		criteria.andNameLike(name);
-		criteria.andSchoolIdEqualTo(id);
-		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
-		return staffMapper.selectByExample(condition);
+	public List<Tb_staff> findByNameSchool(Tb_staff tb_staff){
+//		Tb_staffExample condition = new Tb_staffExample();
+//		Tb_staffExample.Criteria criteria = condition.createCriteria();
+//		// 对于已经deleted=1的不显示 禁用不显示
+//		criteria.andNameLike(name);
+//		criteria.andSchoolIdEqualTo(id);
+//		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
+		return hand_Staff_icMapper.selectStaff_name(tb_staff);
 	}
 	
 	/**
@@ -211,26 +213,23 @@ public class StaffService {
 	 * 通过学校查询该学校的医生和保洁
 	 */
 	public List<Tb_staff> findByType(Integer schoolid){
-		Tb_staffExample condition = new Tb_staffExample();
-		Tb_staffExample.Criteria criteria = condition.createCriteria();
-		// 对于已经deleted=1的不显示 禁用不显示
-		criteria.andTypeBetween(StaffType.DOCTOR.getIndex(), StaffType.SUPPORT.getIndex());
-		criteria.andSchoolIdEqualTo(schoolid);
-		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
-		return staffMapper.selectByExample(condition);
+		return hand_Staff_icMapper.selectStaff_icCardandType(schoolid);
 	}
 	/**
 	 * 通过学校查询该学校的医生和保洁
 	 */
-	public List<Tb_staff> findByNameType(String name,Integer schoolid){
-		Tb_staffExample condition = new Tb_staffExample();
-		Tb_staffExample.Criteria criteria = condition.createCriteria();
-		// 对于已经deleted=1的不显示 禁用不显示
-		criteria.andNameLike(name);
-		criteria.andTypeBetween(StaffType.DOCTOR.getIndex(), StaffType.SUPPORT.getIndex());
-		criteria.andSchoolIdEqualTo(schoolid);
-		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
-		return staffMapper.selectByExample(condition);
+	public List<Tb_staff> findByNameType(Tb_staff tb_staff){
+//		Tb_staffExample condition = new Tb_staffExample();
+//		Tb_staffExample.Criteria criteria = condition.createCriteria();
+//		// 对于已经deleted=1的不显示 禁用不显示
+//		criteria.andNameLike(name);
+//		criteria.andTypeBetween(StaffType.DOCTOR.getIndex(), StaffType.SUPPORT.getIndex());
+//		criteria.andSchoolIdEqualTo(schoolid);
+//		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
+		
+		// yang 修改代码
+		
+		return hand_Staff_icMapper.selectStaff_icCardType(tb_staff);
 	}
 	/**
 	 * 插入老师

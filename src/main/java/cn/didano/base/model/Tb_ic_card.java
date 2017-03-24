@@ -9,6 +9,8 @@ public class Tb_ic_card {
 
     private String icNumber;
 
+    private String rfid;
+
     private Integer schoolId;
 
     private Integer status;
@@ -17,7 +19,7 @@ public class Tb_ic_card {
 
     private Date updated;
 
-    private Integer deleted;
+    private Boolean deleted;
 
     public Integer getId() {
         return id;
@@ -41,6 +43,14 @@ public class Tb_ic_card {
 
     public void setIcNumber(String icNumber) {
         this.icNumber = icNumber == null ? null : icNumber.trim();
+    }
+
+    public String getRfid() {
+        return rfid;
+    }
+
+    public void setRfid(String rfid) {
+        this.rfid = rfid == null ? null : rfid.trim();
     }
 
     public Integer getSchoolId() {
@@ -75,11 +85,11 @@ public class Tb_ic_card {
         this.updated = updated;
     }
 
-    public Integer getDeleted() {
+    public Boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Integer deleted) {
+    public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
 }

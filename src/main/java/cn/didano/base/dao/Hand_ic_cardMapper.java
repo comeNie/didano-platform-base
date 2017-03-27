@@ -11,4 +11,8 @@ public interface Hand_ic_cardMapper {
 	List<Tb_ic_card> select_between_icInfo(Hand_icCardAndSchool_id hciCard);
 	
 	List<Tb_ic_card> select_ICMaxNumber(int school_id);
+	
+	int updateInfoByid(int id);
+	
+	int updateInfoByic_number(Tb_ic_card td);
 }

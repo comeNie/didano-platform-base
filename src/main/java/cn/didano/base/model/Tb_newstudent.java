@@ -37,12 +37,22 @@ public class Tb_newstudent {
     
     private String student_ic_number;
     
-    private List<Tb_parent4mailList> parent = new ArrayList<Tb_parent4mailList>();
+    private int ic_card_id;
+    
+   
+
+	private List<Tb_parent4mailList> parent = new ArrayList<Tb_parent4mailList>();
     
     
-    
-    
-    public List<Tb_parent4mailList> getParent() {
+    public int getIc_card_id() {
+		return ic_card_id;
+	}
+
+	public void setIc_card_id(int ic_card_id) {
+		this.ic_card_id = ic_card_id;
+	}
+
+	public List<Tb_parent4mailList> getParent() {
 		return parent;
 	}
 

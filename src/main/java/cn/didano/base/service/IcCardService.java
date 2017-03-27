@@ -46,6 +46,29 @@ public class IcCardService {
 		return new PageInfo<Tb_ic_card>(tb_ic_card.selectByExample(condition));
 	}
 
+	
+	
+	/**
+	 * 根据ID修改信息
+	 * 
+	 * @return
+	 */
+	public int updateInfoByid(int id) {
+		int number = hand_ic_cardMapper.updateInfoByid(id);
+		return number;
+	}
+	
+	
+	/**
+	 * 根据ic_number修改信息
+	 * 
+	 * @return
+	 */
+	public int updateInfoByic_number(Tb_ic_card td) {
+		int number = hand_ic_cardMapper.updateInfoByic_number(td);
+		return number;
+	}
+	
 	/**
 	 * 查询单个集合，并且是存在的信息
 	 * 

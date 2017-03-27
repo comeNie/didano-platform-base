@@ -17,6 +17,7 @@
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
+    <result column="rfid" jdbcType="BIT" property="student_ic_number" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -175,7 +176,7 @@
         deleted,
       </if>
       <if test="student_ic_number != null">
-        student_ic_number,
+        rfid,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">

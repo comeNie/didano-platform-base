@@ -12,6 +12,7 @@ import cn.didano.base.model.Tb_mailList_list;
 import cn.didano.base.model.Tb_parent4mailList;
 import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_staff;
+import cn.didano.base.model.Tb_staff4List;
 import cn.didano.base.model.Tb_staff4MailList;
 import cn.didano.base.model.Tb_staffData;
 import cn.didano.base.model.Tb_studentData;
@@ -25,7 +26,7 @@ public class MailListService {
 	/**
 	 * 通过员工id查询该班级
 	 */
-	public Tb_staff findClassIdBySid(Integer id){
+	public Tb_staffData findClassIdBySid(Integer id){
 		return mailList_listMapper.findClassIdBySid(id);
 	}
 	/**
@@ -111,7 +112,7 @@ public class MailListService {
 	/**
 	 * 通过名字班级查询该班的老师
 	 */
-	public List<Tb_staff> findTeacherByNameClass(Tb_staffData data2){
+	public List<Tb_staff4List> findTeacherByNameClass(Tb_staffData data2){
 		return mailList_listMapper.findTeacherByNameClass(data2);
 	}
 	/**
@@ -138,6 +139,14 @@ public class MailListService {
 	public List<Tb_parent4mailList> findparent(Integer id){
 		return mailList_listMapper.findParentById(id);
 	}
+	/**
+	 * 通过小朋友id查找其所有父母联系方式
+	 */
+	public List<Tb_parent4mailList> findParentByStudentId(Integer id){
+		return mailList_listMapper.findParentByStudentId(id);
+	}
+	
+	
 	/**
 	 * 编辑小朋友信息
 	 */

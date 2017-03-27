@@ -13,7 +13,9 @@ public class Tb_studentparent {
 
     private Integer parentId;
 
-    private String parent_ic_number;
+    private String rfid;
+
+    private Integer icCardId;
 
     private Byte relationId;
 
@@ -21,33 +23,19 @@ public class Tb_studentparent {
 
     private String qrcodeUrl;
 
+    private String qrcodeUrlOld;
+
+    private String qrcodeSchoolKeyOld;
+
     private String qrcodeSchoolKey;
 
     private Date created;
-    
-    private String student_ic_number;
-    
-	public String getParent_ic_number() {
-		return parent_ic_number;
-	}
 
-	public void setParent_ic_number(String parent_ic_number) {
-		this.parent_ic_number = parent_ic_number;
-	}
+    private Date updated;
 
-	public String getStudent_ic_number() {
-		return student_ic_number;
-	}
+    private Boolean deleted;
 
-	public void setStudent_ic_number(String student_ic_number) {
-		this.student_ic_number = student_ic_number;
-	}
-
-	public Byte getRelationId() {
-		return relationId;
-	}
-
-	public Integer getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -87,6 +75,26 @@ public class Tb_studentparent {
         this.parentId = parentId;
     }
 
+    public String getRfid() {
+        return rfid;
+    }
+
+    public void setRfid(String rfid) {
+        this.rfid = rfid == null ? null : rfid.trim();
+    }
+
+    public Integer getIcCardId() {
+        return icCardId;
+    }
+
+    public void setIcCardId(Integer icCardId) {
+        this.icCardId = icCardId;
+    }
+
+    public Byte getRelationId() {
+        return relationId;
+    }
+
     public void setRelationId(Byte relationId) {
         this.relationId = relationId;
     }
@@ -107,6 +115,22 @@ public class Tb_studentparent {
         this.qrcodeUrl = qrcodeUrl == null ? null : qrcodeUrl.trim();
     }
 
+    public String getQrcodeUrlOld() {
+        return qrcodeUrlOld;
+    }
+
+    public void setQrcodeUrlOld(String qrcodeUrlOld) {
+        this.qrcodeUrlOld = qrcodeUrlOld == null ? null : qrcodeUrlOld.trim();
+    }
+
+    public String getQrcodeSchoolKeyOld() {
+        return qrcodeSchoolKeyOld;
+    }
+
+    public void setQrcodeSchoolKeyOld(String qrcodeSchoolKeyOld) {
+        this.qrcodeSchoolKeyOld = qrcodeSchoolKeyOld == null ? null : qrcodeSchoolKeyOld.trim();
+    }
+
     public String getQrcodeSchoolKey() {
         return qrcodeSchoolKey;
     }
@@ -121,5 +145,21 @@ public class Tb_studentparent {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

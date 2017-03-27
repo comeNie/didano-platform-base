@@ -8,18 +8,22 @@ public class Tb_staff {
     private Byte type;
 
     private Integer schoolId;
-    private Integer class_id;
 
     private String name;
 
-    private String title;
     private String phone;
 
-   // private String rfid;
-    private String staff_ic_number;
+    private String rfid;
+
+    private Integer icCardId;
+
     private String qrcodeUrl;
 
+    private String qrcodeUrlOld;
+
     private String qrcodeSchoolKey;
+
+    private String qrcodeSchoolKeyOld;
 
     private Integer signTypeId;
 
@@ -27,41 +31,11 @@ public class Tb_staff {
 
     private Date created;
 
+    private Boolean deleted;
+
     private Date updated;
 
-    private Boolean deleted;
-    
-    
-    
-    
-
-   
-
-	public String getStaff_ic_number() {
-		return staff_ic_number;
-	}
-
-	public void setStaff_ic_number(String staff_ic_number) {
-		this.staff_ic_number = staff_ic_number;
-	}
-
-	public Integer getClass_id() {
-		return class_id;
-	}
-
-	public void setClass_id(Integer class_id) {
-		this.class_id = class_id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public Integer getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -100,6 +74,23 @@ public class Tb_staff {
     public void setPhone(String phone) {
         this.phone = phone == null ? null : phone.trim();
     }
+
+    public String getRfid() {
+        return rfid;
+    }
+
+    public void setRfid(String rfid) {
+        this.rfid = rfid == null ? null : rfid.trim();
+    }
+
+    public Integer getIcCardId() {
+        return icCardId;
+    }
+
+    public void setIcCardId(Integer icCardId) {
+        this.icCardId = icCardId;
+    }
+
     public String getQrcodeUrl() {
         return qrcodeUrl;
     }
@@ -108,12 +99,28 @@ public class Tb_staff {
         this.qrcodeUrl = qrcodeUrl == null ? null : qrcodeUrl.trim();
     }
 
+    public String getQrcodeUrlOld() {
+        return qrcodeUrlOld;
+    }
+
+    public void setQrcodeUrlOld(String qrcodeUrlOld) {
+        this.qrcodeUrlOld = qrcodeUrlOld == null ? null : qrcodeUrlOld.trim();
+    }
+
     public String getQrcodeSchoolKey() {
         return qrcodeSchoolKey;
     }
 
     public void setQrcodeSchoolKey(String qrcodeSchoolKey) {
         this.qrcodeSchoolKey = qrcodeSchoolKey == null ? null : qrcodeSchoolKey.trim();
+    }
+
+    public String getQrcodeSchoolKeyOld() {
+        return qrcodeSchoolKeyOld;
+    }
+
+    public void setQrcodeSchoolKeyOld(String qrcodeSchoolKeyOld) {
+        this.qrcodeSchoolKeyOld = qrcodeSchoolKeyOld == null ? null : qrcodeSchoolKeyOld.trim();
     }
 
     public Integer getSignTypeId() {
@@ -140,19 +147,19 @@ public class Tb_staff {
         this.created = created;
     }
 
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
-
     public Boolean getDeleted() {
         return deleted;
     }
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
     }
 }

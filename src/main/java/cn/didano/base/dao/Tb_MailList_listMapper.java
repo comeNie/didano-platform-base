@@ -7,7 +7,7 @@ import cn.didano.base.model.Tb_deleteParentDate;
 import cn.didano.base.model.Tb_mailList_list;
 import cn.didano.base.model.Tb_parent4mailList;
 import cn.didano.base.model.Tb_relation;
-import cn.didano.base.model.Tb_staff;
+import cn.didano.base.model.Tb_staff4List;
 import cn.didano.base.model.Tb_staff4MailList;
 import cn.didano.base.model.Tb_staffData;
 import cn.didano.base.model.Tb_studentData;
@@ -21,7 +21,7 @@ public interface Tb_MailList_listMapper {
 	List<Tb_parent4mailList> findParentById(Integer id);
 	List<Tb_mailList_list> findByClass(Integer id);
 	List<Tb_teacher> findTeacherByClass(Integer id);
-	List<Tb_staff> findTeacherByNameClass(Tb_staffData data2);
+	List<Tb_staff4List> findTeacherByNameClass(Tb_staffData data2);
 	Tb_staff4MailList findBystaffbyId(Integer id);
 	List<Tb_teacher> findteacherByschool(Integer id);
 	List<Tb_mailList_list> findByschool(Integer id);
@@ -31,11 +31,13 @@ public interface Tb_MailList_listMapper {
 	List<Tb_relation> findrelation();
 	Tb_relation findrelationById(byte id);
 	Tb_parent4mailList findParentByPid(Integer id);
-	Tb_staff findClassIdBySid(Integer id);
+	Tb_staffData findClassIdBySid(Integer id);
 	int UpdateTeacher(Tb_teacher teacher);
 	int Update( Tb_mailList_list list); 
 	int UpdateParent(Tb_parent4mailList parent);
 	int delete(Integer id);
 	int deleteparent(Integer id);
 	int deleteparentByid(Tb_deleteParentDate date);
+	
+	List<Tb_parent4mailList> findParentByStudentId(Integer id);
 }

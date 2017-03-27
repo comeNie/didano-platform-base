@@ -892,6 +892,136 @@ public class Tb_studentExample {
             return (Criteria) this;
         }
 
+        public Criteria andRfidIsNull() {
+            addCriterion("rfid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRfidIsNotNull() {
+            addCriterion("rfid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRfidEqualTo(String value) {
+            addCriterion("rfid =", value, "rfid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRfidNotEqualTo(String value) {
+            addCriterion("rfid <>", value, "rfid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRfidGreaterThan(String value) {
+            addCriterion("rfid >", value, "rfid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRfidGreaterThanOrEqualTo(String value) {
+            addCriterion("rfid >=", value, "rfid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRfidLessThan(String value) {
+            addCriterion("rfid <", value, "rfid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRfidLessThanOrEqualTo(String value) {
+            addCriterion("rfid <=", value, "rfid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRfidLike(String value) {
+            addCriterion("rfid like", value, "rfid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRfidNotLike(String value) {
+            addCriterion("rfid not like", value, "rfid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRfidIn(List<String> values) {
+            addCriterion("rfid in", values, "rfid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRfidNotIn(List<String> values) {
+            addCriterion("rfid not in", values, "rfid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRfidBetween(String value1, String value2) {
+            addCriterion("rfid between", value1, value2, "rfid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRfidNotBetween(String value1, String value2) {
+            addCriterion("rfid not between", value1, value2, "rfid");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdIsNull() {
+            addCriterion("ic_card_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdIsNotNull() {
+            addCriterion("ic_card_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdEqualTo(Integer value) {
+            addCriterion("ic_card_id =", value, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdNotEqualTo(Integer value) {
+            addCriterion("ic_card_id <>", value, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdGreaterThan(Integer value) {
+            addCriterion("ic_card_id >", value, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("ic_card_id >=", value, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdLessThan(Integer value) {
+            addCriterion("ic_card_id <", value, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdLessThanOrEqualTo(Integer value) {
+            addCriterion("ic_card_id <=", value, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdIn(List<Integer> values) {
+            addCriterion("ic_card_id in", values, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdNotIn(List<Integer> values) {
+            addCriterion("ic_card_id not in", values, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdBetween(Integer value1, Integer value2) {
+            addCriterion("ic_card_id between", value1, value2, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("ic_card_id not between", value1, value2, "icCardId");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedIsNull() {
             addCriterion("created is null");
             return (Criteria) this;
@@ -1069,76 +1199,6 @@ public class Tb_studentExample {
 
         public Criteria andDeletedNotBetween(Boolean value1, Boolean value2) {
             addCriterion("deleted not between", value1, value2, "deleted");
-            return (Criteria) this;
-        }
-
-        public Criteria andRfidIsNull() {
-            addCriterion("rfid is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andRfidIsNotNull() {
-            addCriterion("rfid is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andRfidEqualTo(String value) {
-            addCriterion("rfid =", value, "rfid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRfidNotEqualTo(String value) {
-            addCriterion("rfid <>", value, "rfid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRfidGreaterThan(String value) {
-            addCriterion("rfid >", value, "rfid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRfidGreaterThanOrEqualTo(String value) {
-            addCriterion("rfid >=", value, "rfid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRfidLessThan(String value) {
-            addCriterion("rfid <", value, "rfid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRfidLessThanOrEqualTo(String value) {
-            addCriterion("rfid <=", value, "rfid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRfidLike(String value) {
-            addCriterion("rfid like", value, "rfid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRfidNotLike(String value) {
-            addCriterion("rfid not like", value, "rfid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRfidIn(List<String> values) {
-            addCriterion("rfid in", values, "rfid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRfidNotIn(List<String> values) {
-            addCriterion("rfid not in", values, "rfid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRfidBetween(String value1, String value2) {
-            addCriterion("rfid between", value1, value2, "rfid");
-            return (Criteria) this;
-        }
-
-        public Criteria andRfidNotBetween(String value1, String value2) {
-            addCriterion("rfid not between", value1, value2, "rfid");
             return (Criteria) this;
         }
     }

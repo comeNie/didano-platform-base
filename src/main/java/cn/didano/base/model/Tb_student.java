@@ -27,13 +27,15 @@ public class Tb_student {
 
     private Byte status;
 
+    private String rfid;
+
+    private Integer icCardId;
+
     private Date created;
 
     private Date updated;
 
     private Boolean deleted;
-
-    private String student_iv_number;
 
     public Integer getId() {
         return id;
@@ -131,6 +133,22 @@ public class Tb_student {
         this.status = status;
     }
 
+    public String getRfid() {
+        return rfid;
+    }
+
+    public void setRfid(String rfid) {
+        this.rfid = rfid == null ? null : rfid.trim();
+    }
+
+    public Integer getIcCardId() {
+        return icCardId;
+    }
+
+    public void setIcCardId(Integer icCardId) {
+        this.icCardId = icCardId;
+    }
+
     public Date getCreated() {
         return created;
     }
@@ -154,13 +172,4 @@ public class Tb_student {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
-
-	public String getStudent_iv_number() {
-		return student_iv_number;
-	}
-
-	public void setStudent_iv_number(String student_iv_number) {
-		this.student_iv_number = student_iv_number;
-	}
-
 }

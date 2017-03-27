@@ -2,8 +2,6 @@ package cn.didano.video.json;
 
 
 
-import java.util.Date;
-
 import io.swagger.annotations.ApiModelProperty;
 
 public class In_Teacher_Edit {

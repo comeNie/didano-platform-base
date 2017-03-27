@@ -14,10 +14,11 @@
     <result column="birthday" jdbcType="DATE" property="birthday" />
     <result column="device_registered" jdbcType="TINYINT" property="deviceRegistered" />
     <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="rfid" jdbcType="VARCHAR" property="rfid" />
+    <result column="ic_card_id" jdbcType="INTEGER" property="icCardId" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
-    <result column="rfid" jdbcType="VARCHAR" property="rfid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -79,7 +80,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, school_id, class_id, name, nickname, hobby, dream_id, comment, gender, birthday, 
-    device_registered, status, created, updated, deleted, rfid
+    device_registered, status, rfid, ic_card_id, created, updated, deleted
   </sql>
   <select id="selectByExample" parameterType="cn.didano.base.model.Tb_studentExample" resultMap="BaseResultMap">
     select
@@ -119,15 +120,15 @@
     insert into tb_student (school_id, class_id, name, 
       nickname, hobby, dream_id, 
       comment, gender, birthday, 
-      device_registered, status, created, 
-      updated, deleted, rfid
-      )
+      device_registered, status, rfid, 
+      ic_card_id, created, updated, 
+      deleted)
     values (#{schoolId,jdbcType=INTEGER}, #{classId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{nickname,jdbcType=VARCHAR}, #{hobby,jdbcType=VARCHAR}, #{dreamId,jdbcType=INTEGER}, 
       #{comment,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, #{birthday,jdbcType=DATE}, 
-      #{deviceRegistered,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{created,jdbcType=TIMESTAMP}, 
-      #{updated,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{rfid,jdbcType=VARCHAR}
-      )
+      #{deviceRegistered,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{rfid,jdbcType=VARCHAR}, 
+      #{icCardId,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
+      #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="cn.didano.base.model.Tb_student">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -168,6 +169,12 @@
       <if test="status != null">
         status,
       </if>
+      <if test="rfid != null">
+        rfid,
+      </if>
+      <if test="icCardId != null">
+        ic_card_id,
+      </if>
       <if test="created != null">
         created,
       </if>
@@ -176,9 +183,6 @@
       </if>
       <if test="deleted != null">
         deleted,
-      </if>
-      <if test="rfid != null">
-        rfid,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -215,6 +219,12 @@
       <if test="status != null">
         #{status,jdbcType=TINYINT},
       </if>
+      <if test="rfid != null">
+        #{rfid,jdbcType=VARCHAR},
+      </if>
+      <if test="icCardId != null">
+        #{icCardId,jdbcType=INTEGER},
+      </if>
       <if test="created != null">
         #{created,jdbcType=TIMESTAMP},
       </if>
@@ -223,9 +233,6 @@
       </if>
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
-      </if>
-      <if test="rfid != null">
-        #{rfid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -274,6 +281,12 @@
       <if test="record.status != null">
         status = #{record.status,jdbcType=TINYINT},
       </if>
+      <if test="record.rfid != null">
+        rfid = #{record.rfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.icCardId != null">
+        ic_card_id = #{record.icCardId,jdbcType=INTEGER},
+      </if>
       <if test="record.created != null">
         created = #{record.created,jdbcType=TIMESTAMP},
       </if>
@@ -282,9 +295,6 @@
       </if>
       <if test="record.deleted != null">
         deleted = #{record.deleted,jdbcType=BIT},
-      </if>
-      <if test="record.rfid != null">
-        rfid = #{record.rfid,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -305,10 +315,11 @@
       birthday = #{record.birthday,jdbcType=DATE},
       device_registered = #{record.deviceRegistered,jdbcType=TINYINT},
       status = #{record.status,jdbcType=TINYINT},
+      rfid = #{record.rfid,jdbcType=VARCHAR},
+      ic_card_id = #{record.icCardId,jdbcType=INTEGER},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP},
-      deleted = #{record.deleted,jdbcType=BIT},
-      rfid = #{record.rfid,jdbcType=VARCHAR}
+      deleted = #{record.deleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -349,6 +360,12 @@
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
       </if>
+      <if test="rfid != null">
+        rfid = #{rfid,jdbcType=VARCHAR},
+      </if>
+      <if test="icCardId != null">
+        ic_card_id = #{icCardId,jdbcType=INTEGER},
+      </if>
       <if test="created != null">
         created = #{created,jdbcType=TIMESTAMP},
       </if>
@@ -357,9 +374,6 @@
       </if>
       <if test="deleted != null">
         deleted = #{deleted,jdbcType=BIT},
-      </if>
-      <if test="rfid != null">
-        rfid = #{rfid,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -377,10 +391,11 @@
       birthday = #{birthday,jdbcType=DATE},
       device_registered = #{deviceRegistered,jdbcType=TINYINT},
       status = #{status,jdbcType=TINYINT},
+      rfid = #{rfid,jdbcType=VARCHAR},
+      ic_card_id = #{icCardId,jdbcType=INTEGER},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},
-      deleted = #{deleted,jdbcType=BIT},
-      rfid = #{rfid,jdbcType=VARCHAR}
+      deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

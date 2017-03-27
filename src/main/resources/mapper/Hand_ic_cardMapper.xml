@@ -2,18 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.didano.base.dao.Hand_ic_cardMapper">
  <resultMap id="BaseResultMap" type="cn.didano.base.model.Tb_ic_card">
-    <id column="id" jdbcType="INTEGER" property="id" />
+     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="ic_type" jdbcType="INTEGER" property="icType" />
     <result column="ic_number" jdbcType="VARCHAR" property="icNumber" />
+    <result column="rfid" jdbcType="VARCHAR" property="rfid" />
     <result column="school_id" jdbcType="INTEGER" property="schoolId" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
-    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <select id="selectNoeIcInfo" parameterType="cn.didano.base.model.Tb_ic_card" resultMap="BaseResultMap">
     SELECT id,ic_type,ic_number,school_id,STATUS,created,updated,deleted from tb_ic_card where ic_number=#{icNumber} and school_id=#{schoolId}
   </select> 
+  
+  <update id="updateInfoByid" parameterType="Integer">
+		UPDATE tb_ic_card AS a SET a.status=2 WHERE a.id=#{id} 
+  </update>
+  
+  
+  <update id="updateInfoByic_number" parameterType="cn.didano.base.model.Tb_ic_card">
+		UPDATE tb_ic_card AS a SET a.status=3 WHERE a.ic_number=#{icNumber} 
+  </update>
   
   <select id="select_between_icInfo" parameterType="cn.didano.base.model.Hand_icCardAndSchool_id" resultMap="BaseResultMap">
     SELECT id,ic_type,ic_number,school_id,STATUS,created,updated,deleted from tb_ic_card where <![CDATA[ic_number >= #{icNumberNoe} AND ic_number <= #{icNumberTow} AND school_id=#{school_id} AND deleted=0]]> 

@@ -1,11 +1,20 @@
 package cn.didano.base.model;
 
-public class Tb_parent4mailList {
+public class Tb_parent4mailList{
 	private Integer id;
 	private byte relation_id;
 	private String parent_name;
 	private String parent_phone;
 	private String parent_ic_number;
+	private Integer icCardId;
+
+	public Integer getIcCardId() {
+		return icCardId;
+	}
+
+	public void setIcCardId(Integer icCardId) {
+		this.icCardId = icCardId;
+	}
 
 	public String getParent_ic_number() {
 		return parent_ic_number;

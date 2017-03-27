@@ -13,8 +13,16 @@ public class Tb_mailList_list {
 	private Date birthday;
 	private byte gender;
 	private String student_ic_number; 
+	private int icCradId;
+	
 	private List<Tb_parent4mailList> parent = new ArrayList<Tb_parent4mailList>();
 	
+	public int getIcCradId() {
+		return icCradId;
+	}
+	public void setIcCradId(int icCradId) {
+		this.icCradId = icCradId;
+	}
 	public String getStudent_ic_number() {
 		return student_ic_number;
 	}

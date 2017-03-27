@@ -475,6 +475,66 @@ public class Tb_studentparentExample {
             return (Criteria) this;
         }
 
+        public Criteria andIcCardIdIsNull() {
+            addCriterion("ic_card_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdIsNotNull() {
+            addCriterion("ic_card_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdEqualTo(Integer value) {
+            addCriterion("ic_card_id =", value, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdNotEqualTo(Integer value) {
+            addCriterion("ic_card_id <>", value, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdGreaterThan(Integer value) {
+            addCriterion("ic_card_id >", value, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("ic_card_id >=", value, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdLessThan(Integer value) {
+            addCriterion("ic_card_id <", value, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdLessThanOrEqualTo(Integer value) {
+            addCriterion("ic_card_id <=", value, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdIn(List<Integer> values) {
+            addCriterion("ic_card_id in", values, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdNotIn(List<Integer> values) {
+            addCriterion("ic_card_id not in", values, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdBetween(Integer value1, Integer value2) {
+            addCriterion("ic_card_id between", value1, value2, "icCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcCardIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("ic_card_id not between", value1, value2, "icCardId");
+            return (Criteria) this;
+        }
+
         public Criteria andRelationIdIsNull() {
             addCriterion("relation_id is null");
             return (Criteria) this;
@@ -675,6 +735,146 @@ public class Tb_studentparentExample {
             return (Criteria) this;
         }
 
+        public Criteria andQrcodeUrlOldIsNull() {
+            addCriterion("qrcode_url_old is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeUrlOldIsNotNull() {
+            addCriterion("qrcode_url_old is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeUrlOldEqualTo(String value) {
+            addCriterion("qrcode_url_old =", value, "qrcodeUrlOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeUrlOldNotEqualTo(String value) {
+            addCriterion("qrcode_url_old <>", value, "qrcodeUrlOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeUrlOldGreaterThan(String value) {
+            addCriterion("qrcode_url_old >", value, "qrcodeUrlOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeUrlOldGreaterThanOrEqualTo(String value) {
+            addCriterion("qrcode_url_old >=", value, "qrcodeUrlOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeUrlOldLessThan(String value) {
+            addCriterion("qrcode_url_old <", value, "qrcodeUrlOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeUrlOldLessThanOrEqualTo(String value) {
+            addCriterion("qrcode_url_old <=", value, "qrcodeUrlOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeUrlOldLike(String value) {
+            addCriterion("qrcode_url_old like", value, "qrcodeUrlOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeUrlOldNotLike(String value) {
+            addCriterion("qrcode_url_old not like", value, "qrcodeUrlOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeUrlOldIn(List<String> values) {
+            addCriterion("qrcode_url_old in", values, "qrcodeUrlOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeUrlOldNotIn(List<String> values) {
+            addCriterion("qrcode_url_old not in", values, "qrcodeUrlOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeUrlOldBetween(String value1, String value2) {
+            addCriterion("qrcode_url_old between", value1, value2, "qrcodeUrlOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeUrlOldNotBetween(String value1, String value2) {
+            addCriterion("qrcode_url_old not between", value1, value2, "qrcodeUrlOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSchoolKeyOldIsNull() {
+            addCriterion("qrcode_school_key_old is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSchoolKeyOldIsNotNull() {
+            addCriterion("qrcode_school_key_old is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSchoolKeyOldEqualTo(String value) {
+            addCriterion("qrcode_school_key_old =", value, "qrcodeSchoolKeyOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSchoolKeyOldNotEqualTo(String value) {
+            addCriterion("qrcode_school_key_old <>", value, "qrcodeSchoolKeyOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSchoolKeyOldGreaterThan(String value) {
+            addCriterion("qrcode_school_key_old >", value, "qrcodeSchoolKeyOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSchoolKeyOldGreaterThanOrEqualTo(String value) {
+            addCriterion("qrcode_school_key_old >=", value, "qrcodeSchoolKeyOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSchoolKeyOldLessThan(String value) {
+            addCriterion("qrcode_school_key_old <", value, "qrcodeSchoolKeyOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSchoolKeyOldLessThanOrEqualTo(String value) {
+            addCriterion("qrcode_school_key_old <=", value, "qrcodeSchoolKeyOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSchoolKeyOldLike(String value) {
+            addCriterion("qrcode_school_key_old like", value, "qrcodeSchoolKeyOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSchoolKeyOldNotLike(String value) {
+            addCriterion("qrcode_school_key_old not like", value, "qrcodeSchoolKeyOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSchoolKeyOldIn(List<String> values) {
+            addCriterion("qrcode_school_key_old in", values, "qrcodeSchoolKeyOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSchoolKeyOldNotIn(List<String> values) {
+            addCriterion("qrcode_school_key_old not in", values, "qrcodeSchoolKeyOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSchoolKeyOldBetween(String value1, String value2) {
+            addCriterion("qrcode_school_key_old between", value1, value2, "qrcodeSchoolKeyOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSchoolKeyOldNotBetween(String value1, String value2) {
+            addCriterion("qrcode_school_key_old not between", value1, value2, "qrcodeSchoolKeyOld");
+            return (Criteria) this;
+        }
+
         public Criteria andQrcodeSchoolKeyIsNull() {
             addCriterion("qrcode_school_key is null");
             return (Criteria) this;
@@ -802,6 +1002,126 @@ public class Tb_studentparentExample {
 
         public Criteria andCreatedNotBetween(Date value1, Date value2) {
             addCriterion("created not between", value1, value2, "created");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedIsNull() {
+            addCriterion("updated is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedIsNotNull() {
+            addCriterion("updated is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedEqualTo(Date value) {
+            addCriterion("updated =", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedNotEqualTo(Date value) {
+            addCriterion("updated <>", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedGreaterThan(Date value) {
+            addCriterion("updated >", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedGreaterThanOrEqualTo(Date value) {
+            addCriterion("updated >=", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedLessThan(Date value) {
+            addCriterion("updated <", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedLessThanOrEqualTo(Date value) {
+            addCriterion("updated <=", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedIn(List<Date> values) {
+            addCriterion("updated in", values, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedNotIn(List<Date> values) {
+            addCriterion("updated not in", values, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedBetween(Date value1, Date value2) {
+            addCriterion("updated between", value1, value2, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedNotBetween(Date value1, Date value2) {
+            addCriterion("updated not between", value1, value2, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIsNull() {
+            addCriterion("deleted is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIsNotNull() {
+            addCriterion("deleted is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedEqualTo(Boolean value) {
+            addCriterion("deleted =", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotEqualTo(Boolean value) {
+            addCriterion("deleted <>", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedGreaterThan(Boolean value) {
+            addCriterion("deleted >", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("deleted >=", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedLessThan(Boolean value) {
+            addCriterion("deleted <", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedLessThanOrEqualTo(Boolean value) {
+            addCriterion("deleted <=", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIn(List<Boolean> values) {
+            addCriterion("deleted in", values, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotIn(List<Boolean> values) {
+            addCriterion("deleted not in", values, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedBetween(Boolean value1, Boolean value2) {
+            addCriterion("deleted between", value1, value2, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("deleted not between", value1, value2, "deleted");
             return (Criteria) this;
         }
     }

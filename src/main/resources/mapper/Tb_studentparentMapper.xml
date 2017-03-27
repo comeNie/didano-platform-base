@@ -8,11 +8,16 @@
     <result column="student_id" jdbcType="INTEGER" property="studentId" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="rfid" jdbcType="VARCHAR" property="rfid" />
+    <result column="ic_card_id" jdbcType="INTEGER" property="icCardId" />
     <result column="relation_id" jdbcType="TINYINT" property="relationId" />
     <result column="relation_title" jdbcType="VARCHAR" property="relationTitle" />
     <result column="qrcode_url" jdbcType="VARCHAR" property="qrcodeUrl" />
+    <result column="qrcode_url_old" jdbcType="VARCHAR" property="qrcodeUrlOld" />
+    <result column="qrcode_school_key_old" jdbcType="VARCHAR" property="qrcodeSchoolKeyOld" />
     <result column="qrcode_school_key" jdbcType="VARCHAR" property="qrcodeSchoolKey" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,8 +78,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, school_id, class_id, student_id, parent_id, rfid, relation_id, relation_title, 
-    qrcode_url, qrcode_school_key, created
+    id, school_id, class_id, student_id, parent_id, rfid, ic_card_id, relation_id, relation_title, 
+    qrcode_url, qrcode_url_old, qrcode_school_key_old, qrcode_school_key, created, updated, 
+    deleted
   </sql>
   <select id="selectByExample" parameterType="cn.didano.base.model.Tb_studentparentExample" resultMap="BaseResultMap">
     select
@@ -112,13 +118,17 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into tb_student_parent (school_id, class_id, student_id, 
-      parent_id, rfid, relation_id, 
-      relation_title, qrcode_url, qrcode_school_key, 
-      created)
+      parent_id, rfid, ic_card_id, 
+      relation_id, relation_title, qrcode_url, 
+      qrcode_url_old, qrcode_school_key_old, qrcode_school_key, 
+      created, updated, deleted
+      )
     values (#{schoolId,jdbcType=INTEGER}, #{classId,jdbcType=INTEGER}, #{studentId,jdbcType=INTEGER}, 
-      #{parentId,jdbcType=INTEGER}, #{rfid,jdbcType=VARCHAR}, #{relationId,jdbcType=TINYINT}, 
-      #{relationTitle,jdbcType=VARCHAR}, #{qrcodeUrl,jdbcType=VARCHAR}, #{qrcodeSchoolKey,jdbcType=VARCHAR}, 
-      #{created,jdbcType=TIMESTAMP})
+      #{parentId,jdbcType=INTEGER}, #{rfid,jdbcType=VARCHAR}, #{icCardId,jdbcType=INTEGER}, 
+      #{relationId,jdbcType=TINYINT}, #{relationTitle,jdbcType=VARCHAR}, #{qrcodeUrl,jdbcType=VARCHAR}, 
+      #{qrcodeUrlOld,jdbcType=VARCHAR}, #{qrcodeSchoolKeyOld,jdbcType=VARCHAR}, #{qrcodeSchoolKey,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.didano.base.model.Tb_studentparent">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -141,6 +151,9 @@
       <if test="rfid != null">
         rfid,
       </if>
+      <if test="icCardId != null">
+        ic_card_id,
+      </if>
       <if test="relationId != null">
         relation_id,
       </if>
@@ -150,11 +163,23 @@
       <if test="qrcodeUrl != null">
         qrcode_url,
       </if>
+      <if test="qrcodeUrlOld != null">
+        qrcode_url_old,
+      </if>
+      <if test="qrcodeSchoolKeyOld != null">
+        qrcode_school_key_old,
+      </if>
       <if test="qrcodeSchoolKey != null">
         qrcode_school_key,
       </if>
       <if test="created != null">
         created,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="deleted != null">
+        deleted,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -173,6 +198,9 @@
       <if test="rfid != null">
         #{rfid,jdbcType=VARCHAR},
       </if>
+      <if test="icCardId != null">
+        #{icCardId,jdbcType=INTEGER},
+      </if>
       <if test="relationId != null">
         #{relationId,jdbcType=TINYINT},
       </if>
@@ -182,11 +210,23 @@
       <if test="qrcodeUrl != null">
         #{qrcodeUrl,jdbcType=VARCHAR},
       </if>
+      <if test="qrcodeUrlOld != null">
+        #{qrcodeUrlOld,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeSchoolKeyOld != null">
+        #{qrcodeSchoolKeyOld,jdbcType=VARCHAR},
+      </if>
       <if test="qrcodeSchoolKey != null">
         #{qrcodeSchoolKey,jdbcType=VARCHAR},
       </if>
       <if test="created != null">
         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -217,6 +257,9 @@
       <if test="record.rfid != null">
         rfid = #{record.rfid,jdbcType=VARCHAR},
       </if>
+      <if test="record.icCardId != null">
+        ic_card_id = #{record.icCardId,jdbcType=INTEGER},
+      </if>
       <if test="record.relationId != null">
         relation_id = #{record.relationId,jdbcType=TINYINT},
       </if>
@@ -226,11 +269,23 @@
       <if test="record.qrcodeUrl != null">
         qrcode_url = #{record.qrcodeUrl,jdbcType=VARCHAR},
       </if>
+      <if test="record.qrcodeUrlOld != null">
+        qrcode_url_old = #{record.qrcodeUrlOld,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qrcodeSchoolKeyOld != null">
+        qrcode_school_key_old = #{record.qrcodeSchoolKeyOld,jdbcType=VARCHAR},
+      </if>
       <if test="record.qrcodeSchoolKey != null">
         qrcode_school_key = #{record.qrcodeSchoolKey,jdbcType=VARCHAR},
       </if>
       <if test="record.created != null">
         created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -245,11 +300,16 @@
       student_id = #{record.studentId,jdbcType=INTEGER},
       parent_id = #{record.parentId,jdbcType=INTEGER},
       rfid = #{record.rfid,jdbcType=VARCHAR},
+      ic_card_id = #{record.icCardId,jdbcType=INTEGER},
       relation_id = #{record.relationId,jdbcType=TINYINT},
       relation_title = #{record.relationTitle,jdbcType=VARCHAR},
       qrcode_url = #{record.qrcodeUrl,jdbcType=VARCHAR},
+      qrcode_url_old = #{record.qrcodeUrlOld,jdbcType=VARCHAR},
+      qrcode_school_key_old = #{record.qrcodeSchoolKeyOld,jdbcType=VARCHAR},
       qrcode_school_key = #{record.qrcodeSchoolKey,jdbcType=VARCHAR},
-      created = #{record.created,jdbcType=TIMESTAMP}
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      deleted = #{record.deleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -272,6 +332,9 @@
       <if test="rfid != null">
         rfid = #{rfid,jdbcType=VARCHAR},
       </if>
+      <if test="icCardId != null">
+        ic_card_id = #{icCardId,jdbcType=INTEGER},
+      </if>
       <if test="relationId != null">
         relation_id = #{relationId,jdbcType=TINYINT},
       </if>
@@ -281,11 +344,23 @@
       <if test="qrcodeUrl != null">
         qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
       </if>
+      <if test="qrcodeUrlOld != null">
+        qrcode_url_old = #{qrcodeUrlOld,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeSchoolKeyOld != null">
+        qrcode_school_key_old = #{qrcodeSchoolKeyOld,jdbcType=VARCHAR},
+      </if>
       <if test="qrcodeSchoolKey != null">
         qrcode_school_key = #{qrcodeSchoolKey,jdbcType=VARCHAR},
       </if>
       <if test="created != null">
         created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -297,11 +372,16 @@
       student_id = #{studentId,jdbcType=INTEGER},
       parent_id = #{parentId,jdbcType=INTEGER},
       rfid = #{rfid,jdbcType=VARCHAR},
+      ic_card_id = #{icCardId,jdbcType=INTEGER},
       relation_id = #{relationId,jdbcType=TINYINT},
       relation_title = #{relationTitle,jdbcType=VARCHAR},
       qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
+      qrcode_url_old = #{qrcodeUrlOld,jdbcType=VARCHAR},
+      qrcode_school_key_old = #{qrcodeSchoolKeyOld,jdbcType=VARCHAR},
       qrcode_school_key = #{qrcodeSchoolKey,jdbcType=VARCHAR},
-      created = #{created,jdbcType=TIMESTAMP}
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

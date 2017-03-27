@@ -12,9 +12,15 @@ public class Tb_mailList_list {
 	private String class_name;
 	private Date birthday;
 	private byte gender;
-	private String rfid; 
+	private String student_ic_number; 
 	private List<Tb_parent4mailList> parent = new ArrayList<Tb_parent4mailList>();
 	
+	public String getStudent_ic_number() {
+		return student_ic_number;
+	}
+	public void setStudent_ic_number(String student_ic_number) {
+		this.student_ic_number = student_ic_number;
+	}
 	public String getClass_name() {
 		return class_name;
 	}
@@ -58,12 +64,4 @@ public class Tb_mailList_list {
 	public void setParent(List<Tb_parent4mailList> parent) {
 		this.parent = parent;
 	}
-	public String getRfid() {
-		return rfid;
-	}
-	public void setRfid(String rfid) {
-		this.rfid = rfid;
-	}
-	
-	
 }

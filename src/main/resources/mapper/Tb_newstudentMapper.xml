@@ -174,8 +174,8 @@
       <if test="deleted != null">
         deleted,
       </if>
-      <if test="rfid != null">
-        rfid,
+      <if test="student_ic_number != null">
+        student_ic_number,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -221,8 +221,8 @@
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
       </if>
-      <if test="rfid != null">
-        #{rfid,jdbcType=VARCHAR},
+      <if test="student_ic_number != null">
+        #{student_ic_number,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

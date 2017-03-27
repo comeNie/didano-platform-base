@@ -17,20 +17,20 @@ public class Tb_classStudentParent {
 		private List<Tb_parent4mailList> parent = new ArrayList<Tb_parent4mailList>();
 	    private Boolean deleted;
 	    //家长ic卡号
-	    private String parent_ic;
-	    private String student_rfid;
+	    private String parent_ic_number;
+	    private String student_ic_number;
 	    
-		public String getStudent_rfid() {
-			return student_rfid;
+		public String getParent_ic_number() {
+			return parent_ic_number;
 		}
-		public void setStudent_rfid(String student_rfid) {
-			this.student_rfid = student_rfid;
+		public void setParent_ic_number(String parent_ic_number) {
+			this.parent_ic_number = parent_ic_number;
 		}
-		public String getParent_ic() {
-			return parent_ic;
+		public String getStudent_ic_number() {
+			return student_ic_number;
 		}
-		public void setParent_ic(String parent_ic) {
-			this.parent_ic = parent_ic;
+		public void setStudent_ic_number(String student_ic_number) {
+			this.student_ic_number = student_ic_number;
 		}
 		public Integer getId() {
 			return id;

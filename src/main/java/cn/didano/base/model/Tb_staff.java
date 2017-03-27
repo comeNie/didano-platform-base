@@ -15,8 +15,8 @@ public class Tb_staff {
     private String title;
     private String phone;
 
-    private String rfid;
-
+   // private String rfid;
+    private String staff_ic_number;
     private String qrcodeUrl;
 
     private String qrcodeSchoolKey;
@@ -36,6 +36,14 @@ public class Tb_staff {
     
 
    
+
+	public String getStaff_ic_number() {
+		return staff_ic_number;
+	}
+
+	public void setStaff_ic_number(String staff_ic_number) {
+		this.staff_ic_number = staff_ic_number;
+	}
 
 	public Integer getClass_id() {
 		return class_id;
@@ -92,15 +100,6 @@ public class Tb_staff {
     public void setPhone(String phone) {
         this.phone = phone == null ? null : phone.trim();
     }
-
-    public String getRfid() {
-        return rfid;
-    }
-
-    public void setRfid(String rfid) {
-        this.rfid = rfid == null ? null : rfid.trim();
-    }
-
     public String getQrcodeUrl() {
         return qrcodeUrl;
     }

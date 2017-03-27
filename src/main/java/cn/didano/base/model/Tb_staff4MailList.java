@@ -13,7 +13,7 @@ public class Tb_staff4MailList extends Tb_staff {
 	private String out_time;
 	private Integer class_id;
 	private String title;
-	private String rfid; 
+	private String staff_ic_number; 
 
 	public String getIn_time() {
 		return in_time;
@@ -47,14 +47,14 @@ public class Tb_staff4MailList extends Tb_staff {
 		this.title = title;
 	}
 
-	public String getRfid() {
-		return rfid;
+	public String getStaff_ic_number() {
+		return staff_ic_number;
 	}
 
-	public void setRfid(String rfid) {
-		this.rfid = rfid;
+	public void setStaff_ic_number(String staff_ic_number) {
+		this.staff_ic_number = staff_ic_number;
 	}
-	
+
 
 	
 }

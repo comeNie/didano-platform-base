@@ -27,15 +27,16 @@ public class In_Teacher_Edit {
 	@ApiModelProperty(value = "是否有效",required=true)
 	private byte status;
 	
-	//杨超强添加教师rfid  本来是ic_number 为了方便统一前台传过来的都命名为rfid
+	//杨超强添加教师staff_ic_number
 	@ApiModelProperty(value = "IC卡编号",required=true)
-	private String rfid;
+	//private String rfid;
+	private String staff_ic_number;
 	
-	public String getRfid() {
-		return rfid;
+	public String getStaff_ic_number() {
+		return staff_ic_number;
 	}
-	public void setRfid(String rfid) {
-		this.rfid = rfid;
+	public void setStaff_ic_number(String staff_ic_number) {
+		this.staff_ic_number = staff_ic_number;
 	}
 	public Integer getStaffid() {
 		return staffid;

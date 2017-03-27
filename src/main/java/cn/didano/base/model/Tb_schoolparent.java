@@ -16,28 +16,28 @@ public class Tb_schoolparent {
     private Byte status;
     private Date created;
     
-    private String rfid;
+  //private String rfid;
     
-    private String student_rfid;
+    // private String student_rfid;
+     private String parent_id_number;
+     private String student_id_number;
+ 	public String getParent_id_number() {
+ 		return parent_id_number;
+ 	}
+
+ 	public void setParent_id_number(String parent_id_number) {
+ 		this.parent_id_number = parent_id_number;
+ 	}
+
+ 	public String getStudent_id_number() {
+ 		return student_id_number;
+ 	}
+
+ 	public void setStudent_id_number(String student_id_number) {
+ 		this.student_id_number = student_id_number;
+ 	}
     
-    
-    
-    public String getStudent_rfid() {
-		return student_rfid;
-	}
-
-	public void setStudent_rfid(String student_rfid) {
-		this.student_rfid = student_rfid;
-	}
-
-	public String getRfid() {
-		return rfid;
-	}
-
-	public void setRfid(String rfid) {
-		this.rfid = rfid;
-	}
-
+   
 	@Override
 	public String toString() {
 		return "Tb_schoolparent [id=" + id + ", schoolId=" + schoolId + ", name=" + name + ", phone=" + phone

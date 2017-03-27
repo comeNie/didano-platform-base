@@ -7,7 +7,7 @@
     <result column="school_id" jdbcType="INTEGER" property="schoolId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="rfid" jdbcType="VARCHAR" property="rfid" />
+    <result column="rfid" jdbcType="VARCHAR" property="staff_ic_number" />
     <result column="qrcode_url" jdbcType="VARCHAR" property="qrcodeUrl" />
     <result column="qrcode_school_key" jdbcType="VARCHAR" property="qrcodeSchoolKey" />
     <result column="sign_type_id" jdbcType="INTEGER" property="signTypeId" />
@@ -17,19 +17,19 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <select id="selectStaff_icCard" parameterType="INTEGER" resultMap="BaseResultMap">
-     select a.ic_number as rfid,b.id,b.type,b.school_id,b.name,b.phone,b.qrcode_url,b.qrcode_url_old,
+     select a.ic_number as staff_ic_number,b.id,b.type,b.school_id,b.name,b.phone,b.qrcode_url,b.qrcode_url_old,
     b.qrcode_school_key,b.qrcode_school_key_old,b.sign_type_id,b.status,b.created,b.updated,b.deleted
      from tb_staff b left join tb_ic_card a on b.rfid=a.rfid where b.type=31 and b.school_id=#{school_id}
   </select> 
   
    <select id="selectStaff_icCardandType" parameterType="INTEGER" resultMap="BaseResultMap">
-     select a.ic_number as rfid,b.id,b.type,b.school_id,b.name,b.phone,b.qrcode_url,b.qrcode_url_old,
+     select a.ic_number as staff_ic_number,b.id,b.type,b.school_id,b.name,b.phone,b.qrcode_url,b.qrcode_url_old,
     b.qrcode_school_key,b.qrcode_school_key_old,b.sign_type_id,b.status,b.created,b.updated,b.deleted
      from tb_staff b left join tb_ic_card a on b.rfid=a.rfid where b.type in (32,33) and b.school_id=#{school_id}
   </select> 
   
   <select id="selectStaff_name" parameterType="cn.didano.base.model.Tb_staff" resultMap="BaseResultMap">
-    select tmp1.*,c.title,d.ic_number as rfid from 
+    select tmp1.*,c.title,d.ic_number as staff_ic_number from 
     (select a.rfid,a.id,a.type,a.school_id,b.class_id,a.name,a.phone,a.qrcode_url,
     a.qrcode_school_key,a.sign_type_id,a.status,a.created,a.updated,a.deleted from
      tb_staff a,tb_staff_class b where a.type in(31) and a.name like #{name} and a.school_id=#{schoolId} and a.id=b.staff_id)
@@ -37,7 +37,7 @@
   </select> 
   
    <select id="selectStaff_icCardType" parameterType="cn.didano.base.model.Tb_staff" resultMap="BaseResultMap">
-    select tmp1.*,c.title,d.ic_number as rfid from 
+    select tmp1.*,c.title,d.ic_number as staff_ic_number from 
     (select a.rfid,a.id,a.type,a.school_id,b.class_id,a.name,a.phone,a.qrcode_url,
     a.qrcode_school_key,a.sign_type_id,a.status,a.created,a.updated,a.deleted from
      tb_staff a,tb_staff_class b where a.type in(33,34) and a.name like #{name} and a.school_id=#{schoolId} and a.id=b.staff_id)

@@ -35,7 +35,7 @@ public class Tb_newstudent {
 
     private Boolean deleted;
     
-    private String rfid;
+    private String student_ic_number;
     
     private List<Tb_parent4mailList> parent = new ArrayList<Tb_parent4mailList>();
     
@@ -50,12 +50,14 @@ public class Tb_newstudent {
 		this.parent = parent;
 	}
 
-	public String getRfid() {
-		return rfid;
+	
+
+	public String getStudent_ic_number() {
+		return student_ic_number;
 	}
 
-	public void setRfid(String rfid) {
-		this.rfid = rfid;
+	public void setStudent_ic_number(String student_ic_number) {
+		this.student_ic_number = student_ic_number;
 	}
 
 	public Integer getId() {

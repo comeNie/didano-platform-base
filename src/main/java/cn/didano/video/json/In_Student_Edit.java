@@ -22,18 +22,19 @@ public class In_Student_Edit {
 	@ApiModelProperty(value = "删除了的家长id",required=true)
 	private String deleteParents;
 	@ApiModelProperty(value = "学生的ic卡编号",required=true)
-	private String rfid;
+	private String student_ic_number;
 	@ApiModelProperty(value = "家长信息",required=true)
 	private List<Tb_parent4mailList> parent;
 	
 	
 	
-	public String getRfid() {
-		return rfid;
+	public String getStudent_ic_number() {
+		return student_ic_number;
 	}
-	public void setRfid(String rfid) {
-		this.rfid = rfid;
+	public void setStudent_ic_number(String student_ic_number) {
+		this.student_ic_number = student_ic_number;
 	}
+	
 	public String getDeleteParents() {
 		return deleteParents;
 	}

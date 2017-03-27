@@ -33,7 +33,7 @@ public class Tb_student {
 
     private Boolean deleted;
 
-    private String rfid;
+    private String student_iv_number;
 
     public Integer getId() {
         return id;
@@ -155,11 +155,12 @@ public class Tb_student {
         this.deleted = deleted;
     }
 
-    public String getRfid() {
-        return rfid;
-    }
+	public String getStudent_iv_number() {
+		return student_iv_number;
+	}
 
-    public void setRfid(String rfid) {
-        this.rfid = rfid == null ? null : rfid.trim();
-    }
+	public void setStudent_iv_number(String student_iv_number) {
+		this.student_iv_number = student_iv_number;
+	}
+
 }

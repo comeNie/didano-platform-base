@@ -18,15 +18,14 @@ public class Tb_teacher {
 	private byte deleted;
 	
 	private Byte status;
-	private String rfid;
+	private String staff_ic_number;
 	
 	
-	
-	public String getRfid() {
-		return rfid;
+	public String getStaff_ic_number() {
+		return staff_ic_number;
 	}
-	public void setRfid(String rfid) {
-		this.rfid = rfid;
+	public void setStaff_ic_number(String staff_ic_number) {
+		this.staff_ic_number = staff_ic_number;
 	}
 	public void setStatus(Byte status) {
 		this.status = status;

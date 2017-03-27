@@ -1109,6 +1109,7 @@ public class MailListController {
 							}
 						}
 
+						
 					}
 					if (rowNum > 0) {
 						back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "rowNum=" + (rowNum + rowNum));

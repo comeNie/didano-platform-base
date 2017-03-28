@@ -18,6 +18,7 @@ import com.github.pagehelper.PageInfo;
 
 import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Hand_icCardAndSchool_id;
+import cn.didano.base.model.Hand_ic_card;
 import cn.didano.base.model.Tb_ic_card;
 import cn.didano.base.model.Tb_school;
 import cn.didano.base.service.IcCardService;
@@ -360,41 +361,31 @@ public class IcCardController {
 		}
 		return back;
 	}
-	
 	/**
-	 * 编辑ic卡  根据学校id和ic卡的编号进行编辑
-	 * 多条进行更新
 	 * 
+	 * 对一批卡的状态和学校进行修改
 	 * @param 
 	 * @return
+	*/
 	
-	@ApiOperation(value = "编辑ic卡（多条进行更新）", notes = "编辑ic卡内容编辑ic卡（多条进行更新）")
-	@PostMapping(value = "edit_icMultiterm")
+	@ApiOperation(value = "对一批卡的状态和学校进行修改(和学校的交付)", notes = "对一批卡的状态和学校进行修改(和学校的交付)")
+	@PostMapping(value = "update_icCardInfo/{ic_numberOne}/{ic_numberTow}")
 	@ResponseBody
-	public Out<String> edit_icMultiterm(
-			@ApiParam(value = "编编辑ic卡对象编辑ic卡（多条进行更新）", required = true) @RequestBody Tb_ic_card tb_ic_card) {
-		logger.info("访问  PostController:channelEdit,tb_ic_card=" + tb_ic_card);
-		Tb_ic_card ic_card = new Tb_ic_card();
+	public Out<String> update_icCardInfo(
+		@ApiParam(value = "对一批卡的状态和学校进行修改(和学校的交付)", required = true) @RequestBody Hand_ic_card hand_ic_card) {
+		logger.info("访问  PostController:update_icCardInfo");
 		Out<String> back = new Out<String>();
-		ChannelStatus channelStatus = new ChannelStatus(tb_ic_card.getId(), tb_ic_card.getStatus());
 		try {
-			BeanUtils.copyProperties(ic_card, tb_ic_card);
-			int rowNum = icCardServices.updateByPrimaryKeySelective(ic_card);// insert
+			int rowNum =icCardServices.updateIcCardInfo(hand_ic_card);
 			if (rowNum > 0) {
-				back.setBackTypeWithLog(BackType.SUCCESS_UPDATE,
-						"id=" + channelStatus.getChannelId() + "rowNum=" + rowNum);
-			} else {
-				back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL,
-						"id=" + channelStatus.getChannelId() + "rowNum=" + rowNum);
+				back.setBackTypeWithLog(BackType.SUCCESS_UPDATE);
+
 			}
-		} catch (ServiceException e) {
-			// 服务层错误，包括 内部service 和 对外service
-			back.setServiceExceptionWithLog(e.getExceptionEnums());
-		} catch (Exception ex) {
+		}catch (Exception ex) {
 			back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, ex.getMessage());
 		}
 		return back;
-	} */
+	} 
 	
 	
 	/**

@@ -53,8 +53,8 @@ select
 	tmp1.ic_number as student_ic_number,
 	tmp2.ic_number as parent_ic_number
 from 
-	 (select d.relation_id,d.parent_id,d.relation_title,d.student_id,f.ic_number,e.title from `tb_student_parent` d left join tb_class e on e.id=d.class_id left join tb_ic_card f on f.rfid=d.rfid where d.school_id=5 and d.deleted=0
-	) tmp2 right join (select a.*,b.title,c.ic_number from tb_student a left join tb_class b on a.class_id = b.id left join tb_ic_card c on c.rfid=a.rfid  where a.school_id = 5 AND a.deleted = 0 ORDER BY
+	 (select d.relation_id,d.parent_id,d.relation_title,d.student_id,f.ic_number,e.title from `tb_student_parent` d left join tb_class e on e.id=d.class_id left join tb_ic_card f on f.rfid=d.rfid where d.school_id=#{id} and d.deleted=0
+	) tmp2 right join (select a.*,b.title,c.ic_number from tb_student a left join tb_class b on a.class_id = b.id left join tb_ic_card c on c.rfid=a.rfid  where a.school_id =#{id} AND a.deleted = 0 ORDER BY
 		CONVERT (a. NAME USING gbk)) tmp1 
 	 on tmp1.id=tmp2.student_id left join tb_school_parent tmp3 on tmp2.parent_id=tmp3.id 
  </select>
@@ -201,7 +201,7 @@ FROM
    SELECT * FROM tb_school_parent where id=#{id}
 </select>
 <update id="Update" parameterType="cn.didano.base.model.Tb_mailList_list">
-	UPDATE tb_student a SET a.rfid=#{student_ic_number},a.name=#{name},a.class_id=#{class_id},a.gender=#{gender,jdbcType=TINYINT},a.birthday=#{birthday,jdbcType=DATE} where a.id=#{id}
+	UPDATE tb_student a SET a.ic_card_id=#{icCardId},a.rfid=#{student_ic_number},a.name=#{name},a.class_id=#{class_id},a.gender=#{gender,jdbcType=TINYINT},a.birthday=#{birthday,jdbcType=DATE} where a.id=#{id}
 </update>
 
 <update id="delete" parameterType="Integer">

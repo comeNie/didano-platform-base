@@ -3,6 +3,7 @@ package cn.didano.base.model;
 import java.util.Date;
 
 public class Tb_ic_card {
+	
     private Integer id;
 
     private Integer icType;

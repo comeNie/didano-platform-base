@@ -13,6 +13,7 @@ import cn.didano.base.dao.Tb_ic_cardMapper;
 import cn.didano.base.exception.DBExceptionEnums;
 import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Hand_icCardAndSchool_id;
+import cn.didano.base.model.Hand_ic_card;
 import cn.didano.base.model.Tb_ic_card;
 import cn.didano.base.model.Tb_ic_cardExample;
 import cn.didano.video.constant.DeletedType;
@@ -213,5 +214,16 @@ public class IcCardService {
 		if (record.getId() == null || record.getId() < 1)
 			throw new ServiceException(DBExceptionEnums.ERROR_DB_LESS_1);
 		return tb_ic_card.updateByPrimaryKeySelective(record);
+	}
+	/**
+	 * 单条更新
+	 * 
+	 * @param record
+	 * @return 更新行数
+	 */
+	public int updateIcCardInfo(Hand_ic_card h) {
+		if (h.getIc_numberOne()==null || h.getIc_numberTow()==null)
+			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
+		return hand_ic_cardMapper.updateIcCardInfo(h);
 	}
 }

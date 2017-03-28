@@ -12,8 +12,9 @@
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
-  <select id="selectNoeIcInfo" parameterType="cn.didano.base.model.Tb_ic_card" resultMap="BaseResultMap">
-    SELECT id,ic_type,ic_number,school_id,STATUS,created,updated,deleted from tb_ic_card where ic_number=#{icNumber} and school_id=#{schoolId}
+  <select id="selectNoeIcInfo" parameterType="cn.didano.base.model.Tb_ic_card" resultMap="BaseResultMap"><!-- 
+    SELECT id,ic_type,ic_number,school_id,STATUS,created,updated,deleted from tb_ic_card where ic_number=#{icNumber} and school_id=#{schoolId} -->
+     SELECT * from tb_ic_card where ic_number=#{icNumber} and school_id=#{schoolId}
   </select> 
   
   <update id="updateInfoByid" parameterType="Integer">
@@ -25,12 +26,19 @@
 		UPDATE tb_ic_card AS a SET a.status=3 WHERE a.ic_number=#{icNumber} 
   </update>
   
+  <update id="updateIcCardInfo" parameterType="cn.didano.base.model.Hand_ic_card">
+		UPDATE tb_ic_card AS a SET a.status=2,a.school_id=#{school_id} where <![CDATA[ic_number >= #{ic_numberOne} AND ic_number <= #{ic_numberTow} AND deleted=0]]> 
+  </update>
+  
   <select id="select_between_icInfo" parameterType="cn.didano.base.model.Hand_icCardAndSchool_id" resultMap="BaseResultMap">
-    SELECT id,ic_type,ic_number,school_id,STATUS,created,updated,deleted from tb_ic_card where <![CDATA[ic_number >= #{icNumberNoe} AND ic_number <= #{icNumberTow} AND school_id=#{school_id} AND deleted=0]]> 
-  </select> 
+    <!-- SELECT id,ic_type,ic_number,school_id,STATUS,created,updated,deleted from tb_ic_card where <![CDATA[ic_number >= #{icNumberNoe} AND ic_number <= #{icNumberTow} AND school_id=#{school_id} AND deleted=0]]> 
+   -->
+   SELECT * from tb_ic_card where <![CDATA[ic_number >= #{icNumberNoe} AND ic_number <= #{icNumberTow} AND school_id=#{school_id} AND deleted=0]]> 
+   </select> 
   
    <select id="select_ICMaxNumber" parameterType="INTEGER" resultMap="BaseResultMap">
-    SELECT id,ic_type,MAX(id),ic_number,school_id,STATUS,created,updated,deleted FROM tb_ic_card WHERE school_id=#{school_id}
+    <!-- SELECT id,ic_type,MAX(id),ic_number,school_id,STATUS,created,updated,deleted FROM tb_ic_card WHERE school_id=#{school_id} -->
+    SELECT * FROM tb_ic_card WHERE school_id=#{school_id}
   </select> 
   
 

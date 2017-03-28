@@ -1,15 +1,13 @@
 package cn.didano.base.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-public class Tb_newstudent {
+public class Tb_student4List {
     private Integer id;
 
     private Integer schoolId;
 
-    private Integer class_id;
+    private Integer classId;
 
     private String name;
 
@@ -34,37 +32,16 @@ public class Tb_newstudent {
     private Date updated;
 
     private Boolean deleted;
-    
+
+    private String rfid;
     private String student_ic_number;
-    
-    private int icCardId;
 
-	private List<Tb_parent4mailList> parent = new ArrayList<Tb_parent4mailList>();
-   
-	public int getIcCardId() {
-		return icCardId;
+    public String getRfid() {
+		return rfid;
 	}
 
-	public void setIcCardId(int icCardId) {
-		this.icCardId = icCardId;
-	}
-
-	public List<Tb_parent4mailList> getParent() {
-		return parent;
-	}
-
-	public void setParent(List<Tb_parent4mailList> parent) {
-		this.parent = parent;
-	}
-
-	
-
-	public String getStudent_ic_number() {
-		return student_ic_number;
-	}
-
-	public void setStudent_ic_number(String student_ic_number) {
-		this.student_ic_number = student_ic_number;
+	public void setRfid(String rfid) {
+		this.rfid = rfid;
 	}
 
 	public Integer getId() {
@@ -83,17 +60,15 @@ public class Tb_newstudent {
         this.schoolId = schoolId;
     }
 
-   
+    public Integer getClassId() {
+        return classId;
+    }
 
-    public Integer getClass_id() {
-		return class_id;
-	}
+    public void setClassId(Integer classId) {
+        this.classId = classId;
+    }
 
-	public void setClass_id(Integer class_id) {
-		this.class_id = class_id;
-	}
-
-	public String getName() {
+    public String getName() {
         return name;
     }
 
@@ -188,4 +163,13 @@ public class Tb_newstudent {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
+
+	public String getStudent_ic_number() {
+		return student_ic_number;
+	}
+
+	public void setStudent_ic_number(String student_ic_number) {
+		this.student_ic_number = student_ic_number;
+	}
+
 }

@@ -3,8 +3,15 @@
 <mapper namespace="cn.didano.base.dao.Tb_MailList_listMapper">
 <!-- 需要修改rfid -->
 <select id="findByTeacher" parameterType="Integer" resultType="cn.didano.base.model.Tb_mailList_list">
-    SELECT a.*,c.rfid FROM tb_student a,tb_staff_class b,tb_staff c WHERE b.staff_id=#{id} and c.id=b.staff_id AND a.class_id=b.class_id  AND a.deleted =0 AND b.deleted=0 ORDER BY CONVERT( a.name USING gbk )
-</select> 
+    <!-- SELECT a.*,c.rfid FROM tb_student a,tb_staff_class b,tb_staff c WHERE b.staff_id=#{id} and c.id=b.staff_id AND a.class_id=b.class_id  AND a.deleted =0 AND b.deleted=0 ORDER BY CONVERT( a.name USING gbk )
+ -->
+ 
+select tmp3.*,tmp3.ic_number as student_ic_number,tmp4.ic_number as staff_ic_number from (select tmp1.*,tmp2.ic_number from 
+(SELECT a.* FROM tb_student a,tb_staff_class b WHERE b.staff_id=#{id} AND a.class_id=b.class_id  AND a.deleted =0 AND b.deleted=0 ORDER BY CONVERT( a.name USING gbk))tmp1 left join tb_ic_card tmp2 on tmp1.rfid=tmp2.rfid) tmp3 
+left join 
+(select card.ic_number,tmp5.class_id from (select staff.rfid,sc.class_id from tb_staff staff,tb_staff_class sc where staff.id=sc.staff_id and staff.deleted=0 and sc.class_id=#{id}) tmp5 left join tb_ic_card card on tmp5.rfid=card.rfid) tmp4 
+on tmp3.class_id=tmp4.class_id
+ </select> 
  <select id="findAll" resultType="cn.didano.base.model.Tb_mailList_list">
  SELECT a.id,a.class_id,a.name,a.birthday,a.gender FROM tb_student a WHERE   a.deleted =0  ORDER BY CONVERT( a.name USING gbk )
   </select>
@@ -12,7 +19,7 @@
  <select id="findById" parameterType="Integer" resultType="cn.didano.base.model.Tb_mailList_list"> 
  SELECT a.id,a.class_id,a.name,a.birthday,a.gender FROM tb_student a WHERE  a.id=#{id} AND a.deleted =0 ORDER BY CONVERT( a.name USING gbk )
  </select>
-<select id="findClassIdBySid" parameterType="Integer" resultType="cn.didano.base.model.Tb_staff">
+<select id="findClassIdBySid" parameterType="Integer" resultType="cn.didano.base.model.Tb_staffData">
    SELECT class_id FROM tb_staff_class WHERE staff_id = #{id}
 </select> 
  <select id="findByName"  parameterType="cn.didano.base.model.Tb_studentData" resultType="cn.didano.base.model.Tb_mailList_list">
@@ -76,10 +83,9 @@ from
 		tmp1.school_id ,
 		tmp3.ic_number as staff_ic_number
 	FROM
-	(SELECT 				a.status,a.id,b.class_id,a.type,a.school_id,a.name,a.phone,c.in_time,c.out_time,a.rfid
-	FROM tb_staff a,tb_staff_class b ,tb_sign_type c WHERE a.school_id=#{id} AND a.deleted=0 AND a.type =32 and 		a.id=b.staff_id and a.sign_type_id=c.id
+	(SELECT a.status,a.id,b.class_id,a.type,a.school_id,a.name,a.phone,c.in_time,c.out_time,a.rfid
+	FROM tb_staff a,tb_staff_class b ,tb_sign_type c WHERE a.school_id=#{id} AND a.deleted=0 AND a.type =32 and a.id=b.staff_id and a.sign_type_id=c.id
 	)AS tmp1 LEFT JOIN tb_class c ON tmp1.class_id=c.id left join tb_ic_card tmp3 on tmp1.rfid=tmp3.rfid ORDER BY CONVERT( tmp1.name USING gbk ) 
- 
  </select>
  <select id="findrelation" resultType="cn.didano.base.model.Tb_relation">
       select id,title from tb_relation
@@ -156,15 +162,15 @@ select * from tb_student_parent where student_id=#{id}
 <select id="findTeacherByClass" parameterType="Integer" resultType="cn.didano.base.model.Tb_teacher">
   
   <!-- 有错误还没有修改 -->
-  SELECT  
-tmp1.title,tmp1.status,tmp1.school_id,tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id ,c.in_time,c.out_time ,tmp1.rfid
-FROM 
+   SELECT  
+		tmp1.title,tmp1.status,tmp1.school_id,tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id ,c.in_time,c.out_time ,card.ic_number as staff_ic_number
+		FROM 
 	 (SELECT c.title,a.status,a.sign_type_id,a.school_id,a.id,a.name,a.phone,a.type,b.class_id,a.rfid
 	 FROM 
 	 tb_staff a,tb_staff_class b ,tb_class c
 	 WHERE 
 	 a.type=32 AND a.id=b.staff_id  AND a.deleted=0 AND b.deleted=0 AND b.class_id=c.id ) AS tmp1 
-	 LEFT JOIN tb_sign_type c ON (tmp1.sign_type_id =c.id)
+	 LEFT JOIN tb_sign_type c ON (tmp1.sign_type_id =c.id) left join tb_ic_card card on tmp1.rfid=card.rfid
 	 WHERE  class_id=#{id} ORDER BY CONVERT( tmp1.name USING gbk )
 </select>
 <select id="findBystaffbyId" parameterType="Integer" resultType="cn.didano.base.model.Tb_staff4MailList">
@@ -210,7 +216,7 @@ UPDATE tb_student AS a SET a.deleted=1 WHERE a.id=#{id}
 
 
 <update id="UpdateParent" parameterType="cn.didano.base.model.Tb_parent4mailList">
-  UPDATE tb_school_parent a,tb_student_parent b SET a.phone=#{parent_phone}, b.relation_id =#{relation_id},b.relation_title=#{parent_name},b.rfid=#{parent_ic_number} where a.id = #{id} and b.parent_id=#{id}
+  UPDATE tb_school_parent a,tb_student_parent b SET a.phone=#{parent_phone}, b.relation_id =#{relation_id},b.relation_title=#{parent_name},b.rfid=#{parent_ic_number},b.ic_card_id=#{icCardId} where a.id = #{id} and b.parent_id=#{id}
 </update>
 
 <update id="UpdateTeacher" parameterType="cn.didano.base.model.Tb_teacher">

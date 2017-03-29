@@ -164,7 +164,7 @@ public class StaffService {
 	public int updatestaff(Tb_staff record){
 		if (record == null)
 			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
-		return staffMapper.updateByPrimaryKeySelective(record);
+		return tb_staffM4ListMapper.updateByPrimaryKeySelective(record);
 	}
 	
 	/**

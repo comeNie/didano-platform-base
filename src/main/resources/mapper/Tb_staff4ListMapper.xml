@@ -7,7 +7,7 @@
     <result column="school_id" jdbcType="INTEGER" property="schoolId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="rfid" jdbcType="VARCHAR" property="staff_ic_number" />
+    <result column="rfid" jdbcType="VARCHAR" property="rfid" />
     <result column="qrcode_url" jdbcType="VARCHAR" property="qrcodeUrl" />
     <result column="qrcode_school_key" jdbcType="VARCHAR" property="qrcodeSchoolKey" />
     <result column="sign_type_id" jdbcType="INTEGER" property="signTypeId" />
@@ -15,6 +15,7 @@
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
+     <result column="ic_card_id" jdbcType="TINYINT" property="icCardId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -119,7 +120,7 @@
       created, updated, deleted
       )
     values (#{type,jdbcType=TINYINT}, #{schoolId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=VARCHAR}, #{staff_ic_number,jdbcType=VARCHAR}, #{qrcodeUrl,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{rfid,jdbcType=VARCHAR}, #{qrcodeUrl,jdbcType=VARCHAR}, 
       #{qrcodeSchoolKey,jdbcType=VARCHAR}, #{signTypeId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
       #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
       )
@@ -142,7 +143,7 @@
       <if test="phone != null">
         phone,
       </if>
-      <if test="staff_ic_number != null">
+      <if test="rfid != null">
         rfid,
       </if>
       <if test="qrcodeUrl != null">
@@ -180,8 +181,8 @@
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="staff_ic_number != null">
-        #{staff_ic_number,jdbcType=VARCHAR},
+      <if test="rfid != null">
+        #{rfid,jdbcType=VARCHAR},
       </if>
       <if test="qrcodeUrl != null">
         #{qrcodeUrl,jdbcType=VARCHAR},
@@ -230,8 +231,8 @@
       <if test="record.phone != null">
         phone = #{record.phone,jdbcType=VARCHAR},
       </if>
-      <if test="record.staff_ic_number != null">
-        rfid = #{record.staff_ic_number,jdbcType=VARCHAR},
+      <if test="record.rfid != null">
+        rfid = #{record.rfid,jdbcType=VARCHAR},
       </if>
       <if test="record.qrcodeUrl != null">
         qrcode_url = #{record.qrcodeUrl,jdbcType=VARCHAR},
@@ -266,7 +267,7 @@
       school_id = #{record.schoolId,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
-      rfid = #{record.staff_ic_number,jdbcType=VARCHAR},
+      rfid = #{record.rfid,jdbcType=VARCHAR},
       qrcode_url = #{record.qrcodeUrl,jdbcType=VARCHAR},
       qrcode_school_key = #{record.qrcodeSchoolKey,jdbcType=VARCHAR},
       sign_type_id = #{record.signTypeId,jdbcType=INTEGER},
@@ -293,8 +294,8 @@
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="staff_ic_number != null">
-        rfid = #{staff_ic_number,jdbcType=VARCHAR},
+      <if test="rfid != null">
+        rfid = #{rfid,jdbcType=VARCHAR},
       </if>
       <if test="qrcodeUrl != null">
         qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
@@ -317,6 +318,9 @@
       <if test="deleted != null">
         deleted = #{deleted,jdbcType=BIT},
       </if>
+       <if test="icCardId != null">
+        ic_card_id = #{icCardId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -326,7 +330,7 @@
       school_id = #{schoolId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
-      rfid = #{staff_ic_number,jdbcType=VARCHAR},
+      rfid = #{rfid,jdbcType=VARCHAR},
       qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
       qrcode_school_key = #{qrcodeSchoolKey,jdbcType=VARCHAR},
       sign_type_id = #{signTypeId,jdbcType=INTEGER},
@@ -334,6 +338,7 @@
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},
       deleted = #{deleted,jdbcType=BIT}
+      ic_card_id = #{icCardId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

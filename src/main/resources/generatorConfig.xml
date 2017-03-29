@@ -185,7 +185,18 @@
 			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
 			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
 		</table> -->
-		<table tableName="view_staff_ic_card" domainObjectName="View_staff_ic_card"
+		<!-- <table tableName="tb_staff" domainObjectName="Tb_staff"
+			enableCountByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
+			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
+		</table> -->
+		
+		<!-- <table tableName="tb_student" domainObjectName="Tb_student"
+			enableCountByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
+			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
+		</table> -->
+		<table tableName="tb_student_parent" domainObjectName="Tb_studentparent"
 			enableCountByExample="true" enableSelectByExample="true"
 			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
 			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  

@@ -7,7 +7,7 @@
     <result column="school_id" jdbcType="INTEGER" property="schoolId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="rfid" jdbcType="VARCHAR" property="staff_ic_number" />
+    <result column="rfid" jdbcType="VARCHAR" property="rfid" />
     <result column="qrcode_url" jdbcType="VARCHAR" property="qrcodeUrl" />
     <result column="qrcode_school_key" jdbcType="VARCHAR" property="qrcodeSchoolKey" />
     <result column="sign_type_id" jdbcType="INTEGER" property="signTypeId" />
@@ -15,6 +15,7 @@
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
+    <result column="staff_ic_number" jdbcType="VARCHAR" property="staff_ic_number" />
   </resultMap>
   <select id="selectStaff_icCard" parameterType="INTEGER" resultMap="BaseResultMap">
      select a.ic_number as staff_ic_number,b.id,b.type,b.school_id,b.name,b.phone,b.qrcode_url,b.qrcode_url_old,
@@ -37,13 +38,19 @@
       
       select a.*,d.ic_number as staff_ic_number,tmp1.title,tmp1.class_id from tb_staff a left join (select b.*,c.title from tb_staff_class b,tb_class c where b.class_id=c.id)
       tmp1 on a.id=tmp1.staff_id left join tb_ic_card d on a.rfid=d.rfid where a.deleted=0 and a.school_id=#{schoolId} and a.name like #{name}
-  </select> 
+      </select> 
   
    <select id="selectStaff_icCardType" parameterType="cn.didano.base.model.Tb_staff" resultMap="BaseResultMap">
-    select tmp1.*,c.title,d.ic_number as staff_ic_number from 
+  <!--   select tmp1.*,c.title,d.ic_number as staff_ic_number from 
     (select a.rfid,a.id,a.type,a.school_id,b.class_id,a.name,a.phone,a.qrcode_url,
     a.qrcode_school_key,a.sign_type_id,a.status,a.created,a.updated,a.deleted from
      tb_staff a,tb_staff_class b where a.type in(33,34) and a.name like #{name} and a.school_id=#{schoolId} and a.id=b.staff_id and a.deleted=0)
-      tmp1 left join tb_class c on tmp1.class_id=c.id left join tb_ic_card d on tmp1.rfid=d.rfid
+      tmp1 left join tb_class c on tmp1.class_id=c.id left join tb_ic_card d on tmp1.rfid=d.rfid -->
+      
+  select tmp1.*,d.ic_number as staff_ic_number from 
+    (select a.rfid,a.id,a.type,a.school_id,a.name,a.phone,a.qrcode_url,
+    a.qrcode_school_key,a.sign_type_id,a.status,a.created,a.updated,a.deleted from
+     tb_staff a where a.type in(33,34) and a.name like #{name} and a.school_id=#{schoolId} and a.deleted=0)
+      tmp1  left join tb_ic_card d on tmp1.rfid=d.rfid
   </select> 
 </mapper>

@@ -199,6 +199,7 @@ public class MailListController {
 			throws IllegalAccessException, InvocationTargetException {
 		logger.info("访问  MailListController:studentstaff_searchByName,name=" + name + ",id=" + id);
 		Tb_staff s0 = staffService.findById(id);
+//		 得到学校的id
 		Tb_staff4MailList s1 = mailListService.findbystaffbyid(id);
 		// 按名字查询老师集合
 		List<Tb_staff> staffAll = new ArrayList<Tb_staff>();
@@ -223,6 +224,7 @@ public class MailListController {
 				target.setStaff_ic_number(staff.getStaff_ic_number());
 				staffAll.add(target);
 			}
+			
 		} else {
 			Tb_staff ts = new Tb_staff();
 			ts.setName("%" + name + "%");
@@ -724,7 +726,6 @@ public class MailListController {
 		List<Tb_mailList_list> students = null;
 		Tb_classStudent cs = new Tb_classStudent();
 		Out<Tb_teacherAndStudent> back = new Out<Tb_teacherAndStudent>();
-		System.err.println(staff_id+"________");
 		try {
 			if (staff.getType() == StaffType.TEACHEER.getIndex()) {
 				students = mailListService.findByTeacher(staff.getId());
@@ -752,6 +753,7 @@ public class MailListController {
 				}
 				// 取教职工（老师）
 				List<Tb_teacher> classstaff = mailListService.findTeacherByClass(classid.getClass_id());
+				
 				Tb_staff4MailList staff1 = null;
 				for (Tb_teacher teacher : classstaff) {
 					staff1 = new Tb_staff4MailList();
@@ -1011,6 +1013,7 @@ public class MailListController {
 								iCCardService.updateInfoByic_number(td);
 							}
 						}
+						int i=0;
 						for (Tb_parent4mailList add : student_a.getParent()) {
 							// 查询家长的ic卡是否存在
 							List<Tb_ic_card> tb_ic_cardTow = new ArrayList<Tb_ic_card>();
@@ -1039,9 +1042,9 @@ public class MailListController {
 							vd_studentparent.setParentId(vd_parent.getId());
 							vd_studentparent.setRelationId(add.getRelation_id());
 							// 添加父母的rfid
-							if (tb_ic_cardTow.size() > 0) {
-								vd_studentparent.setRfid(tb_ic_cardTow.get(0).getRfid());
-								vd_studentparent.setIcCardId(tb_ic_cardTow.get(0).getId());
+							if (tb_ic_cardTow.size() > i) {
+								vd_studentparent.setRfid(tb_ic_cardTow.get(i).getRfid());
+								vd_studentparent.setIcCardId(tb_ic_cardTow.get(i).getId());
 
 							} else {
 								vd_studentparent.setRfid("");
@@ -1081,6 +1084,7 @@ public class MailListController {
 								respContent = EntityUtils.toString(he, "UTF-8");
 							}
 							logger.info("respContent=" + respContent);
+							i=i+1;
 						}
 					}
 					if (rowNum >= 0) {
@@ -1143,6 +1147,7 @@ public class MailListController {
 //								iCCardService.updateInfoByic_number(td);
 //							}
 //						}
+						int i=0;
 						for (Tb_parent4mailList add : student_a.getParent()) {
 							// 查询家长的ic卡是否存在
 							List<Tb_ic_card> tb_icList = new ArrayList<Tb_ic_card>();
@@ -1177,9 +1182,9 @@ public class MailListController {
 								}
 								vd_studentparent.setCreated(new Date());
 								// yang 添加家长的rfid
-								if (tb_icList.size() > 0) {
-									vd_studentparent.setRfid(tb_icList.get(0).getRfid());
-									vd_studentparent.setIcCardId(tb_icList.get(0).getId());
+								if (tb_icList.size() > i) {
+									vd_studentparent.setRfid(tb_icList.get(i).getRfid());
+									vd_studentparent.setIcCardId(tb_icList.get(i).getId());
 								} else {
 									vd_studentparent.setRfid("");
 									vd_studentparent.setIcCardId(0);
@@ -1222,15 +1227,16 @@ public class MailListController {
 								p.setParent_name(mailListService.findrealtionById(add.getRelation_id()).getTitle());
 								// 添加家长的rfid
 								
-								if(tb_icList.size()>0){
-									p.setParent_ic_number(tb_icList.get(0).getRfid());
-									p.setIcCardId(tb_icList.get(0).getId());
+								if(tb_icList.size()>i){
+									p.setParent_ic_number(tb_icList.get(i).getRfid());
+									p.setIcCardId(tb_icList.get(i).getId());
 								}else{
 									p.setParent_ic_number("");
 									p.setIcCardId(0);
 								}
 								mailListService.UpdateParent(p);
 							}
+							i=i+1;
 						}
 					}
 					if (rowNum > 0) {

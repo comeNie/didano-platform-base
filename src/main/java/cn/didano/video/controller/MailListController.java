@@ -1001,6 +1001,11 @@ public class MailListController {
 		Out<String> back = new Out<String>();
 		Tb_ic_card tb_ic_cardNoe = null;
 		Tb_ic_card tb_ic_card = null;
+		if (student_a.getStudent_ic_number() != "") {
+			// 如果输入的编号IC卡表里面不存在，那么返回错误信息，如果有才继续
+        	tb_ic_cardNoe = iCCardService.selectIcByNumber(student_a.getStudent_ic_number(), tb_class.getSchoolId(),
+					IcCardType.BABY.getIndex());
+		}
 		try {
 			BeanUtils.copyProperties(vd_student, student_a);
 			// id为null则为新增，不为null则为编辑
@@ -1010,7 +1015,7 @@ public class MailListController {
 					// 修改表tb_ic_card表数据的状态
 					Tb_ic_card td = new Tb_ic_card();
 					td.setIcNumber(student_a.getStudent_ic_number());
-					int updateInfoByid = iCCardService.updateInfoByic_number(td);
+					iCCardService.updateInfoByic_number(td);
 				}
 				vd_student.setStatus((byte) 1);
 				vd_student.setCreated(new Date());
@@ -1025,7 +1030,6 @@ public class MailListController {
 					vd_student.setIcCardId(0);
 				}
 				int rowNum = studentService.insertStudentSelective(vd_student);// insert
-				int rowNUM2 = 0;
 				if (!student_a.getParent().isEmpty()) {
 					// 修改家长的ic卡状态
 					List<Hand_parent4mailList> parent3 = student_a.getParent();
@@ -1058,7 +1062,7 @@ public class MailListController {
 						vd_parent.setStatus((byte) 1);
 						vd_parent.setCreated(new Date());
 
-						rowNUM2 = studentService.insertParentSelective(vd_parent);
+						studentService.insertParentSelective(vd_parent);
 						vd_studentparent.setSchoolId(vd_student.getSchoolId());
 						vd_studentparent.setClassId(vd_student.getClassId());
 						vd_studentparent.setStudentId(vd_student.getId());
@@ -1081,7 +1085,7 @@ public class MailListController {
 						}
 						vd_studentparent.setCreated(new Date());
 
-						rowNUM2 = studentService.insertStudentParentSelective(vd_studentparent);
+						studentService.insertStudentParentSelective(vd_studentparent);
 						System.out.println("插入从父母成功:" + vd_parent.getId() + vd_student.getId());
 						HttpPost httpPost = new HttpPost(appConfigProperties.getQrcodePath());
 						logger.info("appConfigProperties.getQrcodePath()=" + appConfigProperties.getQrcodePath());
@@ -1244,77 +1248,72 @@ public class MailListController {
 		return back;
 	}
 
-	/**
-	 * 新增编辑小朋友之前验证ic卡号是否被绑定过了
-	 * 
-	 * @param c_channel
-	 * @return
-	 * @throws InvocationTargetException
-	 * @throws IllegalAccessException
-	 * @throws IOException
-	 * @throws ClientProtocolException
-	 */
-	@ApiOperation(value = "新增编辑小朋友和教师之前验证ic卡号是否被绑定过了", notes = "新增编辑小朋友和教师之前验证ic卡号是否被绑定过了")
-	@PostMapping(value = "Student_add_parent_edit")
-	@ResponseBody
-	public Out<String> Student_add_parent_edit(
-			@ApiParam(value = "新增编辑小朋友和教师之前验证ic卡号是否被绑定过了", required = true) @RequestBody Hand_ic_type hand_id_type)
-			throws IllegalAccessException, InvocationTargetException, ClientProtocolException, IOException {
-		logger.info("访问  MailListController:Student_add_parent_edit,ic_number=" + hand_id_type);
-		// 得到学校的id
-		Tb_staff4MailList s1 = mailListService.findbystaffbyid(hand_id_type.getStaff_id());
-		System.err.println(s1.getSchoolId());
-		Out<String> back = new Out<String>();
-		Tb_ic_card tb_ic_card = null;
-		Tb_student tb_student = new Tb_student();
-		Tb_student findStudentByIcNumber = null;
-		Hand_student4MailListHasParent findParentByIcNumber = null;
-		Tb_staff4List selectInfoByic_number = null;
-		Tb_staff tb_staff = new Tb_staff();
-		try {
-			if (hand_id_type.getIc_number() != "") {
-				tb_ic_card = iCCardService.selectIcByNumber(hand_id_type.getIc_number(), s1.getSchoolId(),
-						hand_id_type.getType());
-			}
-			// 判断是学生还是家长
-			if (tb_ic_card != null) {
-				if (tb_ic_card.getIcType() == 1) {
-					// 查询家长的信息最后返回
-					tb_student.setRfid(tb_ic_card.getRfid());
-					findParentByIcNumber = mailListService.findParentByIcNumber(tb_student);
-					// 同时区查询教师
-					tb_staff.setRfid(hand_id_type.getIc_number());
-					selectInfoByic_number = iCCardService.selectInfoByic_number(tb_staff);
-				} else {
-					// 查询学生信息最后返回该信息
-					tb_student.setRfid(tb_ic_card.getRfid());
-					findStudentByIcNumber = mailListService.findStudentByIcNumber(tb_student);
-				}
-			} else {
-				// 学生返回信息
-				back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD,
-						"没有该卡号为" + hand_id_type.getIc_number() + "的信息",
-						hand_id_type.getIc_number() + "，在系统中没有记录,请再次确认");
-			}
-			if (findStudentByIcNumber != null) {
-				// 学生返回信息
-				back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD, "已经被绑定",
-						hand_id_type.getIc_number() + "，已经被学生‘" + findStudentByIcNumber.getName() + "’绑定");
-			} else if (findParentByIcNumber != null) {
-				// 家长返回返回的信息
-				back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD, "已经被绑定", hand_id_type.getIc_number()
-						+ "，已经被‘" + findParentByIcNumber.getName() + "的" + findParentByIcNumber.getTitle() + "’绑定");
-			} else if (selectInfoByic_number != null) {
-				back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD, "已经被绑定",
-						hand_id_type.getIc_number() + "，已经被教职工‘" + selectInfoByic_number.getName() + "’绑定");
-			} else if (tb_ic_card != null && findStudentByIcNumber == null && findParentByIcNumber == null
-					&& selectInfoByic_number == null) {
-				back.setBackType(BackType.SUCCESS, "可以进行绑定");
-			}
-		} catch (ServiceException e) {
-			// 服务层错误，包括 内部service 和 对外service
-			back.setServiceExceptionWithLog(e.getExceptionEnums());
-		}
-		return back;
-	}
+
+    /**
+     * 新增编辑小朋友之前验证ic卡号是否被绑定过了
+     * @param c_channel
+     * @return
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     * @throws IOException
+     * @throws ClientProtocolException
+     */
+    @ApiOperation(value = "新增编辑小朋友和教师之前验证ic卡号是否被绑定过了", notes = "新增编辑小朋友和教师之前验证ic卡号是否被绑定过了")
+    @PostMapping(value = "Student_add_parent_edit")
+    @ResponseBody
+    public Out<String> Student_add_parent_edit(
+            @ApiParam(value = "新增编辑小朋友和教师之前验证ic卡号是否被绑定过了", required = true) @RequestBody Hand_ic_type hand_id_type)
+            throws IllegalAccessException, InvocationTargetException, ClientProtocolException, IOException {
+        logger.info("访问  MailListController:Student_add_parent_edit,ic_number=" + hand_id_type);
+        //得到学校的id
+        Tb_staff4MailList s1 = mailListService.selectSchoolBystaffId(hand_id_type.getStaff_id());
+        Out<String> back = new Out<String>();
+        Tb_ic_card tb_ic_card=null;
+        Tb_student tb_student=new Tb_student();
+        Tb_student findStudentByIcNumber=null;
+        Hand_student4MailListHasParent findParentByIcNumber=null;
+        Tb_staff4List selectInfoByic_number=null;
+        Tb_staff tb_staff=new Tb_staff();
+        try {
+            if (hand_id_type.getIc_number() != "" ) {
+                tb_ic_card = iCCardService.selectIcByNumber(hand_id_type.getIc_number(),
+                        s1.getSchoolId(),hand_id_type.getType());
+            }
+            // 判断是学生还是家长
+            if(tb_ic_card!=null){
+                if(tb_ic_card.getIcType()==1){
+                  //查询家长的信息最后返回
+                    tb_student.setRfid(tb_ic_card.getRfid());
+                    findParentByIcNumber= mailListService.findParentByIcNumber(tb_student);
+                    //同时区查询教师
+                    tb_staff.setRfid(tb_ic_card.getRfid());
+                    selectInfoByic_number = iCCardService.selectInfoByic_number(tb_staff);
+                }else{
+                    //查询学生信息最后返回该信息
+                    tb_student.setRfid(tb_ic_card.getRfid());
+                    findStudentByIcNumber = mailListService.findStudentByIcNumber(tb_student);
+                }
+            }else{
+                //学生返回信息
+                back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD,"没有该卡号为"+hand_id_type.getIc_number()+"的信息",hand_id_type.getIc_number()+"，在系统中没有记录,请再次确认");
+            }
+            if(findStudentByIcNumber!=null){
+                //学生返回信息
+                back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD,"已经被绑定",hand_id_type.getIc_number()+"，已经被学生‘"+findStudentByIcNumber.getName()+"’绑定");
+            }
+            else if(findParentByIcNumber!=null){
+                //家长返回返回的信息
+                back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD,"已经被绑定",hand_id_type.getIc_number()+"，已经被‘"+findParentByIcNumber.getName()+"的"+findParentByIcNumber.getTitle()+"’绑定");
+            }
+            else if(selectInfoByic_number!=null){
+                back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD,"已经被绑定",hand_id_type.getIc_number()+"，已经被教职工‘"+selectInfoByic_number.getName()+"’绑定");
+            }else if(tb_ic_card!=null && findStudentByIcNumber==null && findParentByIcNumber==null && selectInfoByic_number==null){
+                back.setBackType(BackType.SUCCESS,"可以进行绑定");
+            }
+        } catch (ServiceException e) {
+            // 服务层错误，包括 内部service 和 对外service
+                        back.setServiceExceptionWithLog(e.getExceptionEnums());
+        }
+        return back;
+    }
 }

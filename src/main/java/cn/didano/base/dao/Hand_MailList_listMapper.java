@@ -32,7 +32,7 @@ public interface Hand_MailList_listMapper {
 	//杨 添加根据学生的ic_number进行查询
 	Tb_student findStudentByIcNumber(Tb_student tb_student);
 	Hand_student4MailListHasParent findParentByIcNumber(Tb_student tb_student);
-	
+	Tb_staff4MailList selectSchoolBystaffId(Integer id);
 	
 	List<Hand_mailList_list> findByName(Tb_studentData data);
 	List<Hand_mailList_list> findByNameClass(Tb_studentData data);

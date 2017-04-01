@@ -19,7 +19,9 @@ on tmp3.class_id=tmp4.class_id
 <select id="findStudentByIcNumber" parameterType="cn.didano.base.model.Tb_student" resultType="cn.didano.base.model.Tb_student">
    SELECT * FROM tb_student where rfid=#{rfid}
 </select>
-
+<select id="selectSchoolBystaffId" parameterType="Integer" resultType="cn.didano.base.model.Tb_staff4MailList">
+ 	select school_id as schoolId from tb_staff where id=#{id}
+</select>
 <select id="findParentByIcNumber" parameterType="cn.didano.base.model.Tb_student" resultType="cn.didano.base.model.Hand_staff4MailList">
    select a.relation_title as title,b.name from tb_student_parent a,tb_student b where a.rfid=#{rfid} and b.id=a.student_id and a.deleted=0
 </select>

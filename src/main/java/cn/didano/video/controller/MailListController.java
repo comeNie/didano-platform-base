@@ -993,7 +993,6 @@ public class MailListController {
 			throws IllegalAccessException, InvocationTargetException, ClientProtocolException, IOException {
 		logger.info("访问  MailListController:Student_add_edit,student_a=" + student_a);
 		Tb_class tb_class = classService.selectById(student_a.getClassId());
-		System.out.println(student_a.getClassId());
 		Hand_student4MailListHasParents vd_student = new Hand_student4MailListHasParents();
 		Hand_mailList_list list = new Hand_mailList_list();
 		Tb_schoolparent4 vd_parent = new Tb_schoolparent4();

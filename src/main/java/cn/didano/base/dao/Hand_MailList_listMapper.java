@@ -34,6 +34,7 @@ public interface Hand_MailList_listMapper {
 	Hand_student4MailListHasParent findParentByIcNumber(Tb_student tb_student);
 	Tb_staff4MailList selectSchoolBystaffId(Integer id);
 	
+	
 	List<Hand_mailList_list> findByName(Tb_studentData data);
 	List<Hand_mailList_list> findByNameClass(Tb_studentData data);
 	List<Tb_relation> findrelation();

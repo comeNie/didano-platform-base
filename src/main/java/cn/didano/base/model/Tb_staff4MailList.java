@@ -13,8 +13,8 @@ public class Tb_staff4MailList extends Tb_staff {
 	private String out_time;
 	private Integer class_id;
 	private String title;
-	private String staff_ic_number; 
-
+	private String staff_ic_number;
+	
 	public String getIn_time() {
 		return in_time;
 	}

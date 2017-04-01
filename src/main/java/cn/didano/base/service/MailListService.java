@@ -43,17 +43,18 @@ public class MailListService {
 		return mailList_listMapper.findParentByPid(id);
 	}
 	/**
-	 * 查询
-	 */
-	public Tb_staff4MailList findbystaffbyid(Integer id){
-		return mailList_listMapper.findBystaffbyId(id);
-	}
-	/**
 	 *  查询学校
 	 */
 	public Tb_staff4MailList selectSchoolBystaffId(Integer id){
 		return mailList_listMapper.selectSchoolBystaffId(id);
 	}
+	/**
+	 * 查询
+	 */
+	public Tb_staff4MailList findbystaffbyid(Integer id){
+		return mailList_listMapper.findBystaffbyId(id);
+	}
+	
 	/**
 	 * 通过小朋友id删除父母信息
 	 */

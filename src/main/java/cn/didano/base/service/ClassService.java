@@ -40,7 +40,6 @@ public class ClassService {
 	 */
 	public Tb_class selectById(Integer id){
 	
-		
 		return classMapper.selectByPrimaryKey(id);
 	}
 	/**

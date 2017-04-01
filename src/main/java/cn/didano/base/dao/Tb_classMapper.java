@@ -1,10 +1,9 @@
 package cn.didano.base.dao;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
-
 import cn.didano.base.model.Tb_class;
 import cn.didano.base.model.Tb_classExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface Tb_classMapper {
     long countByExample(Tb_classExample example);

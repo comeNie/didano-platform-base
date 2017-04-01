@@ -2,7 +2,7 @@ package cn.didano.base.model;
 
 import java.util.Date;
 
-public class Tb_teacher {
+public class Hand_staff4MailList {
 
 	private Integer id;
 	private String name;

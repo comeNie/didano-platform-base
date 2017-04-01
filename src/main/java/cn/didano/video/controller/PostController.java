@@ -25,6 +25,7 @@ import com.github.pagehelper.PageInfo;
 import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Bs_good;
 import cn.didano.base.model.Hand_student;
+import cn.didano.base.model.Hand_student4MailList;
 import cn.didano.base.model.Tb_benchmark;
 import cn.didano.base.model.Tb_class;
 import cn.didano.base.model.Tb_school;

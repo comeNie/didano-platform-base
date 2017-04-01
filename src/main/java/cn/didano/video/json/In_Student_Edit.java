@@ -3,7 +3,7 @@ package cn.didano.video.json;
 import java.util.Date;
 import java.util.List;
 
-import cn.didano.base.model.Tb_parent4mailList;
+import cn.didano.base.model.Hand_parent4mailList;
 import io.swagger.annotations.ApiModelProperty;
 
 public class In_Student_Edit {
@@ -23,11 +23,17 @@ public class In_Student_Edit {
 	private String deleteParents;
 	@ApiModelProperty(value = "学生的ic卡编号",required=true)
 	private String student_ic_number;
+	@ApiModelProperty(value = "学生的ic卡id",required=true)
+	private Integer icCardId;
 	@ApiModelProperty(value = "家长信息",required=true)
-	private List<Tb_parent4mailList> parent;
+	private List<Hand_parent4mailList> parent;
 	
-	
-	
+	public Integer getIcCardId() {
+		return icCardId;
+	}
+	public void setIcCardId(Integer icCardId) {
+		this.icCardId = icCardId;
+	}
 	public String getStudent_ic_number() {
 		return student_ic_number;
 	}
@@ -71,10 +77,10 @@ public class In_Student_Edit {
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
-	public List<Tb_parent4mailList> getParent() {
+	public List<Hand_parent4mailList> getParent() {
 		return parent;
 	}
-	public void setParent(List<Tb_parent4mailList> parent) {
+	public void setParent(List<Hand_parent4mailList> parent) {
 		this.parent = parent;
 	}
 	

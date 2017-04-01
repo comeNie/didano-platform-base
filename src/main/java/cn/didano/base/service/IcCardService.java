@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.didano.base.dao.Hand_Staff_icMapper;
 import cn.didano.base.dao.Hand_ic_cardMapper;
 import cn.didano.base.dao.Tb_ic_cardMapper;
 import cn.didano.base.exception.DBExceptionEnums;
@@ -16,6 +17,9 @@ import cn.didano.base.model.Hand_icCardAndSchool_id;
 import cn.didano.base.model.Hand_ic_card;
 import cn.didano.base.model.Tb_ic_card;
 import cn.didano.base.model.Tb_ic_cardExample;
+import cn.didano.base.model.Tb_staff;
+import cn.didano.base.model.Tb_staff4List;
+import cn.didano.base.model.Tb_student;
 import cn.didano.video.constant.DeletedType;
 import cn.didano.video.constant.IcCardType;
 
@@ -30,6 +34,8 @@ public class IcCardService {
 	private Tb_ic_cardMapper tb_ic_card;
 	@Autowired
 	private Hand_ic_cardMapper hand_ic_cardMapper;
+	@Autowired
+	private Hand_Staff_icMapper hand_Staff_icMapper;
 
 	/**
 	 * 查询集合，并且是存在的信息
@@ -71,6 +77,25 @@ public class IcCardService {
 	}
 	
 	/**
+	 * 根据ic_number查询教职工的信息
+	 * @return 
+	 * 
+	 * @return
+	 */
+	public  Tb_staff4List selectInfoByic_number(Tb_staff tf) {
+		return  hand_Staff_icMapper.selectInfoByic_number(tf);
+	}
+	/**
+	 * 根据ic_number修改教职工的信息信息信息
+	 * @return 
+	 * 
+	 * @return
+	 */
+	public  int updateByic_number(Tb_staff tf) {
+		return  hand_Staff_icMapper.updateByic_number(tf);
+	}
+	
+	/**
 	 * 查询单个集合，并且是存在的信息
 	 * 
 	 * @return
@@ -90,6 +115,26 @@ public class IcCardService {
 		Tb_ic_cardExample.Criteria criteria = tb_ic_cardExample.createCriteria();
 		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
 		criteria.andIcTypeEqualTo(ic_type);
+		criteria.andIcNumberEqualTo(number);
+		criteria.andSchoolIdEqualTo(school_id);
+		List<Tb_ic_card> list = tb_ic_card.selectByExample(tb_ic_cardExample);
+		Tb_ic_card tb_ic_card = null;
+		if(list!=null && list.size()>0){
+			tb_ic_card = list.get(0);
+		}
+		return tb_ic_card;
+	}
+	
+	/**
+	 * 根据卡的ic_number进行查询ic卡信息
+	 * 
+	 * @return
+	 */
+	public Tb_ic_card selectIcByIcNumber(String number,int school_id) {
+		
+		Tb_ic_cardExample tb_ic_cardExample = new Tb_ic_cardExample();
+		Tb_ic_cardExample.Criteria criteria = tb_ic_cardExample.createCriteria();
+		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
 		criteria.andIcNumberEqualTo(number);
 		criteria.andSchoolIdEqualTo(school_id);
 		List<Tb_ic_card> list = tb_ic_card.selectByExample(tb_ic_cardExample);

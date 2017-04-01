@@ -5,23 +5,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.didano.base.dao.Tb_MailList_listMapper;
-import cn.didano.base.model.Tb_class;
+import cn.didano.base.dao.Hand_MailList_listMapper;
+import cn.didano.base.model.Hand_parent4mailList;
+import cn.didano.base.model.Hand_staff4MailList;
+import cn.didano.base.model.Hand_student4MailList;
+import cn.didano.base.model.Hand_student4MailListHasParent;
 import cn.didano.base.model.Tb_deleteParentDate;
-import cn.didano.base.model.Tb_mailList_list;
-import cn.didano.base.model.Tb_parent4mailList;
+import cn.didano.base.model.Hand_mailList_list;
 import cn.didano.base.model.Tb_relation;
-import cn.didano.base.model.Tb_staff;
 import cn.didano.base.model.Tb_staff4List;
 import cn.didano.base.model.Tb_staff4MailList;
 import cn.didano.base.model.Tb_staffData;
+import cn.didano.base.model.Tb_student;
 import cn.didano.base.model.Tb_studentData;
-import cn.didano.base.model.Tb_teacher;
 @Service
 public class MailListService {
 
 	@Autowired
-	private Tb_MailList_listMapper mailList_listMapper;
+	private Hand_MailList_listMapper mailList_listMapper;
 	
 	/**
 	 * 通过员工id查询该班级
@@ -38,7 +39,7 @@ public class MailListService {
 	/**
 	 * 通过家长id查询家长
 	 */
-	public Tb_parent4mailList findParentByPid(Integer id){
+	public Hand_parent4mailList findParentByPid(Integer id){
 		return mailList_listMapper.findParentByPid(id);
 	}
 	/**
@@ -70,43 +71,58 @@ public class MailListService {
 	/**
 	 * 通过名字查询小朋友
 	 */
-	public List<Tb_mailList_list> findByname(Tb_studentData data){
+	public List<Hand_mailList_list> findByname(Tb_studentData data){
 		return mailList_listMapper.findByName(data);
 	}
 	/**
 	 * 通过名字班级查询小朋友
 	 */
-	public List<Tb_mailList_list> findBynameClass(Tb_studentData data){
+	public List<Hand_mailList_list> findBynameClass(Tb_studentData data){
 		return mailList_listMapper.findByNameClass(data);
 	}
 	/**
 	 * 通过学校查询所有老师
 	 */
-	public List<Tb_teacher> findteacherByschool(Integer id){
+	public List<Hand_staff4MailList> findteacherByschool(Integer id){
 		return mailList_listMapper.findteacherByschool(id);
 	}
 	/**
-	 * 通过学校查询该学校所有班级
+	 * 通过学校查学生
 	 */
-	public List<Tb_class> findClassByschool(Integer id){
-		return mailList_listMapper.findClassByschool(id);
+	public List<Hand_student4MailList> findStudentByschool(Integer id){
+		return mailList_listMapper.findStudentByschool(id);
+	}
+	/**
+	 * 通过学生的ic_number进行查询学生的信息
+	 * 杨
+	 */
+	public Tb_student findStudentByIcNumber(Tb_student tb_student){
+		return mailList_listMapper.findStudentByIcNumber(tb_student);
+	}
+	
+	/**
+	 * 通过该家长的ic_number进行查询家长的信息
+	 * 杨
+	 */
+	public Hand_student4MailListHasParent findParentByIcNumber(Tb_student tb_student){
+		return mailList_listMapper.findParentByIcNumber(tb_student);
 	}
 	/**
 	 * 通过学校查询
 	 */
-	public List<Tb_mailList_list> findBySchool(Integer id){
+	public List<Hand_mailList_list> findBySchool(Integer id){
 		return mailList_listMapper.findByschool(id);
 	}
 	/**
 	 * 编辑老师
 	 */
-	public int UpdateTeacher(Tb_teacher teacher){
+	public int UpdateTeacher(Hand_staff4MailList teacher){
 		return mailList_listMapper.UpdateTeacher(teacher);
 	}
 	/**
 	 * 通过班级查询该班的老师
 	 */
-	public List<Tb_teacher> findTeacherByClass(Integer id){
+	public List<Hand_staff4MailList> findTeacherByClass(Integer id){
 		return mailList_listMapper.findTeacherByClass(id);
 	}
 	/**
@@ -118,13 +134,13 @@ public class MailListService {
 	/**
 	 * 通过班级查询该班的所有小朋友
 	 */
-	public List<Tb_mailList_list> findByClass(Integer id){
+	public List<Hand_mailList_list> findByClass(Integer id){
 		return mailList_listMapper.findByClass(id);
 	}
 	/**
 	 * 通过小朋友id编辑父母信息
 	 */
-	public int UpdateParent(Tb_parent4mailList parent){
+	public int UpdateParent(Hand_parent4mailList parent){
 		return mailList_listMapper.UpdateParent(parent);
 	}
 	/**
@@ -136,13 +152,13 @@ public class MailListService {
 	/**
 	 * 通过小朋友id查找其所有父母联系方式
 	 */
-	public List<Tb_parent4mailList> findparent(Integer id){
+	public List<Hand_parent4mailList> findparent(Integer id){
 		return mailList_listMapper.findParentById(id);
 	}
 	/**
 	 * 通过小朋友id查找其所有父母联系方式
 	 */
-	public List<Tb_parent4mailList> findParentByStudentId(Integer id){
+	public List<Hand_parent4mailList> findParentByStudentId(Integer id){
 		return mailList_listMapper.findParentByStudentId(id);
 	}
 	
@@ -150,13 +166,13 @@ public class MailListService {
 	/**
 	 * 编辑小朋友信息
 	 */
-	public int Update(Tb_mailList_list list){
+	public int Update(Hand_mailList_list list){
 		return mailList_listMapper.Update(list);
 	}
 	/**
 	 * 通过学生id查询小朋友及其家长信息
 	 */
-	public Tb_mailList_list findById(Integer id){
+	public Hand_mailList_list findById(Integer id){
 		return mailList_listMapper.findById(id);
 	}
 	/**
@@ -164,14 +180,14 @@ public class MailListService {
 	 * @param id
 	 * @return
 	 */
-	public List<Tb_mailList_list> findByTeacher(Integer id){
+	public List<Hand_mailList_list> findByTeacher(Integer id){
 		return mailList_listMapper.findByTeacher(id);
 	}
 	
 	/**
 	 * 查询所有孩子及其家长信息
 	 */
-	public List<Tb_mailList_list> findAll(){
+	public List<Hand_mailList_list> findAll(){
 		return mailList_listMapper.findAll();
 	}
 }

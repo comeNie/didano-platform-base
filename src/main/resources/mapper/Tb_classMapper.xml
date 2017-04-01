@@ -5,8 +5,12 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="school_id" jdbcType="INTEGER" property="schoolId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="start" jdbcType="DATE" property="start" />
     <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
+    <result column="tested" jdbcType="INTEGER" property="tested" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, school_id, title, status, deleted
+    id, school_id, title, start, status, created, updated, deleted, tested
   </sql>
   <select id="selectByExample" parameterType="cn.didano.base.model.Tb_classExample" resultMap="BaseResultMap">
     select
@@ -101,45 +105,71 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.didano.base.model.Tb_class">
-    insert into tb_class (id, school_id, title, 
-      status, deleted)
-    values (#{id,jdbcType=INTEGER}, #{schoolId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
-      #{status,jdbcType=TINYINT}, #{deleted,jdbcType=BIT})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_class (school_id, title, start, 
+      status, created, updated, 
+      deleted, tested)
+    values (#{schoolId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{start,jdbcType=DATE}, 
+      #{status,jdbcType=TINYINT}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
+      #{deleted,jdbcType=BIT}, #{tested,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.didano.base.model.Tb_class">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into tb_class
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="schoolId != null">
         school_id,
       </if>
       <if test="title != null">
         title,
       </if>
+      <if test="start != null">
+        start,
+      </if>
       <if test="status != null">
         status,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="updated != null">
+        updated,
       </if>
       <if test="deleted != null">
         deleted,
       </if>
+      <if test="tested != null">
+        tested,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="schoolId != null">
         #{schoolId,jdbcType=INTEGER},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
+      <if test="start != null">
+        #{start,jdbcType=DATE},
+      </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
       </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
+      </if>
+      <if test="tested != null">
+        #{tested,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -161,11 +191,23 @@
       <if test="record.title != null">
         title = #{record.title,jdbcType=VARCHAR},
       </if>
+      <if test="record.start != null">
+        start = #{record.start,jdbcType=DATE},
+      </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=TINYINT},
       </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.deleted != null">
         deleted = #{record.deleted,jdbcType=BIT},
+      </if>
+      <if test="record.tested != null">
+        tested = #{record.tested,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -177,8 +219,12 @@
     set id = #{record.id,jdbcType=INTEGER},
       school_id = #{record.schoolId,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
+      start = #{record.start,jdbcType=DATE},
       status = #{record.status,jdbcType=TINYINT},
-      deleted = #{record.deleted,jdbcType=BIT}
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      deleted = #{record.deleted,jdbcType=BIT},
+      tested = #{record.tested,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -192,11 +238,23 @@
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
+      <if test="start != null">
+        start = #{start,jdbcType=DATE},
+      </if>
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
       </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
       <if test="deleted != null">
         deleted = #{deleted,jdbcType=BIT},
+      </if>
+      <if test="tested != null">
+        tested = #{tested,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -205,8 +263,12 @@
     update tb_class
     set school_id = #{schoolId,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
+      start = #{start,jdbcType=DATE},
       status = #{status,jdbcType=TINYINT},
-      deleted = #{deleted,jdbcType=BIT}
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT},
+      tested = #{tested,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -17,6 +17,7 @@ public class Tb_staff4List extends Tb_staff{
 
     //private String rfid;
     private String staff_ic_number;
+    private Integer staffIcCardId;
     
     private String qrcodeUrl;
 
@@ -34,6 +35,14 @@ public class Tb_staff4List extends Tb_staff{
     
     private Integer icCardId;
     
+
+	public Integer getStaffIcCardId() {
+		return staffIcCardId;
+	}
+
+	public void setStaffIcCardId(Integer staffIcCardId) {
+		this.staffIcCardId = staffIcCardId;
+	}
 
 	public Integer getIcCardId() {
 		return icCardId;

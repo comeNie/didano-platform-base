@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tb_mailList_list {
+public class Hand_mailList_list {
  
 	private Integer id;
 	private Integer class_id;
@@ -15,7 +15,7 @@ public class Tb_mailList_list {
 	private String student_ic_number; 
 	private int icCardId;
 	
-	private List<Tb_parent4mailList> parent = new ArrayList<Tb_parent4mailList>();
+	private List<Hand_parent4mailList> parent = new ArrayList<Hand_parent4mailList>();
 	
 	
 	public int getIcCardId() {
@@ -67,10 +67,10 @@ public class Tb_mailList_list {
 	public void setGender(byte gender) {
 		this.gender = gender;
 	}
-	public List<Tb_parent4mailList> getParent() {
+	public List<Hand_parent4mailList> getParent() {
 		return parent;
 	}
-	public void setParent(List<Tb_parent4mailList> parent) {
+	public void setParent(List<Hand_parent4mailList> parent) {
 		this.parent = parent;
 	}
 }

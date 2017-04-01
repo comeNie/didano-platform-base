@@ -39,7 +39,7 @@ public class Tb_newstudent {
     
     private int icCardId;
 
-	private List<Tb_parent4mailList> parent = new ArrayList<Tb_parent4mailList>();
+	private List<Hand_parent4mailList> parent = new ArrayList<Hand_parent4mailList>();
    
 	public int getIcCardId() {
 		return icCardId;
@@ -49,11 +49,11 @@ public class Tb_newstudent {
 		this.icCardId = icCardId;
 	}
 
-	public List<Tb_parent4mailList> getParent() {
+	public List<Hand_parent4mailList> getParent() {
 		return parent;
 	}
 
-	public void setParent(List<Tb_parent4mailList> parent) {
+	public void setParent(List<Hand_parent4mailList> parent) {
 		this.parent = parent;
 	}
 

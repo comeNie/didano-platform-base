@@ -30,6 +30,15 @@ public class In_Teacher_Edit {
 	//private String rfid;
 	private String staff_ic_number;
 	
+	@ApiModelProperty(value = "ic卡的id编号",required=true)
+	private Integer icCardId;
+	
+	public Integer getIcCardId() {
+		return icCardId;
+	}
+	public void setIcCardId(Integer icCardId) {
+		this.icCardId = icCardId;
+	}
 	public String getStaff_ic_number() {
 		return staff_ic_number;
 	}

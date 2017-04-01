@@ -5,17 +5,17 @@ import java.util.List;
 public class Tb_studentByschool {
 
 	private Integer classId;
-	private List<Tb_mailList_list> list;
+	private List<Hand_mailList_list> list;
 	public Integer getClassId() {
 		return classId;
 	}
 	public void setClassId(Integer classId) {
 		this.classId = classId;
 	}
-	public List<Tb_mailList_list> getList() {
+	public List<Hand_mailList_list> getList() {
 		return list;
 	}
-	public void setList(List<Tb_mailList_list> list) {
+	public void setList(List<Hand_mailList_list> list) {
 		this.list = list;
 	}
 	@Override

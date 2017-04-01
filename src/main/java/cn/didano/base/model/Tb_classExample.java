@@ -1,6 +1,8 @@
 package cn.didano.base.model;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class Tb_classExample {
@@ -102,6 +104,32 @@ public class Tb_classExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
+        }
+
+        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
+            if (value == null) {
+                throw new RuntimeException("Value for " + property + " cannot be null");
+            }
+            addCriterion(condition, new java.sql.Date(value.getTime()), property);
+        }
+
+        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
+            if (values == null || values.size() == 0) {
+                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
+            }
+            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
+            Iterator<Date> iter = values.iterator();
+            while (iter.hasNext()) {
+                dateList.add(new java.sql.Date(iter.next().getTime()));
+            }
+            addCriterion(condition, dateList, property);
+        }
+
+        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
+            if (value1 == null || value2 == null) {
+                throw new RuntimeException("Between values for " + property + " cannot be null");
+            }
+            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -294,6 +322,66 @@ public class Tb_classExample {
             return (Criteria) this;
         }
 
+        public Criteria andStartIsNull() {
+            addCriterion("start is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartIsNotNull() {
+            addCriterion("start is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartEqualTo(Date value) {
+            addCriterionForJDBCDate("start =", value, "start");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartNotEqualTo(Date value) {
+            addCriterionForJDBCDate("start <>", value, "start");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartGreaterThan(Date value) {
+            addCriterionForJDBCDate("start >", value, "start");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("start >=", value, "start");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartLessThan(Date value) {
+            addCriterionForJDBCDate("start <", value, "start");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("start <=", value, "start");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartIn(List<Date> values) {
+            addCriterionForJDBCDate("start in", values, "start");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartNotIn(List<Date> values) {
+            addCriterionForJDBCDate("start not in", values, "start");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("start between", value1, value2, "start");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("start not between", value1, value2, "start");
+            return (Criteria) this;
+        }
+
         public Criteria andStatusIsNull() {
             addCriterion("status is null");
             return (Criteria) this;
@@ -354,6 +442,126 @@ public class Tb_classExample {
             return (Criteria) this;
         }
 
+        public Criteria andCreatedIsNull() {
+            addCriterion("created is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedIsNotNull() {
+            addCriterion("created is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedEqualTo(Date value) {
+            addCriterion("created =", value, "created");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedNotEqualTo(Date value) {
+            addCriterion("created <>", value, "created");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedGreaterThan(Date value) {
+            addCriterion("created >", value, "created");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedGreaterThanOrEqualTo(Date value) {
+            addCriterion("created >=", value, "created");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedLessThan(Date value) {
+            addCriterion("created <", value, "created");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedLessThanOrEqualTo(Date value) {
+            addCriterion("created <=", value, "created");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedIn(List<Date> values) {
+            addCriterion("created in", values, "created");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedNotIn(List<Date> values) {
+            addCriterion("created not in", values, "created");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedBetween(Date value1, Date value2) {
+            addCriterion("created between", value1, value2, "created");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedNotBetween(Date value1, Date value2) {
+            addCriterion("created not between", value1, value2, "created");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedIsNull() {
+            addCriterion("updated is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedIsNotNull() {
+            addCriterion("updated is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedEqualTo(Date value) {
+            addCriterion("updated =", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedNotEqualTo(Date value) {
+            addCriterion("updated <>", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedGreaterThan(Date value) {
+            addCriterion("updated >", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedGreaterThanOrEqualTo(Date value) {
+            addCriterion("updated >=", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedLessThan(Date value) {
+            addCriterion("updated <", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedLessThanOrEqualTo(Date value) {
+            addCriterion("updated <=", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedIn(List<Date> values) {
+            addCriterion("updated in", values, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedNotIn(List<Date> values) {
+            addCriterion("updated not in", values, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedBetween(Date value1, Date value2) {
+            addCriterion("updated between", value1, value2, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedNotBetween(Date value1, Date value2) {
+            addCriterion("updated not between", value1, value2, "updated");
+            return (Criteria) this;
+        }
+
         public Criteria andDeletedIsNull() {
             addCriterion("deleted is null");
             return (Criteria) this;
@@ -411,6 +619,66 @@ public class Tb_classExample {
 
         public Criteria andDeletedNotBetween(Boolean value1, Boolean value2) {
             addCriterion("deleted not between", value1, value2, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestedIsNull() {
+            addCriterion("tested is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestedIsNotNull() {
+            addCriterion("tested is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestedEqualTo(Integer value) {
+            addCriterion("tested =", value, "tested");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestedNotEqualTo(Integer value) {
+            addCriterion("tested <>", value, "tested");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestedGreaterThan(Integer value) {
+            addCriterion("tested >", value, "tested");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestedGreaterThanOrEqualTo(Integer value) {
+            addCriterion("tested >=", value, "tested");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestedLessThan(Integer value) {
+            addCriterion("tested <", value, "tested");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestedLessThanOrEqualTo(Integer value) {
+            addCriterion("tested <=", value, "tested");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestedIn(List<Integer> values) {
+            addCriterion("tested in", values, "tested");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestedNotIn(List<Integer> values) {
+            addCriterion("tested not in", values, "tested");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestedBetween(Integer value1, Integer value2) {
+            addCriterion("tested between", value1, value2, "tested");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestedNotBetween(Integer value1, Integer value2) {
+            addCriterion("tested not between", value1, value2, "tested");
             return (Criteria) this;
         }
     }

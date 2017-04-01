@@ -119,6 +119,40 @@ public class Out<T> {
 		Object o = new String("");
 		this.setData((T)o);
 	}
+	
+	/**
+	 * 设置返回信息，返回信息不包含第二参数message，第二参数message只是用来日志
+	 * 杨
+	 * 不返回任何消息，但是要返回true
+	 * @param type
+	 * @param message
+	 */
+	public void setBackType(BackType type,String message) {
+		this.success = true;
+		this.code = type.getCode();
+		Object o = new String("");
+		this.setData((T)o);
+	}
+	
+	
+	/**
+	 * 设置返回信息，返回信息不包含第二参数message，第二参数message只是用来日志
+	 * @param type
+	 * @param message
+	 */
+	public void setBackTypeWithLogInfo(BackType type, String message,String info) {
+		if (type.getCode() < BackType.FAIL_DOWN_LINE.getCode()) {//2000
+			this.success = true;
+			logger.debug(type.getMessage() + ":" + message);
+		} else {
+			logger.error(type.getMessage() + ":" + message);
+			this.success = false;
+		}
+		this.code = type.getCode();
+		this.message = type.getMessage()+""+info;
+		Object o = new String("");
+		this.setData((T)o);
+	}
 
 	/**
 	 * 设置返回信息，返回信息不包含第二参数message，第二参数message只是用来日志

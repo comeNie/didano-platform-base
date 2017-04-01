@@ -1,6 +1,6 @@
 package cn.didano.base.model;
 
-public class Tb_parent4mailList{
+public class Hand_parent4mailList{
 	private Integer id;
 	private byte relation_id;
 	private String parent_name;

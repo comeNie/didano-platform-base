@@ -1,142 +1,95 @@
 package cn.didano.base.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Tb_class {
-	private Integer id;
+    private Integer id;
 
-	private Integer SchoolId;
-	private Integer class_id;
-	private String title;
-	private String name;
-	private Date birthday;
-	private Byte gender;
-	private Byte status;
-	private byte relation_id;
-	private Integer parent_id;
-	private String parent_name;
-	private String parent_phone;
-	private Boolean deleted;
-	private String parent_ic_number;
-	private String student_ic_number;
+    private Integer schoolId;
 
-	public String getParent_ic_number() {
-		return parent_ic_number;
-	}
+    private String title;
 
-	public void setParent_ic_number(String parent_ic_number) {
-		this.parent_ic_number = parent_ic_number;
-	}
+    private Date start;
 
-	public String getStudent_ic_number() {
-		return student_ic_number;
-	}
+    private Byte status;
 
-	public void setStudent_ic_number(String student_ic_number) {
-		this.student_ic_number = student_ic_number;
-	}
+    private Date created;
 
-	public Integer getParent_id() {
-		return parent_id;
-	}
+    private Date updated;
 
-	public void setParent_id(Integer parent_id) {
-		this.parent_id = parent_id;
-	}
+    private Boolean deleted;
 
-	public byte getRelation_id() {
-		return relation_id;
-	}
+    private Integer tested;
 
-	public void setRelation_id(byte relation_id) {
-		this.relation_id = relation_id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getParent_name() {
-		return parent_name;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setParent_name(String parent_name) {
-		this.parent_name = parent_name;
-	}
+    public Integer getSchoolId() {
+        return schoolId;
+    }
 
-	public String getParent_phone() {
-		return parent_phone;
-	}
+    public void setSchoolId(Integer schoolId) {
+        this.schoolId = schoolId;
+    }
 
-	public void setParent_phone(String parent_phone) {
-		this.parent_phone = parent_phone;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Date getStart() {
+        return start;
+    }
 
-	public Integer getSchoolId() {
-		return SchoolId;
-	}
+    public void setStart(Date start) {
+        this.start = start;
+    }
 
-	public void setSchoolId(Integer schoolId) {
-		SchoolId = schoolId;
-	}
+    public Byte getStatus() {
+        return status;
+    }
 
-	public Integer getClass_id() {
-		return class_id;
-	}
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
 
-	public void setClass_id(Integer class_id) {
-		this.class_id = class_id;
-	}
+    public Date getCreated() {
+        return created;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Date getUpdated() {
+        return updated;
+    }
 
-	public Date getBirthday() {
-		return birthday;
-	}
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
 
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
+    public Boolean getDeleted() {
+        return deleted;
+    }
 
-	public Byte getGender() {
-		return gender;
-	}
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
 
-	public void setGender(Byte gender) {
-		this.gender = gender;
-	}
+    public Integer getTested() {
+        return tested;
+    }
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title == null ? null : title.trim();
-	}
-
-	public Byte getStatus() {
-		return status;
-	}
-
-	public void setStatus(Byte status) {
-		this.status = status;
-	}
-
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
-	}
+    public void setTested(Integer tested) {
+        this.tested = tested;
+    }
 }

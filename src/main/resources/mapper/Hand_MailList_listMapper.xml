@@ -6,7 +6,7 @@
     <!-- SELECT a.*,c.rfid FROM tb_student a,tb_staff_class b,tb_staff c WHERE b.staff_id=#{id} and c.id=b.staff_id AND a.class_id=b.class_id  AND a.deleted =0 AND b.deleted=0 ORDER BY CONVERT( a.name USING gbk )
  -->
  
-select tmp3.*,tmp3.ic_number as student_ic_number,tmp4.ic_number as staff_ic_number from (select tmp1.*,tmp2.ic_number from 
+select tmp3.ic_card_id as icCardId,tmp3.*,tmp3.ic_number as student_ic_number,tmp4.ic_number as staff_ic_number from (select tmp1.*,tmp2.ic_number from 
 (SELECT a.* FROM tb_student a,tb_staff_class b WHERE b.staff_id=#{id} AND a.class_id=b.class_id  AND a.deleted =0 AND b.deleted=0 ORDER BY CONVERT( a.name USING gbk))tmp1 left join tb_ic_card tmp2 on tmp1.rfid=tmp2.rfid) tmp3 
 left join 
 (select card.ic_number,tmp5.class_id from (select staff.rfid,sc.class_id from tb_staff staff,tb_staff_class sc where staff.id=sc.staff_id and staff.deleted=0 and sc.class_id=#{id}) tmp5 left join tb_ic_card card on tmp5.rfid=card.rfid) tmp4 
@@ -20,13 +20,10 @@ on tmp3.class_id=tmp4.class_id
    SELECT * FROM tb_student where rfid=#{rfid}
 </select>
 
-<select id="findParentByIcNumber" parameterType="cn.didano.base.model.Tb_student" resultType="cn.didano.base.model.Hand_student4MailList">
+<select id="findParentByIcNumber" parameterType="cn.didano.base.model.Tb_student" resultType="cn.didano.base.model.Hand_staff4MailList">
    select a.relation_title as title,b.name from tb_student_parent a,tb_student b where a.rfid=#{rfid} and b.id=a.student_id and a.deleted=0
 </select>
- 
- 
- 
- 
+
  <select id="findAll" resultType="cn.didano.base.model.Hand_mailList_list">
  SELECT a.id,a.class_id,a.name,a.birthday,a.gender FROM tb_student a WHERE   a.deleted =0  ORDER BY CONVERT( a.name USING gbk )
   </select>
@@ -118,9 +115,10 @@ from
 		c.title,
 		tmp1.type,
 		tmp1.school_id ,
-		tmp3.ic_number as staff_ic_number
+		tmp3.ic_number as staff_ic_number,
+		tmp1.ic_card_id as icCardId
 	FROM
-	(SELECT a.status,a.id,b.class_id,a.type,a.school_id,a.name,a.phone,c.in_time,c.out_time,a.rfid
+	(SELECT a.ic_card_id,a.status,a.id,b.class_id,a.type,a.school_id,a.name,a.phone,c.in_time,c.out_time,a.rfid
 	FROM tb_staff a,tb_staff_class b ,tb_sign_type c WHERE a.school_id=#{id} AND a.deleted=0 AND a.type =32 and a.id=b.staff_id and a.sign_type_id=c.id
 	)AS tmp1 LEFT JOIN tb_class c ON tmp1.class_id=c.id left join tb_ic_card tmp3 on tmp1.rfid=tmp3.rfid ORDER BY CONVERT( tmp1.name USING gbk ) 
  </select>
@@ -165,6 +163,7 @@ LEFT JOIN tb_school_parent p ON tmp2.parent_id = p.id left join tb_ic_card tmp3 
   tmp2.relation_id,
   tmp2.title AS parent_name,
   tmp3.ic_number as parent_ic_number,
+  tmp2.ic_card_id as icCardId,
   p.phone AS parent_phone
 FROM
   (
@@ -177,7 +176,8 @@ FROM
       tmp1.gender,
       tmp1.class_id,
       p.parent_id AS parent_id,
-      p.rfid
+      p.rfid,
+      p.ic_card_id
     FROM
       tb_student AS tmp1,
       tb_student_parent p
@@ -227,6 +227,10 @@ select * from tb_student_parent where student_id=#{id}
 	b.class_id=c.id AND a.id=#{id} ORDER BY CONVERT( a.name USING gbk )
 	) tmp1 left join tb_ic_card tmp2 on tmp1.rfid=tmp2.rfid
 </select>
+<select id="selectSchoolBystaffId" parameterType="Integer" resultType="cn.didano.base.model.Tb_staff4MailList">
+ 	select school_id as schoolId from tb_staff where id=#{id}
+</select>
+
 <select id="findTeacherByNameClass" parameterType="cn.didano.base.model.Tb_staffData" resultType="cn.didano.base.model.Tb_staff4List"> 
   <!--  SELECT  tmp1.sign_type_id AS SignTypeId,tmp1.title,tmp1.status,tmp1.school_id,tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id ,c.in_time,c.out_time FROM 
 	 (SELECT c.title,a.status,a.sign_type_id,a.school_id,a.id,a.name,a.phone,a.type,b.class_id FROM tb_staff a,tb_staff_class b ,tb_class c

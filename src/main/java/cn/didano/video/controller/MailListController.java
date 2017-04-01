@@ -42,7 +42,7 @@ import cn.didano.base.model.Tb_classStudent;
 import cn.didano.base.model.Tb_deleteParentDate;
 import cn.didano.base.model.Tb_ic_card;
 import cn.didano.base.model.Hand_mailList_list;
-import cn.didano.base.model.Tb_newstudent;
+import cn.didano.base.model.Hand_student4MailListHasParents;
 import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_schoolparent4;
 import cn.didano.base.model.Tb_sign_type;
@@ -112,7 +112,9 @@ public class MailListController {
 		OutList<Tb_staff> outList = null;
 		Out<OutList<Tb_staff>> back = new Out<OutList<Tb_staff>>();
 		try {
+			// 通过学生id查找到该学生
 			student = mailListService.findById(student_id);
+			// 通过班级id查找该班级所有老师
 			classstaff = mailListService.findTeacherByClass(student.getClass_id());
 			List<Tb_staff> doctor = new ArrayList<Tb_staff>();
 			Tb_staff staff1 = null;
@@ -135,18 +137,20 @@ public class MailListController {
 	}
 
 	/**
-	 * 查询班级关系对应 当前登录老师所对应的班级
+	 * 查询班级关系对应 当前登录老师学校的所有班级
 	 */
 	@PostMapping(value = "findStaff_ClassInfo/{staff_id}")
 	@ApiOperation(value = "查询班级关系对应", notes = "查询班级关系对应")
 	@ResponseBody
 	public Out<OutList<Tb_class>> findStaff_ClassInfo(@PathVariable("staff_id") Integer id) {
 		logger.info("访问  MailListController : findStaff_ClassInfo,staff_id=" + id);
+		// 查询当前登录的员工
 		Tb_staff staff = staffService.findById(id);
 		List<Tb_class> classs = null;
 		OutList<Tb_class> outList = null;
 		Out<OutList<Tb_class>> back = new Out<OutList<Tb_class>>();
 		try {
+			// 查询该学校所有班级
 			classs = classService.findAll(staff.getSchoolId());
 			if (classs.size() > 0) {
 				outList = new OutList<Tb_class>(classs.size(), classs);
@@ -173,6 +177,7 @@ public class MailListController {
 		OutList<Tb_relation> outList = null;
 		Out<OutList<Tb_relation>> back = new Out<OutList<Tb_relation>>();
 		try {
+			// 查找所有家长关系及其对应id
 			relation = mailListService.findrelation();
 			if (relation.size() > 0) {
 				outList = new OutList<Tb_relation>(relation.size(), relation);
@@ -199,52 +204,59 @@ public class MailListController {
 	public Out<Tb_bossData> studentstaff_searchByName(@PathVariable("name") String name, @PathVariable("id") Integer id)
 			throws IllegalAccessException, InvocationTargetException {
 		logger.info("访问  MailListController:studentstaff_searchByName,name=" + name + ",id=" + id);
-		Tb_staff s0 = staffService.findById(id);
-//		 得到学校的id
-		Tb_staff4MailList s1 = mailListService.findbystaffbyid(id);
+		// 得到当前登录人员的信息，为了得到学校id
+		Tb_staff staff4SchoolId = staffService.findById(id);
+		// 为了得到班级id
+		Tb_staff4MailList staff4ClassId = mailListService.findbystaffbyid(id);
 		// 按名字查询老师集合
 		List<Tb_staff> staffAll = new ArrayList<Tb_staff>();
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-		if (s0.getType() == StaffType.SCHOOLMASTER.getIndex()) {
-			// yang 添加类
-			Tb_staff ts = new Tb_staff();
-			ts.setName("%" + name + "%");
-			ts.setSchoolId(s0.getSchoolId());
-			List<Tb_staff4List> staffA = staffService.findByNameSchool(ts);
-			// 取教职工（老师）
+		// 判断当前登录人员是园长还是老师
+		if (staff4SchoolId.getType() == StaffType.SCHOOLMASTER.getIndex()) {
+			// 设置要查询的人员的名字和该学校id
+			Tb_staff staffNameData = new Tb_staff();
+			staffNameData.setName("%" + name + "%");
+			staffNameData.setSchoolId(staff4SchoolId.getSchoolId());
+			// 通过名字和学校id进行模糊查询
+			List<Tb_staff4List> staffFindByName = staffService.findByNameSchool(staffNameData);
 			Tb_staff4MailList target = null;
-			Tb_sign_type t = null;
-			for (Tb_staff4List staff : staffA) {
+			Tb_sign_type sign_time = null;
+			for (Tb_staff4List staff : staffFindByName) {
 				target = new Tb_staff4MailList();
 				BeanUtils.copyProperties(target, staff);
+				// 判断该员工是否需要签到
 				if (target.getSignTypeId() != 0) {
-					t = staffService.findTypeByID(target.getSignTypeId());
-					target.setIn_time(sdf.format(t.getInTime()));
-					target.setOut_time(sdf.format(t.getOutTime()));
+					sign_time = staffService.findTypeByID(target.getSignTypeId());
+					target.setIn_time(sdf.format(sign_time.getInTime()));
+					target.setOut_time(sdf.format(sign_time.getOutTime()));
 				}
 				target.setStaff_ic_number(staff.getStaff_ic_number());
 				staffAll.add(target);
 			}
-			
+
 		} else {
-			Tb_staff ts = new Tb_staff();
-			ts.setName("%" + name + "%");
-			ts.setSchoolId(s0.getSchoolId());
-			List<Tb_staff4List> boss = staffService.findBossByNameschool(ts);
+			// 设置要查询的人员的名字和该学校id
+			Tb_staff staffNameData = new Tb_staff();
+			staffNameData.setName("%" + name + "%");
+			staffNameData.setSchoolId(staff4SchoolId.getSchoolId());
+			// 查询该名字为园长的人
+			List<Tb_staff4List> boss = staffService.findBossByNameschool(staffNameData);
 			Tb_staffData data2 = new Tb_staffData();
 			data2.setName("%" + name + "%");
-			data2.setClass_id(s1.getClass_id());
+			data2.setClass_id(staff4ClassId.getClass_id());
 			staffAll.addAll(boss);
+			// 查询改名字为教职工的人
 			List<Tb_staff4List> teacherAll = mailListService.findTeacherByNameClass(data2);
-			Tb_sign_type t0 = null;
+			Tb_sign_type sign_time = null;
+			// 为教职工补充签到时间等数据
 			if (!teacherAll.isEmpty()) {
 				for (Tb_staff4List one : teacherAll) {
 					Tb_staff4MailList target0 = new Tb_staff4MailList();
 					BeanUtils.copyProperties(target0, one);
 					if (target0.getSignTypeId() != 0) {
-						t0 = staffService.findTypeByID(target0.getSignTypeId());
-						target0.setIn_time(sdf.format(t0.getInTime()));
-						target0.setOut_time(sdf.format(t0.getOutTime()));
+						sign_time = staffService.findTypeByID(target0.getSignTypeId());
+						target0.setIn_time(sdf.format(sign_time.getInTime()));
+						target0.setOut_time(sdf.format(sign_time.getOutTime()));
 					}
 					target0.setStaff_ic_number(one.getStaff_ic_number());
 					staffAll.add(target0);
@@ -252,11 +264,12 @@ public class MailListController {
 			}
 			Tb_staff tf = new Tb_staff();
 			tf.setName("%" + name + "%");
-			tf.setSchoolId(s0.getSchoolId());
-			List<Tb_staff4List> n = staffService.findByNameType(tf);
+			tf.setSchoolId(staff4SchoolId.getSchoolId());
+			// 查询该名字为医生或勤务的人
+			List<Tb_staff4List> helper = staffService.findByNameType(tf);
 			Tb_sign_type t1 = null;
-			if (!n.isEmpty()) {
-				for (Tb_staff4List one : n) {
+			if (!helper.isEmpty()) {
+				for (Tb_staff4List one : helper) {
 					Tb_staff4MailList target1 = new Tb_staff4MailList();
 					BeanUtils.copyProperties(target1, one);
 					if (target1.getSignTypeId() != 0) {
@@ -272,7 +285,7 @@ public class MailListController {
 		Tb_bossData data = new Tb_bossData();
 		List<Hand_mailList_list> student = null;
 		List<Tb_classStudent> student2 = new ArrayList<Tb_classStudent>();
-		// 学生同名顶多三次
+		// 关于同名学生的处理
 		Out<Tb_bossData> back = new Out<Tb_bossData>();
 		try {
 
@@ -280,16 +293,16 @@ public class MailListController {
 				data.getStaff().addAll(staffAll);
 			}
 			Tb_studentData data1 = new Tb_studentData();
-			if (s0.getType() == StaffType.SCHOOLMASTER.getIndex()) {
+			if (staff4SchoolId.getType() == StaffType.SCHOOLMASTER.getIndex()) {
 				// yang修改sql
 				data1.setName("%" + name + "%");
-				data1.setSchoolid(s0.getSchoolId());
+				data1.setSchoolid(staff4SchoolId.getSchoolId());
 				// 按名字查询学生集合
 				student = mailListService.findByname(data1);
 			} else {
 				// yang修改sql
 				data1.setName("%" + name + "%");
-				data1.setSchoolid(s1.getClass_id());
+				data1.setSchoolid(staff4ClassId.getClass_id());
 				student = mailListService.findBynameClass(data1);
 			}
 
@@ -313,6 +326,7 @@ public class MailListController {
 
 			Set<Integer> keys = map.keySet();
 			Iterator<Integer> it = keys.iterator();
+			// 通过班级分类
 			while (it.hasNext()) {
 				Integer key = it.next();
 				List<Hand_mailList_list> val = map.get(key);
@@ -379,30 +393,32 @@ public class MailListController {
 		Tb_staff_class vd_class = new Tb_staff_class();
 		Tb_sign_type vd_date = new Tb_sign_type();
 		Out<String> back = new Out<String>();
-		Tb_ic_card tb_ic_card =null;
+		Tb_ic_card tb_ic_card = null;
 		try {
 			BeanUtils.copyProperties(vd_staff, teacher_a);
 			int rowNum = 0;
 			int rowNum3 = 0;
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-			boolean boo=false;
+			boolean boo = false;
 			if (teacher_a.getStaff_ic_number() != "") {
 				// 如果输入的编号IC卡表里面不存在，那么返回错误信息，如果有才继续
 				tb_ic_card = iCCardService.selectIcByNumber(teacher_a.getStaff_ic_number(), operator.getSchoolId(),
 						IcCardType.ADULT.getIndex());
-				if(tb_ic_card!=null){
-					boo=true;
+				if (tb_ic_card != null) {
+					boo = true;
 				}
-			}else{
-				boo=true;
+			} else {
+				boo = true;
 			}
-			if(boo){
-				if (vd_staff.getId() == null) {
+			if (boo) {
+				// id为null则为新增，id不为null则为编辑
+				if (vd_staff.getId() == null) {// 新增
 					if (teacher_a.getStaff_ic_number() != null) {
 						Tb_ic_card td = new Tb_ic_card();
 						td.setIcNumber(teacher_a.getStaff_ic_number());
 						int updateInfoByid = iCCardService.updateInfoByic_number(td);
 					}
+					// 判断要新增的人员是否为园长
 					if (teacher_a.getType() != StaffType.SCHOOLMASTER.getIndex()) {
 						vd_date.setSchoolId(operator.getSchoolId());
 						vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
@@ -411,6 +427,7 @@ public class MailListController {
 						rowNum3 = staffService.insertTypeSelective(vd_date);
 					}
 					vd_staff.setCreated(new Date());
+					// 根据员工类型看是否需要设置签到时间
 					if (teacher_a.getType() != StaffType.SCHOOLMASTER.getIndex()) {
 						vd_staff.setSignTypeId(vd_date.getId());
 					} else {
@@ -428,6 +445,7 @@ public class MailListController {
 						vd_staff.setIcCardId(0);
 					}
 					rowNum = staffService.insertTeacherSelective(vd_staff);// insert
+					// 如果新增人员为老师，设置他所带班级的对应关系
 					if (teacher_a.getType() == StaffType.TEACHEER.getIndex()) {
 						vd_class.setClassId(teacher_a.getClassId());
 						vd_class.setCreated(new Date());
@@ -435,6 +453,7 @@ public class MailListController {
 						vd_class.setStaffId(vd_staff.getId());
 						staffService.insertClassSelective(vd_class);
 					}
+					// 引入二维码接口，生成对应的二维码
 					HttpPost httpPost = new HttpPost(appConfigProperties.getQrcodePath());
 					CloseableHttpClient client = HttpClients.createDefault();
 					String respContent = null;
@@ -462,10 +481,12 @@ public class MailListController {
 						// 更新有问题
 						back.setBackTypeWithLog(BackType.FAIL_UPDATE_AFTER_INSERT, "rowNum=" + rowNum);
 					}
-				} else {
+				} else {// 编辑
+					// 如果修改职工类型为园长，则设置为不用签到
 					if (teacher_a.getType() == StaffType.SCHOOLMASTER.getIndex()) {
 						vd_staff.setSignTypeId(0);
 					} else {
+						// 判断该员工是否已经有签到时间数据，没有的话就新增
 						if (staffService.findById(teacher_a.getId()).getSignTypeId() != 0) {
 							vd_date.setSchoolId(operator.getSchoolId());
 							vd_date.setInTime(sdf.parse(teacher_a.getSetIntime()));
@@ -481,17 +502,18 @@ public class MailListController {
 							vd_staff.setSignTypeId(vd_date.getId());
 						}
 					}
-				
+
 					// yang 编辑的时候也可能修改编号，编号导致同步修改RFID
-					if (tb_ic_card!= null) {
+					if (tb_ic_card != null) {
 						vd_staff.setRfid(tb_ic_card.getRfid());
 						vd_staff.setIcCardId(tb_ic_card.getId());
-					} else if(teacher_a.getIcCardId()!=null){
+					} else if (teacher_a.getIcCardId() != null) {
 						vd_staff.setRfid(null);
 						vd_staff.setIcCardId(null);
 					}
 					rowNum = staffService.updatestaff(vd_staff);
 					if (teacher_a.getType() == StaffType.TEACHEER.getIndex()) {
+						// 判断该人员是否已经有班级对应关系数据，没有则新增
 						if (!staffService.findclassidByStaffid(vd_staff.getId()).isEmpty()) {
 							vd_class.setClassId(teacher_a.getClassId());
 
@@ -515,7 +537,7 @@ public class MailListController {
 						back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, "rowNum=" + rowNum);
 					}
 				} // end else
-			}else{
+			} else {
 				// 输入的ic卡编号有错
 				back.setBackTypeWithLog(BackType.FAIL_OPER_NO_STAFF_CARD);
 			}
@@ -527,6 +549,7 @@ public class MailListController {
 		}
 		return back;
 	}
+
 	/**
 	 * 通过班级查找老师
 	 */
@@ -562,6 +585,7 @@ public class MailListController {
 	public Out<Tb_bossData> student_searchByBoss(@PathVariable("staff_id") Integer staff_id)
 			throws IllegalAccessException, InvocationTargetException {
 		logger.info("访问  MailListController:student_searchByBoss,staff_id=" + staff_id);
+		// 获取当前登录人员的信息
 		Tb_staff staff = staffService.findById(staff_id);
 		Tb_bossData data = new Tb_bossData();
 		List<Hand_mailList_list> student = null;
@@ -574,13 +598,13 @@ public class MailListController {
 			List<Hand_student4MailList> students = mailListService.findStudentByschool(staff.getSchoolId());
 			// 按学生分班存进一个map
 			Map<Integer, List<Hand_student4MailList>> student2ParentMap = new HashMap<Integer, List<Hand_student4MailList>>();
-			for (Hand_student4MailList c : students) {
-				if (student2ParentMap.containsKey(c.getClass_id())) {
-					student2ParentMap.get(c.getId()).add(c);
+			for (Hand_student4MailList studentGroupByClass : students) {
+				if (student2ParentMap.containsKey(studentGroupByClass.getClass_id())) {
+					student2ParentMap.get(studentGroupByClass.getId()).add(studentGroupByClass);
 				} else {
 					List<Hand_student4MailList> newOne = new ArrayList<Hand_student4MailList>();
-					newOne.add(c);
-					student2ParentMap.put(c.getId(), newOne);
+					newOne.add(studentGroupByClass);
+					student2ParentMap.put(studentGroupByClass.getId(), newOne);
 				}
 			}
 			// 循环遍历成一个学生家长集合
@@ -614,29 +638,29 @@ public class MailListController {
 			}
 			// 将学生家长集合通过班级分类
 			Map<Integer, List<Hand_mailList_list>> map = new HashMap<Integer, List<Hand_mailList_list>>();
-			
-			//返回集合对象，Tb_mailList_list需要将上面的数据组装进来
+
+			// 返回集合对象，Tb_mailList_list需要将上面的数据组装进来
 			Hand_mailList_list mailList = null;
 
-			for (Hand_student4MailListHasParent c : cspAll) {
+			for (Hand_student4MailListHasParent studentAndParents : cspAll) {
 				mailList = new Hand_mailList_list();
-				mailList.setBirthday(c.getBirthday());
-				mailList.setClass_id(c.getClass_id());
-				mailList.setGender(c.getGender());
-				mailList.setId(c.getId());
-				mailList.setName(c.getName());
-				mailList.setClass_name(c.getTitle());
-				mailList.setParent(c.getParent());
+				mailList.setBirthday(studentAndParents.getBirthday());
+				mailList.setClass_id(studentAndParents.getClass_id());
+				mailList.setGender(studentAndParents.getGender());
+				mailList.setId(studentAndParents.getId());
+				mailList.setName(studentAndParents.getName());
+				mailList.setClass_name(studentAndParents.getTitle());
+				mailList.setParent(studentAndParents.getParent());
 				// 学生的rfid
-				mailList.setStudent_ic_number(c.getStudent_ic_number());
-				mailList.setIcCardId(c.getStudentIcCardId());
+				mailList.setStudent_ic_number(studentAndParents.getStudent_ic_number());
+				mailList.setIcCardId(studentAndParents.getStudentIcCardId());
 
-				if (map.containsKey(c.getClass_id())) {
-					map.get(c.getClass_id()).add(mailList);
+				if (map.containsKey(studentAndParents.getClass_id())) {
+					map.get(studentAndParents.getClass_id()).add(mailList);
 				} else {
 					student = new ArrayList<Hand_mailList_list>();
 					student.add(mailList);
-					map.put(c.getClass_id(), student);
+					map.put(studentAndParents.getClass_id(), student);
 				}
 			}
 			// 循环map将数据返回给总返回数据
@@ -721,7 +745,9 @@ public class MailListController {
 	public Out<Tb_teacherAndStudent> student_searchByClass(@PathVariable("staff_id") Integer staff_id)
 			throws ParseException, IllegalAccessException, InvocationTargetException {
 		logger.info("访问  MailListController:student_searchByClass,staff_id=" + staff_id);
+		// 获取当前登录人员的信息
 		Tb_staff staff = staffService.findById(staff_id);
+		// 获取当前登录老师的班级id
 		Tb_staffData classid = mailListService.findClassIdBySid(staff_id);
 		Tb_teacherAndStudent data = new Tb_teacherAndStudent();
 		List<Hand_mailList_list> students = null;
@@ -729,8 +755,10 @@ public class MailListController {
 		Out<Tb_teacherAndStudent> back = new Out<Tb_teacherAndStudent>();
 		try {
 			if (staff.getType() == StaffType.TEACHEER.getIndex()) {
+				// 获取当前老师所带的所有学生
 				students = mailListService.findByTeacher(staff.getId());
 				if (!students.isEmpty()) {
+					// 添加每个学生对应的父母信息
 					for (Hand_mailList_list list : students) {
 						List<Hand_parent4mailList> parent = mailListService.findparent(list.getId());
 						list.getParent().addAll(parent);
@@ -743,6 +771,7 @@ public class MailListController {
 				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
 				List<Tb_staff4MailList> all = new ArrayList<Tb_staff4MailList>();
+				// 查找该老师所属学校的园长
 				List<Tb_staff4List> bosses = staffService.findBossByschool(staff.getSchoolId());
 				// 校长
 				if (!bosses.isEmpty()) {
@@ -754,8 +783,9 @@ public class MailListController {
 				}
 				// 取教职工（老师）
 				List<Hand_staff4MailList> classstaff = mailListService.findTeacherByClass(classid.getClass_id());
-				
+
 				Tb_staff4MailList staff1 = null;
+				// 组装老师的各种数据
 				for (Hand_staff4MailList teacher : classstaff) {
 					staff1 = new Tb_staff4MailList();
 					BeanUtils.copyProperties(staff1, teacher);
@@ -844,7 +874,9 @@ public class MailListController {
 		Out<String> back = new Out<String>();
 		List<Hand_parent4mailList> parentall = null;
 		try {
+			// 删除学生信息
 			int rowNum = mailListService.delete(student_id);
+			// 查询该学生所有的父母并删除
 			parentall = mailListService.findparent(student_id);
 			if (!parentall.isEmpty()) {
 				mailListService.deleteparent(student_id);
@@ -960,8 +992,9 @@ public class MailListController {
 			@ApiParam(value = "新增编辑小朋友", required = true) @RequestBody In_Student_Edit student_a)
 			throws IllegalAccessException, InvocationTargetException, ClientProtocolException, IOException {
 		logger.info("访问  MailListController:Student_add_edit,student_a=" + student_a);
-		Tb_class tb_class = classService.selectById(student_a.getClass_id());
-		Tb_newstudent vd_student = new Tb_newstudent();
+		Tb_class tb_class = classService.selectById(student_a.getClassId());
+		System.out.println(student_a.getClassId());
+		Hand_student4MailListHasParents vd_student = new Hand_student4MailListHasParents();
 		Hand_mailList_list list = new Hand_mailList_list();
 		Tb_schoolparent4 vd_parent = new Tb_schoolparent4();
 		Tb_studentparent vd_studentparent = new Tb_studentparent();
@@ -970,7 +1003,8 @@ public class MailListController {
 		Tb_ic_card tb_ic_card = null;
 		try {
 			BeanUtils.copyProperties(vd_student, student_a);
-			if (vd_student.getId() == null) {
+			// id为null则为新增，不为null则为编辑
+			if (vd_student.getId() == null) {// 新增
 
 				if (student_a.getStudent_ic_number() != null) {
 					// 修改表tb_ic_card表数据的状态
@@ -985,7 +1019,7 @@ public class MailListController {
 					// 学生的添加studebt_rfid，传进来的只是编号 要天加ic卡中ic_rfid
 					vd_student.setStudent_ic_number(tb_ic_cardNoe.getRfid());
 					vd_student.setIcCardId(tb_ic_cardNoe.getId());
-				}else if(student_a.getIcCardId()!=null){
+				} else if (student_a.getIcCardId() != null) {
 					// 学生的添加studebt_rfid，传进来的只是编号 要天加ic卡中ic_rfid
 					vd_student.setStudent_ic_number("");
 					vd_student.setIcCardId(0);
@@ -1002,22 +1036,22 @@ public class MailListController {
 							iCCardService.updateInfoByic_number(td);
 						}
 					}
-					int i=0;
+					int i = 0;
 					for (Hand_parent4mailList add : student_a.getParent()) {
 						// 查询家长的ic卡是否存在
 						List<Tb_ic_card> tb_ic_cardTow = new ArrayList<Tb_ic_card>();
 						List<Hand_parent4mailList> parent2 = student_a.getParent();
 						for (Hand_parent4mailList tb_parent4mailList : parent2) {
-							if (tb_parent4mailList.getParent_ic_number() !="" ) {
+							if (tb_parent4mailList.getParent_ic_number() != "") {
 								tb_ic_card = iCCardService.selectIcByNumber(tb_parent4mailList.getParent_ic_number(),
 										tb_class.getSchoolId(), IcCardType.ADULT.getIndex());
-								if(tb_ic_card!=null){
+								if (tb_ic_card != null) {
 									tb_ic_cardTow.add(tb_ic_card);
 								}
 							}
-							
+
 						}
-						vd_parent.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
+						vd_parent.setSchoolId(classService.selectById(vd_student.getClassId()).getSchoolId());
 						vd_parent.setPhone(add.getParent_phone());
 						vd_parent.setParent_id_number(add.getParent_ic_number());
 						vd_parent.setType(1);
@@ -1026,7 +1060,7 @@ public class MailListController {
 
 						rowNUM2 = studentService.insertParentSelective(vd_parent);
 						vd_studentparent.setSchoolId(vd_student.getSchoolId());
-						vd_studentparent.setClassId(vd_student.getClass_id());
+						vd_studentparent.setClassId(vd_student.getClassId());
 						vd_studentparent.setStudentId(vd_student.getId());
 						vd_studentparent.setParentId(vd_parent.getId());
 						vd_studentparent.setRelationId(add.getRelation_id());
@@ -1073,7 +1107,7 @@ public class MailListController {
 							respContent = EntityUtils.toString(he, "UTF-8");
 						}
 						logger.info("respContent=" + respContent);
-						i=i+1;
+						i = i + 1;
 					}
 				}
 				if (rowNum >= 0) {
@@ -1083,14 +1117,16 @@ public class MailListController {
 					// 更新有问题
 					back.setBackTypeWithLog(BackType.FAIL_UPDATE_AFTER_INSERT, "rowNum=" + rowNum);
 				}
-			} else{
+			} else {// 编辑
 				BeanUtils.copyProperties(list, student_a);
-//				if (tb_ic_cardNoe != null) {
-//					// 添加学生的rifid
-//					list.setStudent_ic_number(tb_ic_cardNoe.getRfid());
-//					list.setIcCardId(tb_ic_cardNoe.getId());
-//				} 
+				// if (tb_ic_cardNoe != null) {
+				// // 添加学生的rifid
+				// list.setStudent_ic_number(tb_ic_cardNoe.getRfid());
+				// list.setIcCardId(tb_ic_cardNoe.getId());
+				// }
+				// 更新学生信息
 				int rowNum = mailListService.Update(list);// insert
+				// 删除掉已经取消的父母信息
 				if (!"".equals(student_a.getDeleteParents())) {
 					String[] arr = student_a.getDeleteParents().split("_");
 					Tb_deleteParentDate date = null;
@@ -1102,21 +1138,22 @@ public class MailListController {
 					}
 				}
 				if (!student_a.getParent().isEmpty()) {
-					int i=0;
+					int i = 0;
 					for (Hand_parent4mailList add : student_a.getParent()) {
 						// 查询家长的ic卡是否存在
 						List<Tb_ic_card> tb_icList = new ArrayList<Tb_ic_card>();
 						List<Hand_parent4mailList> parent2 = student_a.getParent();
 						for (Hand_parent4mailList tb_parent4mailList : parent2) {
-							if (tb_parent4mailList.getParent_ic_number() !="") {
+							if (tb_parent4mailList.getParent_ic_number() != "") {
 								tb_ic_card = iCCardService.selectIcByNumber(tb_parent4mailList.getParent_ic_number(),
 										tb_class.getSchoolId(), IcCardType.ADULT.getIndex());
-								if(tb_ic_card!=null){
+								if (tb_ic_card != null) {
 									tb_icList.add(tb_ic_card);
 								}
 							}
 						}
-						if (add.getId() == null) {
+						// 如果父母的id为null则为新增父母，否则为编辑
+						if (add.getId() == null) {// 新增家长
 							vd_parent.setSchoolId(classService.selectById(list.getClass_id()).getSchoolId());
 							vd_parent.setPhone(add.getParent_phone());
 							vd_parent.setType(1);
@@ -1128,6 +1165,7 @@ public class MailListController {
 							vd_studentparent.setStudentId(list.getId());
 							vd_studentparent.setParentId(vd_parent.getId());
 							vd_studentparent.setRelationId(add.getRelation_id());
+							// 家长信息中选择其他的时候
 							if (add.getRelation_id() != 99) {
 								vd_studentparent.setRelationTitle(
 										mailListService.findrealtionById(add.getRelation_id()).getTitle());
@@ -1144,7 +1182,7 @@ public class MailListController {
 								vd_studentparent.setIcCardId(0);
 							}
 							studentService.insertStudentParentSelective(vd_studentparent);
-
+							// 引入二维码接口，为家长生成对应的二维码
 							HttpPost httpPost = new HttpPost(appConfigProperties.getQrcodePath());
 							logger.info("appConfigProperties.getQrcodePath()=" + appConfigProperties.getQrcodePath());
 							CloseableHttpClient client = HttpClients.createDefault();
@@ -1170,27 +1208,27 @@ public class MailListController {
 							}
 							logger.info("respContent=" + respContent);
 
-						} else {
+						} else {// 编辑家长
 							Hand_parent4mailList p = mailListService.findParentByPid(add.getId());
 							p.setParent_phone(add.getParent_phone());
-							
+
 							p.setParent_phone(add.getParent_phone());
-							
+
 							p.setRelation_id(add.getRelation_id());
-							
+
 							p.setParent_name(mailListService.findrealtionById(add.getRelation_id()).getTitle());
 							// 添加家长的rfid
-							
-							if(tb_icList.size()>i){
+
+							if (tb_icList.size() > i) {
 								p.setParent_ic_number(tb_icList.get(i).getRfid());
 								p.setIcCardId(tb_icList.get(i).getId());
-							}else{
+							} else {
 								p.setParent_ic_number("");
 								p.setIcCardId(0);
 							}
 							mailListService.UpdateParent(p);
 						}
-						i=i+1;
+						i = i + 1;
 					}
 				}
 				if (rowNum > 0) {
@@ -1208,6 +1246,7 @@ public class MailListController {
 
 	/**
 	 * 新增编辑小朋友之前验证ic卡号是否被绑定过了
+	 * 
 	 * @param c_channel
 	 * @return
 	 * @throws InvocationTargetException
@@ -1222,55 +1261,59 @@ public class MailListController {
 			@ApiParam(value = "新增编辑小朋友和教师之前验证ic卡号是否被绑定过了", required = true) @RequestBody Hand_ic_type hand_id_type)
 			throws IllegalAccessException, InvocationTargetException, ClientProtocolException, IOException {
 		logger.info("访问  MailListController:Student_add_parent_edit,ic_number=" + hand_id_type);
-		//得到学校的id
+		// 得到学校的id
 		Tb_staff4MailList s1 = mailListService.findbystaffbyid(hand_id_type.getStaff_id());
 		System.err.println(s1.getSchoolId());
 		Out<String> back = new Out<String>();
-		Tb_ic_card tb_ic_card=null;
-		Tb_student tb_student=new Tb_student();
-		Tb_student findStudentByIcNumber=null;
-		Hand_student4MailListHasParent findParentByIcNumber=null;
-		Tb_staff4List selectInfoByic_number=null;
-		Tb_staff tb_staff=new Tb_staff();
+		Tb_ic_card tb_ic_card = null;
+		Tb_student tb_student = new Tb_student();
+		Tb_student findStudentByIcNumber = null;
+		Hand_student4MailListHasParent findParentByIcNumber = null;
+		Tb_staff4List selectInfoByic_number = null;
+		Tb_staff tb_staff = new Tb_staff();
 		try {
-			if (hand_id_type.getIc_number() != "" ) {
-				tb_ic_card = iCCardService.selectIcByNumber(hand_id_type.getIc_number(),
-						s1.getSchoolId(),hand_id_type.getType());
+			if (hand_id_type.getIc_number() != "") {
+				tb_ic_card = iCCardService.selectIcByNumber(hand_id_type.getIc_number(), s1.getSchoolId(),
+						hand_id_type.getType());
 			}
 			// 判断是学生还是家长
-			if(tb_ic_card!=null){
-				if(tb_ic_card.getIcType()==1){
-				  //查询家长的信息最后返回
+			if (tb_ic_card != null) {
+				if (tb_ic_card.getIcType() == 1) {
+					// 查询家长的信息最后返回
 					tb_student.setRfid(tb_ic_card.getRfid());
-					findParentByIcNumber= mailListService.findParentByIcNumber(tb_student);
-					//同时区查询教师
+					findParentByIcNumber = mailListService.findParentByIcNumber(tb_student);
+					// 同时区查询教师
 					tb_staff.setRfid(hand_id_type.getIc_number());
 					selectInfoByic_number = iCCardService.selectInfoByic_number(tb_staff);
-				}else{
-					//查询学生信息最后返回该信息
+				} else {
+					// 查询学生信息最后返回该信息
 					tb_student.setRfid(tb_ic_card.getRfid());
-				    findStudentByIcNumber = mailListService.findStudentByIcNumber(tb_student);
+					findStudentByIcNumber = mailListService.findStudentByIcNumber(tb_student);
 				}
-			}else{
-				//学生返回信息
-				back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD,"没有该卡号为"+hand_id_type.getIc_number()+"的信息",hand_id_type.getIc_number()+"，在系统中没有记录,请再次确认");
+			} else {
+				// 学生返回信息
+				back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD,
+						"没有该卡号为" + hand_id_type.getIc_number() + "的信息",
+						hand_id_type.getIc_number() + "，在系统中没有记录,请再次确认");
 			}
-			if(findStudentByIcNumber!=null){
-				//学生返回信息
-				back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD,"已经被绑定",hand_id_type.getIc_number()+"，已经被学生‘"+findStudentByIcNumber.getName()+"’绑定");
-			}
-			else if(findParentByIcNumber!=null){
-				//家长返回返回的信息
-				back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD,"已经被绑定",hand_id_type.getIc_number()+"，已经被‘"+findParentByIcNumber.getName()+"的"+findParentByIcNumber.getTitle()+"’绑定");
-			}
-			else if(selectInfoByic_number!=null){
-				back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD,"已经被绑定",hand_id_type.getIc_number()+"，已经被教职工‘"+selectInfoByic_number.getName()+"’绑定");
-			}else if(tb_ic_card!=null && findStudentByIcNumber==null && findParentByIcNumber==null && selectInfoByic_number==null){
-				back.setBackType(BackType.SUCCESS,"可以进行绑定");
+			if (findStudentByIcNumber != null) {
+				// 学生返回信息
+				back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD, "已经被绑定",
+						hand_id_type.getIc_number() + "，已经被学生‘" + findStudentByIcNumber.getName() + "’绑定");
+			} else if (findParentByIcNumber != null) {
+				// 家长返回返回的信息
+				back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD, "已经被绑定", hand_id_type.getIc_number()
+						+ "，已经被‘" + findParentByIcNumber.getName() + "的" + findParentByIcNumber.getTitle() + "’绑定");
+			} else if (selectInfoByic_number != null) {
+				back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD, "已经被绑定",
+						hand_id_type.getIc_number() + "，已经被教职工‘" + selectInfoByic_number.getName() + "’绑定");
+			} else if (tb_ic_card != null && findStudentByIcNumber == null && findParentByIcNumber == null
+					&& selectInfoByic_number == null) {
+				back.setBackType(BackType.SUCCESS, "可以进行绑定");
 			}
 		} catch (ServiceException e) {
 			// 服务层错误，包括 内部service 和 对外service
-						back.setServiceExceptionWithLog(e.getExceptionEnums());
+			back.setServiceExceptionWithLog(e.getExceptionEnums());
 		}
 		return back;
 	}

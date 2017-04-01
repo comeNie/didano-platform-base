@@ -5,15 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.didano.base.dao.Tb_newstudentMapper;
+import cn.didano.base.dao.Hand_student4MailListHasParentsMapper;
 import cn.didano.base.dao.Tb_schoolparentMapper;
 import cn.didano.base.dao.Tb_studentMapper;
 import cn.didano.base.dao.Tb_student_detection4photoWallMapper;
 import cn.didano.base.dao.Tb_studentparentMapper;
 import cn.didano.base.exception.DBExceptionEnums;
 import cn.didano.base.exception.ServiceException;
-import cn.didano.base.model.Tb_newstudent;
-import cn.didano.base.model.Tb_newstudentExample;
+import cn.didano.base.model.Hand_student4MailListHasParents;
+import cn.didano.base.model.Hand_student4MailListHasParentsExample;
 import cn.didano.base.model.Tb_schoolparent4;
 import cn.didano.base.model.Tb_student;
 import cn.didano.base.model.Tb_studentExample;
@@ -34,7 +34,7 @@ public class StudentService {
 	@Autowired
 	private Tb_student_detection4photoWallMapper photoWallMapper;
 	@Autowired
-	private Tb_newstudentMapper newstudentMapper;
+	private Hand_student4MailListHasParentsMapper newstudentMapper;
 	@Autowired
 	private Tb_studentparentMapper studentparentMapper;
 	@Autowired
@@ -70,9 +70,9 @@ public class StudentService {
 	/**
 	 * 查找所有学生
 	 */
-	public List<Tb_newstudent> findAll() {
-		Tb_newstudentExample condition = new Tb_newstudentExample();
-		Tb_newstudentExample.Criteria criteria = condition.createCriteria();
+	public List<Hand_student4MailListHasParents> findAll() {
+		Hand_student4MailListHasParentsExample condition = new Hand_student4MailListHasParentsExample();
+		Hand_student4MailListHasParentsExample.Criteria criteria = condition.createCriteria();
 		// 对于已经deleted=1的不显示 禁用不显示
 		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
 		criteria.andStatusEqualTo(StatusType.IS_USE.getIndex());
@@ -85,7 +85,7 @@ public class StudentService {
 	 * @param record
 	 * @return 有值，id ,否则返回-1
 	 */
-	public int insertStudentSelective(Tb_newstudent record) {
+	public int insertStudentSelective(Hand_student4MailListHasParents record) {
 		if (record == null)
 			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
 		return newstudentMapper.insertSelective(record);

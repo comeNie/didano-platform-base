@@ -42,7 +42,7 @@ import cn.didano.base.model.Tb_classStudent;
 import cn.didano.base.model.Tb_deleteParentDate;
 import cn.didano.base.model.Tb_ic_card;
 import cn.didano.base.model.Hand_mailList_list;
-import cn.didano.base.model.Tb_newstudent;
+import cn.didano.base.model.Hand_student4MailListHasParents;
 import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_schoolparent4;
 import cn.didano.base.model.Tb_sign_type;
@@ -992,8 +992,9 @@ public class MailListController {
 			@ApiParam(value = "新增编辑小朋友", required = true) @RequestBody In_Student_Edit student_a)
 			throws IllegalAccessException, InvocationTargetException, ClientProtocolException, IOException {
 		logger.info("访问  MailListController:Student_add_edit,student_a=" + student_a);
-		Tb_class tb_class = classService.selectById(student_a.getClass_id());
-		Tb_newstudent vd_student = new Tb_newstudent();
+		Tb_class tb_class = classService.selectById(student_a.getClassId());
+		System.out.println(student_a.getClassId());
+		Hand_student4MailListHasParents vd_student = new Hand_student4MailListHasParents();
 		Hand_mailList_list list = new Hand_mailList_list();
 		Tb_schoolparent4 vd_parent = new Tb_schoolparent4();
 		Tb_studentparent vd_studentparent = new Tb_studentparent();
@@ -1050,7 +1051,7 @@ public class MailListController {
 							}
 
 						}
-						vd_parent.setSchoolId(classService.selectById(vd_student.getClass_id()).getSchoolId());
+						vd_parent.setSchoolId(classService.selectById(vd_student.getClassId()).getSchoolId());
 						vd_parent.setPhone(add.getParent_phone());
 						vd_parent.setParent_id_number(add.getParent_ic_number());
 						vd_parent.setType(1);
@@ -1059,7 +1060,7 @@ public class MailListController {
 
 						rowNUM2 = studentService.insertParentSelective(vd_parent);
 						vd_studentparent.setSchoolId(vd_student.getSchoolId());
-						vd_studentparent.setClassId(vd_student.getClass_id());
+						vd_studentparent.setClassId(vd_student.getClassId());
 						vd_studentparent.setStudentId(vd_student.getId());
 						vd_studentparent.setParentId(vd_parent.getId());
 						vd_studentparent.setRelationId(add.getRelation_id());

@@ -229,9 +229,6 @@ select * from tb_student_parent where student_id=#{id}
 	b.class_id=c.id AND a.id=#{id} ORDER BY CONVERT( a.name USING gbk )
 	) tmp1 left join tb_ic_card tmp2 on tmp1.rfid=tmp2.rfid
 </select>
-<select id="selectSchoolBystaffId" parameterType="Integer" resultType="cn.didano.base.model.Tb_staff4MailList">
- 	select school_id as schoolId from tb_staff where id=#{id}
-</select>
 
 <select id="findTeacherByNameClass" parameterType="cn.didano.base.model.Tb_staffData" resultType="cn.didano.base.model.Tb_staff4List"> 
   <!--  SELECT  tmp1.sign_type_id AS SignTypeId,tmp1.title,tmp1.status,tmp1.school_id,tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id ,c.in_time,c.out_time FROM 

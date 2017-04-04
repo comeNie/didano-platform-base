@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="video/main" charset="UTF-8">
+<head>
+<link href="../video/css/bootstrap.min.css" rel="stylesheet">
+<link href="../video/css/bootstrap-imageupload.css" rel="stylesheet">
+<link href="../video/css/basicStyle.css" rel="stylesheet" />
+</head>
+<meta charset="UTF-8">
+<body>
+	<div layout:fragment="content" class="container width-100 padding-rl-0">
+		<div th:if="${message}">
+			<h2 th:text="${message}" />
+		</div>
+		<div>
+			<form method="POST" enctype="multipart/form-data" action="/interaction/upload">
+				<table>
+					<tr>
+						<td>File to upload:</td>
+						<td><input type="file" name="file" /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="submit" value="Upload" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div>
+			<ul>
+				<li th:each="file : ${files}"><a th:href="${file}"
+					th:text="${file}" /></li>
+			</ul>
+		</div>
+</body>
+</html>

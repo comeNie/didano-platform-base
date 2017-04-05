@@ -14,7 +14,16 @@ public class Tb_staff4MailList extends Tb_staff {
 	private Integer class_id;
 	private String title;
 	private String staff_ic_number;
+	private Integer staffIcCardId;
 	
+	public Integer getStaffIcCardId() {
+		return staffIcCardId;
+	}
+
+	public void setStaffIcCardId(Integer staffIcCardId) {
+		this.staffIcCardId = staffIcCardId;
+	}
+
 	public String getIn_time() {
 		return in_time;
 	}

@@ -1,15 +1,15 @@
 package cn.didano.base.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * 学生信息，包括班级、家长、IC卡信息
  * @author stephen.wang  2017年3月31日 
  */
-public class Hand_student4MailList {
+public class Hand_wholeStudentParent4PhoneBook {
 	private Integer id;
 	private Integer SchoolId;
-	private Integer class_id;
+	private Integer classId;
 	private String title;
 	private String name;
 	private Date birthday;
@@ -105,12 +105,12 @@ public class Hand_student4MailList {
 		SchoolId = schoolId;
 	}
 
-	public Integer getClass_id() {
-		return class_id;
+	public Integer getClassId() {
+		return classId;
 	}
 
-	public void setClass_id(Integer class_id) {
-		this.class_id = class_id;
+	public void setClassId(Integer classId) {
+		this.classId = classId;
 	}
 
 	public String getName() {

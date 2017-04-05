@@ -1,10 +1,35 @@
 package cn.didano.base.model;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hand_mailList_list {
+/**
+ * 学生家长信息，json对象
+ * 		{
+            "id": 3593,
+            "class_id": 18,
+            "name": "廖君雅",
+            "class_name": "贝恩班",
+            "birthday": "2013-12-19",
+            "gender": 2,
+            "student_ic_number": "02944",
+            "icCardId": 7,
+            "parent": [
+              {
+                "id": 5730,
+                "relation_id": 1,
+                "parent_name": "爸爸",
+                "parent_phone": "13883766355",
+                "parent_ic_number": "8888",
+                "icCardId": 10
+              },
+              {..}
+            ]
+          }
+ * @author stephen.wang  2017年4月5日 
+ */
+public class Hand_WholeStudentParents4PhoneBook {
  
 	private Integer id;
 	private Integer class_id;
@@ -13,15 +38,15 @@ public class Hand_mailList_list {
 	private Date birthday;
 	private byte gender;
 	private String student_ic_number; 
-	private int icCardId;
+	private Integer icCardId;
 	
 	private List<Hand_parent4mailList> parent = new ArrayList<Hand_parent4mailList>();
 	
 	
-	public int getIcCardId() {
+	public Integer getIcCardId() {
 		return icCardId;
 	}
-	public void setIcCardId(int icCardId) {
+	public void setIcCardId(Integer icCardId) {
 		this.icCardId = icCardId;
 	}
 	public String getStudent_ic_number() {
@@ -42,6 +67,7 @@ public class Hand_mailList_list {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
 	public Integer getClass_id() {
 		return class_id;
 	}

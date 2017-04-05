@@ -141,15 +141,18 @@ public class Tb_student {
         this.rfid = rfid == null ? null : rfid.trim();
     }
 
-    public Integer getIcCardId() {
-        return icCardId;
-    }
+   
+  
 
-    public void setIcCardId(Integer icCardId) {
-        this.icCardId = icCardId;
-    }
+	public Integer getIcCardId() {
+		return icCardId;
+	}
 
-    public Date getCreated() {
+	public void setIcCardId(Integer icCardId) {
+		this.icCardId = icCardId;
+	}
+
+	public Date getCreated() {
         return created;
     }
 

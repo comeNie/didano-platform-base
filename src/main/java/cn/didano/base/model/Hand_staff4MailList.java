@@ -19,8 +19,14 @@ public class Hand_staff4MailList {
 	
 	private Byte status;
 	private String staff_ic_number;
+	private Integer staffIcCardId;
 	
-	
+	public Integer getStaffIcCardId() {
+		return staffIcCardId;
+	}
+	public void setStaffIcCardId(Integer staffIcCardId) {
+		this.staffIcCardId = staffIcCardId;
+	}
 	public String getStaff_ic_number() {
 		return staff_ic_number;
 	}

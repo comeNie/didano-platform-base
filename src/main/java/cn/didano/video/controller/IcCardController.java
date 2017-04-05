@@ -25,6 +25,7 @@ import cn.didano.base.service.IcCardService;
 import cn.didano.base.service.SchoolService;
 import cn.didano.video.auth.channel.ChannelStatus;
 import cn.didano.video.constant.BackType;
+import cn.didano.video.json.In_ic_card;
 import cn.didano.video.json.Out;
 import cn.didano.video.json.OutList;
 import io.swagger.annotations.Api;
@@ -51,7 +52,7 @@ public class IcCardController {
 	@ApiOperation(value = "添加ic卡信息", notes = "添加ic卡信息")
 	@PostMapping(value = "icCard_insert")
 	@ResponseBody
-	public Out<String> icCard_insert(@ApiParam(value = "添加ic卡信息", required = true) @RequestBody Tb_ic_card tb_ic_card) {
+	public Out<String> icCard_insert(@ApiParam(value = "添加ic卡信息", required = true) @RequestBody In_ic_card tb_ic_card) {
 		logger.info("访问  PostController:channelAdd,tb_ic_card=" + tb_ic_card);
 		Tb_ic_card vd_ic = new Tb_ic_card();
 		Out<String> back = new Out<String>();

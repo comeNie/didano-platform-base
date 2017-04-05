@@ -40,7 +40,7 @@
      tb_staff a,tb_staff_class b where a.type in(31) and a.name like #{name} and a.school_id=#{schoolId} and a.id=b.staff_id and a.deleted=0)
       tmp1 left join tb_class c on tmp1.class_id=c.id left join tb_ic_card d on tmp1.rfid=d.rfid -->
       
-      select a.*,d.ic_number as staff_ic_number,tmp1.title,tmp1.class_id from tb_staff a left join (select b.*,c.title from tb_staff_class b,tb_class c where b.class_id=c.id)
+      select a.ic_card_id as staffIcCardId,a.*,d.ic_number as staff_ic_number,tmp1.title,tmp1.class_id from tb_staff a left join (select b.*,c.title from tb_staff_class b,tb_class c where b.class_id=c.id)
       tmp1 on a.id=tmp1.staff_id left join tb_ic_card d on a.rfid=d.rfid where a.deleted=0 and a.school_id=#{schoolId} and a.name like #{name}
       </select> 
   
@@ -51,15 +51,14 @@
      tb_staff a,tb_staff_class b where a.type in(33,34) and a.name like #{name} and a.school_id=#{schoolId} and a.id=b.staff_id and a.deleted=0)
       tmp1 left join tb_class c on tmp1.class_id=c.id left join tb_ic_card d on tmp1.rfid=d.rfid -->
       
-  select tmp1.*,d.ic_number as staff_ic_number from 
-    (select a.rfid,a.id,a.type,a.school_id,a.name,a.phone,a.qrcode_url,
+  select tmp1.ic_card_id as staffIcCardId,tmp1.*,d.ic_number as staff_ic_number from 
+    (select a.ic_card_id,a.rfid,a.id,a.type,a.school_id,a.name,a.phone,a.qrcode_url,
     a.qrcode_school_key,a.sign_type_id,a.status,a.created,a.updated,a.deleted from
      tb_staff a where a.type in(31,33,34) and a.name like #{name} and a.school_id=#{schoolId} and a.deleted=0)
       tmp1  left join tb_ic_card d on tmp1.rfid=d.rfid
   </select> 
-  
-  <select id="selectInfoByic_number" parameterType="cn.didano.base.model.Tb_staff" resultMap="BaseResultMap">
-  	select * from tb_staff where rfid=#{rfid} and deleted=0
+    <select id="selectInfoByic_number" parameterType="cn.didano.base.model.Tb_staff" resultMap="BaseResultMap">
+  	select MAX(id),a.* from tb_staff a where rfid=#{rfid} and deleted=0 
   </select> 
   
   <update id="updateByic_number" parameterType="cn.didano.base.model.Tb_staff">

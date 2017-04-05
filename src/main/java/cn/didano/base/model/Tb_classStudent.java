@@ -7,7 +7,7 @@ public class Tb_classStudent {
 
 	private String className;
 	private Integer classId;
-	private List<Hand_mailList_list> student = new ArrayList<Hand_mailList_list>();
+	private List<Hand_WholeStudentParents4PhoneBook> student = new ArrayList<Hand_WholeStudentParents4PhoneBook>();
 	
 	public Integer getClassId() {
 		return classId;
@@ -21,10 +21,10 @@ public class Tb_classStudent {
 	public void setClassName(String className) {
 		this.className = className;
 	}
-	public List<Hand_mailList_list> getStudent() {
+	public List<Hand_WholeStudentParents4PhoneBook> getStudent() {
 		return student;
 	}
-	public void setStudent(List<Hand_mailList_list> student) {
+	public void setStudent(List<Hand_WholeStudentParents4PhoneBook> student) {
 		this.student = student;
 	}
 	@Override

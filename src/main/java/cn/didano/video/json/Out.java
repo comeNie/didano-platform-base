@@ -149,7 +149,7 @@ public class Out<T> {
 			this.success = false;
 		}
 		this.code = type.getCode();
-		this.message = type.getMessage()+""+info;
+		this.message = type.getMessage()+ ":" +info;
 		Object o = new String("");
 		this.setData((T)o);
 	}

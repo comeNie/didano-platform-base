@@ -1,7 +1,10 @@
 package cn.didano.video.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -60,12 +63,17 @@ public class FileUploadController {
     }
 
     @PostMapping("/upload")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file,
+    public String handleFileUpload( @RequestParam("file") List<MultipartFile> files,
                                    RedirectAttributes redirectAttributes) {
-
-        storageService.store(file);
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
+        
+         
+    	for (int i = 0; i < files.size(); i++) {
+    		
+    		 storageService.store(files.get(i),i+1);
+    	        redirectAttributes.addFlashAttribute("message",
+    	                "You successfully uploaded " + files.get(i).getOriginalFilename() + "!");
+		}
+       
 
         return "redirect:/interaction/";
     }

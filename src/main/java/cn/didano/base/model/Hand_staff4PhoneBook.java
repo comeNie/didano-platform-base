@@ -2,28 +2,23 @@ package cn.didano.base.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
- * 教职工
+ * 输出组装数据 教职工对象
  * 扩展签到时间和签退时间翻译
  * @author guitar
  *
  */
-public class Tb_staff4MailList extends Tb_staff {
+public class Hand_staff4PhoneBook extends Tb_staff {
 	private String in_time;
 	private String out_time;
-	private Integer class_id;
+	private Integer classId;
 	private String title;
 	private String staff_ic_number;
-	private Integer staffIcCardId;
 	
-	public Integer getStaffIcCardId() {
-		return staffIcCardId;
-	}
 
-	public void setStaffIcCardId(Integer staffIcCardId) {
-		this.staffIcCardId = staffIcCardId;
-	}
-
+	@JsonFormat(pattern="HH:mm")
 	public String getIn_time() {
 		return in_time;
 	}
@@ -40,12 +35,12 @@ public class Tb_staff4MailList extends Tb_staff {
 		this.out_time = out_time;
 	}
 
-	public Integer getClass_id() {
-		return class_id;
+	public Integer getClassId() {
+		return classId;
 	}
 
-	public void setClass_id(Integer class_id) {
-		this.class_id = class_id;
+	public void setClassId(Integer classId) {
+		this.classId = classId;
 	}
 
 	public String getTitle() {

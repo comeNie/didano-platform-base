@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.didano.base.dao.Hand_Staff_icMapper">
- <resultMap id="BaseResultMap" type="cn.didano.base.model.Tb_staff4List">
+ <resultMap id="BaseResultMap" type="cn.didano.base.model.Hand_staffTransit4PhoneBook">
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="type" jdbcType="TINYINT" property="type" />
     <result column="school_id" jdbcType="INTEGER" property="schoolId" />
@@ -16,13 +16,14 @@
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
     <result column="staff_ic_number" jdbcType="VARCHAR" property="staff_ic_number" />
-     <result column="staffIcCardId" jdbcType="INTEGER" property="staffIcCardId" />
+    <result column="ic_card_id" jdbcType="INTEGER" property="icCardId" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
   </resultMap>
   <select id="selectStaff_icCard" parameterType="INTEGER" resultMap="BaseResultMap">
      <!-- select a.ic_number as staff_ic_number,b.id,b.type,b.school_id,b.name,b.phone,b.qrcode_url,b.qrcode_url_old,
     b.qrcode_school_key,b.qrcode_school_key_old,b.sign_type_id,b.status,b.created,b.updated,b.deleted
      from tb_staff b left join tb_ic_card a on b.rfid=a.rfid where b.type=31 and b.school_id=#{school_id} and b.deleted=0 -->
-     select b.ic_card_id as staffIcCardId,a.ic_number as staff_ic_number,b.id,b.type,b.school_id,b.name,b.phone,b.qrcode_url,b.qrcode_url_old,
+     select b.ic_card_id,a.ic_number as staff_ic_number,b.id,b.type,b.school_id,b.name,b.phone,b.qrcode_url,b.qrcode_url_old,
     b.qrcode_school_key,b.qrcode_school_key_old,b.sign_type_id,b.status,b.created,b.updated,b.deleted
      from tb_staff b left join tb_ic_card a on b.rfid=a.rfid where b.type=31 and b.school_id=#{school_id} and b.deleted=0
   </select> 
@@ -40,7 +41,7 @@
      tb_staff a,tb_staff_class b where a.type in(31) and a.name like #{name} and a.school_id=#{schoolId} and a.id=b.staff_id and a.deleted=0)
       tmp1 left join tb_class c on tmp1.class_id=c.id left join tb_ic_card d on tmp1.rfid=d.rfid -->
       
-      select a.ic_card_id as staffIcCardId,a.*,d.ic_number as staff_ic_number,tmp1.title,tmp1.class_id from tb_staff a left join (select b.*,c.title from tb_staff_class b,tb_class c where b.class_id=c.id)
+      select a.ic_card_id,a.*,d.ic_number as staff_ic_number,tmp1.title,tmp1.class_id as classId from tb_staff a left join (select b.*,c.title from tb_staff_class b,tb_class c where b.class_id=c.id)
       tmp1 on a.id=tmp1.staff_id left join tb_ic_card d on a.rfid=d.rfid where a.deleted=0 and a.school_id=#{schoolId} and a.name like #{name}
       </select> 
   
@@ -51,14 +52,14 @@
      tb_staff a,tb_staff_class b where a.type in(33,34) and a.name like #{name} and a.school_id=#{schoolId} and a.id=b.staff_id and a.deleted=0)
       tmp1 left join tb_class c on tmp1.class_id=c.id left join tb_ic_card d on tmp1.rfid=d.rfid -->
       
-  select tmp1.ic_card_id as staffIcCardId,tmp1.*,d.ic_number as staff_ic_number from 
+  	select tmp1.ic_card_id,tmp1.*,d.ic_number as staff_ic_number from 
     (select a.ic_card_id,a.rfid,a.id,a.type,a.school_id,a.name,a.phone,a.qrcode_url,
     a.qrcode_school_key,a.sign_type_id,a.status,a.created,a.updated,a.deleted from
      tb_staff a where a.type in(31,33,34) and a.name like #{name} and a.school_id=#{schoolId} and a.deleted=0)
       tmp1  left join tb_ic_card d on tmp1.rfid=d.rfid
   </select> 
     <select id="selectInfoByic_number" parameterType="cn.didano.base.model.Tb_staff" resultMap="BaseResultMap">
-  	select MAX(id),a.* from tb_staff a where rfid=#{rfid} and deleted=0 
+  	select MAX(id),a.* from tb_staff a where rfid=#{rfid} and deleted=0 <![CDATA[and a.id <> #{id}]]>
   </select> 
   
   <update id="updateByic_number" parameterType="cn.didano.base.model.Tb_staff">

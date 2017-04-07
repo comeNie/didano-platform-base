@@ -18,7 +18,7 @@ import cn.didano.base.model.Hand_ic_card;
 import cn.didano.base.model.Tb_ic_card;
 import cn.didano.base.model.Tb_ic_cardExample;
 import cn.didano.base.model.Tb_staff;
-import cn.didano.base.model.Tb_staff4List;
+import cn.didano.base.model.Hand_staffTransit4PhoneBook;
 import cn.didano.base.model.Tb_student;
 import cn.didano.video.constant.DeletedType;
 import cn.didano.video.constant.IcCardType;
@@ -82,7 +82,7 @@ public class IcCardService {
 	 * 
 	 * @return
 	 */
-	public  Tb_staff4List selectInfoByic_number(Tb_staff tf) {
+	public  Hand_staffTransit4PhoneBook selectInfoByic_number(Tb_staff tf) {
 		return  hand_Staff_icMapper.selectInfoByic_number(tf);
 	}
 	/**

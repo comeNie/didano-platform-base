@@ -5,7 +5,7 @@ import java.util.Date;
 public class Tb_staffData extends Tb_staff{
 
 	private String name ;
-	private Integer class_id;
+	private Integer classId;
 	private Integer id;
 
     private Byte type;
@@ -161,11 +161,11 @@ public class Tb_staffData extends Tb_staff{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Integer getClass_id() {
-		return class_id;
+	public Integer getClassId() {
+		return classId;
 	}
-	public void setClass_id(Integer class_id) {
-		this.class_id = class_id;
+	public void setClassId(Integer classId) {
+		this.classId = classId;
 	}
 	
 }

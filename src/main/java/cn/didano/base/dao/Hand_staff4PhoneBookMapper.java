@@ -5,7 +5,7 @@ import cn.didano.base.model.Tb_staffExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface Tb_staff4ListMapper {
+public interface Hand_staff4PhoneBookMapper {
     long countByExample(Tb_staffExample example);
 
     int deleteByExample(Tb_staffExample example);

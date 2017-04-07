@@ -10,7 +10,7 @@ import com.github.pagehelper.PageInfo;
 
 import cn.didano.base.dao.Hand_Staff_icMapper;
 import cn.didano.base.dao.Tb_sign_typeMapper;
-import cn.didano.base.dao.Tb_staff4ListMapper;
+import cn.didano.base.dao.Hand_staff4PhoneBookMapper;
 import cn.didano.base.dao.Tb_staffMapper;
 import cn.didano.base.dao.Tb_staff_classMapper;
 import cn.didano.base.dao.Tb_staff_signdateMapper;
@@ -19,7 +19,7 @@ import cn.didano.base.exception.DBExceptionEnums;
 import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Tb_sign_type;
 import cn.didano.base.model.Tb_staff;
-import cn.didano.base.model.Tb_staff4List;
+import cn.didano.base.model.Hand_staffTransit4PhoneBook;
 import cn.didano.base.model.Tb_staffExample;
 import cn.didano.base.model.Tb_staff_class;
 import cn.didano.base.model.Tb_staff_classExample;
@@ -49,7 +49,7 @@ public class StaffService {
 	private Hand_Staff_icMapper hand_Staff_icMapper;
 	
 	@Autowired
-	private Tb_staff4ListMapper tb_staffM4ListMapper;
+	private Hand_staff4PhoneBookMapper tb_staffM4ListMapper;
 
 	/**
 	 * 查询所有
@@ -98,14 +98,14 @@ public class StaffService {
 	/**
 	 * 通过学校查询该学校的医生和保洁
 	 */
-	public List<Tb_staff4List> findBossByschool(Integer schoolid){
+	public List<Hand_staffTransit4PhoneBook> findBossByschool(Integer schoolid){
 		return hand_Staff_icMapper.selectStaff_icCard(schoolid);
 	}
 	
 	/**
 	 * 通过学校查询该学校的医生和保洁
 	 */
-	public List<Tb_staff4List> findBossByNameschool(Tb_staff tb_staff){
+	public List<Hand_staffTransit4PhoneBook> findBossByNameschool(Tb_staff tb_staff){
 //		Tb_staffExample condition = new Tb_staffExample();
 //		Tb_staffExample.Criteria criteria = condition.createCriteria();
 //		// 对于已经deleted=1的不显示 禁用不显示
@@ -187,7 +187,7 @@ public class StaffService {
 	/**
 	 * 校长通过员工姓名查询
 	 */
-	public List<Tb_staff4List> findByNameSchool(Tb_staff tb_staff){
+	public List<Hand_staffTransit4PhoneBook> findByNameSchool(Tb_staff tb_staff){
 //		Tb_staffExample condition = new Tb_staffExample();
 //		Tb_staffExample.Criteria criteria = condition.createCriteria();
 //		// 对于已经deleted=1的不显示 禁用不显示
@@ -215,13 +215,13 @@ public class StaffService {
 	/**
 	 * 通过学校查询该学校的医生和保洁
 	 */
-	public List<Tb_staff4List> findByType(Integer schoolid){
+	public List<Hand_staffTransit4PhoneBook> findByType(Integer schoolid){
 		return hand_Staff_icMapper.selectStaff_icCardandType(schoolid);
 	}
 	/**
 	 * 通过学校查询该学校的医生和保洁
 	 */
-	public List<Tb_staff4List> findByNameType(Tb_staff tb_staff){
+	public List<Hand_staffTransit4PhoneBook> findByNameType(Tb_staff tb_staff){
 //		Tb_staffExample condition = new Tb_staffExample();
 //		Tb_staffExample.Criteria criteria = condition.createCriteria();
 //		// 对于已经deleted=1的不显示 禁用不显示

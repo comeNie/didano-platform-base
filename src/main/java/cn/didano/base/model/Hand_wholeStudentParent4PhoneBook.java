@@ -2,6 +2,8 @@ package cn.didano.base.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * 学生信息，包括班级、家长、IC卡信息
  * @author stephen.wang  2017年3月31日 

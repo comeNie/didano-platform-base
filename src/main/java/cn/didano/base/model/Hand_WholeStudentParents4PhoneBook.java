@@ -1,8 +1,12 @@
 package cn.didano.base.model;
 
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * 学生家长信息，json对象
@@ -30,9 +34,8 @@ import java.util.List;
  * @author stephen.wang  2017年4月5日 
  */
 public class Hand_WholeStudentParents4PhoneBook {
- 
 	private Integer id;
-	private Integer class_id;
+	private Integer classId;
 	private String name;
 	private String class_name;
 	private Date birthday;
@@ -68,11 +71,11 @@ public class Hand_WholeStudentParents4PhoneBook {
 		this.id = id;
 	}
 	
-	public Integer getClass_id() {
-		return class_id;
+	public Integer getClassId() {
+		return classId;
 	}
-	public void setClass_id(Integer class_id) {
-		this.class_id = class_id;
+	public void setClassId(Integer classId) {
+		this.classId = classId;
 	}
 	public String getName() {
 		return name;
@@ -80,6 +83,8 @@ public class Hand_WholeStudentParents4PhoneBook {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	public Date getBirthday() {
 		return birthday;
 	}

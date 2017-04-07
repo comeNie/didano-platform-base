@@ -11,6 +11,13 @@ public class Hand_ic_type {
 	public String ic_number;
 	public Integer staff_id;
 	public Integer type;
+	public Integer id;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getIc_number() {
 		return ic_number;
 	}

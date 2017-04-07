@@ -6,15 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.didano.base.dao.Hand_MailList_listMapper;
-import cn.didano.base.model.Hand_parent4mailList;
-import cn.didano.base.model.Hand_staff4MailList;
-import cn.didano.base.model.Hand_wholeStudentParent4PhoneBook;
-import cn.didano.base.model.Hand_wholeStudent4PhoneBook;
-import cn.didano.base.model.Tb_deleteParentDate;
 import cn.didano.base.model.Hand_WholeStudentParents4PhoneBook;
+import cn.didano.base.model.Hand_parent4mailList;
+import cn.didano.base.model.Hand_staff4PhoneBook;
+import cn.didano.base.model.Hand_staff4PhoneBook;
+import cn.didano.base.model.Hand_staffTransit4PhoneBook;
+import cn.didano.base.model.Hand_wholeStudent4PhoneBook;
+import cn.didano.base.model.Hand_wholeStudentParent4PhoneBook;
+import cn.didano.base.model.Tb_deleteParentDate;
 import cn.didano.base.model.Tb_relation;
-import cn.didano.base.model.Tb_staff4List;
-import cn.didano.base.model.Tb_staff4MailList;
 import cn.didano.base.model.Tb_staffData;
 import cn.didano.base.model.Tb_student;
 import cn.didano.base.model.Tb_studentData;
@@ -45,13 +45,13 @@ public class MailListService {
 	/**
 	 *  查询学校
 	 */
-	public Tb_staff4MailList selectSchoolBystaffId(Integer id){
+	public Hand_staff4PhoneBook selectSchoolBystaffId(Integer id){
 		return mailList_listMapper.selectSchoolBystaffId(id);
 	}
 	/**
 	 * 查询
 	 */
-	public Tb_staff4MailList findbystaffbyid(Integer id){
+	public Hand_staff4PhoneBook findbystaffbyid(Integer id){
 		return mailList_listMapper.findBystaffbyId(id);
 	}
 	
@@ -89,7 +89,7 @@ public class MailListService {
 	/**
 	 * 通过学校查询所有老师
 	 */
-	public List<Hand_staff4MailList> findteacherByschool(Integer id){
+	public List<Hand_staff4PhoneBook> findteacherByschool(Integer id){
 		return mailList_listMapper.findteacherByschool(id);
 	}
 	/**
@@ -122,19 +122,19 @@ public class MailListService {
 	/**
 	 * 编辑老师
 	 */
-	public int UpdateTeacher(Hand_staff4MailList teacher){
+	public int UpdateTeacher(Hand_staff4PhoneBook teacher){
 		return mailList_listMapper.UpdateTeacher(teacher);
 	}
 	/**
 	 * 通过班级查询该班的老师
 	 */
-	public List<Hand_staff4MailList> findTeacherByClass(Integer id){
+	public List<Hand_staff4PhoneBook> findTeacherByClass(Integer id){
 		return mailList_listMapper.findTeacherByClass(id);
 	}
 	/**
 	 * 通过名字班级查询该班的老师
 	 */
-	public List<Tb_staff4List> findTeacherByNameClass(Tb_staffData data2){
+	public List<Hand_staffTransit4PhoneBook> findTeacherByNameClass(Tb_staffData data2){
 		return mailList_listMapper.findTeacherByNameClass(data2);
 	}
 	/**

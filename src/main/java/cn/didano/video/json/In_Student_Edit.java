@@ -13,7 +13,7 @@ public class In_Student_Edit {
 	@ApiModelProperty(value = "姓名",required=true)
 	private String name;
 	@ApiModelProperty(value = "班级",required=true)
-	private Integer class_id;
+	private Integer classId;
 
 	@ApiModelProperty(value = "性别",required=true)
 	private Byte gender;
@@ -61,11 +61,11 @@ public class In_Student_Edit {
 	}
 	
 	
-	public Integer getClass_id() {
-		return class_id;
+	public Integer getClassId() {
+		return classId;
 	}
-	public void setClass_id(Integer class_id) {
-		this.class_id = class_id;
+	public void setClass_id(Integer classId) {
+		this.classId = classId;
 	}
 	public Byte getGender() {
 		return gender;

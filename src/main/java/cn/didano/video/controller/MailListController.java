@@ -637,7 +637,6 @@ public class MailListController {
 						parent.setId(c.getParent_id());
 						// yang 编辑家长的rfid
 						parent.setParent_ic_number(c.getParent_ic_number());
-						System.err.println(c.getParentIcCardId()+"___________>");
 						parent.setIcCardId(c.getParentIcCardId());
 						parentall.add(parent);
 					}
@@ -1094,7 +1093,6 @@ public class MailListController {
 						vd_studentparent.setCreated(new Date());
 
 						studentService.insertStudentParentSelective(vd_studentparent);
-						System.out.println("插入从父母成功:" + vd_parent.getId() + vd_student.getId());
 						HttpPost httpPost = new HttpPost(appConfigProperties.getQrcodePath());
 						logger.info("appConfigProperties.getQrcodePath()=" + appConfigProperties.getQrcodePath());
 						CloseableHttpClient client = HttpClients.createDefault();
@@ -1328,19 +1326,16 @@ public class MailListController {
 			// 判断是学生还是家长
 			if (tb_ic_card != null) {
 				if (hand_id_type.getType() == 1) {
-					System.err.println(1);
 					// 查询学生信息最后返回该信息
 					tb_student.setRfid(tb_ic_card.getRfid());
 					tb_student.setId(hand_id_type.getId());
 					findStudentByIcNumber = mailListService.findStudentByIcNumber(tb_student);
 				} else if(hand_id_type.getType() == 2){
-					System.err.println(2);
 					// 查询家长的信息最后返回
 					tb_student.setRfid(tb_ic_card.getRfid());
 					tb_student.setId(hand_id_type.getId());
 					findParentByIcNumber = mailListService.findParentByIcNumber(tb_student);
 				}else if(hand_id_type.getType() == 3){
-					System.err.println(3);
 					// 同时区查询教师
 					tb_staff.setRfid(tb_ic_card.getRfid());
 					tb_staff.setId(hand_id_type.getId());

@@ -69,27 +69,34 @@ select tmp1.id,tmp1.class_id  as classId,tmp1.name,tmp1.gender,tmp1.birthday,tmp
   SELECT * FROM tb_student WHERE school_id=#{id} ORDER BY class_id ORDER BY CONVERT( NAME USING gbk )
  </select>
  <select id="findWholeStudentParentsByschool" parameterType="Integer" resultType="cn.didano.base.model.Hand_wholeStudentParent4PhoneBook">
-	select 
-	tmp2.relation_id,
-	tmp2.parent_id,
-	tmp1.id, 
-	tmp1.School_id as SchoolId,
-	tmp1.class_id as classId,
-	tmp1.title,
-	tmp1.NAME,
-	tmp1.gender,
-	tmp1.birthday,
-	tmp2.relation_title as parent_name,
-	tmp3.phone as parent_phone,
-	tmp1.ic_number as student_ic_number,
-	tmp1.ic_card_id as studentIcCardId,
-	tmp2.ic_number as parent_ic_number,
-	tmp2.ic_card_id as parentIcCardId
-from 
-	 (select d.relation_id,d.ic_card_id,d.parent_id,d.relation_title,d.student_id,f.ic_number,e.title from `tb_student_parent` d left join tb_class e on e.id=d.class_id left join tb_ic_card f on f.rfid=d.rfid where d.school_id=#{id} and d.deleted=0
-	) tmp2 right join (select a.*,b.title,c.ic_number from tb_student a left join tb_class b on a.class_id = b.id left join tb_ic_card c on c.rfid=a.rfid  where a.school_id =#{id} AND a.deleted = 0 ORDER BY
-		CONVERT (a. NAME USING gbk)) tmp1 
-	 on tmp1.id=tmp2.student_id left join tb_school_parent tmp3 on tmp2.parent_id=tmp3.id
+ select
+		tmp2.relation_id,
+		tmp2.parent_id,
+		tmp1.id,
+		tmp1.School_id as SchoolId,
+		tmp1.class_id as classId,
+		tmp1.title,
+		tmp1.NAME,
+		tmp1.gender,
+		tmp1.birthday,
+		tmp2.relation_title as parent_name,
+		tmp3.phone as parent_phone,
+		tmp1.ic_number as student_ic_number,
+		tmp1.ic_card_id as studentIcCardId,
+		tmp2.ic_number as parent_ic_number,
+		tmp2.ic_card_id as parentIcCardId
+		from (
+		select tmpIn.*,b.title,c.ic_number from (select tmpIn2.* from (select a.* from tb_student a where  a.school_id =#{id} AND a.deleted = 0) as tmpIn2 ORDER BY
+		CONVERT (tmpIn2. NAME USING gbk)) as tmpIn
+		left join tb_class b on tmpIn.class_id = b.id
+		left join tb_ic_card c on c.rfid=tmpIn.rfid
+		) tmp1
+		left join
+		(select d.relation_id,d.ic_card_id,d.parent_id,d.relation_title,d.student_id,f.ic_number,e.title
+		from `tb_student_parent` d left join tb_class e on e.id=d.class_id
+		left join tb_ic_card f on f.rfid=d.rfid where d.school_id=#{id} and d.deleted=0
+		) tmp2
+		on tmp1.id=tmp2.student_id left join tb_school_parent tmp3 on tmp2.parent_id=tmp3.id   
  </select>
  <select id="findteacherByschool" parameterType="Integer" resultType="cn.didano.base.model.Hand_staff4PhoneBook">
 <!-- SELECT tmp1.status,tmp1.in_time,tmp1.out_time,tmp1.id,tmp1.name,tmp1.phone,tmp1.class_id,c.title,tmp1.type,tmp1.school_id ,tmp3.ic_number as rfid

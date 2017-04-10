@@ -2,7 +2,7 @@ package cn.didano.base.model;
 
 public class Hand_parent4mailList{
 	private Integer id;
-	private byte relation_id;
+	private Integer relation_id;
 	private String parent_name;
 	private String parent_phone;
 	private String parent_ic_number;
@@ -40,11 +40,11 @@ public class Hand_parent4mailList{
 		this.parent_name = parent_name;
 	}
 
-	public byte getRelation_id() {
+	public Integer getRelation_id() {
 		return relation_id;
 	}
 
-	public void setRelation_id(byte relation_id) {
+	public void setRelation_id(Integer relation_id) {
 		this.relation_id = relation_id;
 	}
 

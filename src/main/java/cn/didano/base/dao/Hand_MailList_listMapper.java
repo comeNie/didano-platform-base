@@ -37,7 +37,7 @@ public interface Hand_MailList_listMapper {
 	List<Hand_WholeStudentParents4PhoneBook> findByName(Tb_studentData data);
 	List<Hand_WholeStudentParents4PhoneBook> findByNameClass(Tb_studentData data);
 	List<Tb_relation> findrelation();
-	Tb_relation findrelationById(byte id);
+	Tb_relation findrelationById(Integer id);
 	Hand_parent4mailList findParentByPid(Integer id);
 	Tb_staffData findClassIdBySid(Integer id);
 	int UpdateTeacher(Hand_staff4PhoneBook teacher);

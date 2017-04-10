@@ -227,8 +227,8 @@ public class MailListController {
 				// 判断该员工是否需要签到
 				if (target.getSignTypeId() != 0) {
 					sign_time = staffService.findTypeByID(target.getSignTypeId());
-					target.setIn_time(sdf.format(sign_time.getInTime()));
-					target.setOut_time(sdf.format(sign_time.getOutTime()));
+					target.setIn_time(sign_time.getInTime());
+					target.setOut_time(sign_time.getOutTime());
 				}
 				target.setStaff_ic_number(staff.getStaff_ic_number());
 				staffAll.add(target);
@@ -243,7 +243,7 @@ public class MailListController {
 			List<Hand_staffTransit4PhoneBook> boss = staffService.findBossByNameschool(staffNameData);
 			Tb_staffData data2 = new Tb_staffData();
 			data2.setName("%" + name + "%");
-			data2.setClassId(staff4ClassId.getClassId());
+			data2.setSchoolId(staff4SchoolId.getSchoolId());
 			staffAll.addAll(boss);
 			// 查询改名字为教职工的人
 			List<Hand_staffTransit4PhoneBook> teacherAll = mailListService.findTeacherByNameClass(data2);
@@ -255,8 +255,8 @@ public class MailListController {
 					BeanUtils.copyProperties(target0, one);
 					if (target0.getSignTypeId() != 0) {
 						sign_time = staffService.findTypeByID(target0.getSignTypeId());
-						target0.setIn_time(sdf.format(sign_time.getInTime()));
-						target0.setOut_time(sdf.format(sign_time.getOutTime()));
+						target0.setIn_time(sign_time.getInTime());
+						target0.setOut_time(sign_time.getOutTime());
 					}
 					target0.setStaff_ic_number(one.getStaff_ic_number());
 					staffAll.add(target0);
@@ -274,8 +274,8 @@ public class MailListController {
 					BeanUtils.copyProperties(target1, one);
 					if (target1.getSignTypeId() != 0) {
 						t1 = staffService.findTypeByID(target1.getSignTypeId());
-						target1.setIn_time(sdf.format(t1.getInTime()));
-						target1.setOut_time(sdf.format(t1.getOutTime()));
+						target1.setIn_time(t1.getInTime());
+						target1.setOut_time(t1.getOutTime());
 					}
 					target1.setStaff_ic_number(one.getStaff_ic_number());
 					staffAll.add(target1);
@@ -439,10 +439,10 @@ public class MailListController {
 						vd_staff.setRfid(tb_ic_card.getRfid());
 						// 添加icCardId
 						vd_staff.setIcCardId(tb_ic_card.getId());
-					} else if (teacher_a.getIcCardId() != null) {
-						vd_staff.setRfid(null);
+					}else{
+						vd_staff.setRfid("");
 						// 添加icCardId
-						vd_staff.setIcCardId(null);
+						vd_staff.setIcCardId(88888888);
 					}
 					rowNum = staffService.insertTeacherSelective(vd_staff);// insert
 					// 如果新增人员为老师，设置他所带班级的对应关系
@@ -508,13 +508,16 @@ public class MailListController {
 						}
 					}
 
-					
 					// yang 编辑的时候也可能修改编号，编号导致同步修改RFID
+					//新卡解绑ic_card_id使用88888888
 					if (tb_ic_card != null) {
 						vd_staff.setRfid(tb_ic_card.getRfid());
 						vd_staff.setIcCardId(tb_ic_card.getId());
-					} else if (teacher_a.getIcCardId() != null) {
+					} else if (teacher_a.getIcCardId() != 0) {
 						vd_staff.setRfid("");
+						vd_staff.setIcCardId(88888888);
+					}else{
+						vd_staff.setRfid(null);
 						vd_staff.setIcCardId(0);
 					}
 					
@@ -634,6 +637,7 @@ public class MailListController {
 						parent.setId(c.getParent_id());
 						// yang 编辑家长的rfid
 						parent.setParent_ic_number(c.getParent_ic_number());
+						System.err.println(c.getParentIcCardId()+"___________>");
 						parent.setIcCardId(c.getParentIcCardId());
 						parentall.add(parent);
 					}
@@ -709,12 +713,9 @@ public class MailListController {
 				staff1 = new Hand_staff4PhoneBook();
 				BeanUtils.copyProperties(staff1, teacher);
 				
-				String intime = teacher.getIn_time();
-				String outtime = teacher.getOut_time();
-				System.err.println(intime);
 				staff1.setSchoolId(teacher.getSchoolId());
-				staff1.setIn_time(intime);
-				staff1.setOut_time(outtime);
+				staff1.setIn_time(teacher.getIn_time());
+				staff1.setOut_time(teacher.getOut_time());
 				staffall.add(staff1);
 			}
 			// 取教职工（医生、勤务）
@@ -727,8 +728,8 @@ public class MailListController {
 					BeanUtils.copyProperties(target, one);
 					if (target.getSignTypeId() != 0) {
 						t = staffService.findTypeByID(target.getSignTypeId());
-						target.setIn_time(sdf.format(t.getInTime()));
-						target.setOut_time(sdf.format(t.getOutTime()));
+						target.setIn_time(t.getInTime());
+						target.setOut_time(t.getOutTime());
 					}
 					staffall.add(target);
 				}
@@ -801,12 +802,9 @@ public class MailListController {
 				for (Hand_staff4PhoneBook teacher : classstaff) {
 					staff1 = new Hand_staff4PhoneBook();
 					BeanUtils.copyProperties(staff1, teacher);
-					String intime = teacher.getIn_time();
-					System.err.println(intime);
-					String outtime = teacher.getOut_time();
 					staff1.setSchoolId(teacher.getSchoolId());
-					staff1.setIn_time(intime);
-					staff1.setOut_time(outtime);
+					staff1.setIn_time(teacher.getIn_time());
+					staff1.setOut_time(teacher.getOut_time());
 					staff1.setStaff_ic_number(teacher.getStaff_ic_number());
 					staff1.setIcCardId(teacher.getIcCardId());
 					all.add(staff1);
@@ -820,8 +818,8 @@ public class MailListController {
 						BeanUtils.copyProperties(target, one);
 						if (target.getSignTypeId() != 0) {
 							t = staffService.findTypeByID(target.getSignTypeId());
-							target.setIn_time(sdf.format(t.getInTime()));
-							target.setOut_time(sdf.format(t.getOutTime()));
+							target.setIn_time(t.getInTime());
+							target.setOut_time(t.getOutTime());
 							target.setStaff_ic_number(target.getStaff_ic_number());
 							staff1.setIcCardId(target.getIcCardId());
 						}
@@ -1014,7 +1012,7 @@ public class MailListController {
 		Tb_studentparent vd_studentparent = new Tb_studentparent();
 		Out<String> back = new Out<String>();
 		Tb_ic_card tb_ic_cardNoe = null;
-		Tb_ic_card tb_ic_card = null;
+		
 		if (student_a.getStudent_ic_number() != "") {
 			// 如果输入的编号IC卡表里面不存在，那么返回错误信息，如果有才继续
 			tb_ic_cardNoe = iCCardService.selectIcByNumber(student_a.getStudent_ic_number(), tb_class.getSchoolId(),
@@ -1025,7 +1023,6 @@ public class MailListController {
 			vd_student.setClassId(student_a.getClassId());
 			// id为null则为新增，不为null则为编辑
 			if (vd_student.getId() == null) {// 新增
-
 				if (student_a.getStudent_ic_number() != null) {
 					// 修改表tb_ic_card表数据的状态
 					Tb_ic_card td = new Tb_ic_card();
@@ -1039,10 +1036,9 @@ public class MailListController {
 					// 学生的添加studebt_rfid，传进来的只是编号 要天加ic卡中ic_rfid
 					vd_student.setStudent_ic_number(tb_ic_cardNoe.getRfid());
 					vd_student.setIcCardId(tb_ic_cardNoe.getId());
-				} else if (student_a.getIcCardId() != null) {
-					// 学生的添加studebt_rfid，传进来的只是编号 要天加ic卡中ic_rfid
+				}else{
 					vd_student.setStudent_ic_number("");
-					vd_student.setIcCardId(0);
+					vd_student.setIcCardId(88888888);
 				}
 				int rowNum = studentService.insertStudentSelective(vd_student);// insert
 
@@ -1056,21 +1052,16 @@ public class MailListController {
 							iCCardService.updateInfoByic_number(td);
 						}
 					}
-					int i = 0;
+					//List<Tb_ic_card> tb_ic_cardTow = new ArrayList<Tb_ic_card>();
+					//HashMap hasIcNumberMap = new HashMap();
 					for (Hand_parent4mailList add : student_a.getParent()) {
 						// 查询家长的ic卡是否存在
-						List<Tb_ic_card> tb_ic_cardTow = new ArrayList<Tb_ic_card>();
-						List<Hand_parent4mailList> parent2 = student_a.getParent();
-						for (Hand_parent4mailList tb_parent4mailList : parent2) {
-							if (tb_parent4mailList.getParent_ic_number() != "") {
-								tb_ic_card = iCCardService.selectIcByNumber(tb_parent4mailList.getParent_ic_number(),
-										tb_class.getSchoolId(), IcCardType.ADULT.getIndex());
-								if (tb_ic_card != null) {
-									tb_ic_cardTow.add(tb_ic_card);
-								}
-							}
-
+						Tb_ic_card tb_ic_card = null;
+						if ( "".equals(add.getParent_ic_number())){
+							tb_ic_card = iCCardService.selectIcByNumber(add.getParent_ic_number(),
+									tb_class.getSchoolId(), IcCardType.ADULT.getIndex());
 						}
+						
 						vd_parent.setSchoolId(classService.selectById(vd_student.getClassId()).getSchoolId());
 						vd_parent.setPhone(add.getParent_phone());
 						vd_parent.setParent_id_number(add.getParent_ic_number());
@@ -1084,15 +1075,16 @@ public class MailListController {
 						vd_studentparent.setStudentId(vd_student.getId());
 						vd_studentparent.setParentId(vd_parent.getId());
 						vd_studentparent.setRelationId(add.getRelation_id());
-						// 添加父母的rfid
-						if (tb_ic_cardTow.size() > i) {
-							vd_studentparent.setRfid(tb_ic_cardTow.get(i).getRfid());
-							vd_studentparent.setIcCardId(tb_ic_cardTow.get(i).getId());
+						// 添加父母的rfid   在添加的时候有rfid就添加  咩有就默认为null
+						if (tb_ic_card!=null) {
+							vd_studentparent.setRfid(tb_ic_card.getRfid());
+							vd_studentparent.setIcCardId(tb_ic_card.getId());
 
-						} else if (student_a.getParent().get(i).getIcCardId() != null) {
+						} else{
 							vd_studentparent.setRfid("");
-							vd_studentparent.setIcCardId(0);
+							vd_studentparent.setIcCardId(88888888);
 						}
+						
 						if (add.getRelation_id() != 99) {
 							vd_studentparent.setRelationTitle(
 									mailListService.findrealtionById(add.getRelation_id()).getTitle());
@@ -1127,7 +1119,7 @@ public class MailListController {
 							respContent = EntityUtils.toString(he, "UTF-8");
 						}
 						logger.info("respContent=" + respContent);
-						i = i + 1;
+						
 					}
 				}
 				if (rowNum >= 0) {
@@ -1144,14 +1136,17 @@ public class MailListController {
 					td.setIcNumber(student_a.getStudent_ic_number());
 					iCCardService.updateInfoByic_number(td);
 				}
-				
+				//新卡和老卡使用88888888开区分
 				BeanUtils.copyProperties(list, student_a);
 				if (tb_ic_cardNoe != null) {
 					// 添加学生的rifid
 					list.setStudent_ic_number(tb_ic_cardNoe.getRfid());
 					list.setIcCardId(tb_ic_cardNoe.getId());
-				}else if(student_a.getIcCardId()!=null){
+				}else if(student_a.getIcCardId()!=0){
 					list.setStudent_ic_number("");
+					list.setIcCardId(88888888);
+				}else{
+					list.setStudent_ic_number(null);
 					list.setIcCardId(0);
 				}
 				// 更新学生信息
@@ -1171,19 +1166,15 @@ public class MailListController {
 					}
 				}
 				if (!student_a.getParent().isEmpty()) {
-					int i = 0;
+					//循环遍历是使用的循环变量
+					Integer i=0;
 					for (Hand_parent4mailList add : student_a.getParent()) {
-						// 查询家长的ic卡是否存在
-						List<Tb_ic_card> tb_icList = new ArrayList<Tb_ic_card>();
-						List<Hand_parent4mailList> parent2 = student_a.getParent();
-						for (Hand_parent4mailList tb_parent4mailList : parent2) {
-							if (tb_parent4mailList.getParent_ic_number() != "") {
-								tb_ic_card = iCCardService.selectIcByNumber(tb_parent4mailList.getParent_ic_number(),
-										tb_class.getSchoolId(), IcCardType.ADULT.getIndex());
-								if (tb_ic_card != null) {
-									tb_icList.add(tb_ic_card);
-								}
-							}
+						Tb_ic_card tb_ic_card = null;
+						
+						
+						if (add.getParent_ic_number() != "") {
+							tb_ic_card = iCCardService.selectIcByNumber(add.getParent_ic_number(),
+									tb_class.getSchoolId(), IcCardType.ADULT.getIndex());
 						}
 						// 修改家长的ic卡状态
 						List<Hand_parent4mailList> parent3 = student_a.getParent();
@@ -1216,11 +1207,14 @@ public class MailListController {
 							}
 							vd_studentparent.setCreated(new Date());
 							// yang 添加家长的rfid
-							if (tb_icList.size() > i) {
-								vd_studentparent.setRfid(tb_icList.get(i).getRfid());
-								vd_studentparent.setIcCardId(tb_icList.get(i).getId());
-							} else if (student_a.getParent().get(i).getIcCardId() != null) {
+							if (tb_ic_card!=null) {
+								vd_studentparent.setRfid(tb_ic_card.getRfid());
+								vd_studentparent.setIcCardId(tb_ic_card.getId());
+							} else if (student_a.getParent().get(i).getIcCardId() != 0) {
 								vd_studentparent.setRfid("");
+								vd_studentparent.setIcCardId(88888888);
+							}else{
+								vd_studentparent.setRfid(null);
 								vd_studentparent.setIcCardId(0);
 							}
 							studentService.insertStudentParentSelective(vd_studentparent);
@@ -1251,26 +1245,33 @@ public class MailListController {
 							logger.info("respContent=" + respContent);
 						} else {// 编辑家长
 							Hand_parent4mailList p = mailListService.findParentByPid(add.getId());
-							System.err.println(add.getParent_phone());
+							// 家长信息中选择其他的时候
+							if (add.getRelation_id() != 99) {
+								Tb_relation relation = mailListService.findrealtionById(add.getRelation_id());
+								p.setParent_name(relation.getTitle());
+								p.setRelation_id(relation.getId());
+							} else {
+								p.setRelation_id(99);
+								p.setParent_name(add.getParent_name());
+							}
 							p.setParent_phone(add.getParent_phone());
-
-							p.setParent_phone(add.getParent_phone());
-
-							p.setRelation_id(add.getRelation_id());
-
-							p.setParent_name(mailListService.findrealtionById(add.getRelation_id()).getTitle());
+							
 							// 添加家长的rfid
 
-							if (tb_icList.size() > i) {
-								p.setParent_ic_number(tb_icList.get(i).getRfid());
-								p.setIcCardId(tb_icList.get(i).getId());
-							} else if (student_a.getParent().get(i).getIcCardId()!=null) {
+							if (tb_ic_card!=null) {
+								p.setParent_ic_number(tb_ic_card.getRfid());
+								p.setIcCardId(tb_ic_card.getId());
+								//当编辑时，icCaidId不为null  说明是新卡
+							} else if (student_a.getParent().get(i).getIcCardId()!=0) {
 								p.setParent_ic_number("");
+								p.setIcCardId(88888888);
+							}else{
+								p.setParent_ic_number(null);
 								p.setIcCardId(0);
 							}
 							mailListService.UpdateParent(p);
 						}
-						i = i + 1;
+						i=i+1;
 					}
 				}
 				if (rowNum > 0) {

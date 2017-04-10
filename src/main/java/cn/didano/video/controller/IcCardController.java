@@ -129,9 +129,9 @@ public class IcCardController {
 	@ApiOperation(value = "根据ic编号和学校的id进行查询信息，并且是存在的信息", notes = "根据ic编号和学校的id进行查询信息，并且是存在的信息,没有选学校，默认school_id传0")
 	@PostMapping(value = "icCard_selectwhereicNumberAndschool_ic/{icNumber}/{school_id}")
 	@ResponseBody
-	public Out<OutList<Tb_ic_card>> icCard_selectwhereicNumberAndschool_ic(@PathVariable("icNumber")String  icNumber,@PathVariable("school_id")int  school_id) {
+	public Out<OutList<Tb_ic_card>> icCard_selectwhereicNumberAndschool_ic(@PathVariable("icNumber")String  icNumber,@PathVariable("school_id")Integer  school_id) {
 		logger.info("访问  PostController:icCard_selectwhereicNumberAndschool_ic");
-		if(school_id+""==null||school_id+""==""){
+		if(school_id==null){
 			school_id=0;
 		}
 		List<Tb_ic_card> controls = null;
@@ -183,9 +183,9 @@ public class IcCardController {
 	@ApiOperation(value = "查询某个范围内的ic卡信息（根据两个ic编号和一个学校的ID编号），并且是存在的信息", notes = "查询某个范围内的ic卡信息（根据两个ic编号和一个学校的ID编号），并且是存在的信息,没有选学校，默认school_id传0")
 	@PostMapping(value = "select_between_icInfoAndSchool_id/{icNumberNoe}/{icNumberTow}/{school_id}")
 	@ResponseBody
-	public Out<OutList<Tb_ic_card>> select_between_icInfoAndSchool_id(@PathVariable("icNumberNoe")String  icNumberNoe,@PathVariable("icNumberTow")String  icNumberTow,@PathVariable("school_id")int  school_id) {
+	public Out<OutList<Tb_ic_card>> select_between_icInfoAndSchool_id(@PathVariable("icNumberNoe")String  icNumberNoe,@PathVariable("icNumberTow")String  icNumberTow,@PathVariable("school_id")Integer  school_id) {
 		logger.info("访问  PostController:select_between_icInfoAndSchool_id");
-		if(school_id+""==null||school_id+""==""){
+		if(school_id==null){
 			school_id=0;
 		}
 		System.err.println(icNumberNoe+"可以"+school_id);

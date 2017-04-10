@@ -15,7 +15,7 @@ public class Tb_studentparent4List extends Tb_studentparent{
 
     private String parent_ic_number;
 
-    private Byte relationId;
+    private Integer relationId;
 
     private String relationTitle;
 
@@ -27,6 +27,15 @@ public class Tb_studentparent4List extends Tb_studentparent{
     
     private String student_ic_number;
     
+    
+	public Integer getRelationId() {
+		return relationId;
+	}
+
+	public void setRelationId(Integer relationId) {
+		this.relationId = relationId;
+	}
+
 	public String getParent_ic_number() {
 		return parent_ic_number;
 	}
@@ -43,9 +52,7 @@ public class Tb_studentparent4List extends Tb_studentparent{
 		this.student_ic_number = student_ic_number;
 	}
 
-	public Byte getRelationId() {
-		return relationId;
-	}
+	
 
 	public Integer getId() {
         return id;
@@ -87,9 +94,6 @@ public class Tb_studentparent4List extends Tb_studentparent{
         this.parentId = parentId;
     }
 
-    public void setRelationId(Byte relationId) {
-        this.relationId = relationId;
-    }
 
     public String getRelationTitle() {
         return relationTitle;

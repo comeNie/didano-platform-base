@@ -17,7 +17,7 @@ public class Hand_wholeStudentParent4PhoneBook {
 	private Date birthday;
 	private Byte gender;
 	private Byte status;
-	private byte relation_id;
+	private Integer relation_id;
 	private Integer parent_id;
 	private String parent_name;
 	private String parent_phone;
@@ -67,11 +67,11 @@ public class Hand_wholeStudentParent4PhoneBook {
 		this.parent_id = parent_id;
 	}
 
-	public byte getRelation_id() {
+	public Integer getRelation_id() {
 		return relation_id;
 	}
 
-	public void setRelation_id(byte relation_id) {
+	public void setRelation_id(Integer relation_id) {
 		this.relation_id = relation_id;
 	}
 

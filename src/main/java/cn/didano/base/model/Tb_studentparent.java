@@ -17,7 +17,7 @@ public class Tb_studentparent {
 
     private Integer icCardId;
 
-    private Byte relationId;
+    private Integer relationId;
 
     private String relationTitle;
 
@@ -91,11 +91,11 @@ public class Tb_studentparent {
         this.icCardId = icCardId;
     }
 
-    public Byte getRelationId() {
+    public Integer getRelationId() {
         return relationId;
     }
 
-    public void setRelationId(Byte relationId) {
+    public void setRelationId(Integer relationId) {
         this.relationId = relationId;
     }
 

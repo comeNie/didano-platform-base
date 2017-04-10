@@ -18,4 +18,6 @@ public interface Hand_Staff_icMapper {
 	Hand_staffTransit4PhoneBook selectInfoByic_number(Tb_staff tb_staff);
 	
 	int updateByic_number(Tb_staff tb_staff);
+	
+	List<Hand_staffTransit4PhoneBook> selectStaffType(Tb_staff tb_staff);
 }

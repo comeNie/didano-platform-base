@@ -64,7 +64,7 @@ public class MailListService {
 	/**
 	 * 通过关系id查询关系名称
 	 */
-	public Tb_relation findrealtionById(byte id){
+	public Tb_relation findrealtionById(Integer id){
 		return mailList_listMapper.findrelationById(id);
 	}
 	/**

@@ -194,6 +194,9 @@ public class StaffService {
 //		criteria.andNameLike(name);
 //		criteria.andSchoolIdEqualTo(id);
 //		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
+		
+		
+		
 		return hand_Staff_icMapper.selectStaff_name(tb_staff);
 	}
 	
@@ -232,7 +235,7 @@ public class StaffService {
 		
 		// yang 修改代码
 		
-		return hand_Staff_icMapper.selectStaff_icCardType(tb_staff);
+		return hand_Staff_icMapper.selectStaffType(tb_staff);
 	}
 	/**
 	 * 插入老师

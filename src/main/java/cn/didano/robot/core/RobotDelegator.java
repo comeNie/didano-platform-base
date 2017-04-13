@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 import cn.didano.base.exception.BackType;
 import cn.didano.robot.controller.RobotUpController;
@@ -29,7 +30,7 @@ public class RobotDelegator {
 	 */
 	public void handle(String service_no, RobotUpController robot, UpInfo upInfo) {
 		Object back = null;
-		Out<String> out = null;
+		Out<String> out = new Out<String>();;
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			Class<?> para = getParameterType(robot, upInfo.getMethodName());
@@ -37,26 +38,30 @@ public class RobotDelegator {
 				String jsonString = mapper.writeValueAsString(upInfo.getInfo());
 				Object[] o = new Object[] { mapper.readValue(jsonString, para) };
 				back = invokeMethod(robot, upInfo.getMethodName(), o);
+				if (back == null) {// 说明出现了异常
+					out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_WRONG);
+				} else {
+					out = (Out<String>) back;
+				}
 			} else {
 				// para 参数找不到，说明method没找到
-				out = new Out<String>();
 				out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_WRONG_METHOD);
 			}
+		} catch(UnrecognizedPropertyException ue){
+			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_WRONG_FORMAT,ue.getMessage());
 		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException e) {
-			e.printStackTrace();
+			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_WRONG);
 		} catch (Exception ex) {
+			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_WRONG);
 			ex.printStackTrace();
 		}
-		if (back == null) {// 说明出现了异常
-			out = new Out<String>();
-			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_WRONG);
-		} else {
-			out = (Out<String>) back;
-		}
-		// 有异常，反馈客户端信息
+		
+		
 		if (out.isSuccess()) {
-			// do nothing 正确无需返回信息
+			// 客户端上报信息，执行成功，则服务器端无返回信息
+			// 什么也不做
 		} else {
+			// 有异常，反馈客户端错误信息
 			RobotSession session = RobotWebsocketServer.getRobotInfoMap().get(service_no);
 			if (session != null) {
 				RobotWebsocketServer server = session.getRobotWebsocketServer();

@@ -24,7 +24,6 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel
 public class HardwareInfo extends RInfo {
-
 	@ApiModelProperty(value = "产品硬件识别码", required = true)
 	private String deviceNo;
 	@ApiModelProperty(value = "安卓核心板", required = true)
@@ -40,6 +39,8 @@ public class HardwareInfo extends RInfo {
 	@ApiModelProperty(value = "RFID读卡器", required = true)
 	private String rfidCardReader;
 	@ApiModelProperty(value = "液晶屏", required = true)
+	
+	 
 	private String liquidCrystalDisplay;
 	
 	public String getAndroidCoreBoard() {

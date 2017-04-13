@@ -20,7 +20,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @类名称：TemperatureInfo
- * @类描述：硬件信息（将两个摄像头分开） @创建人：杨朝强
+ * @类描述：上报环境温度信息 
+ * @创建人：杨朝强
  * @创建时间：2017年3月17日 下午3:38:14：
  * @version
  */
@@ -33,7 +34,7 @@ public class TemperatureInfo extends RInfo {
 	private String environmentTemperature;
 	@ApiModelProperty(value = "CPU温度", required = true)
 	private String cPUTemperature;
-
+	
 	public String getEnvironmentTemperature() {
 		return environmentTemperature;
 	}

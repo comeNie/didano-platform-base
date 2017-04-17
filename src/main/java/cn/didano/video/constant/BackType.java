@@ -31,6 +31,7 @@ public enum BackType {
 	
 	// fail 2000-3000  
 	// 数据库操作异常信息不能直接暴露给前端，采用FAIL_DB翻译
+	
 	FAIL_DOWN_LINE("异常范围底值", 2000),
 	FAIL_DB("数据库操作异常", 2101),
 	FAIL_INSERT_NORMAL("插入异常", 2112),

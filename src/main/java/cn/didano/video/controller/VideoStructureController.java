@@ -58,6 +58,11 @@ public class VideoStructureController {
 		return new ModelAndView("video/right/paymentAuthorization");
 	}
 	
+//	@GetMapping("uploadForm")
+//	public ModelAndView uploadForm() {
+//		return new ModelAndView("video/right/uploadForm");
+//	}
+	
 	@GetMapping("test_websocket")
 	public ModelAndView test_websocket() {
 		return new ModelAndView("video/right/test_websocket");
@@ -68,7 +73,4 @@ public class VideoStructureController {
 		return new ModelAndView("video/right/haode");
 	}
 	
-	
-	
-
 }

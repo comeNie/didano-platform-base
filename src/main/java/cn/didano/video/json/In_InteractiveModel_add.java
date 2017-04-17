@@ -25,6 +25,39 @@ public class In_InteractiveModel_add {
 	private String answerError;
 	@ApiModelProperty(value = "再见",required=true)
 	private String goodbye;
+	@ApiModelProperty(value = "适用年龄段",required=true)
+	private String Suitable_age;
+	@ApiModelProperty(value = "种类",required=true)
+	private String kinds;
+	@ApiModelProperty(value = "发布者",required=true)
+	private String author;
+	@ApiModelProperty(value = "学校id",required=true)
+	private int school_id;
+	
+	public String getSuitable_age() {
+		return Suitable_age;
+	}
+	public void setSuitable_age(String suitable_age) {
+		Suitable_age = suitable_age;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public int getSchool_id() {
+		return school_id;
+	}
+	public void setSchool_id(int school_id) {
+		this.school_id = school_id;
+	}
+	public String getKinds() {
+		return kinds;
+	}
+	public void setKinds(String kinds) {
+		this.kinds = kinds;
+	}
 	public String getName() {
 		return name;
 	}

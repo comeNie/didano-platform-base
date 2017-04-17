@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.didano.base.exception.ServiceException;
+import cn.didano.base.interaction.StorageService;
 import cn.didano.base.model.Tb_interactive_catalog;
 import cn.didano.base.model.Tb_interactive_model;
 import cn.didano.base.service.InteractiveModelService;
@@ -44,6 +45,8 @@ public class InteractiveModelWritingController {
 	static Logger logger = Logger.getLogger(InteractiveModelWritingController.class);
      @Autowired
      private InteractiveModelService interactiveService;
+     @Autowired
+     private StorageService storageService;
      @Autowired
  	 OssInfo ossInfo;
 	/**
@@ -132,8 +135,8 @@ public class InteractiveModelWritingController {
 				out.closeEntry();
 				fis.close();
 			}
-			FileInputStream fis = new FileInputStream(new File("Create-Xml/InteractiveModel.xml"));
-			out.putNextEntry(new ZipEntry(new File("Create-Xml/InteractiveModel.xml").getName()));
+			FileInputStream fis = new FileInputStream(new File(ossInfo.getLinuxXmlAddress()));
+			out.putNextEntry(new ZipEntry(new File(ossInfo.getLinuxXmlAddress()).getName()));
 			int len;
 			// 读入需要下载的文件的内容，打包到zip文件
 			while ((len = fis.read(buffer)) > 0) {
@@ -142,6 +145,8 @@ public class InteractiveModelWritingController {
 			out.closeEntry();
 			fis.close();
 			out.close();
+			storageService.deleteAll();
+			storageService.init();
 			if(row>0){
 			back.setBackTypeWithLog(BackType.SUCCESS_INSERT, "生成Demo.zip成功！");
 

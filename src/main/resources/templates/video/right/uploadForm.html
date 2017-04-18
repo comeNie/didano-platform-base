@@ -6,6 +6,7 @@
 <link href="../video/css/bootstrap.min.css" rel="stylesheet">
 <link href="../video/css/bootstrap-imageupload.css" rel="stylesheet">
 <link href="../video/css/basicStyle.css" rel="stylesheet" />
+
 </head>
 <meta charset="UTF-8">
 <body>
@@ -14,17 +15,26 @@
 			<h2 th:text="${message}" />
 		</div>
 		<div>
-			<form method="POST" enctype="multipart/form-data" action="/interaction/upload">
+			<form method="POST" enctype="multipart/form-data"
+				action="/interaction/upload">
 				<table>
 					<tr>
-						<td>File to upload:</td>
-						<td><input type="file" name="file" /></td>
-						<td><input type="file" name="file" /></td>
-						<td><input type="file" name="file" /></td>
-						<td><input type="file" name="file" /></td>
+						<td>
+							<div id="result1" name="result1"></div> <input type="file"
+							name="file1" id="file1"/>
+						</td>
+						<td><div id="result2" name="result2"></div> <input
+							type="file" name="file2" id="file2"/></td>
 					</tr>
 					<tr>
-						<td></td>
+						<td><div id="result3" name="result3"></div> <input
+							type="file" name="file3" id="file3"/></td>
+						<td><div id="result4" name="result4"></div> <input
+							type="file" name="file4" id="file4"/></td>
+					</tr>
+					<tr>
+						<td><input type="button" value="读取图像" onclick="readAsDataURL()" /></td>
+						
 						<td><input type="submit" value="Upload" /></td>
 					</tr>
 				</table>
@@ -38,3 +48,29 @@
 		</div>
 </body>
 </html>
+<script type="text/javascript">
+	//判断浏览器是否支持FileReader接口
+	if (typeof FileReader == 'undefined') {
+		result.InnerHTML = "<p>你的浏览器不支持FileReader接口！</p>";
+		//使选择控件不可操作
+		file.setAttribute("disabled", "disabled");
+	}
+
+	function readAsDataURL() {
+		
+		//检验是否为图像文件
+		var file = document.getElementById("file1").files[0];
+		if (!/image\/\w+/.test(file.type)) {
+			alert("请上传图片！");
+			return false;
+		}
+		var reader = new FileReader();
+		//将文件以Data URL形式读入页面
+		reader.readAsDataURL(file);
+		reader.onload = function(e) {
+			var result = document.getElementById("result1");
+			//显示文件 result返回的结果集合
+			result.innerHTML = '<img src="' + this.result +'" alt="" />';
+		}
+	}
+</script>

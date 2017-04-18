@@ -145,8 +145,7 @@ public class InteractiveModelWritingController {
 			out.closeEntry();
 			fis.close();
 			out.close();
-			storageService.deleteAll();
-			storageService.init();
+			
 			if(row>0){
 			back.setBackTypeWithLog(BackType.SUCCESS_INSERT, "生成Demo.zip成功！");
 

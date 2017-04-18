@@ -66,7 +66,8 @@ public class FileUploadController {
     public String handleFileUpload( @RequestParam("file") List<MultipartFile> files,
                                    RedirectAttributes redirectAttributes) {
         
-         
+    	storageService.deleteAll();
+    	storageService.init();
     	for (int i = 0; i < files.size(); i++) {
     		//Optional.ofNullable(files.get(i)).map(files.get(i)::getName).orElse("no name");
     		 storageService.store(files.get(i),i+1);

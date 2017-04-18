@@ -1,5 +1,14 @@
 package cn.didano.base.interaction;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -7,84 +16,82 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
+import cn.didano.video.controller.IcCardController;
 
 @Service
 public class FileSystemStorageService implements StorageService {
+	static Logger logger = Logger.getLogger(FileSystemStorageService.class);
+	
+	private final Path rootLocation;
 
-    private final Path rootLocation;
+	@Autowired
+	public FileSystemStorageService(StorageProperties properties) {
+		this.rootLocation = Paths.get(properties.getLocation());
+	}
 
-    @Autowired
-    public FileSystemStorageService(StorageProperties properties) {
-	        this.rootLocation = Paths.get(properties.getLocation());
-    }
+	@Override
+	public void store(MultipartFile file, int i) {
 
-    @Override
-    public void store(MultipartFile file,int i) {
-    
-        try {
-            if (file.isEmpty()) {
-                throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
-            }
-    //"Pic1."+file.getOriginalFilename().split("\\.")[1])
-            System.err.println(file.getName());
-            Files.copy(file.getInputStream(), this.rootLocation.resolve("pic"+i+"."+file.getOriginalFilename().split("\\.")[1]));
-            
-        } catch (IOException e) {
-            throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
-        }
-    }
+		try {
+			if (file.isEmpty()) {
+				logger.warn("Failed to store empty file ,file.getOriginalFilename()=" + file.getOriginalFilename());
+				//throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
+			} else {
+				System.err.println(file.getName());
+				Files.copy(file.getInputStream(),
+						this.rootLocation.resolve("pic" + i + "." + file.getOriginalFilename().split("\\.")[1]));
+			}
 
-    @Override
-    public Stream<Path> loadAll() {
-        try {
-            return Files.walk(this.rootLocation, 1)
-                    .filter(path -> !path.equals(this.rootLocation))
-                    .map(path -> this.rootLocation.relativize(path));
-        } catch (IOException e) {
-            throw new StorageException("Failed to read stored files", e);
-        }
+		} catch (IOException e) {
+			throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
+		}
+	}
 
-    }
+	@Override
+	public Stream<Path> loadAll() {
+		try {
+			return Files.walk(this.rootLocation, 1).filter(path -> !path.equals(this.rootLocation))
+					.map(path -> this.rootLocation.relativize(path));
+		} catch (IOException e) {
+			throw new StorageException("Failed to read stored files", e);
+		}
 
-    @Override
-    public Path load(String filename) {
-        return rootLocation.resolve(filename);
-    }
+	}
 
-    @Override
-    public Resource loadAsResource(String filename) {
-        try {
-            Path file = load(filename);
-            Resource resource = new UrlResource(file.toUri());
-            if(resource.exists() || resource.isReadable()) {
-                return resource;
-            }
-            else {
-                throw new StorageFileNotFoundException("Could not read file: " + filename);
+	@Override
+	public Path load(String filename) {
+		return rootLocation.resolve(filename);
+	}
 
-            }
-        } catch (MalformedURLException e) {
-            throw new StorageFileNotFoundException("Could not read file: " + filename, e);
-        }
-    }
+	@Override
+	public Resource loadAsResource(String filename) {
+		try {
+			Path file = load(filename);
+			Resource resource = new UrlResource(file.toUri());
+			if (resource.exists() || resource.isReadable()) {
+				return resource;
+			} else {
+				throw new StorageFileNotFoundException("Could not read file: " + filename);
 
-    @Override
-    public void deleteAll() {
-        FileSystemUtils.deleteRecursively(rootLocation.toFile());
-    }
+			}
+		} catch (MalformedURLException e) {
+			throw new StorageFileNotFoundException("Could not read file: " + filename, e);
+		}
+	}
 
-    @Override
-    public void init() {
-        try {
-            Files.createDirectory(rootLocation);
-        } catch (IOException e) {
-            throw new StorageException("Could not initialize storage", e);
-        }
-    }
+	@Override
+	public void deleteAll() {
+		FileSystemUtils.deleteRecursively(rootLocation.toFile());
+	}
+
+	@Override
+	public void init() {
+		try {
+			if (!Files.exists(rootLocation, new LinkOption[] { LinkOption.NOFOLLOW_LINKS })) {
+				Files.createDirectory(rootLocation);
+			}
+		} catch (IOException e) {
+			throw new StorageException("Could not initialize storage", e);
+		}
+	}
 }

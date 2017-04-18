@@ -68,7 +68,7 @@ public class FileUploadController {
         
          
     	for (int i = 0; i < files.size(); i++) {
-    		
+    		//Optional.ofNullable(files.get(i)).map(files.get(i)::getName).orElse("no name");
     		 storageService.store(files.get(i),i+1);
     	        redirectAttributes.addFlashAttribute("message",
     	                "You successfully uploaded " + files.get(i).getOriginalFilename() + "!");

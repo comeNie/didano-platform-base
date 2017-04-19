@@ -144,7 +144,7 @@ input,.btn{
 #issues-photos{
 	height: 155px;
 }
-.a-upload,.submit-btn{
+.a-upload{
 	padding: 4px 10px;
 	position: absolute;
 	color: white;
@@ -160,7 +160,13 @@ input,.btn{
 	*zoom: 1
 }
 .submit-btn{	
-	left: 95px;
+	padding: 6px 12px;
+    height: 60px !important;
+    line-height: 60px !important;
+    background: #6DC0F1;
+	border: 1px solid #6DC0F1;
+	border-radius: 4px;
+	color: white;
 }
 	
 .a-upload input {
@@ -198,7 +204,7 @@ input,.btn{
 	right: 0; 
 	z-index: 11; 
 	border: 0px; 
-	border-radius: 50px; 
+	border-radius: 20px; 
 	background: #9AC0CD; 
 	width: 20px; 
 	height: 20px; 

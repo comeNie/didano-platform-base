@@ -34,12 +34,12 @@
 		background: white;
 		border-radius: 5px;
 		text-align: center;
-	}
+	}*/
 	
 	.a-upload {
 		padding: 4px 10px;
-		height: 20px;
-		line-height: 20px;
+/*		height: 20px;
+		line-height: 20px;*/
 		position: relative;
 		cursor: pointer;
 		color: #888;
@@ -61,20 +61,27 @@
 		filter: alpha(opacity=0);
 		cursor: pointer
 	}
-	*/
-	/*.a-upload:hover {
+	
+	.a-upload:hover {
 		color: #444;
 		background: #eee;
 		border-color: #ccc;
 		text-decoration: none
-	}*/
+	}
 	.img_div{min-height: 100px; min-width: 100px;}
 	.isImg{
 		width: 150px;
         height: 100px; 
 		position: relative; 
 		float: left; 
-		margin-left: 10px;}
+		position: relative;
+	    display: table;
+	    margin: 8px;
+	    border: 1px solid #ddd;
+	    box-shadow: 1px 1px 5px 0 #a2958a;
+	    padding: 6px;
+	    text-align: center;
+	}
 	.removeBtn{position: absolute; top: 0; right: 0; z-index: 11; border: 0px; border-radius: 50px; background: red; width: 22px; height: 22px; color: white;}
 	/*.shadeImg{position: absolute;
 		display: none;
@@ -120,11 +127,7 @@
 			}
 			return true;
 		});
-		/*
-		 作者：z@qq.com
-		时间：2016-12-10
-		描述：鉴定每个浏览器上传图片url 目前没有合并到Ie
-		 * */
+
 		function getObjectURL(file) {
 			var url = null;
 			if(window.createObjectURL != undefined) { // basic
@@ -137,11 +140,7 @@
 			return url;
 		}
 	});
-	/*
-	 作者：z@qq.com
-	 时间：2016-12-10
-	  描述：上传图片附带删除 再次地方可以加上一个ajax进行提交到后台进行删除
-	 * */
+
 	function removeImg(r){
 		$(r).parent().remove();
 	}
@@ -181,12 +180,13 @@
 		</div>
 		<div class="img_div">
 		</div>
-		<!-- <a href="javascript:;" class="a-upload"> -->
 			<form method="POST" enctype="multipart/form-data" action="/interaction/upload">
-				<input type="file" name="file" id="myFile" multiple="multiple" />
+				<a href="javascript:;" class="a-upload">
+					<input type="file" name="file" id="myFile" multiple="multiple" />点击上传图片
+				</a>
 				<input type="submit" value="上传图片" />
 			</form>
-		<!-- </a> -->
+		
 		<div class="shade" onclick="javascript:closeShade()">
 			<div class="">
 				<span class="text_span">
@@ -201,12 +201,12 @@
 			</div>
 		</div>
 
-		<div>
+		<!-- <div>
 			<ul>
 				<li th:each="file : ${files}"><a th:href="${file}"
 					th:text="${file}" /></li>
 			</ul>
-		</div>
+		</div> -->
 	</div>
 </body>
 </html>

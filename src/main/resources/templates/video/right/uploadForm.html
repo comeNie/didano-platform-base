@@ -1,76 +1,212 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="video/main" charset="UTF-8">
-<head>
-<link href="../video/css/bootstrap.min.css" rel="stylesheet">
-<link href="../video/css/bootstrap-imageupload.css" rel="stylesheet">
-<link href="../video/css/basicStyle.css" rel="stylesheet" />
 
-</head>
+<head>
 <meta charset="UTF-8">
+<title>互动模块</title>
+<link rel="stylesheet" href="../video/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../video/css/payAuth.css" />
+<link rel="stylesheet" href="../video/css/basicStyle.css"/>
+<link rel="stylesheet" href="../video/css/test.css" />
+<script src="../video/js/jquery.min.js"></script>
+<style type="text/css">
+	/*.shade {
+		position: absolute;
+		display: none;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background: rgba(0, 0, 0, 0.55);
+	}
+	
+	.shade div {
+		width: 300px;
+		height: 200px;
+		line-height: 200px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: -100px;
+		margin-left: -150px;
+		background: white;
+		border-radius: 5px;
+		text-align: center;
+	}
+	
+	.a-upload {
+		padding: 4px 10px;
+		height: 20px;
+		line-height: 20px;
+		position: relative;
+		cursor: pointer;
+		color: #888;
+		background: #fafafa;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		overflow: hidden;
+		display: inline-block;
+		*display: inline;
+		*zoom: 1
+	}
+	
+	.a-upload input {
+		position: absolute;
+		font-size: 100px;
+		right: 0;
+		top: 0;
+		opacity: 0;
+		filter: alpha(opacity=0);
+		cursor: pointer
+	}
+	*/
+	/*.a-upload:hover {
+		color: #444;
+		background: #eee;
+		border-color: #ccc;
+		text-decoration: none
+	}*/
+	.img_div{min-height: 100px; min-width: 100px;}
+	.isImg{
+		width: 150px;
+        height: 100px; 
+		position: relative; 
+		float: left; 
+		margin-left: 10px;}
+	.removeBtn{position: absolute; top: 0; right: 0; z-index: 11; border: 0px; border-radius: 50px; background: red; width: 22px; height: 22px; color: white;}
+	/*.shadeImg{position: absolute;
+		display: none;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		z-index: 15;
+		text-align: center;
+		background: rgba(0, 0, 0, 0.55);}*/
+	/*.showImg{width: 400px; height: 500px; margin-top: 140px;}	*/
+
+</style>
+<script type="text/javascript">
+	$(function() {
+		var objUrl;
+		var img_html;
+		$("#myFile").change(function() {
+			var img_div = $(".img_div");
+			var filepath = $("input[name='file']").val();
+			for(var i = 0; i < this.files.length; i++) {
+				objUrl = getObjectURL(this.files[i]);
+				var extStart = filepath.lastIndexOf(".");
+				var ext = filepath.substring(extStart, filepath.length).toUpperCase();
+				/*
+				 作者：z@qq.com
+				时间：2016-12-10
+				描述：鉴定每个图片上传尾椎限制
+				* */
+				if(ext != ".BMP" && ext != ".PNG" && ext != ".GIF" && ext != ".JPG" && ext != ".JPEG") {
+					$(".shade").fadeIn(500);
+					$(".text_span").text("图片限于bmp,png,gif,jpeg,jpg格式");
+					this.value = "";
+					$(".img_div").html("");
+					return false;
+				} else {
+					/*
+					 若规则全部通过则在此提交url到后台数据库
+					 * */
+					img_html = "<div class='isImg'><img src='" + objUrl + "' onclick='javascript:lookBigImg(this)' style='height: 100%; width: 100%;' /><button class='removeBtn' onclick='javascript:removeImg(this)'>x</button></div>";
+					img_div.append(img_html);
+				}
+			}
+			return true;
+		});
+		/*
+		 作者：z@qq.com
+		时间：2016-12-10
+		描述：鉴定每个浏览器上传图片url 目前没有合并到Ie
+		 * */
+		function getObjectURL(file) {
+			var url = null;
+			if(window.createObjectURL != undefined) { // basic
+				url = window.createObjectURL(file);
+			} else if(window.URL != undefined) { // mozilla(firefox)
+				url = window.URL.createObjectURL(file);
+			} else if(window.webkitURL != undefined) { // webkit or chrome
+				url = window.webkitURL.createObjectURL(file);
+			}
+			return url;
+		}
+	});
+	/*
+	 作者：z@qq.com
+	 时间：2016-12-10
+	  描述：上传图片附带删除 再次地方可以加上一个ajax进行提交到后台进行删除
+	 * */
+	function removeImg(r){
+		$(r).parent().remove();
+	}
+	/*
+	 作者：z@qq.com
+	 时间：2016-12-10
+	  描述：上传图片附带放大查看处理
+	 * */
+	function lookBigImg(b){
+		$(".shadeImg").fadeIn(500);
+		$(".showImg").attr("src",$(b).attr("src"))
+	}
+	/*
+	 作者：z@qq.com
+	 时间：2016-12-10
+	  描述：关闭弹出层
+	 * */
+	function closeShade(){
+		$(".shade").fadeOut(500);
+	}
+	/*
+	 作者：z@qq.com
+	 时间：2016-12-10
+	  描述：关闭弹出层
+	 * */
+	function closeShadeImg(){
+		$(".shadeImg").fadeOut(500);
+	}
+</script>
+<title>jQuery多张图片上传预览代码 - 站长素材</title>
+</head>
+
 <body>
 	<div layout:fragment="content" class="container width-100 padding-rl-0">
 		<div th:if="${message}">
 			<h2 th:text="${message}" />
 		</div>
-		<div>
-			<form method="POST" enctype="multipart/form-data"
-				action="/interaction/upload">
-				<table>
-					<tr>
-						<td>
-							<div id="result1" name="result1"></div> <input type="file"
-							name="file" id="file1"/>
-						</td>
-						<td><div id="result2" name="result2"></div> <input
-							type="file" name="file" id="file2"/></td>
-					</tr>
-					<tr>
-						<td><div id="result3" name="result3"></div> <input
-							type="file" name="file" id="file3"/></td>
-						<td><div id="result4" name="result4"></div> <input
-							type="file" name="file" id="file4"/></td>
-					</tr>
-					<tr>
-						<td><input type="button" value="读取图像" onclick="readAsDataURL()" /></td>
-						
-						<td><input type="submit" value="Upload" /></td>
-					</tr>
-				</table>
-			</form>
+		<div class="img_div">
 		</div>
+		<!-- <a href="javascript:;" class="a-upload"> -->
+			<form method="POST" enctype="multipart/form-data" action="/interaction/upload">
+				<input type="file" name="file" id="myFile" multiple="multiple" />
+				<input type="submit" value="上传图片" />
+			</form>
+		<!-- </a> -->
+		<div class="shade" onclick="javascript:closeShade()">
+			<div class="">
+				<span class="text_span">
+					
+				</span>
+			</div>
+		</div>
+
+		<div class="shadeImg" onclick="javascript:closeShadeImg()">
+			<div class="">
+				<img class="showImg" src="">
+			</div>
+		</div>
+
 		<div>
 			<ul>
 				<li th:each="file : ${files}"><a th:href="${file}"
 					th:text="${file}" /></li>
 			</ul>
 		</div>
+	</div>
 </body>
 </html>
-<script type="text/javascript">
-	//判断浏览器是否支持FileReader接口
-	if (typeof FileReader == 'undefined') {
-		result.InnerHTML = "<p>你的浏览器不支持FileReader接口！</p>";
-		//使选择控件不可操作
-		file.setAttribute("disabled", "disabled");
-	}
-
-	function readAsDataURL() {
-		
-		//检验是否为图像文件
-		var file = document.getElementById("file1").files[0];
-		if (!/image\/\w+/.test(file.type)) {
-			alert("请上传图片！");
-			return false;
-		}
-		var reader = new FileReader();
-		//将文件以Data URL形式读入页面
-		reader.readAsDataURL(file);
-		reader.onload = function(e) {
-			var result = document.getElementById("result1");
-			//显示文件 result返回的结果集合
-			result.innerHTML = '<img src="' + this.result +'" alt="" />';
-		}
-	}
-</script>

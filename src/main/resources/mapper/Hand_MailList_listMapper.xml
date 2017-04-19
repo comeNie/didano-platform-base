@@ -28,7 +28,7 @@ on tmp3.class_id=tmp4.class_id
 
 <select id="findParentByIcNumber" parameterType="cn.didano.base.model.Tb_student" resultType="cn.didano.base.model.Hand_wholeStudent4PhoneBook">
    select Max(a.id),a.relation_title as title,b.name from tb_student_parent a,tb_student b where a.rfid=#{rfid} and b.id=a.student_id and a.deleted=0 
-       <if test="id != null">
+      <if test="id != null">
         <![CDATA[and a.id <> #{id}]]>
       </if>
 </select>

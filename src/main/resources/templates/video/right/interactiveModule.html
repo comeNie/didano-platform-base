@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="video/main" charset="UTF-8">
+<head>
+	<meta charset="UTF-8">
+	<title>互动模块</title>
+	<link rel="stylesheet" href="../video/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../video/css/payAuth.css" />
+	<link rel="stylesheet" href="../video/css/basicStyle.css"/>
+	<link rel="stylesheet" href="../video/css/test.css" />
+	<link rel="stylesheet" href="../video/css/fileinput.min.css"/>
+
+	<script src="../video/js/jquery.min.js"></script>
+	<script src="../video/js/fileinput.min.js"></script>
+	<script>
+        var IMGWIDTH;
+		/*获取题目列表*/
+		$(function(){
+			$.ajax({
+                type: "POST",
+                url:"http://sp.didano.com:8080/base/interactive/post/findAllModel",
+                dataType: "json",
+                success: function(rs){
+                	if(rs.success){
+                		var issuesStr = "";
+		            	$.each(rs.data.list,function(inx,obj){
+		            		issuesStr += "<div class='col-md-3 margin-bootom-10'><div class='col-md-12 table-bg border-bottom-white padding-rl-0 issues-info'><div class='col-md-6 text-left issues-title'>小诺题卡</div><div class='col-md-6 text-right'></div></div><div class='col-md-12 table-bg padding-rl-0 issues-info'><div class='col-md-6 text-left'>作者</div><div class='col-md-6  text-right'>"+obj['author']+"</div></div><div class='col-md-12 table-bg padding-rl-0 issues-info'><div class='col-md-6 text-left'>类型</div><div class='col-md-6 text-right'>"+obj['catalogName']+"</div></div><div class='col-md-12 table-bg padding-rl-0 issues-info'><div class='col-md-6 text-left'>适用年龄</div><div class='col-md-6 text-right'>"+obj['suitableAge']+"岁</div></div></div>"
+		            	});
+		            	$('.issues-list').append(issuesStr);
+                	}
+                },
+                error: function(){
+
+                }
+            });
+		});
+		/*添加题目*/
+		$(function(){
+			$('#btn-add-issues').click(function(){
+				$('.shield').parent().removeClass('hidden');
+                IMGWIDTH = $('#issues-details').width() / 4 - 10;
+			});
+		});
+
+		/*点击取消添加*/
+		$(function(){
+			$('#btn-cancel').click(function(){
+				$('.shield').parent().addClass('hidden');
+			});
+		});
+		
+		/*确认添加题目*/
+		$(function(){
+			$('#btn-confirms').click(function(){
+				/*获取XML的名称*/
+				var issuesName = $('#issues-name').val();
+				/*获取作者名称*/
+				// var issuesAuthor = $('#issues-author').val();
+				/*获取题目类型*/
+				var issuesKinds1 = $('#issues-kinds1').val();
+				var issuesKinds2 = $('#issues-kinds2').val();
+				var issuesKinds = issuesKinds1+"-"+issuesKinds2;
+				/*获取适用学校ID*/
+				// var schoolId = $('#issues-school').val();
+				/*获取使用的年龄段*/
+				var issuesAge = $('#issues-age').val();
+				/*获取题目的正确答案*/
+				var issuesCorrect = $('#issues-correct').val();
+				/*获取问题描述*/
+				var issuesQuestion  = $('#issues-question').val();
+				// 答题前提示语
+				var issuesPrepar = $('#issues-prepar').val();
+				// 答对信息
+				var issuesAnswerOk1 = $('#issues-answerOk1').val();
+				var issuesAnswerOk2 = $('#issues-answerOk2').val();
+				var issuesAnswerOk = issuesAnswerOk1+';'+issuesAnswerOk2;
+				// 答错信息
+				var issuesAnswerError1 = $('#issues-answerError1').val();
+				var issuesAnswerError2 = $('#issues-answerError2').val();
+				var issuesAnswerError = issuesAnswerError1+';'+issuesAnswerError2;
+				// 再见信息
+				var issuesGoodbye1 = $('#issues-goodbye1').val();
+				var issuesGoodbye2 = $('#issues-goodbye2').val();
+				var issuesGoodbye = issuesGoodbye1+';'+issuesGoodbye2;
+
+				/*ajax发送请求*/
+				$.ajax({
+	                type: "POST",
+	                url:"http://sp.didano.com:8080/base/interactive/post/InteractiveModel_add",
+	                dataType: "json",
+            		contentType: "application/json; charset=utf-8",
+	            	data:JSON.stringify({
+						"answerError": issuesAnswerError,
+						"answerOk": issuesAnswerOk,
+						"author": 'didano',
+						"correct": issuesCorrect,
+						"goodbye": issuesGoodbye,
+						"kinds": issuesKinds,
+						"name": issuesName,
+						"prepare": issuesPrepar,
+						"question": issuesQuestion,
+						"school_id": 0,
+						"suitable_age": issuesAge
+	            	}),
+	                success: function(rs){
+	                	if(rs.success){
+	                		alert('新增题卡成功!');
+	                		location.reload();
+	                	}
+	                },
+	                error: function(){
+	                	alert('网络延误，请稍后操作!');
+	                }
+            });
+
+			})
+		});
+		
+		/*选择学校*/
+		$(function(){
+			$('#issues-school').focus(function(){
+				$('#school-list').removeClass('hidden');
+			});
+		});
+		$(function(){
+			$('.shield').click(function(){
+				$('#school-list').addClass('hidden');
+			});
+		});
+
+        $(function() {
+            var objUrl;
+            var img_html;
+            $("#myFile").change(function() {
+                var img_div = $(".img_div");
+                var filepath = $("input[name='file']").val();
+                for(var i = 0; i < this.files.length; i++) {
+                    objUrl = getObjectURL(this.files[i]);
+                    var extStart = filepath.lastIndexOf(".");
+                    var ext = filepath.substring(extStart, filepath.length).toUpperCase();
+                    /*
+                     作者：z@qq.com
+                    时间：2016-12-10
+                    描述：鉴定每个图片上传尾椎限制
+                    * */
+                    if(ext != ".BMP" && ext != ".PNG" && ext != ".GIF" && ext != ".JPG" && ext != ".JPEG") {
+                        $(".shade").fadeIn(500);
+                        $(".text_span").text("图片限于bmp,png,gif,jpeg,jpg格式");
+                        this.value = "";
+                        $(".img_div").html("");
+                        return false;
+                    } else {
+                        /*
+                         若规则全部通过则在此提交url到后台数据库
+                         * */
+                        img_html = "<div class='isImg' style='width:"+IMGWIDTH+"px'><img src='" + objUrl + "' style='height: 100%; width: 100%;' /><button class='removeBtn' onclick='javascript:removeImg(this)'>X</button></div>";
+                        img_div.append(img_html);
+                    }
+                }
+                return true;
+            });
+
+            function getObjectURL(file) {
+                var url = null;
+                if(window.createObjectURL != undefined) { // basic
+                    url = window.createObjectURL(file);
+                } else if(window.URL != undefined) { // mozilla(firefox)
+                    url = window.URL.createObjectURL(file);
+                } else if(window.webkitURL != undefined) { // webkit or chrome
+                    url = window.webkitURL.createObjectURL(file);
+                }
+                return url;
+            }
+        });
+
+        function removeImg(r){
+            $(r).parent().remove();
+        }
+        /*
+         作者：z@qq.com
+         时间：2016-12-10
+          描述：关闭弹出层
+         * */
+        function closeShade(){
+            $(".shade").fadeOut(500);
+        }
+        /*
+         作者：z@qq.com
+         时间：2016-12-10
+          描述：关闭弹出层
+         * */
+        function closeShadeImg(){
+            $(".shadeImg").fadeOut(500);
+        }
+	</script>
+
+</head>
+<body>
+	<!-- <h1 layout:fragment="header" style="text-align:center">付费授权</h1> -->
+    <div layout:fragment="content" class="container width-100 padding-rl-0">
+    	<div class="col-md-12 list-body bg-color-white width-80 padding-rl-0">
+	    	<div class="col-md-12 list-title list-height">
+	    		互动题卡
+	    	</div>
+	    	<div class="col-md-12 padding-rl-0 margin-bootom-5">
+		    	<div class="col-md-10 list-height">题卡列表</div>
+		    	<div class="col-md-2 list-height text-right">
+		    		<button type="button" class="btn btn-info btn-color2" id="btn-add-issues">添加题卡</button>
+		    	</div>
+	    	</div>
+	    	<div class="col-md-12 table-font-color padding-rl-0 issues-list">
+	    	</div>
+            <!-- <div class="col-md-12 title">
+                <div class="col-md-6 padding-rl-0">图片上传</div>
+                
+            </div>
+	    	<div class="col-md-12 school-list-body padding-rl-0">
+	    		<div class="col-md-6">
+	    			<form method="POST" enctype="multipart/form-data" action="/interaction/upload">
+						<input id="file-4" name="file-4[]" type="file" multiple>
+						<input type="submit" value="上传" />
+					</form >
+                </div>
+	    	</div> -->
+    	</div>
+    	<div class="col-md-12 padding-rl-0 hidden">
+    		<div class="shield"></div>
+    		<div id="issues-details" class="col-md-12 padding-rl-5 issues-card">
+    			<div class="col-md-12  padding-rl-0  border-bottom-gray issues-title issues-div">
+    				新增题目
+    			</div>
+                <div class="col-md-12  padding-rl-0 border-bottom-gray" id='issues-photos'>
+                    <div class="col-md-12  padding-rl-0 img_div">
+
+                    </div>
+                        <form method="POST" enctype="multipart/form-data" action="/interaction/upload">
+                            <input type="submit" value="提交" class="submit-btn"/>
+                            <a href="javascript:;" class="a-upload">
+                                <input type="file" name="file" id="myFile" multiple="multiple" />点击上传图片
+                            </a>
+                            
+                        </form>
+                    
+                    <div class="shade" onclick="javascript:closeShade()">
+                        <div class="">
+                            <span class="text_span">
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="shadeImg" onclick="javascript:closeShadeImg()">
+                        <div class="">
+                            <img class="showImg" src="">
+                        </div>
+                    </div>
+                </div>
+
+    			<div class="col-md-12  padding-rl-0 border-bottom-gray issues-div">
+    				<!-- <div class="col-md-3 padding-rl-0">
+    					文件名称
+    				</div> -->
+    				<div class="col-md-12 padding-rl-0">
+	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入XML文件的名称（例如：template1）" id="issues-name">
+    				</div>
+    			</div>
+    			<!-- <div class="col-md-12  padding-rl-0 border-bottom-gray issues-div">
+    				<div class="col-md-3 padding-rl-0">
+    					作者
+    				</div>
+    				<div class="col-md-12 padding-rl-0">
+	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入作者（例如：didano）" id='issues-author'>
+    				</div>
+    			</div> -->
+    			<div class="col-md-12  padding-rl-0 issues-div">
+    				<!-- <div class="col-md-3 padding-rl-0">
+    					题目类型
+    				</div> -->
+    				<div class="col-md-12 padding-rl-0">
+	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入题目类型（例如：物品）" id="issues-kinds1">
+    				</div>
+    			</div>
+    			<div class="col-md-12  padding-rl-0 border-bottom-gray issues-div">
+    				<!-- <div class="col-md-3 padding-rl-0">
+    					题目类型
+    				</div> -->
+    				<div class="col-md-12 padding-rl-0">
+	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入题目种类（例如：动物）" id="issues-kinds2">
+    				</div>
+    			</div>
+    			<!-- <div class="col-md-12  padding-rl-0 border-bottom-gray">
+    				<div class="col-md-3 padding-rl-0">
+    					学校
+    				</div>
+    				<div class="col-md-12 padding-rl-0">
+	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入学校（必填）" id="issues-school">
+    				</div>
+    			</div> -->
+    			<div class="col-md-12  padding-rl-0 border-bottom-gray issues-div">
+    				<!-- <div class="col-md-3 padding-rl-0">
+    					适用年龄
+    				</div> -->
+    				<div class="col-md-12 padding-rl-0">
+	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入题目使用年龄（例如:5-12）（必填）" id="issues-age">
+    				</div>
+    			</div>
+    			<div class="col-md-12  padding-rl-0 border-bottom-gray issues-div">
+    				<!-- <div class="col-md-3 padding-rl-0">
+    					正确答案
+    				</div> -->
+    				<div class="col-md-12 padding-rl-0">
+	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入正确题目（例如：pic1）" id="issues-correct">
+    				</div>
+    			</div>
+    			<div class="col-md-12  padding-rl-0 border-bottom-gray issues-div">
+    				<!-- <div class="col-md-3 padding-rl-0">
+    					题目描述
+    				</div> -->
+    				<div class="col-md-12 padding-rl-0">
+	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入问题描述（例如：看看哪个是猴子呢？）" id="issues-question">
+    				</div>
+    			</div>
+    			<div class="col-md-12  padding-rl-0 border-bottom-gray issues-div">
+    				<!-- <div class="col-md-3 padding-rl-0">
+    					答前提示
+    				</div> -->
+    				<div class="col-md-12 padding-rl-0">
+	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入答题前提示语（例如：准备答题哦）" id="issues-prepare">
+    				</div>
+    			</div>
+    			<div class="col-md-12  padding-rl-0 issues-div">
+    				<!-- <div class="col-md-3 padding-rl-0">
+    					答对提示
+    				</div> -->
+    				<div class="col-md-12 padding-rl-0">
+	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入答对题提示语（例如：答对了，好厉害）" id="issues-answerOk1">
+    				</div>
+    			</div>
+    			<div class="col-md-12  padding-rl-0 border-bottom-gray issues-div">
+    				<!-- <div class="col-md-3 padding-rl-0">
+    					答对动作
+    				</div> -->
+    				<div class="col-md-12 padding-rl-0">
+	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入答对小诺动作（例如：1.小诺点赞）" id="issues-answerOk2">
+    				</div>
+    			</div>
+    			<div class="col-md-12  padding-rl-0 issues-div">
+    				<!-- <div class="col-md-3 padding-rl-0">
+    					答错提示
+    				</div> -->
+    				<div class="col-md-12 padding-rl-0">
+	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入答错题提示语（例如：很遗憾，下次再接再厉哦）" id="issues-answerError1">
+    				</div>
+    			</div>
+    			<div class="col-md-12  padding-rl-0 border-bottom-gray issues-div">
+    				<!-- <div class="col-md-3 padding-rl-0">
+    					答错动作
+    				</div> -->
+    				<div class="col-md-12 padding-rl-0">
+	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入答对小诺动作（例如：1.小诺鼓励）" id="issues-answerError2">
+    				</div>
+    			</div>
+    			<div class="col-md-12  padding-rl-0 issues-div">
+    				<!-- <div class="col-md-3 padding-rl-0">
+    				   再见提示
+    				</div> -->
+    				<div class="col-md-12 padding-rl-0">
+	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入再见提示语（例如：下次再见）" id="issues-goodbye1">
+    				</div>
+    			</div>
+    			<div class="col-md-12  padding-rl-0 issues-div">
+    				<!-- <div class="col-md-3 padding-rl-0">
+    				   再见动作
+    				</div> -->
+    				<div class="col-md-12 padding-rl-0 border-bottom-gray">
+	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入再见小诺动作（例如：12.2.4秒小诺吐舌头）" id="issues-goodbye2">
+    				</div>
+    			</div>
+    			<div class="col-md-12  padding-rl-0 text-right btn-div">
+    				<button type="button" class="btn btn-info btn-color-gray" id="btn-cancel">取消</button>
+    				<button type="button" class="btn btn-info btn-color2" id="btn-confirms">确定</button>
+    			</div> 			
+        	</div>
+        	<!-- <div id="school-list" class="col-md-12 padding-rl-5 hidden">
+        		<div class="col-md-12 padding-rl-0 border-bottom-white" id="schoolId_0" onclick="getSchool(obj)">
+        			全部学校
+        		</div>
+        	</div> -->
+        </div>
+    </div>
+    </div>
+</body>
+</html>

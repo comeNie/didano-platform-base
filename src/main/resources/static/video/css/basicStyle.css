@@ -85,10 +85,10 @@ body{
     width: 60%;
     left: 20%;
     height: 795px;
-    top: -600px;
+    /*top: -600px;*/
     /*background-color: #F0F0F0 !important;*/
     background-color: white;
-    margin-bottom: 50px;
+    margin-bottom: 35px;
 }
 #school-list{
 	width: 20%;

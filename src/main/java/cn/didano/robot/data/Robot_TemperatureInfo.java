@@ -15,6 +15,8 @@
  */
 package cn.didano.robot.data;
 
+import org.springframework.data.annotation.TypeAlias;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -26,7 +28,8 @@ import io.swagger.annotations.ApiModelProperty;
  * @version
  */
 @ApiModel
-public class TemperatureInfo extends RInfo {
+@TypeAlias("环境温度")
+public class Robot_TemperatureInfo extends RInfo {
 
 	@ApiModelProperty(value = "产品硬件识别码", required = true)
 	private String deviceNo;
@@ -60,12 +63,12 @@ public class TemperatureInfo extends RInfo {
 		this.cPUTemperature = cPUTemperature;
 	}
 
-	public TemperatureInfo() {
+	public Robot_TemperatureInfo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public TemperatureInfo(String deviceNo, String environmentTemperature, String cPUTemperature) {
+	public Robot_TemperatureInfo(String deviceNo, String environmentTemperature, String cPUTemperature) {
 		super();
 		this.deviceNo = deviceNo;
 		this.environmentTemperature = environmentTemperature;

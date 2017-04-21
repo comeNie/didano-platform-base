@@ -23,6 +23,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.domain.Persistable;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 
@@ -40,7 +41,7 @@ public class RInfo {
 	private String id;
 
 	@CreatedDate // 自动生成时间
-	@JsonIgnore // json转换，忽略该属性
+	//@JsonIgnore // json转换，忽略该属性
 	private Date createDate;
 
 	@Version // 自动生成自然数
@@ -54,7 +55,7 @@ public class RInfo {
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getCreateDate() {
 		return createDate;
 	}

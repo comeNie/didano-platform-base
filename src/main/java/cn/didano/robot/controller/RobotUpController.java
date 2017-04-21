@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.didano.base.exception.BackType;
-import cn.didano.robot.data.HardwareInfo;
-import cn.didano.robot.data.ManageInfo;
-import cn.didano.robot.data.MeetPropertyInfo;
-import cn.didano.robot.data.MeetSpeedInfo;
-import cn.didano.robot.data.OnLineInfo;
-import cn.didano.robot.data.OperationInfo;
-import cn.didano.robot.data.PhotographicQualityInfo;
-import cn.didano.robot.data.RVersionInfo;
-import cn.didano.robot.data.SelfLnspectionInfo;
-import cn.didano.robot.data.TemperatureInfo;
+import cn.didano.robot.data.Robot_HardwareInfo;
+import cn.didano.robot.data.Robot_ManageInfo;
+import cn.didano.robot.data.Robot_MeetPropertyInfo;
+import cn.didano.robot.data.Robot_MeetSpeedInfo;
+import cn.didano.robot.data.Robot_OnLineInfo;
+import cn.didano.robot.data.Robot_OperationInfo;
+import cn.didano.robot.data.Robot_PhotographicQualityInfo;
+import cn.didano.robot.data.Robot_VersionInfo;
+import cn.didano.robot.data.Robot_SelfLnspectionInfo;
+import cn.didano.robot.data.Robot_TemperatureInfo;
 import cn.didano.robot.service.RobotMongoDbDataService;
 import cn.didano.video.json.Out;
 import io.swagger.annotations.Api;
@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiParam;
 
 /**
  * 诊断平台api服务
+ * 诊断rest服务
  * 
  * @author stephen Created on 2016年12月17日 下午6:38:30
  */
@@ -42,7 +43,7 @@ public class RobotUpController {
 	@ApiOperation(value = "上报版本信息", notes = "上报版本信息")
 	@ResponseBody
 	public Out<String> reportVersionInfo(
-			@ApiParam(value = "远程机器人版本信息", required = true) @RequestBody RVersionInfo robotVersionInfo) {
+			@ApiParam(value = "远程机器人版本信息", required = true) @RequestBody Robot_VersionInfo robotVersionInfo) {
 		logger.info("访问  RobotController :reportVersionInfo RobotVersionInfo=" + robotVersionInfo);
 		System.err.println("上报版本信息");
 		Out<String> out = new Out<String>();
@@ -70,7 +71,7 @@ public class RobotUpController {
 	@ApiOperation(value = "上报硬件信息", notes = "上报硬件信息")
 	@ResponseBody
 	public Out<String> reporThardwareInfo(
-			@ApiParam(value = "远程机器人硬件信息", required = true) @RequestBody HardwareInfo hardwareInfo) {
+			@ApiParam(value = "远程机器人硬件信息", required = true) @RequestBody Robot_HardwareInfo hardwareInfo) {
 		logger.info("访问  RobotController :reporThardwareInfo HardwareInfo=" + hardwareInfo);
 		System.err.println("上报硬件信息");
 		Out<String> out = new Out<String>();
@@ -99,7 +100,7 @@ public class RobotUpController {
 	@ApiOperation(value = "上报温度信息", notes = "上报温度信息")
 	@ResponseBody
 	public Out<String> reportTemperatureInfo(
-			@ApiParam(value = "远程机器人温度信息", required = true) @RequestBody TemperatureInfo temperatureInfo) {
+			@ApiParam(value = "远程机器人温度信息", required = true) @RequestBody Robot_TemperatureInfo temperatureInfo) {
 		logger.info("访问  RobotController :reportTemperatureInfo HardwareInfo=" + temperatureInfo);
 		System.err.println("上报温度信息");
 		Out<String> out = new Out<String>();
@@ -129,7 +130,7 @@ public class RobotUpController {
 	@ApiOperation(value = "上报运行环境的信息", notes = "上报运行环境的信息")
 	@ResponseBody
 	public Out<String> reportOperationInfo(
-			@ApiParam(value = "远程机器人运行环境的信息", required = true) @RequestBody OperationInfo operationInfo) {
+			@ApiParam(value = "远程机器人运行环境的信息", required = true) @RequestBody Robot_OperationInfo operationInfo) {
 		logger.info("访问  RobotController :reportTemperatureInfo HardwareInfo=" + operationInfo);
 		System.err.println("上报运行环境的信息");
 		Out<String> out = new Out<String>();
@@ -159,7 +160,7 @@ public class RobotUpController {
 	@ApiOperation(value = "上报机器人的自检信息", notes = "上报机器人的自检信息")
 	@ResponseBody
 	public Out<String> reportSelfLnspectionInfo(
-			@ApiParam(value = "远程机器人自检信息", required = true) @RequestBody SelfLnspectionInfo SelfLnspectionInfo) {
+			@ApiParam(value = "远程机器人自检信息", required = true) @RequestBody Robot_SelfLnspectionInfo SelfLnspectionInfo) {
 		logger.info("访问  RobotController :reportSelfLnspectionInfo HardwareInfo=" + SelfLnspectionInfo);
 		System.err.println("上报机器人的自检信息");
 		Out<String> out = new Out<String>();
@@ -187,7 +188,7 @@ public class RobotUpController {
 	@ApiOperation(value = "上报机器人的识别速度信息", notes = "上报机器人的别速度信息")
 	@ResponseBody
 	public Out<String> reportMeetSpeedInfo(
-			@ApiParam(value = "远程机器人别速度信息", required = true) @RequestBody MeetSpeedInfo meetSpeedInfo) {
+			@ApiParam(value = "远程机器人别速度信息", required = true) @RequestBody Robot_MeetSpeedInfo meetSpeedInfo) {
 		logger.info("访问  RobotController :reportreportMeetSpeedInfo reportMeetSpeedInfo=" + meetSpeedInfo);
 		System.err.println("上报机器人的别速度信息");
 		Out<String> out = new Out<String>();
@@ -216,7 +217,7 @@ public class RobotUpController {
 	@ApiOperation(value = "上报机器人的别性能信息", notes = "上报机器人的别性能信息")
 	@ResponseBody
 	public Out<String> reportMeetPropertyInfo(
-			@ApiParam(value = "远程机器人别性能信息", required = true) @RequestBody MeetPropertyInfo meetPropertyInfo) {
+			@ApiParam(value = "远程机器人别性能信息", required = true) @RequestBody Robot_MeetPropertyInfo meetPropertyInfo) {
 		logger.info("访问  RobotController :reportreportMeetSpeedInfo reportMeetSpeedInfo=" + meetPropertyInfo);
 		System.err.println("上报机器人的别性能信息");
 		Out<String> out = new Out<String>();
@@ -245,7 +246,7 @@ public class RobotUpController {
 	@ApiOperation(value = "上报机器人的运行在线信息", notes = "上报机器人的运行在线信息")
 	@ResponseBody
 	public Out<String> reportOnLineInfo(
-			@ApiParam(value = "远程机器人运行在线信息", required = true) @RequestBody OnLineInfo onLineInfo) {
+			@ApiParam(value = "远程机器人运行在线信息", required = true) @RequestBody Robot_OnLineInfo onLineInfo) {
 		logger.info("访问  RobotController :reportreportMeetSpeedInfo reportMeetSpeedInfo=" + onLineInfo);
 		System.err.println("上报机器人的运行在线信息");
 		Out<String> out = new Out<String>();
@@ -274,7 +275,7 @@ public class RobotUpController {
 	@ApiOperation(value = "上报机器人的照片质量信息", notes = "上报机器人的照片质量信息")
 	@ResponseBody
 	public Out<String> reportPhotographicQualityInfo(
-			@ApiParam(value = "远程机器人照片质量信息", required = true) @RequestBody PhotographicQualityInfo photographicQualityInfo) {
+			@ApiParam(value = "远程机器人照片质量信息", required = true) @RequestBody Robot_PhotographicQualityInfo photographicQualityInfo) {
 		logger.info("访问  RobotController :reportreportMeetSpeedInfo reportMeetSpeedInfo=" + photographicQualityInfo);
 		System.err.println("上报机器人的照片质量信息");
 		Out<String> out = new Out<String>();
@@ -302,7 +303,7 @@ public class RobotUpController {
 	@ApiOperation(value = "上报机器人的信息管理", notes = "上报机器人的信息管理")
 	@ResponseBody
 	public Out<String> reportManageInfo(
-			@ApiParam(value = "远程机器人信息管理", required = true) @RequestBody ManageInfo manageInfo) {
+			@ApiParam(value = "远程机器人信息管理", required = true) @RequestBody Robot_ManageInfo manageInfo) {
 		logger.info("访问  RobotController :reportreportMeetSpeedInfo reportMeetSpeedInfo=" + manageInfo);
 		System.err.println("上报机器人的信息管理");
 		Out<String> out = new Out<String>();

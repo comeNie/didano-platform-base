@@ -17,6 +17,8 @@ package cn.didano.robot.data;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.TypeAlias;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -25,7 +27,8 @@ import io.swagger.annotations.ApiModelProperty;
  *主要是上行和下行的信息容器
  */
 @ApiModel
-public class SelfLnspectionInfo extends RInfo {
+@TypeAlias("自检信息")
+public class Robot_SelfLnspectionInfo extends RInfo {
 	@ApiModelProperty(value = "产品硬件识别码", required = true)
 	private String deviceNo;
 	@ApiModelProperty(value = "液晶屏", required = true)

@@ -15,6 +15,8 @@
  */
 package cn.didano.robot.data;
 
+import org.springframework.data.annotation.TypeAlias;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -23,7 +25,8 @@ import io.swagger.annotations.ApiModelProperty;
  * @Todo 将两个摄像头分开
  */
 @ApiModel
-public class HardwareInfo extends RInfo {
+@TypeAlias("硬件信息")
+public class Robot_HardwareInfo extends RInfo {
 	@ApiModelProperty(value = "产品硬件识别码", required = true)
 	private String deviceNo;
 	@ApiModelProperty(value = "安卓核心板", required = true)
@@ -89,7 +92,7 @@ public class HardwareInfo extends RInfo {
 	public void setLiquidCrystalDisplay(String liquidCrystalDisplay) {
 		this.liquidCrystalDisplay = liquidCrystalDisplay;
 	}
-	public HardwareInfo() {
+	public Robot_HardwareInfo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

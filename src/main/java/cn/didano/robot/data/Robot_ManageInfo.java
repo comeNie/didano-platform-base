@@ -15,6 +15,8 @@
  */
 package cn.didano.robot.data;
 
+import org.springframework.data.annotation.TypeAlias;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -22,7 +24,8 @@ import io.swagger.annotations.ApiModelProperty;
  *机器人的管理信息
  */
 @ApiModel
-public class ManageInfo extends RInfo {
+@TypeAlias("管理信息")
+public class Robot_ManageInfo extends RInfo {
 	@ApiModelProperty(value = "产品硬件识别码", required = true)
 	private String deviceNo;
 	@ApiModelProperty(value = "小诺注册密码", required = true)

@@ -15,6 +15,8 @@
  */
 package cn.didano.robot.data;
 
+import org.springframework.data.annotation.TypeAlias;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -22,7 +24,8 @@ import io.swagger.annotations.ApiModelProperty;
  * 运行在线信息类
  */
 @ApiModel
-public class OnLineInfo extends RInfo {
+@TypeAlias("运行在线")
+public class Robot_OnLineInfo extends RInfo {
 	@ApiModelProperty(value = "产品硬件识别码", required = true)
 	private String deviceNo;
 	

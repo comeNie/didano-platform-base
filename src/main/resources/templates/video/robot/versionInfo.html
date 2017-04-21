@@ -5,19 +5,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>诊断平台</title>
-    <link rel="stylesheet" href="../video/css/payAuth.css" />
 	<link rel="stylesheet" href="../video/css/basicStyle.css" />
-	
-	
-	<link rel="stylesheet" href="robotJs/bootstrap.min.css">
-    <link rel="stylesheet" href="robotJs/bootstrap-table.css">
-    <link rel="stylesheet" href="robotJs/examples.css">
-    <script src="robotJs/jquery.min.js"></script>
-    <script src="robotJs/bootstrap.min.js"></script>
-    <script src="robotJs/bootstrap-table.js"></script>
-    <script src="robotJs/bootstrap-table-key-events.js"></script>
-    <script src="robotJs/ga.js"></script>
-   
+	<link rel="stylesheet" href="../video/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="../video/css/bootstrap-table.css" />
+	<script src="../video/js/bootstrap-table.js"></script>
 </head>
 <body>
 	<!-- <h1 layout:fragment="header" style="text-align:center">付费授权</h1> -->
@@ -58,7 +49,7 @@
 		               data-url="/robot/find/queryVersionInfoAll">
 		            <thead style="">
 		            <!-- 1、机器人自检信息的显示 -->
-		            <tr id="tr1" class="tr1" style="display: block;">
+		            <tr id="versionsTableRow" class="tr1" style="display: block;">
 		                <th data-field="deviceNo">机器人编号</th>
 			    		<th data-field="emotionZipVersion">表情包版本</th>
 			    		<th data-field="voiceZipVersion">语音包版本</th>

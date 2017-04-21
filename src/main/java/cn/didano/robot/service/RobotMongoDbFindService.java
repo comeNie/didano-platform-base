@@ -7,16 +7,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import cn.didano.robot.data.HardwareInfo;
-import cn.didano.robot.data.ManageInfo;
-import cn.didano.robot.data.MeetPropertyInfo;
-import cn.didano.robot.data.MeetSpeedInfo;
-import cn.didano.robot.data.OnLineInfo;
-import cn.didano.robot.data.OperationInfo;
-import cn.didano.robot.data.PhotographicQualityInfo;
-import cn.didano.robot.data.RVersionInfo;
-import cn.didano.robot.data.SelfLnspectionInfo;
-import cn.didano.robot.data.TemperatureInfo;
+import cn.didano.robot.data.Robot_HardwareInfo;
+import cn.didano.robot.data.Robot_ManageInfo;
+import cn.didano.robot.data.Robot_MeetPropertyInfo;
+import cn.didano.robot.data.Robot_MeetSpeedInfo;
+import cn.didano.robot.data.Robot_OnLineInfo;
+import cn.didano.robot.data.Robot_OperationInfo;
+import cn.didano.robot.data.Robot_PhotographicQualityInfo;
+import cn.didano.robot.data.Robot_VersionInfo;
+import cn.didano.robot.data.Robot_SelfLnspectionInfo;
+import cn.didano.robot.data.Robot_TemperatureInfo;
 import cn.didano.robot.data.repository.HardwareInfoRepository;
 import cn.didano.robot.data.repository.ManageInfoRepository;
 import cn.didano.robot.data.repository.MeetPropertyInfoRepository;
@@ -68,7 +68,7 @@ public class RobotMongoDbFindService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public List<RVersionInfo> queryRVersionInfo() {
+	public List<Robot_VersionInfo> queryRVersionInfo() {
 		System.err.println("123");
 		return this.v_repository.findAll();
 	}
@@ -82,7 +82,7 @@ public class RobotMongoDbFindService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public List<SelfLnspectionInfo> querySelfLnspectionInfo() {
+	public List<Robot_SelfLnspectionInfo> querySelfLnspectionInfo() {
 		return this.s_repository.findAll();
 	}
 	/**
@@ -95,7 +95,7 @@ public class RobotMongoDbFindService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public List<HardwareInfo> queryHardwareInfo() {
+	public List<Robot_HardwareInfo> queryHardwareInfo() {
 		return this.h_repository.findAll();
 	}
 	/**
@@ -108,7 +108,7 @@ public class RobotMongoDbFindService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public List<TemperatureInfo> queryTemperatureInfo() {
+	public List<Robot_TemperatureInfo> queryTemperatureInfo() {
 		return this.t_repository.findAll();
 	}
 	/**
@@ -121,7 +121,7 @@ public class RobotMongoDbFindService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public List<MeetSpeedInfo> queryMeetSpeedInfo() {
+	public List<Robot_MeetSpeedInfo> queryMeetSpeedInfo() {
 		return this.m_repository.findAll();
 	}
 	/**
@@ -134,7 +134,7 @@ public class RobotMongoDbFindService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public List<MeetPropertyInfo> queryMeetPropertyInfo() {
+	public List<Robot_MeetPropertyInfo> queryMeetPropertyInfo() {
 		return this.mp_repository.findAll();
 	}
 	/**
@@ -147,7 +147,7 @@ public class RobotMongoDbFindService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public List<OnLineInfo> queryOnLineInfo() {
+	public List<Robot_OnLineInfo> queryOnLineInfo() {
 		return this.or_repository.findAll();
 	}
 	/**
@@ -160,7 +160,7 @@ public class RobotMongoDbFindService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public List<PhotographicQualityInfo> queryPhotographicQualityInfo() {
+	public List<Robot_PhotographicQualityInfo> queryPhotographicQualityInfo() {
 		return this.p_repository.findAll();
 	}
 	/**
@@ -173,7 +173,7 @@ public class RobotMongoDbFindService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public List<ManageInfo> queryManageInfo() {
+	public List<Robot_ManageInfo> queryManageInfo() {
 		return this.mr_repository.findAll();
 	}
 	/**
@@ -186,7 +186,7 @@ public class RobotMongoDbFindService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public List<OperationInfo> queryOperationInfo() {
+	public List<Robot_OperationInfo> queryOperationInfo() {
 		return this.o_repository.findAll();
 	}
 	

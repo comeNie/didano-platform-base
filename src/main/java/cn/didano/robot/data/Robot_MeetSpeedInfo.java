@@ -15,6 +15,8 @@
  */
 package cn.didano.robot.data;
 
+import org.springframework.data.annotation.TypeAlias;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -23,7 +25,8 @@ import io.swagger.annotations.ApiModelProperty;
  *主要是上行和下行的信息容器
  */
 @ApiModel
-public class MeetSpeedInfo extends RInfo {
+@TypeAlias("识别速度")
+public class Robot_MeetSpeedInfo extends RInfo {
 	@ApiModelProperty(value = "产品硬件识别码", required = true)
 	private String deviceNo;
 	@ApiModelProperty(value = "最大识别时间", required = true)

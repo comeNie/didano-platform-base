@@ -3,16 +3,16 @@ package cn.didano.robot.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.didano.robot.data.HardwareInfo;
-import cn.didano.robot.data.ManageInfo;
-import cn.didano.robot.data.MeetPropertyInfo;
-import cn.didano.robot.data.MeetSpeedInfo;
-import cn.didano.robot.data.OnLineInfo;
-import cn.didano.robot.data.OperationInfo;
-import cn.didano.robot.data.PhotographicQualityInfo;
-import cn.didano.robot.data.RVersionInfo;
-import cn.didano.robot.data.SelfLnspectionInfo;
-import cn.didano.robot.data.TemperatureInfo;
+import cn.didano.robot.data.Robot_HardwareInfo;
+import cn.didano.robot.data.Robot_ManageInfo;
+import cn.didano.robot.data.Robot_MeetPropertyInfo;
+import cn.didano.robot.data.Robot_MeetSpeedInfo;
+import cn.didano.robot.data.Robot_OnLineInfo;
+import cn.didano.robot.data.Robot_OperationInfo;
+import cn.didano.robot.data.Robot_PhotographicQualityInfo;
+import cn.didano.robot.data.Robot_VersionInfo;
+import cn.didano.robot.data.Robot_SelfLnspectionInfo;
+import cn.didano.robot.data.Robot_TemperatureInfo;
 import cn.didano.robot.data.repository.HardwareInfoRepository;
 import cn.didano.robot.data.repository.ManageInfoRepository;
 import cn.didano.robot.data.repository.MeetPropertyInfoRepository;
@@ -57,7 +57,7 @@ public class RobotMongoDbDataService {
 	 * 
 	 * @return
 	 */
-	public RVersionInfo findRVersionInfo(String device_no) {
+	public Robot_VersionInfo findRVersionInfo(String device_no) {
 		return this.v_repository.findByDeviceNo(device_no);
 	}
 	
@@ -67,7 +67,7 @@ public class RobotMongoDbDataService {
 	 * @param record
 	 * @return 更新行数
 	 */
-	public RVersionInfo saveRVersionInfo(RVersionInfo record) {
+	public Robot_VersionInfo saveRVersionInfo(Robot_VersionInfo record) {
 		return this.v_repository.save(record);
 	}
 	
@@ -81,7 +81,7 @@ public class RobotMongoDbDataService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public HardwareInfo saveHardwareInfo(HardwareInfo hardwareInfo) {
+	public Robot_HardwareInfo saveHardwareInfo(Robot_HardwareInfo hardwareInfo) {
 		return this.h_repository.save(hardwareInfo);
 	}
 	
@@ -96,7 +96,7 @@ public class RobotMongoDbDataService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public TemperatureInfo saveTemperatureInfo(TemperatureInfo temperatureInfo) {
+	public Robot_TemperatureInfo saveTemperatureInfo(Robot_TemperatureInfo temperatureInfo) {
 		return this.t_repository.save(temperatureInfo);
 	}
 	
@@ -111,7 +111,7 @@ public class RobotMongoDbDataService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public OperationInfo saveOperationInfo(OperationInfo operationInfo) {
+	public Robot_OperationInfo saveOperationInfo(Robot_OperationInfo operationInfo) {
 		return this.o_repository.save(operationInfo);
 	}
 	
@@ -125,7 +125,7 @@ public class RobotMongoDbDataService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public SelfLnspectionInfo saveSelfLnspectionInfo(SelfLnspectionInfo selfLnspectionInfo) {
+	public Robot_SelfLnspectionInfo saveSelfLnspectionInfo(Robot_SelfLnspectionInfo selfLnspectionInfo) {
 		System.err.println("123");//当第二次下控时执行啦两次保存
 		return this.s_sepository.save(selfLnspectionInfo);
 	}
@@ -140,7 +140,7 @@ public class RobotMongoDbDataService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public MeetSpeedInfo saveMeetSpeedInfo(MeetSpeedInfo meetSpeedInfo) {
+	public Robot_MeetSpeedInfo saveMeetSpeedInfo(Robot_MeetSpeedInfo meetSpeedInfo) {
 		return this.m_sepository.save(meetSpeedInfo);
 	}
 	
@@ -155,7 +155,7 @@ public class RobotMongoDbDataService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public MeetPropertyInfo saveMeetPropertyInfo(MeetPropertyInfo meetSpeedInfo) {
+	public Robot_MeetPropertyInfo saveMeetPropertyInfo(Robot_MeetPropertyInfo meetSpeedInfo) {
 		return this.mp_sepository.save(meetSpeedInfo);
 	}
 	
@@ -169,7 +169,7 @@ public class RobotMongoDbDataService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public OnLineInfo saveOnLineInfo(OnLineInfo onLineInfo) {
+	public Robot_OnLineInfo saveOnLineInfo(Robot_OnLineInfo onLineInfo) {
 		return this.or_sepository.save(onLineInfo);
 	}
 	
@@ -183,7 +183,7 @@ public class RobotMongoDbDataService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public PhotographicQualityInfo savePhotographicQualityInfo(PhotographicQualityInfo onLineInfo) {
+	public Robot_PhotographicQualityInfo savePhotographicQualityInfo(Robot_PhotographicQualityInfo onLineInfo) {
 		return this.p_sepository.save(onLineInfo);
 	}
 	
@@ -197,7 +197,7 @@ public class RobotMongoDbDataService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public ManageInfo saveManageInfo(ManageInfo onLineInfo) {
+	public Robot_ManageInfo saveManageInfo(Robot_ManageInfo onLineInfo) {
 		return this.mr_sepository.save(onLineInfo);
 	}
 	

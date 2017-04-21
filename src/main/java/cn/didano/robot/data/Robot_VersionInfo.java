@@ -15,11 +15,7 @@
  */
 package cn.didano.robot.data;
 
-import java.util.Date;
-
-import org.springframework.data.annotation.CreatedDate;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.TypeAlias;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -30,8 +26,9 @@ import io.swagger.annotations.ApiModelProperty;
  * @Todo 没有安卓操作系统版本号
  */
 @ApiModel
-public class RVersionInfo extends RInfo {
-
+@TypeAlias("版本信息")
+public class Robot_VersionInfo extends RInfo {
+	
 	@ApiModelProperty(value = "产品硬件识别码", required = true)
 	private String deviceNo;
 	@ApiModelProperty(value = "表情包版本", required = true)
@@ -48,10 +45,11 @@ public class RVersionInfo extends RInfo {
 	@ApiModelProperty(value = "运动控制板软件版本", required = true)
 	private String motionControlVersion;
 
-	public RVersionInfo() {
-		
+	public Robot_VersionInfo() {
+		super();
 	}
 
+	
 	public String getDeviceNo() {
 		return deviceNo;
 	}

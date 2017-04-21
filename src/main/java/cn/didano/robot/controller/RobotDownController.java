@@ -17,6 +17,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * 诊断平台api服务
+ * 诊断控制服务
  * 
  * @author stephen Created on 2016年12月17日 下午6:38:30
  */

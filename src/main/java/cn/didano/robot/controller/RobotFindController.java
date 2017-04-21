@@ -1,37 +1,31 @@
 package cn.didano.robot.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.didano.base.exception.BackType;
-import cn.didano.robot.data.HardwareInfo;
-import cn.didano.robot.data.ManageInfo;
-import cn.didano.robot.data.MeetPropertyInfo;
-import cn.didano.robot.data.MeetSpeedInfo;
-import cn.didano.robot.data.OnLineInfo;
-import cn.didano.robot.data.OperationInfo;
-import cn.didano.robot.data.PhotographicQualityInfo;
-import cn.didano.robot.data.RVersionInfo;
-import cn.didano.robot.data.SelfLnspectionInfo;
-import cn.didano.robot.data.TemperatureInfo;
+import cn.didano.robot.data.Robot_HardwareInfo;
+import cn.didano.robot.data.Robot_ManageInfo;
+import cn.didano.robot.data.Robot_MeetPropertyInfo;
+import cn.didano.robot.data.Robot_MeetSpeedInfo;
+import cn.didano.robot.data.Robot_OnLineInfo;
+import cn.didano.robot.data.Robot_OperationInfo;
+import cn.didano.robot.data.Robot_PhotographicQualityInfo;
+import cn.didano.robot.data.Robot_SelfLnspectionInfo;
+import cn.didano.robot.data.Robot_TemperatureInfo;
+import cn.didano.robot.data.Robot_VersionInfo;
 import cn.didano.robot.service.RobotMongoDbFindService;
-import cn.didano.video.json.Out;
-import cn.didano.video.json.OutList;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
  * 诊断平台api服务
+ * 诊断查询服务
  * 
  * @author stephen Created on 2016年12月17日 下午6:38:30
  */
@@ -51,8 +45,8 @@ public class RobotFindController {
 	@RequestMapping(value = "querySelfLnspectionInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
 	@ApiOperation(value = "查询自检信息,并且不分页", notes = "查询自检信息,并且不分页")
 	@ResponseBody
-	public List<SelfLnspectionInfo> querySelfLnspectionInfoAll() {
-		List<SelfLnspectionInfo> selectSelfLnspectionInfo=null;
+	public List<Robot_SelfLnspectionInfo> querySelfLnspectionInfoAll() {
+		List<Robot_SelfLnspectionInfo> selectSelfLnspectionInfo=null;
 		try {
 			
 			selectSelfLnspectionInfo = robotMongoDbFindService.querySelfLnspectionInfo();
@@ -62,16 +56,15 @@ public class RobotFindController {
 		return selectSelfLnspectionInfo;
 	}
 	/**
-	 * 查询所有的机器人自检信息----------------------------------------------------------------------------------------------------------------------------
+	 * 版本信息----------------------------------------------------------------------------------------------------------------------------
 	 * 不带翻页
 	 * @return
 	 */
 	@RequestMapping(value = "queryVersionInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
-	@ApiOperation(value = "查询自检信息,并且不分页", notes = "查询自检信息,并且不分页")
+	@ApiOperation(value = "查询版本信息,并且不分页", notes = "查询版本信息,并且不分页")
 	@ResponseBody
-	public List<RVersionInfo> queryVersionInfoAll() {
-		System.err.println("queryVersionInfoAll");
-		List<RVersionInfo> rVersionInfo=null;
+	public List<Robot_VersionInfo> queryVersionInfoAll() {
+		List<Robot_VersionInfo> rVersionInfo=null;
 		try {
 			rVersionInfo = robotMongoDbFindService.queryRVersionInfo();
 		} catch (Exception e) {
@@ -80,15 +73,15 @@ public class RobotFindController {
 		return rVersionInfo;
 	}
 	/**
-	 * 查询所有的机器人自检信息----------------------------------------------------------------------------------------------------------------------------
+	 * 查询所有的硬件信息----------------------------------------------------------------------------------------------------------------------------
 	 * 不带翻页
 	 * @return
 	 */
 	@RequestMapping(value = "queryHardwareInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
-	@ApiOperation(value = "查询自检信息,并且不分页", notes = "查询自检信息,并且不分页")
+	@ApiOperation(value = "查询硬件信息,并且不分页", notes = "查询硬件信息,并且不分页")
 	@ResponseBody
-	public List<HardwareInfo> queryHardwareInfoAll() {
-		List<HardwareInfo> hardwareInfo=null;
+	public List<Robot_HardwareInfo> queryHardwareInfoAll() {
+		List<Robot_HardwareInfo> hardwareInfo=null;
 		try {
 			hardwareInfo = robotMongoDbFindService.queryHardwareInfo();
 		} catch (Exception e) {
@@ -102,10 +95,10 @@ public class RobotFindController {
 	 * @return
 	 */
 	@RequestMapping(value = "queryTemperatureInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
-	@ApiOperation(value = "查询自检信息,并且不分页", notes = "查询自检信息,并且不分页")
+	@ApiOperation(value = "查询环境温度信息,并且不分页", notes = "查询环境温度信息,并且不分页")
 	@ResponseBody
-	public List<TemperatureInfo> queryTemperatureInfoAll() {
-		List<TemperatureInfo> temperatureInfo=null;
+	public List<Robot_TemperatureInfo> queryTemperatureInfoAll() {
+		List<Robot_TemperatureInfo> temperatureInfo=null;
 		try {
 			temperatureInfo = robotMongoDbFindService.queryTemperatureInfo();
 		} catch (Exception e) {
@@ -114,15 +107,15 @@ public class RobotFindController {
 		return temperatureInfo;
 	}
 	/**
-	 * 查询所有的机器人自检信息----------------------------------------------------------------------------------------------------------------------------
+	 * 查询所有的机器人识别速度信息----------------------------------------------------------------------------------------------------------------------------
 	 * 不带翻页
 	 * @return
 	 */
 	@RequestMapping(value = "queryMeetSpeedInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
-	@ApiOperation(value = "查询自检信息,并且不分页", notes = "查询自检信息,并且不分页")
+	@ApiOperation(value = "查询识别速度信息,并且不分页", notes = "查询识别速度信息,并且不分页")
 	@ResponseBody
-	public List<MeetSpeedInfo> queryMeetSpeedInfoAll() {
-		List<MeetSpeedInfo> meetSpeedInfo=null;
+	public List<Robot_MeetSpeedInfo> queryMeetSpeedInfoAll() {
+		List<Robot_MeetSpeedInfo> meetSpeedInfo=null;
 		try {
 			meetSpeedInfo = robotMongoDbFindService.queryMeetSpeedInfo();
 		} catch (Exception e) {
@@ -136,10 +129,10 @@ public class RobotFindController {
 	 * @return
 	 */
 	@RequestMapping(value = "queryMeetPropertyInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
-	@ApiOperation(value = "查询自检信息,并且不分页", notes = "查询自检信息,并且不分页")
+	@ApiOperation(value = "查询识别性能信息,并且不分页", notes = "查询识别性能信息,并且不分页")
 	@ResponseBody
-	public List<MeetPropertyInfo> queryMeetPropertyInfoAll() {
-		List<MeetPropertyInfo> meetPropertyInfo=null;
+	public List<Robot_MeetPropertyInfo> queryMeetPropertyInfoAll() {
+		List<Robot_MeetPropertyInfo> meetPropertyInfo=null;
 		try {
 			meetPropertyInfo = robotMongoDbFindService.queryMeetPropertyInfo();
 		} catch (Exception e) {
@@ -153,10 +146,10 @@ public class RobotFindController {
 	 * @return
 	 */
 	@RequestMapping(value = "queryOnLineInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
-	@ApiOperation(value = "查询自检信息,并且不分页", notes = "查询自检信息,并且不分页")
+	@ApiOperation(value = "查询运行在线信息,并且不分页", notes = "查询运行在线信息,并且不分页")
 	@ResponseBody
-	public List<OnLineInfo> queryOnLineInfoAll() {
-		List<OnLineInfo> onLineInfo=null;
+	public List<Robot_OnLineInfo> queryOnLineInfoAll() {
+		List<Robot_OnLineInfo> onLineInfo=null;
 		try {
 			onLineInfo = robotMongoDbFindService.queryOnLineInfo();
 		} catch (Exception e) {
@@ -170,10 +163,10 @@ public class RobotFindController {
 	 * @return
 	 */
 	@RequestMapping(value = "queryPhotographicQualityInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
-	@ApiOperation(value = "查询自检信息,并且不分页", notes = "查询自检信息,并且不分页")
+	@ApiOperation(value = "查询照片质量信息,并且不分页", notes = "查询照片质量信息,并且不分页")
 	@ResponseBody
-	public List<PhotographicQualityInfo> queryPhotographicQualityInfoAll() {
-		List<PhotographicQualityInfo> photographicQualityInfo=null;
+	public List<Robot_PhotographicQualityInfo> queryPhotographicQualityInfoAll() {
+		List<Robot_PhotographicQualityInfo> photographicQualityInfo=null;
 		try {
 			photographicQualityInfo = robotMongoDbFindService.queryPhotographicQualityInfo();
 		} catch (Exception e) {
@@ -187,13 +180,12 @@ public class RobotFindController {
 	 * @return
 	 */
 	@RequestMapping(value = "queryManageInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
-	@ApiOperation(value = "查询自检信息,并且不分页", notes = "查询自检信息,并且不分页")
+	@ApiOperation(value = "查询管理信息,并且不分页", notes = "查询管理信息,并且不分页")
 	@ResponseBody
-	public List<ManageInfo> queryManageInfoAll() {
-		List<ManageInfo> ManageInfo=null;
+	public List<Robot_ManageInfo> queryManageInfoAll() {
+		List<Robot_ManageInfo> ManageInfo=null;
 		try {
 			ManageInfo = robotMongoDbFindService.queryManageInfo();
-			System.err.println(ManageInfo.size());
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -205,10 +197,10 @@ public class RobotFindController {
 	 * @return
 	 */
 	@RequestMapping(value = "queryOperationInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
-	@ApiOperation(value = "查询自检信息,并且不分页", notes = "查询自检信息,并且不分页")
+	@ApiOperation(value = "查询运行环境信息,并且不分页", notes = "查询环境信息,并且不分页")
 	@ResponseBody
-	public List<OperationInfo> queryOperationInfoAll() {
-		List<OperationInfo> operationInfo=null;
+	public List<Robot_OperationInfo> queryOperationInfoAll() {
+		List<Robot_OperationInfo> operationInfo=null;
 		try {
 			operationInfo = robotMongoDbFindService.queryOperationInfo();
 		} catch (Exception e) {

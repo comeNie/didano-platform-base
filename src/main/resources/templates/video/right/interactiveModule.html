@@ -17,7 +17,7 @@
 		$(function(){
 			$.ajax({
                 type: "POST",
-                url:"http://192.168.0.101:8080/base/interactive/post/findAllModel",
+                url:server_url+"/base/interactive/post/findAllModel",
                 dataType: "json",
                 success: function(rs){
                 	if(rs.success){

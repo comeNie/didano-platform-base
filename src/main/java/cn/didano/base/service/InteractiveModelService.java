@@ -66,9 +66,11 @@ public class InteractiveModelService {
 	 */
 	public List<Tb_interactive_model> findAllModel(){
 		Tb_interactive_modelExample condition = new Tb_interactive_modelExample();
+		condition.setOrderByClause("updated");
+		
 		Tb_interactive_modelExample.Criteria criteria = condition.createCriteria();
 		// 对于已经deleted=1的不显示
-
+       
 		criteria.andDeletedNotEqualTo(true);
 		return modelMapper.selectByExample(condition);
 	}

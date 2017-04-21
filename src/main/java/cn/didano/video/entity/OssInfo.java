@@ -21,34 +21,9 @@ public class OssInfo {
 	private String domain;
 	private String cdn;
 	private String imgPath;
-	private String linuxPicAddress;
-	private String linuxXmlAddress;
-	private String linuxZipAddress;
 	
-	public String getLinuxPicAddress() {
-		return linuxPicAddress;
-	}
-
-	public void setLinuxPicAddress(String linuxPicAddress) {
-		this.linuxPicAddress = linuxPicAddress;
-	}
-
-	public String getLinuxXmlAddress() {
-		return linuxXmlAddress;
-	}
-
-	public void setLinuxXmlAddress(String linuxXmlAddress) {
-		this.linuxXmlAddress = linuxXmlAddress;
-	}
-
-	public String getLinuxZipAddress() {
-		return linuxZipAddress;
-	}
-
-	public void setLinuxZipAddress(String linuxZipAddress) {
-		this.linuxZipAddress = linuxZipAddress;
-	}
-
+	
+	
 	public String getEndpoint() {
 		return endpoint;
 	}

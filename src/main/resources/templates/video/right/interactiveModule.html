@@ -9,23 +9,21 @@
     <link rel="stylesheet" href="../video/css/payAuth.css" />
 	<link rel="stylesheet" href="../video/css/basicStyle.css"/>
 	<link rel="stylesheet" href="../video/css/test.css" />
-	<link rel="stylesheet" href="../video/css/fileinput.min.css"/>
 
 	<script src="../video/js/jquery.min.js"></script>
-	<script src="../video/js/fileinput.min.js"></script>
 	<script>
         var IMGWIDTH;
 		/*获取题目列表*/
 		$(function(){
 			$.ajax({
                 type: "POST",
-                url:"http://sp.didano.com:8080/base/interactive/post/findAllModel",
+                url:"http://192.168.0.101:8080/base/interactive/post/findAllModel",
                 dataType: "json",
                 success: function(rs){
                 	if(rs.success){
                 		var issuesStr = "";
 		            	$.each(rs.data.list,function(inx,obj){
-		            		issuesStr += "<div class='col-md-3 margin-bootom-10'><div class='col-md-12 table-bg border-bottom-white padding-rl-0 issues-info'><div class='col-md-6 text-left issues-title'>小诺题卡</div><div class='col-md-6 text-right'></div></div><div class='col-md-12 table-bg padding-rl-0 issues-info'><div class='col-md-6 text-left'>作者</div><div class='col-md-6  text-right'>"+obj['author']+"</div></div><div class='col-md-12 table-bg padding-rl-0 issues-info'><div class='col-md-6 text-left'>类型</div><div class='col-md-6 text-right'>"+obj['catalogName']+"</div></div><div class='col-md-12 table-bg padding-rl-0 issues-info'><div class='col-md-6 text-left'>适用年龄</div><div class='col-md-6 text-right'>"+obj['suitableAge']+"岁</div></div></div>"
+		            		issuesStr += "<div class='col-md-3 margin-bottom-10'><div class='col-md-12 table-bg border-bottom-white padding-rl-0 issues-info'><div class='col-md-6 text-left issues-title'>"+obj['name']+"</div><div class='col-md-6 text-right'></div></div><div class='col-md-12 table-bg padding-rl-0 issues-info'><div class='col-md-6 text-left'>作者</div><div class='col-md-6  text-right'>"+obj['author']+"</div></div><div class='col-md-12 table-bg padding-rl-0 issues-info'><div class='col-md-6 text-left'>类型</div><div class='col-md-6 text-right'>"+obj['catalogName']+"</div></div><div class='col-md-12 table-bg padding-rl-0 issues-info'><div class='col-md-6 text-left'>适用年龄</div><div class='col-md-6 text-right'>"+obj['suitableAge']+"岁</div></div></div>"
 		            	});
 		            	$('.issues-list').append(issuesStr);
                 	}
@@ -50,73 +48,6 @@
 			});
 		});
 		
-		/*确认添加题目*/
-		// $(function(){
-		// 	$('#btn-confirms').click(function(){
-		// 		/*获取XML的名称*/
-		// 		var issuesName = $('#issues-name').val();
-		// 		/*获取作者名称*/
-		// 		// var issuesAuthor = $('#issues-author').val();
-		// 		/*获取题目类型*/
-		// 		var issuesKinds1 = $('#issues-kinds1').val();
-		// 		var issuesKinds2 = $('#issues-kinds2').val();
-		// 		var issuesKinds = issuesKinds1+"-"+issuesKinds2;
-		// 		/*获取适用学校ID*/
-		// 		// var schoolId = $('#issues-school').val();
-		// 		/*获取使用的年龄段*/
-		// 		var issuesAge = $('#issues-age').val();
-		// 		/*获取题目的正确答案*/
-		// 		var issuesCorrect = $('#issues-correct').val();
-		// 		/*获取问题描述*/
-		// 		var issuesQuestion  = $('#issues-question').val();
-		// 		// 答题前提示语
-		// 		var issuesPrepar = $('#issues-prepar').val();
-		// 		// 答对信息
-		// 		var issuesAnswerOk1 = $('#issues-answerOk1').val();
-		// 		var issuesAnswerOk2 = $('#issues-answerOk2').val();
-		// 		var issuesAnswerOk = issuesAnswerOk1+';'+issuesAnswerOk2;
-		// 		// 答错信息
-		// 		var issuesAnswerError1 = $('#issues-answerError1').val();
-		// 		var issuesAnswerError2 = $('#issues-answerError2').val();
-		// 		var issuesAnswerError = issuesAnswerError1+';'+issuesAnswerError2;
-		// 		// 再见信息
-		// 		var issuesGoodbye1 = $('#issues-goodbye1').val();
-		// 		var issuesGoodbye2 = $('#issues-goodbye2').val();
-		// 		var issuesGoodbye = issuesGoodbye1+';'+issuesGoodbye2;
-
-		// 		/*ajax发送请求*/
-		// 		$.ajax({
-	 //                type: "POST",
-	 //                url:"http://sp.didano.com:8080/base/interactive/post/InteractiveModel_add",
-	 //                dataType: "json",
-  //           		contentType: "application/json; charset=utf-8",
-	 //            	data:JSON.stringify({
-		// 				"answerError": issuesAnswerError,
-		// 				"answerOk": issuesAnswerOk,
-		// 				"author": 'didano',
-		// 				"correct": issuesCorrect,
-		// 				"goodbye": issuesGoodbye,
-		// 				"kinds": issuesKinds,
-		// 				"name": issuesName,
-		// 				"prepare": issuesPrepar,
-		// 				"question": issuesQuestion,
-		// 				"school_id": 0,
-		// 				"suitable_age": issuesAge
-	 //            	}),
-	 //                success: function(rs){
-	 //                	if(rs.success){
-	 //                		alert('新增题卡成功!');
-	 //                		location.reload();
-	 //                	}
-	 //                },
-	 //                error: function(){
-	 //                	alert('网络延误，请稍后操作!');
-	 //                }
-  //           });
-
-		// 	})
-		// });
-		
 		/*选择学校*/
 		$(function(){
 			$('#issues-school').focus(function(){
@@ -131,38 +62,31 @@
 
         $(function() {
             var objUrl;
-            var img_html;
-            $("#myFile").change(function(evt) {
-                var files = evt.target.files;
-                console.log(files[0]['name']);
-                var img_div = $(".img_div");
-                var filepath = $("input[name='file']").val();
-                for(var i = 0; i < this.files.length; i++) {
-                    objUrl = getObjectURL(this.files[i]);
-                    var extStart = filepath.lastIndexOf(".");
-                    var ext = filepath.substring(extStart, filepath.length).toUpperCase();
-                    /*
-                     作者：z@qq.com
-                    时间：2016-12-10
-                    描述：鉴定每个图片上传尾椎限制
-                    * */
-                    if(ext != ".BMP" && ext != ".PNG" && ext != ".GIF" && ext != ".JPG" && ext != ".JPEG") {
-                        $(".shade").fadeIn(500);
-                        $(".text_span").text("图片限于bmp,png,gif,jpeg,jpg格式");
-                        this.value = "";
-                        $(".img_div").html("");
-                        return false;
-                    } else {
-                        /*
-                         若规则全部通过则在此提交url到后台数据库
-                         * */
-                        img_html = "<div class='isImg' style='width:"+IMGWIDTH+"px'><img src='" + objUrl + "' style='height: 100%; width: 100%;' /><button class='removeBtn' onclick='javascript:removeImg(this)'>X</button></div>";
-                        img_div.append(img_html);
+            var img_html;{ 
+                $(".myFile").change(function() {
+                    var myFileId = $(this).attr('id');
+                    var img_div = $(".img_div");
+                    var filepath = $(this).val();
+                    for(var i = 0; i < this.files.length; i++) {
+                        filesArr.push(this.files[i]);
+                        objUrl = getObjectURL(this.files[i]);
+                        var extStart = filepath.lastIndexOf(".");
+                        var ext = filepath.substring(extStart, filepath.length).toUpperCase();
+                        if(ext != ".BMP" && ext != ".PNG" && ext != ".GIF" && ext != ".JPG" && ext != ".JPEG") {
+                            $(".shade").fadeIn(500);
+                            $(".text_span").text("图片限于bmp,png,gif,jpeg,jpg格式");
+                            this.value = "";
+                            $(".img_div").html("");
+                            return false;
+                        } else {
+                            img_html = "<div class='isImg' style='width:"+IMGWIDTH+"px'><img src='" + objUrl + "' style='height: 100%; width: 100%;' /><button class='removeBtn' onclick='javascript:removeImg(this)'>X</button></div>";
+                            img_div.append(img_html);
+                        }
                     }
-                }
-                return true;
-            });
-
+                    return true;
+                });
+            }
+            /*获取图片地址*/
             function getObjectURL(file) {
                 var url = null;
                 if(window.createObjectURL != undefined) { // basic
@@ -175,56 +99,56 @@
                 return url;
             }
         });
-
+        /*删除图片*/
         function removeImg(r){
             $(r).parent().remove();
         }
-        /*
-         作者：z@qq.com
-         时间：2016-12-10
-          描述：关闭弹出层
-         * */
-        function closeShade(){
-            $(".shade").fadeOut(500);
-        }
-        /*
-         作者：z@qq.com
-         时间：2016-12-10
-          描述：关闭弹出层
-         * */
-        function closeShadeImg(){
-            $(".shadeImg").fadeOut(500);
+        /*阻止enter键表单事件*/
+        $(document).keydown(function(event){
+          switch(event.keyCode){
+                 case 13:
+                 return false; 
+             }
+        });
+        /*验证表单*/
+        function checkFrom(){
+            var flag = 1;
+            var imgVal = $("input[type$='file']").val();
+            if(!imgVal){
+                alert("请先上传图片");
+                return false;
+            }
+            $("input[type$='text']").each(function(n){
+                if($(this).val()==""){
+                  flag = 0;
+                }
+            });
+            if(!flag){
+                alert("请将题卡数据填写完整后再进行提交");
+                return false;
+            }
+            else{
+                return true;
+            }
+
         }
 	</script>
 
 </head>
 <body>
-	<!-- <h1 layout:fragment="header" style="text-align:center">付费授权</h1> -->
     <div layout:fragment="content" class="container width-100 padding-rl-0">
     	<div class="col-md-12 list-body bg-color-white width-80 padding-rl-0">
 	    	<div class="col-md-12 list-title list-height">
 	    		互动题卡
 	    	</div>
-	    	<div class="col-md-12 padding-rl-0 margin-bootom-5">
+	    	<div class="col-md-12 padding-rl-0 margin-bootom-2">
 		    	<div class="col-md-10 list-height">题卡列表</div>
 		    	<div class="col-md-2 list-height text-right">
 		    		<button type="button" class="btn btn-info btn-color2" id="btn-add-issues">添加题卡</button>
 		    	</div>
 	    	</div>
-	    	<div class="col-md-12 table-font-color padding-rl-0 issues-list">
+	    	<div class="col-md-12 table-font-color padding-rl-0 issues-list margin-bottom-10">
 	    	</div>
-            <!-- <div class="col-md-12 title">
-                <div class="col-md-6 padding-rl-0">图片上传</div>
-                
-            </div>
-	    	<div class="col-md-12 school-list-body padding-rl-0">
-	    		<div class="col-md-6">
-	    			<form method="POST" enctype="multipart/form-data" action="/interaction/upload">
-						<input id="file-4" name="file-4[]" type="file" multiple>
-						<input type="submit" value="上传" />
-					</form >
-                </div>
-	    	</div> -->
     	</div>
     	<div class="col-md-12 padding-rl-0 hidden">
     		<div class="shield"></div>
@@ -232,16 +156,16 @@
     			<div class="col-md-12  padding-rl-0  border-bottom-gray issues-title issues-div">
     				新增题目
     			</div>
-                <form method="POST" enctype="multipart/form-data" action="/interaction/upload">
+                <form method="POST" enctype="multipart/form-data" action="/interaction/upload" onSubmit="return checkFrom()" name='issuesForm'>
                     <div class="col-md-12  padding-rl-0 border-bottom-gray" id='issues-photos'>
-                        <div class="col-md-12  padding-rl-0 img_div">
+                        <div class="col-md-12  padding-rl-0 img_div margin-top-10">
 
                         </div>
                         <!-- <input type="submit" value="提交" class="submit-btn"/> -->
                         <a href="javascript:;" class="a-upload">
-                            <input type="file" name="file" id="myFile" multiple="multiple" />点击上传图片
+                            <input type="file" name="file" id="myFile1" multiple="multiple" class="myFile"/>点击上传图片
                         </a>
-                        <div class="shade" onclick="javascript:closeShade()">
+                        <div class="shade">
                             <div class="">
                                 <span class="text_span">
                                     
@@ -249,7 +173,7 @@
                             </div>
                         </div>
 
-                        <div class="shadeImg" onclick="javascript:closeShadeImg()">
+                        <div class="shadeImg">
                             <div class="">
                                 <img class="showImg" src="">
                             </div>
@@ -377,17 +301,11 @@
         				</div>
         			</div>
         			<div class="col-md-12  padding-rl-0 text-right btn-div">
-        				<button type="submit" class="btn btn-info btn-color-gray" id="btn-cancel">取消</button>
-        				<!-- <button type="button" class="btn btn-info btn-color2" id="btn-confirms">确定</button> -->
-                        <input type="submit" value="提交" class="submit-btn"/>
+        				<div  class="btn btn-info btn-color-gray" id="btn-cancel">取消</div>
+        				<button type="submit" class="btn btn-info btn-color2" id="btn-confirms">确定</button>
         			</div> 
                 </form>			
         	</div>
-        	<!-- <div id="school-list" class="col-md-12 padding-rl-5 hidden">
-        		<div class="col-md-12 padding-rl-0 border-bottom-white" id="schoolId_0" onclick="getSchool(obj)">
-        			全部学校
-        		</div>
-        	</div> -->
         </div>
     </div>
     </div>

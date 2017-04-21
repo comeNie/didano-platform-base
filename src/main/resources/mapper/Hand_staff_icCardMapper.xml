@@ -29,7 +29,7 @@
   </select> 
   
    <select id="selectStaff_icCardandType" parameterType="INTEGER" resultMap="BaseResultMap">
-     select a.ic_number as staff_ic_number,b.id,b.type,b.school_id,b.name,b.phone,b.qrcode_url,b.qrcode_url_old,
+     select b.ic_card_id,a.ic_number as staff_ic_number,b.id,b.type,b.school_id,b.name,b.phone,b.qrcode_url,b.qrcode_url_old,
     b.qrcode_school_key,b.qrcode_school_key_old,b.sign_type_id,b.status,b.created,b.updated,b.deleted
      from tb_staff b left join tb_ic_card a on b.rfid=a.rfid where b.type in (33,34) and b.school_id=#{school_id} and b.deleted=0
   </select> 

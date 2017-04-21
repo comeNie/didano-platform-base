@@ -156,10 +156,10 @@ select * from tb_student_parent where student_id=#{id}
   SELECT a.*,a.class_id  as classId FROM tb_student a WHERE  a.class_id=#{id} AND a.deleted =0 ORDER BY CONVERT( a.name USING gbk )
  </select>
 <select id="findTeacherByClass" parameterType="Integer" resultType="cn.didano.base.model.Hand_staff4PhoneBook">
-   SELECT  
-		tmp1.title,tmp1.status,tmp1.school_id,tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id  as classId,c.in_time,c.out_time ,card.ic_number as staff_ic_number
+	  SELECT  
+		tmp1.ic_card_id as icCardId,tmp1.title,tmp1.status,tmp1.school_id,tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id  as classId,c.in_time,c.out_time ,card.ic_number as staff_ic_number
 		FROM 
-	 (SELECT c.title,a.status,a.sign_type_id,a.school_id,a.id,a.name,a.phone,a.type,b.class_id,a.rfid
+	 (SELECT a.ic_card_id,c.title,a.status,a.sign_type_id,a.school_id,a.id,a.name,a.phone,a.type,b.class_id,a.rfid
 	 FROM 
 	 tb_staff a,tb_staff_class b ,tb_class c
 	 WHERE 
@@ -179,8 +179,8 @@ select * from tb_student_parent where student_id=#{id}
 
 
 <select id="findTeacherByNameClass" parameterType="cn.didano.base.model.Tb_staffData" resultType="cn.didano.base.model.Hand_staffTransit4PhoneBook"> 
-	select tmp2.ic_number as staff_ic_number,tmp1.sign_type_id AS SignTypeId,tmp1.title,tmp1.status,tmp1.school_id,tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id  as classId,c.in_time,c.out_time FROM 
-	 (SELECT a.rfid,c.title,a.status,a.sign_type_id,a.school_id,a.id,a.name,a.phone,a.type,b.class_id FROM tb_staff a,tb_staff_class b ,tb_class c
+	select tmp1.ic_card_id as icCardId,tmp2.ic_number as staff_ic_number,tmp1.sign_type_id AS SignTypeId,tmp1.title,tmp1.status,tmp1.school_id,tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id  as classId,c.in_time,c.out_time FROM 
+	 (SELECT a.ic_card_id,a.rfid,c.title,a.status,a.sign_type_id,a.school_id,a.id,a.name,a.phone,a.type,b.class_id FROM tb_staff a,tb_staff_class b ,tb_class c
 	 WHERE   a.id=b.staff_id  AND a.deleted=0 AND b.deleted=0 AND b.class_id=c.id AND a.name LIKE #{name} and a.school_id=#{schoolId}) AS tmp1 
 	 LEFT JOIN tb_sign_type c ON (tmp1.sign_type_id =c.id) left join tb_ic_card tmp2 on tmp1.rfid=tmp2.rfid ORDER BY CONVERT( tmp1.name USING gbk )
 </select>

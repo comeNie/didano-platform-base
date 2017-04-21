@@ -15,6 +15,8 @@
  */
 package cn.didano.robot.data;
 
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -46,7 +48,6 @@ public class SelfLnspectionInfo extends RInfo {
 	private String siTheStartTime;
 	@ApiModelProperty(value = "启动的原因", required = true)
 	private String siStartTheReason;
-	
 	public String getDeviceNo() {
 		return deviceNo;
 	}

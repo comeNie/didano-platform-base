@@ -38,12 +38,12 @@ public class RobotUpController {
 	@Autowired
 	private RobotMongoDbDataService robotMongoDbDataService;
 
-	@PostMapping(value = "reportVersion")
+	@PostMapping(value = "reportVersionInfo")
 	@ApiOperation(value = "上报版本信息", notes = "上报版本信息")
 	@ResponseBody
-	public Out<String> reportVersion(
+	public Out<String> reportVersionInfo(
 			@ApiParam(value = "远程机器人版本信息", required = true) @RequestBody RVersionInfo robotVersionInfo) {
-		logger.info("访问  RobotController :reportVersion RobotVersionInfo=" + robotVersionInfo);
+		logger.info("访问  RobotController :reportVersionInfo RobotVersionInfo=" + robotVersionInfo);
 		System.err.println("上报版本信息");
 		Out<String> out = new Out<String>();
 		try {
@@ -60,18 +60,18 @@ public class RobotUpController {
 	 * 创建人：SevenYang 
 	 * @创建时间：2017年3月17日 下午3:59:48 
 	 * @Title:
-	 * reportHardwareInfo 
+	 * reporThardwareInfo 
 	 * @Description: （上报机器人的硬件信息） 
 	 * @return Out<String> 修改人：
 	 * 版本：1.0.0 @throws
 	 */
 
-	@PostMapping(value = "reportHardwareInfo")
+	@PostMapping(value = "reporThardwareInfo")
 	@ApiOperation(value = "上报硬件信息", notes = "上报硬件信息")
 	@ResponseBody
-	public Out<String> reportHardwareInfo(
+	public Out<String> reporThardwareInfo(
 			@ApiParam(value = "远程机器人硬件信息", required = true) @RequestBody HardwareInfo hardwareInfo) {
-		logger.info("访问  RobotController :reportHardwareInfo HardwareInfo=" + hardwareInfo);
+		logger.info("访问  RobotController :reporThardwareInfo HardwareInfo=" + hardwareInfo);
 		System.err.println("上报硬件信息");
 		Out<String> out = new Out<String>();
 
@@ -100,7 +100,7 @@ public class RobotUpController {
 	@ResponseBody
 	public Out<String> reportTemperatureInfo(
 			@ApiParam(value = "远程机器人温度信息", required = true) @RequestBody TemperatureInfo temperatureInfo) {
-		logger.info("访问  RobotController :reportHardwareInfo HardwareInfo=" + temperatureInfo);
+		logger.info("访问  RobotController :reportTemperatureInfo HardwareInfo=" + temperatureInfo);
 		System.err.println("上报温度信息");
 		Out<String> out = new Out<String>();
 
@@ -130,7 +130,7 @@ public class RobotUpController {
 	@ResponseBody
 	public Out<String> reportOperationInfo(
 			@ApiParam(value = "远程机器人运行环境的信息", required = true) @RequestBody OperationInfo operationInfo) {
-		logger.info("访问  RobotController :reportHardwareInfo HardwareInfo=" + operationInfo);
+		logger.info("访问  RobotController :reportTemperatureInfo HardwareInfo=" + operationInfo);
 		System.err.println("上报运行环境的信息");
 		Out<String> out = new Out<String>();
 
@@ -160,7 +160,7 @@ public class RobotUpController {
 	@ResponseBody
 	public Out<String> reportSelfLnspectionInfo(
 			@ApiParam(value = "远程机器人自检信息", required = true) @RequestBody SelfLnspectionInfo SelfLnspectionInfo) {
-		logger.info("访问  RobotController :reportHardwareInfo HardwareInfo=" + SelfLnspectionInfo);
+		logger.info("访问  RobotController :reportSelfLnspectionInfo HardwareInfo=" + SelfLnspectionInfo);
 		System.err.println("上报机器人的自检信息");
 		Out<String> out = new Out<String>();
 
@@ -184,7 +184,7 @@ public class RobotUpController {
 	 * 版本：1.0.0 @throws
 	 */
 	@PostMapping(value = "reportMeetSpeedInfo")
-	@ApiOperation(value = "上报机器人的别速度信息", notes = "上报机器人的别速度信息")
+	@ApiOperation(value = "上报机器人的识别速度信息", notes = "上报机器人的别速度信息")
 	@ResponseBody
 	public Out<String> reportMeetSpeedInfo(
 			@ApiParam(value = "远程机器人别速度信息", required = true) @RequestBody MeetSpeedInfo meetSpeedInfo) {
@@ -278,7 +278,6 @@ public class RobotUpController {
 		logger.info("访问  RobotController :reportreportMeetSpeedInfo reportMeetSpeedInfo=" + photographicQualityInfo);
 		System.err.println("上报机器人的照片质量信息");
 		Out<String> out = new Out<String>();
-
 		try {
 			// 直接保存信息
 			Object o = robotMongoDbDataService.savePhotographicQualityInfo(photographicQualityInfo);

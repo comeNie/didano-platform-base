@@ -67,8 +67,47 @@ public class VideoStructureController {
 	public ModelAndView haode() {
 		return new ModelAndView("video/right/haode");
 	}
+	@GetMapping("selfLnspectionInfo")
+	public ModelAndView selfLnspectionInfo() {
+		return new ModelAndView("video/robot/selfLnspectionInfo");
+	}
+	//机器人的版本信息
 	
+	@GetMapping("versionInfo")
+	public ModelAndView versionInfo() {
+		return new ModelAndView("video/robot/versionInfo");
+	}
 	
-	
-
+	@GetMapping("hardwareInfo")
+	public ModelAndView hardwareInfo() {
+		return new ModelAndView("video/robot/hardwareInfo");
+	}
+	@GetMapping("temperatureInfo")
+	public ModelAndView temperatureInfo() {
+		return new ModelAndView("video/robot/temperatureInfo");
+	}
+	@GetMapping("meetSpeedInfo")
+	public ModelAndView meetSpeedInfo() {
+		return new ModelAndView("video/robot/meetSpeedInfo");
+	}
+	@GetMapping("meetPropertyInfo")
+	public ModelAndView meetPropertyInfo() {
+		return new ModelAndView("video/robot/meetPropertyInfo");
+	}
+	@GetMapping("onLineInfo")
+	public ModelAndView onLineInfo() {
+		return new ModelAndView("video/robot/onLineInfo");
+	}
+	@GetMapping("photographicQualityInfo")
+	public ModelAndView photographicQualityInfo() {
+		return new ModelAndView("video/robot/photographicQualityInfo");
+	}
+	@GetMapping("manageInfo")
+	public ModelAndView manageInfo() {
+		return new ModelAndView("video/robot/manageInfo");
+	}
+	@GetMapping("operationInfo")
+	public ModelAndView operationInfo() {
+		return new ModelAndView("video/robot/operationInfo");
+	}
 }

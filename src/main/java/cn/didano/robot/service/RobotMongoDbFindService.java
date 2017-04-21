@@ -1,6 +1,10 @@
 package cn.didano.robot.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import cn.didano.robot.data.HardwareInfo;
@@ -31,7 +35,7 @@ import cn.didano.robot.data.repository.TemperatureInfoRepsitory;
  *
  */
 @Service
-public class RobotMongoDbDataService {
+public class RobotMongoDbFindService {
 	@Autowired
 	private RVersionInfoRepository v_repository;
 	@Autowired
@@ -41,165 +45,149 @@ public class RobotMongoDbDataService {
 	@Autowired
 	private OperationInfoRepository o_repository;
 	@Autowired
-	private SelfLnspectionInfoRepository s_sepository;
+	private SelfLnspectionInfoRepository s_repository;
 	@Autowired
-	private MeetSpeedInfoRepository m_sepository;
+	private MeetSpeedInfoRepository m_repository;
 	@Autowired
-	private MeetPropertyInfoRepository mp_sepository;
+	private MeetPropertyInfoRepository mp_repository;
 	@Autowired
-	private OnLineInfoRepository or_sepository;
+	private OnLineInfoRepository or_repository;
 	@Autowired
-	private PhotographicQualityInfoRepository p_sepository;
+	private PhotographicQualityInfoRepository p_repository;
 	@Autowired
-	private ManageInfoRepository mr_sepository;
-	/**
-	 * 查询
-	 * 
-	 * @return
-	 */
-	public RVersionInfo findRVersionInfo(String device_no) {
-		return this.v_repository.findByDeviceNo(device_no);
-	}
-	
-	/**
-	 * 保存版本数据
-	 * 
-	 * @param record
-	 * @return 更新行数
-	 */
-	public RVersionInfo saveRVersionInfo(RVersionInfo record) {
-		return this.v_repository.save(record);
-	}
-	
-	/**
-	 * 创建人：SevenYang
-	 * @创建时间：2017年3月17日 下午4:05:45
-	 * @Title: saveHardwareInfo
-	 * @Description: （保存硬件数据）
-	 * @return HardwareInfo 
-	 * 修改人：
-	 * 版本：1.0.0
-	 * @throws
-	 */
-	public HardwareInfo saveHardwareInfo(HardwareInfo hardwareInfo) {
-		return this.h_repository.save(hardwareInfo);
-	}
+	private ManageInfoRepository mr_repository;
 	
 	
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:13:13
 	 * @Title: saveTemperatureInfo
-	 * @Description: （保存机器人的温度信息）
-	 * @return TemperatureInfo 
+	 * @Description: （查询所有机器人的版本信息，并且不分页查询）
+	 * @return queryAllByPage 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public TemperatureInfo saveTemperatureInfo(TemperatureInfo temperatureInfo) {
-		return this.t_repository.save(temperatureInfo);
+	public List<RVersionInfo> queryRVersionInfo() {
+		System.err.println("123");
+		return this.v_repository.findAll();
 	}
-	
-	
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:13:13
 	 * @Title: saveTemperatureInfo
-	 * @Description: （保存机器人的运行环境信息）
-	 * @return saveOperationInfo 
+	 * @Description: （查询所有机器人的自检信息，并且不分页查询）
+	 * @return queryAllByPage 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public OperationInfo saveOperationInfo(OperationInfo operationInfo) {
-		return this.o_repository.save(operationInfo);
+	public List<SelfLnspectionInfo> querySelfLnspectionInfo() {
+		return this.s_repository.findAll();
 	}
-	
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:13:13
 	 * @Title: saveTemperatureInfo
-	 * @Description: （保存机器人的自检信息）
-	 * @return saveOperationInfo 
+	 * @Description: （查询所有机器人的硬件信息，并且不分页查询）
+	 * @return queryAllByPage 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public SelfLnspectionInfo saveSelfLnspectionInfo(SelfLnspectionInfo selfLnspectionInfo) {
-		System.err.println("123");//当第二次下控时执行啦两次保存
-		return this.s_sepository.save(selfLnspectionInfo);
+	public List<HardwareInfo> queryHardwareInfo() {
+		return this.h_repository.findAll();
 	}
-	
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:13:13
 	 * @Title: saveTemperatureInfo
-	 * @Description: （保存机器人的自检信息）
-	 * @return saveOperationInfo 
+	 * @Description: （查询所有机器人的环境温度信息信息，并且不分页查询）
+	 * @return queryAllByPage 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public MeetSpeedInfo saveMeetSpeedInfo(MeetSpeedInfo meetSpeedInfo) {
-		return this.m_sepository.save(meetSpeedInfo);
+	public List<TemperatureInfo> queryTemperatureInfo() {
+		return this.t_repository.findAll();
 	}
-	
-	
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:13:13
 	 * @Title: saveTemperatureInfo
-	 * @Description: （保存机器人的自检信息）
-	 * @return saveOperationInfo 
+	 * @Description: （查询所有机器人的环境温度信息信息，并且不分页查询）
+	 * @return queryAllByPage 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public MeetPropertyInfo saveMeetPropertyInfo(MeetPropertyInfo meetSpeedInfo) {
-		return this.mp_sepository.save(meetSpeedInfo);
+	public List<MeetSpeedInfo> queryMeetSpeedInfo() {
+		return this.m_repository.findAll();
 	}
-	
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:13:13
 	 * @Title: saveTemperatureInfo
-	 * @Description: （保存机器人运行在线信息）
-	 * @return saveOperationInfo 
+	 * @Description: （查询所有机器人的环境温度信息信息，并且不分页查询）
+	 * @return queryAllByPage 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public OnLineInfo saveOnLineInfo(OnLineInfo onLineInfo) {
-		return this.or_sepository.save(onLineInfo);
+	public List<MeetPropertyInfo> queryMeetPropertyInfo() {
+		return this.mp_repository.findAll();
 	}
-	
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:13:13
 	 * @Title: saveTemperatureInfo
-	 * @Description: （保存机器人运行在线信息）
-	 * @return saveOperationInfo 
+	 * @Description: （查询所有机器人的环境温度信息信息，并且不分页查询）
+	 * @return queryAllByPage 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public PhotographicQualityInfo savePhotographicQualityInfo(PhotographicQualityInfo onLineInfo) {
-		return this.p_sepository.save(onLineInfo);
+	public List<OnLineInfo> queryOnLineInfo() {
+		return this.or_repository.findAll();
 	}
-	
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:13:13
 	 * @Title: saveTemperatureInfo
-	 * @Description: （保存机器人运行在线信息）
-	 * @return saveOperationInfo 
+	 * @Description: （查询所有机器人的环境温度信息信息，并且不分页查询）
+	 * @return queryAllByPage 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public ManageInfo saveManageInfo(ManageInfo onLineInfo) {
-		return this.mr_sepository.save(onLineInfo);
+	public List<PhotographicQualityInfo> queryPhotographicQualityInfo() {
+		return this.p_repository.findAll();
+	}
+	/**
+	 * 创建人：SevenYang
+	 * @创建时间：2017年3月17日 下午4:13:13
+	 * @Title: saveTemperatureInfo
+	 * @Description: （查询所有机器人的环境温度信息信息，并且不分页查询）
+	 * @return queryAllByPage 
+	 * 修改人：
+	 * 版本：1.0.0
+	 * @throws
+	 */
+	public List<ManageInfo> queryManageInfo() {
+		return this.mr_repository.findAll();
+	}
+	/**
+	 * 创建人：SevenYang
+	 * @创建时间：2017年3月17日 下午4:13:13
+	 * @Title: saveTemperatureInfo
+	 * @Description: （查询所有机器人的环境温度信息信息，并且不分页查询）
+	 * @return queryAllByPage 
+	 * 修改人：
+	 * 版本：1.0.0
+	 * @throws
+	 */
+	public List<OperationInfo> queryOperationInfo() {
+		return this.o_repository.findAll();
 	}
 	
-
 }

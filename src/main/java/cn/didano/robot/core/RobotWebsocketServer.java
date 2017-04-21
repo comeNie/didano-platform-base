@@ -162,15 +162,22 @@ public class RobotWebsocketServer {
 		ConcurrentHashMap<String, RobotSession> tmp = RobotWebsocketServer.getRobotInfoMap();
 		RobotSession session = RobotWebsocketServer.getRobotInfoMap().get(service_no);
 		if (session != null) {
+			
 			ObjectMapper mapper = new ObjectMapper();
 			String data = null;
 			try {
+				System.err.println("给客户端发送消息");
 				data = mapper.writeValueAsString(downInfo);
+				System.err.println(data);
 			} catch (JsonProcessingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			session.getRobotWebsocketServer().sendMessage(data);
+			Session ASession = session.getRobotWebsocketServer().getSession();
+			ASession.getMessageHandlers().clear();
+			int a =ASession.getMessageHandlers().size();
+			System.err.println(a);
 		} else {
 			logger.warn("设备编号:" + service_no + "，不存在robotWebsocket客户端连接");
 			throw new ServiceException(DBExceptionEnums.ERROR_DIAGNOSE_DIVICENO_NOT_EXIST);
@@ -241,4 +248,14 @@ public class RobotWebsocketServer {
 	public static synchronized void delRobotInfo(String service_no) {
 		robotInfoMap.remove(service_no);
 	}
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+	
+	
 }

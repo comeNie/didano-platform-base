@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="video/main" charset="UTF-8">
+<head>
+	<meta charset="UTF-8">
+	<title>诊断平台</title>
+    <link rel="stylesheet" href="../video/css/payAuth.css" />
+	<link rel="stylesheet" href="../video/css/basicStyle.css" />
+	
+	
+	<link rel="stylesheet" href="robotJs/bootstrap.min.css">
+    <link rel="stylesheet" href="robotJs/bootstrap-table.css">
+    <link rel="stylesheet" href="robotJs/examples.css">
+    <script src="robotJs/jquery.min.js"></script>
+    <script src="robotJs/bootstrap.min.js"></script>
+    <script src="robotJs/bootstrap-table.js"></script>
+    <script src="robotJs/bootstrap-table-key-events.js"></script>
+    <script src="robotJs/ga.js"></script>
+    
+</head>
+<body>
+	<!-- <h1 layout:fragment="header" style="text-align:center">付费授权</h1> -->
+    <div layout:fragment="content" class="container width-100 padding-rl-0">
+    	<!-- <div class="col-md-12 bg-color-white top">
+            <div class="col-md-1"> 
+                <img src="img/log.png" alt="" class="width-40">
+            </div>
+        </div> -->
+    	<div class="col-md-12 list-body bg-color-white width-80 padding-rl-0">
+	    	<div class="col-md-12 list-title list-height">
+	    		 诊断平台：小诺的识别速度
+	    		 <!-- <div style="margin-top: 6px;margin-right: 0px;">
+	    		 	显示机器人：
+			      	<select id="robot" style="width:200px;height: 40px" onchange="robot(this)">
+			        <option value="1">--2sf21---</option>   
+			        <option value="2">小诺</option>   
+			        <option value="3">小诺</option>   
+			        <option value="4">小诺</option>   
+			        <option value="5">小诺</option>   
+			        <option value="6">小诺</option>   
+			        <option value="7">小诺</option>
+			        <option value="8">小诺</option>
+			        <option value="9">小诺</option>
+			      </select>
+	    		 </div> -->
+	    	</div>
+	    	<div class="container">
+			      <table id="table"
+		               data-toggle="table"
+		               data-show-columns="true"
+		               data-show-toggle="true"
+		               data-show-pagination-switch="true"
+		               data-show-refresh="true"
+		               data-search="true"
+		               data-pagination="true"
+		               data-key-events="true"
+		               data-url="/robot/find/queryMeetSpeedInfoAll">
+		            <thead style="">
+		            <!-- 1、机器人自检信息的显示 -->
+		            <tr id="tr1" class="tr1" style="display: block;">
+		                <th data-field="deviceNo">机器人编号</th>
+  			    		<th data-field="maximumMeetTime">最大识别时间</th>
+  			    		<th data-field="minimumMeetTime">最小识别时间</th>
+  			    		<th data-field="vaerageMeetTime" >平均识别时间</th>
+		            </tr>
+		            </thead>
+		        </table>
+		    </div>
+    	</div>
+        <div class="col-md-12 list-body bg-color-white width-80 padding-rl-0 hidden margin-bottom-20">
+            <div class="col-md-12 school_title list-height">
+            </div>
+            <!-- <div class="col-md-12 list-height">班级列表</div> -->
+            <div class="col-md-12 class-list-body padding-rl-0"> 
+                <!-- <div class="col-md-12 class-list-comment list-height">草莓班</div>
+                <div class="col-md-1">
+                    <span class="rectangular"></span>
+                    <span>小明</span>
+                </div>
+                <div class="col-md-1">
+                    <span class="rectangular"></span>
+                    <span>小明</span>
+                </div>
+                <div class="col-md-1">
+                    <span class="rectangular"></span>
+                    <span>小明</span>
+                </div>
+                <div class="col-md-1">
+                    <span class="rectangular"></span>
+                    <span>小明</span>
+                </div>
+                <div class="col-md-1">
+                    <span class="rectangular"></span>
+                    <span>小明</span>
+                </div> -->
+
+            </div>
+        </div>
+
+    </div>
+    
+</body>
+</html>

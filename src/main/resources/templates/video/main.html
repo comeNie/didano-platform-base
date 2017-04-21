@@ -12,10 +12,33 @@
 <title>didano video</title>
 <link href="../video/css/bootstrap.min.css" rel="stylesheet" />
 <link href="../video/css/simple-sidebar.css" rel="stylesheet" />
-<script src="../video/js/jquery.min.js"></script>
+<script src="robotJs/jquery.min.js"></script>
 <script src="../video/js/bootstrap.min.js"></script>
 <script src="../video/js/didano.js"></script>
-
+<script type="text/javascript">
+	$(function(){
+		var num=getParam("num");
+		if(num==1){
+			$("#div").show();
+		}
+	})
+	//定义函数  获取url后面的参数
+	function getParam(paramName) { 
+	    paramValue = "", isFound = !1; 
+	    if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) { 
+	        arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&"), i = 0; 
+	        while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++ 
+	    } 
+	    return paramValue == "" && (paramValue = null), paramValue 
+	}
+	function show(){
+		if($("#div").css("display")==='none') {
+			$("#div").show();
+		}else{
+			$("#div").hide();
+		}
+	}
+</script> 
 </head>
 <body>
 	<div id="wrapper">
@@ -26,6 +49,22 @@
 				<li><a th:href="@{~/video/show_videos}">视频详情</a></li>
 				<li><a th:href="@{~/video/paymentAuthorization}">付费授权</a></li>
 				<li><a th:href="@{~/video/test_websocket}">测试websocket</a></li>
+				<li><a onclick="show()">诊断平台</a>
+					<div style="display: none;" id="div">
+						<ul style="list-style-type:none;">
+							<li><a th:href="@{~/video/versionInfo?num=1}">小诺的版本信息</a></li>
+							<li><a th:href="@{~/video/hardwareInfo?num=1}">小诺的硬件信息</a></li>
+							<li><a th:href="@{~/video/temperatureInfo?num=1}">小诺的温度信息</a></li>
+							<li><a th:href="@{~/video/selfLnspectionInfo?num=1}">小诺的自检信息</a>
+							<li><a th:href="@{~/video/meetSpeedInfo?num=1}">小诺识别速度</a>
+							<li><a th:href="@{~/video/meetPropertyInfo?num=1}">小诺的识别性能</a>
+							<li><a th:href="@{~/video/onLineInfo?num=1}">小诺的在线信息</a>
+							<li><a th:href="@{~/video/photographicQualityInfo?num=1}">小诺的照片质量</a>
+							<li><a th:href="@{~/video/manageInfo?num=1}">小诺的管理信息</a>
+							<li><a th:href="@{~/video/operationInfo?num=1}">小诺的运行环境</a>
+						</ul>
+					</div>
+				</li>
 			</ul>
 		</div>
 		<!-- /#sidebar-wrapper -->

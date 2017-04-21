@@ -39,8 +39,6 @@ public class HardwareInfo extends RInfo {
 	@ApiModelProperty(value = "RFID读卡器", required = true)
 	private String rfidCardReader;
 	@ApiModelProperty(value = "液晶屏", required = true)
-	
-	 
 	private String liquidCrystalDisplay;
 	
 	public String getAndroidCoreBoard() {

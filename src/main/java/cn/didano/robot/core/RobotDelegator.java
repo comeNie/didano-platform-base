@@ -30,7 +30,7 @@ public class RobotDelegator {
 	 */
 	public void handle(String service_no, RobotUpController robot, UpInfo upInfo) {
 		Object back = null;
-		Out<String> out = new Out<String>();;
+		Out<String> out = new Out<String>();
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			Class<?> para = getParameterType(robot, upInfo.getMethodName());

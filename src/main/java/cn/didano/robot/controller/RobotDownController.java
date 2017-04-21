@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiOperation;
  * 
  * @author stephen Created on 2016年12月17日 下午6:38:30
  */
+
 @Api(value = "诊断控制服务", tags = "诊断控制服务")
 @RestController
 @RequestMapping(value = "/robot/down/")
@@ -36,14 +37,14 @@ public class RobotDownController {
 	 * 执行,上传版本信息
 	 * @param service_no
 	 */
-	@PostMapping(value = "excute_reportVersion")
+	@PostMapping(value = "reportVersion")
 	@ApiOperation(value = "执行,上传版本信息", notes = "执行,上传版本信息")
 	@ResponseBody
-	public Out<String> excute_reportVersion(@RequestBody String service_no) {
+	public Out<String>reportVersion(@RequestBody String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			DownInfo downInfo = new DownInfo();
-			downInfo.setMethodName("excute_reportVersion");
+			downInfo.setMethodName("reportVersion");
 			back.setBackTypeWithLog(BackType.SUCCESS_DIAGNOSE_EXCUTE);
 			try{
 				RobotWebsocketServer.sendMessage(service_no, downInfo);
@@ -57,23 +58,23 @@ public class RobotDownController {
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:14:06
-	 * @Title: excute_hardwareInfo
+	 * @Title: reporthardwareInfo
 	 * @Description: （ 执行,上传硬件信息）
 	 * @return Out<String> 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "excute_hardwareInfo")
+	@PostMapping(value = "reporThardwareInfo")
 	@ApiOperation(value = " 执行,上传硬件信息", notes = " 执行,上传硬件信息")
 	@ResponseBody
-	public Out<String> excute_hardwareInfo(@RequestBody String service_no) {
+	public Out<String> reporThardwareInfo(@RequestBody String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
 			
 			DownInfo downInfo = new DownInfo();
-			downInfo.setMethodName("excute_hardwareInfo");
+			downInfo.setMethodName("reporThardwareInfo");
 			back.setBackTypeWithLog(BackType.SUCCESS_DIAGNOSE_EXCUTE);
 			try{
 				RobotWebsocketServer.sendMessage(service_no, downInfo);
@@ -87,23 +88,23 @@ public class RobotDownController {
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:15:36
-	 * @Title: excute_temperatureInfo
+	 * @Title: reportTemperatureInfo
 	 * @Description: （执行,上传温度信息）
 	 * @return Out<String> 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "excute_temperatureInfo")
+	@PostMapping(value = "reportTemperatureInfo")
 	@ApiOperation(value = " 执行,上传温度信息", notes = " 执行,上传温度信息")
 	@ResponseBody
-	public Out<String> excute_temperatureInfo(@RequestBody String service_no) {
+	public Out<String> reportTemperatureInfo(@RequestBody String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
 			
 			DownInfo downInfo = new DownInfo();
-			downInfo.setMethodName("excute_temperatureInfo");
+			downInfo.setMethodName("reportTemperatureInfo");
 			back.setBackTypeWithLog(BackType.SUCCESS_DIAGNOSE_EXCUTE);
 			try{
 				RobotWebsocketServer.sendMessage(service_no, downInfo);
@@ -117,23 +118,23 @@ public class RobotDownController {
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:15:36
-	 * @Title: excute_operationInfo
+	 * @Title: reportOperationInfo
 	 * @Description: （执行,上传机器人运行环境信息）
 	 * @return Out<String> 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "excute_operationInfo")
+	@PostMapping(value = "reportOperationInfo")
 	@ApiOperation(value = " 执行,上传机器人运行环境信息", notes = " 执行,上传机器人运行环境信息")
 	@ResponseBody
-	public Out<String> excute_operationInfo(@RequestBody String service_no) {
+	public Out<String> reportOperationInfo(@RequestBody String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
 			
 			DownInfo downInfo = new DownInfo();
-			downInfo.setMethodName("excute_operationInfo");
+			downInfo.setMethodName("reportOperationInfo");
 			back.setBackTypeWithLog(BackType.SUCCESS_DIAGNOSE_EXCUTE);
 			try{
 				RobotWebsocketServer.sendMessage(service_no, downInfo);
@@ -147,25 +148,26 @@ public class RobotDownController {
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:15:36
-	 * @Title: excute_operationInfo
+	 * @Title: reportSelfLnspectionInfo
 	 * @Description: （执行,上传机器人自检信息）
 	 * @return Out<String> 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "excute_selfLnspectionInfo")
+	@PostMapping(value = "reportSelfLnspectionInfo")
 	@ApiOperation(value = " 执行,上传机器人自检信息", notes = " 执行,上传机器人自检信息")
 	@ResponseBody
-	public Out<String> excute_selfLnspectionInfo(@RequestBody String service_no) {
+	public Out<String> reportSelfLnspectionInfo(@RequestBody String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
 			
 			DownInfo downInfo = new DownInfo();
-			downInfo.setMethodName("excute_selfLnspectionInfo");
+			downInfo.setMethodName("reportSelfLnspectionInfo");
 			back.setBackTypeWithLog(BackType.SUCCESS_DIAGNOSE_EXCUTE);
 			try{
+				System.err.println("执行下控自检信息");
 				RobotWebsocketServer.sendMessage(service_no, downInfo);
 			}catch(ServiceException ex){
 				back.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_EXCUTE,ex.getExceptionEnums().getMessage());
@@ -177,23 +179,23 @@ public class RobotDownController {
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:15:36
-	 * @Title: excute_operationInfo
+	 * @Title: reportMeetSpeedInfo
 	 * @Description: （执行,上传机器人识别速度信息）
 	 * @return Out<String> 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "excute_MeetSpeedInfo")
+	@PostMapping(value = "reportMeetSpeedInfo")
 	@ApiOperation(value = " 执行,上传机器人识别速度信息", notes = " 执行,上传机器人识别速度信息")
 	@ResponseBody
-	public Out<String> excute_MeetSpeedInfo(@RequestBody String service_no) {
+	public Out<String> reportMeetSpeedInfo(@RequestBody String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
 			
 			DownInfo downInfo = new DownInfo();
-			downInfo.setMethodName("excute_MeetSpeedInfo");
+			downInfo.setMethodName("reportMeetSpeedInfo");
 			back.setBackTypeWithLog(BackType.SUCCESS_DIAGNOSE_EXCUTE);
 			try{
 				RobotWebsocketServer.sendMessage(service_no, downInfo);
@@ -207,23 +209,23 @@ public class RobotDownController {
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:15:36
-	 * @Title: excute_operationInfo
+	 * @Title: reportMeetPropertyInfo
 	 * @Description: （执行,上传机器人识别性能信息）
 	 * @return Out<String> 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "excute_MeetPropertyInfo")
+	@PostMapping(value = "reportMeetPropertyInfo")
 	@ApiOperation(value = " 执行,上传机器人识别性能信息", notes = " 执行,上传机器人识别性能信息")
 	@ResponseBody
-	public Out<String> excute_MeetPropertyInfo(@RequestBody String service_no) {
+	public Out<String> reportMeetPropertyInfo(@RequestBody String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
 			
 			DownInfo downInfo = new DownInfo();
-			downInfo.setMethodName("excute_MeetPropertyInfo");
+			downInfo.setMethodName("reportMeetPropertyInfo");
 			back.setBackTypeWithLog(BackType.SUCCESS_DIAGNOSE_EXCUTE);
 			try{
 				RobotWebsocketServer.sendMessage(service_no, downInfo);
@@ -238,23 +240,23 @@ public class RobotDownController {
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:15:36
-	 * @Title: excute_operationInfo
+	 * @Title: reportOnLineInfo
 	 * @Description: （执行,上传机器人运行在线信息）
 	 * @return Out<String> 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "excute_OnLineInfo")
+	@PostMapping(value = "reportOnLineInfo")
 	@ApiOperation(value = " 执行,上传机器人运行在线信息", notes = " 执行,上传机器人运行在线信息")
 	@ResponseBody
-	public Out<String> excute_OnLineInfo(@RequestBody String service_no) {
+	public Out<String> reportOnLineInfo(@RequestBody String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
 			
 			DownInfo downInfo = new DownInfo();
-			downInfo.setMethodName("excute_OnLineInfo");
+			downInfo.setMethodName("reportOnLineInfo");
 			back.setBackTypeWithLog(BackType.SUCCESS_DIAGNOSE_EXCUTE);
 			try{
 				RobotWebsocketServer.sendMessage(service_no, downInfo);
@@ -268,23 +270,23 @@ public class RobotDownController {
 	/**
 	 * 创建人：SevenYang
 	 * @创建时间：2017年3月17日 下午4:15:36
-	 * @Title: excute_operationInfo
+	 * @Title: reportPhotographicQualityInfo
 	 * @Description: （执行,上传机器人照片质量信息）
 	 * @return Out<String> 
 	 * 修改人：
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "excute_PhotographicQualityInfo")
+	@PostMapping(value = "reportPhotographicQualityInfo")
 	@ApiOperation(value = " 执行,上传机器人照片质量信息", notes = " 执行,上传机器人照片质量信息")
 	@ResponseBody
-	public Out<String> excute_PhotographicQualityInfo(@RequestBody String service_no) {
+	public Out<String> reportPhotographicQualityInfo(@RequestBody String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
 			
 			DownInfo downInfo = new DownInfo();
-			downInfo.setMethodName("excute_PhotographicQualityInfo");
+			downInfo.setMethodName("reportPhotographicQualityInfo");
 			back.setBackTypeWithLog(BackType.SUCCESS_DIAGNOSE_EXCUTE);
 			try{
 				RobotWebsocketServer.sendMessage(service_no, downInfo);
@@ -294,7 +296,34 @@ public class RobotDownController {
 		}
 		return back;
 	}
-	
+	/**
+	 * 创建人：SevenYang
+	 * @创建时间：2017年3月17日 下午4:15:36
+	 * @Title: reportManageInfo
+	 * @Description: （执行,上传机器人照片质量信息）
+	 * @return Out<String> 
+	 * 修改人：
+	 * 版本：1.0.0
+	 * @throws
+	 */
+	@PostMapping(value = "reportManageInfo")
+	@ApiOperation(value = " 执行,上传机器人信息管理", notes = " 执行,上传机器人信息管理")
+	@ResponseBody
+	public Out<String> reportManageInfo(@RequestBody String service_no) {
+		Out<String> back = new Out<String>();
+		if (RobotWebsocketServer.getRobotInfoMap() != null) {
+			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
+			DownInfo downInfo = new DownInfo();
+			downInfo.setMethodName("reportManageInfo");
+			back.setBackTypeWithLog(BackType.SUCCESS_DIAGNOSE_EXCUTE);
+			try{
+				RobotWebsocketServer.sendMessage(service_no, downInfo);
+			}catch(ServiceException ex){
+				back.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_EXCUTE,ex.getExceptionEnums().getMessage());
+			}
+		}
+		return back;
+	}
 	/**
 	 * 当有异常时，回复客户端，便于调试
 	 * 没有异常时，客户端传送数据上来，不做回复

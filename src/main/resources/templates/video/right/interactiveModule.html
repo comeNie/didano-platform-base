@@ -44,19 +44,21 @@
 		});
 
 		/*点击取消添加*/
+		/*点击取消添加*/
 		$(function(){
 			$('#btn-cancel').click(function(){
 				$('.shield').parent().addClass('hidden');
 			});
 		});
 		
-		/*选择学校*/
 		$(function(){
-			$('#issues-school').focus(function(){
-				$('#school-list').removeClass('hidden');
+			$('.shield').click(function(){
+				$('#school-list').addClass('hidden');
 			});
 		});
-		$(func       var objUrl;
+
+        $(function() {
+            var objUrl;
             var img_html;{ 
                 $(".myFile").change(function() {
                     var myFileId = $(this).attr('id');
@@ -130,9 +132,9 @@
 
 </head>
 <body>
-    <div layout:fragment="content" class="container width-100 padding-rl-0">
-    	<di    	<div class="col-md-12 list-body bg-color-white width-80 padding-rl-0 margin-bottom-20">
-iv class="col-md-12 list-title list-height">
+   <div layout:fragment="content" class="container width-100 padding-rl-0">
+    	<div class="col-md-12 list-body bg-color-white width-80 padding-rl-0 margin-bottom-20">
+	    	<div class="col-md-12 list-title list-height">
 	    		互动题卡
 	    	</div>
 	    	<div class="col-md-12 padding-rl-0 margin-bootom-2">

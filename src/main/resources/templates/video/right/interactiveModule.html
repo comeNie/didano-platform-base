@@ -17,7 +17,7 @@
 		$(function(){
 			$.ajax({
                 type: "POST",
-                url:server_url+"/base/interactive/post/findAllModel",
+                url:"http://192.168.0.101:8080/base/interactive/post/findAllModel",
                 dataType: "json",
                 success: function(rs){
                 	if(rs.success){
@@ -43,7 +43,6 @@
 			});
 		});
 
-		/*点击取消添加*/
 		/*点击取消添加*/
 		$(function(){
 			$('#btn-cancel').click(function(){
@@ -132,7 +131,7 @@
 
 </head>
 <body>
-   <div layout:fragment="content" class="container width-100 padding-rl-0">
+    <div layout:fragment="content" class="container width-100 padding-rl-0">
     	<div class="col-md-12 list-body bg-color-white width-80 padding-rl-0 margin-bottom-20">
 	    	<div class="col-md-12 list-title list-height">
 	    		互动题卡
@@ -197,7 +196,7 @@
         					题目类型
         				</div> -->
         				<div class="col-md-12 padding-rl-0">
-    	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入题目类型（例如：物品）" id="issues-kinds1" name="ParentKinds">
+    	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入题目类型（例如：动物）" id="issues-kinds1" name="ParentKinds">
         				</div>
         			</div>
         			<div class="col-md-12  padding-rl-0 border-bottom-gray issues-div">
@@ -205,7 +204,7 @@
         					题目类型
         				</div> -->
         				<div class="col-md-12 padding-rl-0">
-    	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入题目种类（例如：动物）" id="issues-kinds2" name="kinds">
+    	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入题目种类（例如：哺乳动物）" id="issues-kinds2" name="kinds">
         				</div>
         			</div>
         			<div class="col-md-12  padding-rl-0 border-bottom-gray hidden">
@@ -277,7 +276,7 @@
         					答错动作
         				</div> -->
         				<div class="col-md-12 padding-rl-0">
-    	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入答对小诺动作（例如：1.小诺鼓励）" id="issues-answerError2" name="answerErrorAction">
+    	    				<input type="text" class="no-border width-100 text-left height-80" placeholder="请输入答错小诺动作（例如：1.小诺鼓励）" id="issues-answerError2" name="answerErrorAction">
         				</div>
         			</div>
         			<div class="col-md-12  padding-rl-0 issues-div">

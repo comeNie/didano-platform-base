@@ -68,7 +68,6 @@
                     var img_div = $(".img_div");
                     var filepath = $(this).val();
                     for(var i = 0; i < this.files.length; i++) {
-                        filesArr.push(this.files[i]);
                         objUrl = getObjectURL(this.files[i]);
                         var extStart = filepath.lastIndexOf(".");
                         var ext = filepath.substring(extStart, filepath.length).toUpperCase();

@@ -11,6 +11,25 @@ body{
 .width-100{
 	width: 100%;
 }
+.margin-bootom-2{
+	margin-bottom: 2px;
+}
+.margin-bottom-10{
+	margin-bottom: 10px;
+}
+.margin-bottom-20{
+	margin-bottom: 20px;
+}
+.margin-top-10{
+	margin-top: 10px;
+}
+.margin-rl-0{
+	margin-left: 0px !important;
+	margin-right: 0px !important;
+}
+.margin-left-5{
+	margin-left: 5px !important;
+}
 .padding-rl-0{
 	padding-right: 0px !important;
 	padding-left: 0px !important;
@@ -20,6 +39,13 @@ body{
 	padding-right: 0px !important;
 	padding-left: 0px !important;
 }
+.padding-rl-5{
+	padding-left: 5px !important;
+	padding-right: 5px !important;
+}
+.no-border{
+	border: none !important;
+}
 .top{
 	height: 70px;
 	line-height: 70px;
@@ -27,42 +53,14 @@ body{
 .bg-color-white{
 	background-color: white;
 }
-.margin-bottom-10{
-	margin-bottom: 10px;
-}
-.margin-bottom-20{
-	margin-bottom: 20px;
-}
-.margin-left-5{
-	margin-left: 5px;
-}
+
 .border-bottom-white{
 	border-bottom: 1px solid white;
-}
-.padding-rl-0{
-	padding-left: 0px !important;
-	padding-right: 0px !important;
-}
-.issues-list{
-	margin-bottom: 10px;
 }
 .issues-info{
 	line-height: 3.5rem;
 	height: 3.5rem;
 	font-size: 1.1rem;
-}
-.margin-bootom-10{
-	margin-bottom: 10px;
-}
-.margin-bootom-5{
-	margin-bottom: 5px;
-}
-.margin-rl-0{
-	margin-left: 0px !important;
-	margin-right: 0px !important;
-}
-.margin-left-5{
-	margin-left: 5px !important;
 }
 .issues-title{
 	font-size: 1.3rem !important;
@@ -106,10 +104,6 @@ body{
 	line-height: 35px;
 	font-size: 1rem;
 }
-.padding-rl-5{
-	padding-left: 5px !important;
-	padding-right: 5px !important;
-}
 #issues-details div{
 	font-size: 1.1rem;
 }
@@ -124,9 +118,6 @@ body{
 
 .border-bottom-gray{
 	border-bottom: 1px solid #F0F0F0;
-}
-.no-border{
-	border: none !important;
 }
 .height-80{
 	height: 80%;
@@ -143,6 +134,9 @@ input,.btn{
 }
 #issues-photos{
 	height: 155px;
+}
+#btn-cancel{
+	font-size: 14px !important;
 }
 .a-upload{
 	padding: 4px 10px;
@@ -183,9 +177,6 @@ input,.btn{
 	text-decoration: none
 }
 
-.img_div{
-	margin-top: 10px;
-}
 .isImg{
     height: 100px; 
 	position: relative; 

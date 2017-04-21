@@ -12,6 +12,7 @@
     <result column="author" jdbcType="VARCHAR" property="author" />
     <result column="suitable_age" jdbcType="VARCHAR" property="suitableAge" />
     <result column="catalog" jdbcType="INTEGER" property="catalog" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,7 +74,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, location, created, updated, deleted, school_id, status, author, suitable_age, 
-    catalog
+    catalog, name
   </sql>
   <select id="selectByExample" parameterType="cn.didano.base.model.Tb_interactive_modelExample" resultMap="BaseResultMap">
     select
@@ -112,12 +113,12 @@
     </selectKey>
     insert into tb_interactive_model (location, created, updated, 
       deleted, school_id, status, 
-      author, suitable_age, catalog
-      )
+      author, suitable_age, catalog, 
+      name)
     values (#{location,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
       #{deleted,jdbcType=BIT}, #{schoolId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
-      #{author,jdbcType=VARCHAR}, #{suitableAge,jdbcType=VARCHAR}, #{catalog,jdbcType=INTEGER}
-      )
+      #{author,jdbcType=VARCHAR}, #{suitableAge,jdbcType=VARCHAR}, #{catalog,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.didano.base.model.Tb_interactive_model">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -152,6 +153,9 @@
       <if test="catalog != null">
         catalog,
       </if>
+      <if test="name != null">
+        name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="location != null">
@@ -180,6 +184,9 @@
       </if>
       <if test="catalog != null">
         #{catalog,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -222,6 +229,9 @@
       <if test="record.catalog != null">
         catalog = #{record.catalog,jdbcType=INTEGER},
       </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -238,7 +248,8 @@
       status = #{record.status,jdbcType=TINYINT},
       author = #{record.author,jdbcType=VARCHAR},
       suitable_age = #{record.suitableAge,jdbcType=VARCHAR},
-      catalog = #{record.catalog,jdbcType=INTEGER}
+      catalog = #{record.catalog,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -273,6 +284,9 @@
       <if test="catalog != null">
         catalog = #{catalog,jdbcType=INTEGER},
       </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -286,7 +300,8 @@
       status = #{status,jdbcType=TINYINT},
       author = #{author,jdbcType=VARCHAR},
       suitable_age = #{suitableAge,jdbcType=VARCHAR},
-      catalog = #{catalog,jdbcType=INTEGER}
+      catalog = #{catalog,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

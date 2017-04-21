@@ -7,6 +7,7 @@ public class Tb_interactive_catalog {
 
     private String name;
 
+   
     private Integer parentId;
 
     private Date created;

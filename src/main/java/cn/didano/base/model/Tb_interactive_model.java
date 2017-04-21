@@ -24,7 +24,8 @@ public class Tb_interactive_model {
     private Integer catalog;
 
     private String catalogName;
-    
+    private String name;
+
     public String getCatalogName() {
 		return catalogName;
 	}
@@ -111,5 +112,13 @@ public class Tb_interactive_model {
 
     public void setCatalog(Integer catalog) {
         this.catalog = catalog;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 }

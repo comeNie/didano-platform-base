@@ -116,7 +116,7 @@ public class FileUploadController {
 			interactive_model.setAuthor(author);
 			interactive_model.setCreated(new Date());
 			interactive_model.setCatalog(interactive_catalog.getId());
-			;
+			interactive_model.setName(name);
 			interactive_model.setLocation(location);
 			interactive_model.setSchoolId(school_id);
 			interactive_model.setStatus((byte) 1);

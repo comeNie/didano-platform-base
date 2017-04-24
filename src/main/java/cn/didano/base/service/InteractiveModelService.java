@@ -14,6 +14,7 @@ import cn.didano.base.model.Tb_interactive_catalog;
 import cn.didano.base.model.Tb_interactive_catalogExample;
 import cn.didano.base.model.Tb_interactive_model;
 import cn.didano.base.model.Tb_interactive_modelExample;
+import cn.didano.base.model.Tb_staff;
 
 @Service
 public class InteractiveModelService {
@@ -23,6 +24,26 @@ public class InteractiveModelService {
 	@Autowired
 	private Tb_interactive_catalogMapper catalogMapper;
 	
+	/**
+	 * 删除种类
+	 */
+	public int deleteCatalog(Integer id){
+		 Tb_interactive_model model=modelMapper.selectByPrimaryKey(id);
+       Tb_interactive_catalog catalog=catalogMapper.selectByPrimaryKey(model.getCatalog());
+         catalog.setDeleted(true);
+		 Tb_interactive_catalog catalogParent = catalogMapper.selectByPrimaryKey(catalog.getParentId());
+		 catalogParent.setDeleted(true);
+		 
+		return catalogMapper.updateByPrimaryKeySelective(catalogParent)+catalogMapper.updateByPrimaryKeySelective(catalog);
+	}
+	/**
+	 * 删除模板
+	 */
+	public int deleteModel(Integer id){
+		 Tb_interactive_model model=modelMapper.selectByPrimaryKey(id);
+		model.setDeleted(true);
+		return modelMapper.updateByPrimaryKeySelective(model);
+	}
 	/**
 	 * 查找种类
 	 */

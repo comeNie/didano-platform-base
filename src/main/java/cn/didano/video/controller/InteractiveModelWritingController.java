@@ -62,6 +62,34 @@ public class InteractiveModelWritingController {
      private StorageService storageService;
      
 
+     /**
+ 	 * 
+ 	 * 删除模板
+ 	 * 
+ 	 * @param id
+ 	 * @return
+ 	 */
+ 	@PostMapping(value = "deleteModel/{id}")
+ 	@ApiOperation(value = "删除员工", notes = "删除员工")
+ 	@ResponseBody
+ 	public Out<String> deleteModel(@PathVariable("id") Integer id) {
+ 		logger.info("访问  InteractiveModelWritingController:deleteModel,id=" + id);
+ 		Out<String> back = new Out<String>();
+ 		try {
+ 			int rowNum =interactiveService.deleteModel(id);
+ 			interactiveService.deleteCatalog(id);
+ 			if (rowNum > 0) {
+ 				back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "rowNum=" + rowNum);
+ 			} else {
+ 				back.setBackTypeWithLog(BackType.FAIL_UPDATE_NORMAL, "rowNum=" + rowNum);
+ 			}
+ 		} catch (ServiceException e) {
+ 			logger.warn(e.getMessage());
+ 			back.setServiceExceptionWithLog(e.getExceptionEnums());
+ 		}
+ 		return back;
+ 	}
+
      
 
 	/**

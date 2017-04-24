@@ -189,15 +189,23 @@ input,.btn{
     padding: 6px;
     text-align: center;
 }
-.removeBtn{
+.removeBtn,.removeDiv{
 	position: absolute; 
-	top: 0; 
-	right: 0; 
-	z-index: 11; 
 	border: 0px; 
-	border-radius: 20px; 
+	border-radius: 20px !important; 
 	background: #9AC0CD; 
 	width: 20px; 
 	height: 20px; 
 	color: white;
+}
+.removeBtn{
+	top: 0; 
+	right: 0; 
+	z-index: 11; 
+}
+.removeDiv{
+	top: 7.5px;
+	right: 15px;
+	text-align: center;
+	line-height: 20px;
 }

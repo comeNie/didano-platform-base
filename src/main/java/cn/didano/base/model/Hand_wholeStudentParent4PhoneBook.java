@@ -26,7 +26,17 @@ public class Hand_wholeStudentParent4PhoneBook {
 	private String student_ic_number;
 	private Integer parentIcCardId;
 	private Integer StudentIcCardId;
+	private Integer is_use;
 	
+	
+	public Integer getIs_use() {
+		return is_use;
+	}
+
+	public void setIs_use(Integer is_use) {
+		this.is_use = is_use;
+	}
+
 	public Integer getParentIcCardId() {
 		return parentIcCardId;
 	}

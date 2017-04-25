@@ -42,10 +42,17 @@ public class Hand_WholeStudentParents4PhoneBook {
 	private byte gender;
 	private String student_ic_number; 
 	private Integer icCardId;
+	private Integer is_use;
 	
 	private List<Hand_parent4mailList> parent = new ArrayList<Hand_parent4mailList>();
 	
 	
+	public Integer getIs_use() {
+		return is_use;
+	}
+	public void setIs_use(Integer is_use) {
+		this.is_use = is_use;
+	}
 	public Integer getIcCardId() {
 		return icCardId;
 	}

@@ -3,7 +3,7 @@
 <mapper namespace="cn.didano.base.dao.Hand_MailList_listMapper">
 <!-- 需要修改rfid -->
 <select id="findByTeacher" parameterType="Integer" resultType="cn.didano.base.model.Hand_WholeStudentParents4PhoneBook">
-select tmp6.id,tmp6.classId,v.is_use,tmp6.icCardId,tmp6.school_id,tmp6.name,tmp6.gender,tmp6.birthday,tmp6.device_registered,tmp6.status,tmp6.rfid,tmp6.ic_card_id,tmp6.ic_number,tmp6.student_ic_number,tmp6.staff_ic_number from (select tmp3.class_id as classId,tmp3.ic_card_id as icCardId,tmp3.*,tmp3.ic_number as student_ic_number,tmp4.ic_number as staff_ic_number from (select tmp1.*,tmp2.ic_number from 
+select tmp6.id,tmp6.classId,v.id as switchId,v.is_use,tmp6.icCardId,tmp6.school_id,tmp6.name,tmp6.gender,tmp6.birthday,tmp6.device_registered,tmp6.status,tmp6.rfid,tmp6.ic_card_id,tmp6.ic_number,tmp6.student_ic_number,tmp6.staff_ic_number from (select tmp3.class_id as classId,tmp3.ic_card_id as icCardId,tmp3.*,tmp3.ic_number as student_ic_number,tmp4.ic_number as staff_ic_number from (select tmp1.*,tmp2.ic_number from 
 	(SELECT a.* FROM tb_student a,tb_staff_class b WHERE b.staff_id=#{id} AND a.class_id=b.class_id  AND a.deleted =0 AND b.deleted=0 ORDER BY CONVERT( a.name USING gbk))tmp1 left join tb_ic_card tmp2 on tmp1.rfid=tmp2.rfid) tmp3 
 	left join 
 	(select card.ic_number,tmp5.class_id from (select staff.rfid,sc.class_id from tb_staff staff,tb_staff_class sc where staff.id=sc.staff_id and staff.deleted=0 and sc.staff_id=#{id}) tmp5 left join tb_ic_card card on tmp5.rfid=card.rfid) tmp4 
@@ -44,7 +44,7 @@ on tmp3.class_id=tmp4.class_id) as tmp6 left join `vd_auth_switch` v on tmp6.id=
    SELECT class_id  as classId FROM tb_staff_class WHERE staff_id = #{id}
 </select> 
  <select id="findByName"  parameterType="cn.didano.base.model.Tb_studentData" resultType="cn.didano.base.model.Hand_WholeStudentParents4PhoneBook">
-	select tmp3.id,tmp3.classId,tmp3.name,tmp3.gender,tmp3.birthday,tmp3.student_ic_number,tmp3.icCardId,v.`is_use` from (select tmp1.id,tmp1.class_id as classId,tmp1.name,tmp1.gender,tmp1.birthday,tmp2.ic_number as 
+	select tmp3.id,v.id as switchId,tmp3.classId,tmp3.name,tmp3.gender,tmp3.birthday,tmp3.student_ic_number,tmp3.icCardId,v.`is_use` from (select tmp1.id,tmp1.class_id as classId,tmp1.name,tmp1.gender,tmp1.birthday,tmp2.ic_number as 
 	student_ic_number,tmp1.ic_card_id as icCardId from
 	tb_student tmp1
 	left join tb_ic_card tmp2
@@ -57,7 +57,7 @@ on tmp3.class_id=tmp4.class_id) as tmp6 left join `vd_auth_switch` v on tmp6.id=
   <!--  select * from tb_student where name like #{name} and class_id=#{schoolid} and deleted=0 ORDER BY CONVERT( NAME USING gbk ) -->
   <!-- select tmp1.id,tmp1.class_id,tmp1.name,tmp1.gender,tmp1.birthday,tmp2.rfid from tb_student tmp1 left join tb_ic_card tmp2 on tmp1.rfid=tmp2.rfid where tmp1.name like #{name} and tmp1.class_id=#{schoolid} and tmp1.deleted=0 ORDER BY CONVERT( NAME USING gbk ) 
  --> 
-select tmp3.id,v.is_use,tmp3.classId,tmp3.name,tmp3.gender,tmp3.birthday,tmp3.student_ic_number,tmp3.icCardId from 
+select tmp3.id,v.id as switchId,v.is_use,tmp3.classId,tmp3.name,tmp3.gender,tmp3.birthday,tmp3.student_ic_number,tmp3.icCardId from 
 (select tmp1.id,tmp1.class_id  as classId,tmp1.name,tmp1.gender,tmp1.birthday,tmp2.ic_number as student_ic_number,tmp1.ic_card_id as icCardId 
 from tb_student tmp1 left join tb_ic_card tmp2 on tmp1.rfid=tmp2.rfid 
 where tmp1.name like #{name} and tmp1.class_id=#{schoolid} and tmp1.deleted=0 ORDER BY CONVERT( NAME USING gbk ) )as tmp3 left join `vd_auth_switch` v on tmp3.id=v.owner_id
@@ -82,9 +82,10 @@ where tmp1.name like #{name} and tmp1.class_id=#{schoolid} and tmp1.deleted=0 OR
 		tmp1.ic_card_id as studentIcCardId,
 		tmp2.ic_number as parent_ic_number,
 		tmp2.ic_card_id as parentIcCardId,
-		tmp1.is_use 
+		tmp1.is_use ,
+		tmp1.switchId
 		from (
-		select tmpIn.*,b.title,c.ic_number from (select tmpIn2.* from (select a.*,vd.is_use from tb_student a left join vd_auth_switch vd on a.id=vd.owner_id where  a.school_id =#{id} AND a.deleted = 0) as tmpIn2 ORDER BY
+		select tmpIn.*,b.title,c.ic_number from (select tmpIn2.* from (select a.*,vd.is_use,vd.id as switchId from tb_student a left join vd_auth_switch vd on a.id=vd.owner_id where  a.school_id =#{id} AND a.deleted = 0) as tmpIn2 ORDER BY
 		CONVERT (tmpIn2. NAME USING gbk)) as tmpIn
 		left join tb_class b on tmpIn.class_id = b.id
 		left join tb_ic_card c on c.rfid=tmpIn.rfid

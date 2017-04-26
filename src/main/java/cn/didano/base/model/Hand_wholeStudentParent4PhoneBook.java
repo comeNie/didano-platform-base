@@ -27,8 +27,18 @@ public class Hand_wholeStudentParent4PhoneBook {
 	private Integer parentIcCardId;
 	private Integer StudentIcCardId;
 	private Integer is_use;
+	private Integer switchId;
 	
 	
+	
+	public Integer getSwitchId() {
+		return switchId;
+	}
+
+	public void setSwitchId(Integer switchId) {
+		this.switchId = switchId;
+	}
+
 	public Integer getIs_use() {
 		return is_use;
 	}

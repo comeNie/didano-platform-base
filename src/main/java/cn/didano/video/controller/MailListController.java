@@ -668,6 +668,7 @@ public class MailListController {
 				hand_WholeStudentParents.setIcCardId(one.getStudentIcCardId());
 				//返回视频状态
 				hand_WholeStudentParents.setIs_use(one.getIs_use());
+				hand_WholeStudentParents.setSwitchId(one.getSwitchId());
 				if (map.containsKey(one.getClassId())) {
 					map.get(one.getClassId()).add(hand_WholeStudentParents);
 				} else {

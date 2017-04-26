@@ -17,7 +17,7 @@
 		$(function(){
 			$.ajax({
                 type: "POST",
-                url:"http://192.168.0.102:8080/base/interactive/post/findAllModel",
+                url:server_url+"/base/interactive/post/findAllModel",
                 dataType: "json",
                 success: function(rs){
                 	if(rs.success){
@@ -134,7 +134,7 @@
                 var issuesId = $(obj).attr('id').split('_')[1];
                 $.ajax({
                     type: "POST",
-                    url:"http://192.168.0.102:8080/base/interactive/post/deleteModel/"+issuesId,
+                    url:server_url+"/base/interactive/post/deleteModel/"+issuesId,
                     dataType: "json",
                     success: function(rs){
                         if(rs.success){

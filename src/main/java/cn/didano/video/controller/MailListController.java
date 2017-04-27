@@ -1244,7 +1244,7 @@ public class MailListController {
 								respContent = EntityUtils.toString(he, "UTF-8");
 							}
 							logger.info("respContent=" + respContent);
-						} else {// 编辑家长
+						}else {// 编辑家长
 							Hand_parent4mailList p = mailListService.findParentByPid(add.getId());
 							// 家长信息中选择其他的时候
 							if (add.getRelation_id() != 99) {

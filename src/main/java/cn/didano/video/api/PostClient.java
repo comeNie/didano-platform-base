@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.didano.base.model.Hand_staff4PhoneBook;
+import cn.didano.base.model.Tb_staff;
+import cn.didano.base.model.Tb_staffData;
 import cn.didano.base.model.Vd_auth_time_control;
 import cn.didano.base.model.Vd_channel;
 import cn.didano.base.model.Vd_channelExample;
@@ -20,11 +23,13 @@ import cn.didano.base.model.View_staff_channel;
 import cn.didano.base.model.View_student_channel;
 import cn.didano.base.service.AuthTimeControlService;
 import cn.didano.base.service.ChannelService;
+import cn.didano.base.service.MailListService;
 import cn.didano.base.service.StaffService;
 import cn.didano.base.service.ViewChannelService;
 import cn.didano.video.auth.channel.ChannelStatus;
 import cn.didano.video.constant.BackType;
 import cn.didano.video.constant.DeletedType;
+import cn.didano.video.constant.StaffType;
 import cn.didano.video.json.In_Channel_Status;
 import cn.didano.video.json.In_Channel_Status_All;
 import cn.didano.video.json.Out;
@@ -57,6 +62,11 @@ public class PostClient {
 	private AuthTimeControlService controlService;
 	@Autowired
 	private WebsocketService websocketService;
+	
+	@Autowired
+	private MailListService mailListService;
+	
+	
 	
 	@PostMapping(value = "channel_get_by_student/{studentId}")
 	@ApiOperation(value="按学生获取视频频道集合", notes = "按学生获取视频频道集合")
@@ -105,34 +115,71 @@ public class PostClient {
 	public Out<OutList<Out_View_staff_channel>> channel_get_by_staff(@ApiParam(value = "老师ID", required = true)@PathVariable("staffId") int staffId) {
 		logger.info("访问  PostClient:channel_get_by_staff staffId="+staffId);
 		Out<OutList<Out_View_staff_channel>> back = new Out<OutList<Out_View_staff_channel>>();
-		List<View_staff_channel> lists = viewChannelService.selectVideosByStaff(staffId);
+		Tb_staff staff4SchoolId = staffService.findById(staffId);
 		List<Out_View_staff_channel> mylists = new ArrayList<Out_View_staff_channel>();
 		try{
-			//channel 循环
-			for (View_staff_channel view_staff_channel : lists) {
-				Out_View_staff_channel out_View_staff_channel = new Out_View_staff_channel();
-				BeanUtils.copyProperties(out_View_staff_channel, view_staff_channel);
-				int channelId = view_staff_channel.getChannelId();
-				List<Vd_auth_time_control> few= controlService.selectByChannelId(channelId);
-				boolean isOn = false;
-				boolean isOneTrue = false;
-				//循环判断当前时间是不是处在某个开放时间段中
-				for (Vd_auth_time_control vd_auth_time_control : few) {
-					if(!isOn){//如果还不true,判断下一个
-						isOneTrue = TimeUtil.inRange(vd_auth_time_control.getStart(),vd_auth_time_control.getEnd()); 
-						if(isOneTrue){
-							isOn = true;
+			//判断是不是园长进行登录
+			if (staff4SchoolId.getType() == StaffType.SCHOOLMASTER.getIndex()) {
+				//channel 循环
+				List<View_staff_channel> lists = viewChannelService.selectVideosByStaff(staffId);
+				for (View_staff_channel view_staff_channel : lists) {
+					Out_View_staff_channel out_View_staff_channel = new Out_View_staff_channel();
+					BeanUtils.copyProperties(out_View_staff_channel, view_staff_channel);
+					int channelId = view_staff_channel.getChannelId();
+					List<Vd_auth_time_control> few= controlService.selectByChannelId(channelId);
+					boolean isOn = false;
+					boolean isOneTrue = false;
+					//循环判断当前时间是不是处在某个开放时间段中
+					for (Vd_auth_time_control vd_auth_time_control : few) {
+						if(!isOn){//如果还不true,判断下一个
+							isOneTrue = TimeUtil.inRange(vd_auth_time_control.getStart(),vd_auth_time_control.getEnd()); 
+							if(isOneTrue){
+								isOn = true;
+							}
 						}
+						out_View_staff_channel.getStart_ends().add(vd_auth_time_control.getStart()+"-"+vd_auth_time_control.getEnd());
 					}
-					out_View_staff_channel.getStart_ends().add(vd_auth_time_control.getStart()+"-"+vd_auth_time_control.getEnd());
+						//设置时间控制状态
+						out_View_staff_channel.setOn(isOn);
+						mylists.add(out_View_staff_channel);
+					}
+					OutList<Out_View_staff_channel> outlist = new OutList<Out_View_staff_channel>(mylists.size(),mylists);
+					back.setBackTypeWithLog(outlist, BackType.SUCCESS);
+				}else{
+					// 为了得到班级id
+					Hand_staff4PhoneBook staff4ClassId = mailListService.findbystaffbyid(staffId);
+					System.err.println(staff4ClassId.getClassId());
+					//channel 循环
+					Tb_staffData t=new Tb_staffData();
+					t.setClassId(staff4ClassId.getClassId());
+					t.setId(staffId);
+					t.setSchoolId(staff4ClassId.getSchoolId());
+					List<View_staff_channel> lists = viewChannelService.selectAllView_channel_info_staff(t);
+					for (View_staff_channel view_staff_channel : lists) {
+						Out_View_staff_channel out_View_staff_channel = new Out_View_staff_channel();
+						BeanUtils.copyProperties(out_View_staff_channel, view_staff_channel);
+						int channelId = view_staff_channel.getChannelId();
+						List<Vd_auth_time_control> few= controlService.selectByChannelId(channelId);
+						boolean isOn = false;
+						boolean isOneTrue = false;
+						//循环判断当前时间是不是处在某个开放时间段中
+						for (Vd_auth_time_control vd_auth_time_control : few) {
+							if(!isOn){//如果还不true,判断下一个
+								isOneTrue = TimeUtil.inRange(vd_auth_time_control.getStart(),vd_auth_time_control.getEnd()); 
+								if(isOneTrue){
+									isOn = true;
+								}
+							}
+							out_View_staff_channel.getStart_ends().add(vd_auth_time_control.getStart()+"-"+vd_auth_time_control.getEnd());
+						}
+						//设置时间控制状态
+						out_View_staff_channel.setOn(isOn);
+						mylists.add(out_View_staff_channel);
+					}
+					OutList<Out_View_staff_channel> outlist = new OutList<Out_View_staff_channel>(mylists.size(),mylists);
+					back.setBackTypeWithLog(outlist, BackType.SUCCESS);
 				}
-				//设置时间控制状态
-				out_View_staff_channel.setOn(isOn);
-				mylists.add(out_View_staff_channel);
-			}
-			OutList<Out_View_staff_channel> outlist = new OutList<Out_View_staff_channel>(mylists.size(),mylists);
-			back.setBackTypeWithLog(outlist, BackType.SUCCESS);
-		}catch(Exception e){
+			}catch(Exception e){
 			logger.error(e.getMessage());
 			back.setBackTypeWithLog(BackType.FAIL_SEARCH_NORMAL,e.getMessage());
 		}

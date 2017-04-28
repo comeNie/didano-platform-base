@@ -12,6 +12,7 @@ import cn.didano.base.model.Tb_deleteParentDate;
 import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_staffData;
 import cn.didano.base.model.Tb_student;
+import cn.didano.base.model.Tb_student4List;
 import cn.didano.base.model.Tb_studentData;
 
 public interface Hand_MailList_listMapper {
@@ -29,7 +30,7 @@ public interface Hand_MailList_listMapper {
 	List<Hand_wholeStudentParent4PhoneBook> findWholeStudentParentsByschool(Integer id);
 	
 	//杨 添加根据学生的ic_number进行查询
-	Tb_student findStudentByIcNumber(Tb_student tb_student);
+	Tb_student4List findStudentByIcNumber(Tb_student tb_student);
 	Hand_wholeStudent4PhoneBook findParentByIcNumber(Tb_student tb_student);
 	Hand_staff4PhoneBook selectSchoolBystaffId(Integer id);
 	

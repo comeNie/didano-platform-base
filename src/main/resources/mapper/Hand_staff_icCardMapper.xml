@@ -67,7 +67,7 @@
   </select>
   
     <select id="selectInfoByic_number" parameterType="cn.didano.base.model.Tb_staff" resultMap="BaseResultMap">
-  	select MAX(id),a.* from tb_staff a where rfid=#{rfid} and deleted=0 
+  	select MAX(a.id),a.name,b.title as phone from tb_staff a  left join tb_school b on a.school_id = b.id where a.rfid=#{rfid} and a.deleted=0
     <if test="id != null">
         <![CDATA[and a.id <> #{id}]]>
       </if>

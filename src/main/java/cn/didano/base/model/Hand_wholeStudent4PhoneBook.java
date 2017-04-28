@@ -1,10 +1,8 @@
 package cn.didano.base.model;
 
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 过度组装需要 单个学生信息，不包含家长信息
@@ -25,7 +23,27 @@ public class Hand_wholeStudent4PhoneBook {
 	private Integer StudentIcCardId;
 	private Integer is_use;
 	private Integer switchId;
+	//学校名称
+	private String schoolTitlel;
+	//班级名称
+	private String classTitle;
 	
+	public String getSchoolTitlel() {
+		return schoolTitlel;
+	}
+
+	public void setSchoolTitlel(String schoolTitlel) {
+		this.schoolTitlel = schoolTitlel;
+	}
+
+	public String getClassTitle() {
+		return classTitle;
+	}
+
+	public void setClassTitle(String classTitle) {
+		this.classTitle = classTitle;
+	}
+
 	public Integer getSwitchId() {
 		return switchId;
 	}

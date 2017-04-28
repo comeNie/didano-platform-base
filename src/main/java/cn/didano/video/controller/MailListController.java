@@ -31,27 +31,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.didano.base.exception.ServiceException;
+import cn.didano.base.model.Hand_WholeStudentParents4PhoneBook;
 import cn.didano.base.model.Hand_ic_type;
 import cn.didano.base.model.Hand_parent4mailList;
 import cn.didano.base.model.Hand_staff4PhoneBook;
-import cn.didano.base.model.Hand_wholeStudentParent4PhoneBook;
+import cn.didano.base.model.Hand_staffTransit4PhoneBook;
+import cn.didano.base.model.Hand_student4MailListHasParents;
 import cn.didano.base.model.Hand_wholeStudent4PhoneBook;
+import cn.didano.base.model.Hand_wholeStudentParent4PhoneBook;
 import cn.didano.base.model.Tb_bossData;
 import cn.didano.base.model.Tb_class;
 import cn.didano.base.model.Tb_classStudent;
 import cn.didano.base.model.Tb_deleteParentDate;
 import cn.didano.base.model.Tb_ic_card;
-import cn.didano.base.model.Hand_WholeStudentParents4PhoneBook;
-import cn.didano.base.model.Hand_student4MailListHasParents;
 import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_schoolparent4;
 import cn.didano.base.model.Tb_sign_type;
 import cn.didano.base.model.Tb_staff;
-import cn.didano.base.model.Hand_staffTransit4PhoneBook;
-import cn.didano.base.model.Hand_staff4PhoneBook;
 import cn.didano.base.model.Tb_staffData;
 import cn.didano.base.model.Tb_staff_class;
 import cn.didano.base.model.Tb_student;
+import cn.didano.base.model.Tb_student4List;
 import cn.didano.base.model.Tb_studentData;
 import cn.didano.base.model.Tb_studentparent;
 import cn.didano.base.model.Tb_teacherAndStudent;
@@ -1311,7 +1311,7 @@ public class MailListController {
 		Out<String> back = new Out<String>();
 		Tb_ic_card tb_ic_card = null;
 		Tb_student tb_student = new Tb_student();
-		Tb_student findStudentByIcNumber = null;
+		Tb_student4List findStudentByIcNumber = null;
 		Hand_wholeStudent4PhoneBook findParentByIcNumber = null;
 		Hand_staffTransit4PhoneBook selectInfoByic_number = null;
 		Tb_staff tb_staff = new Tb_staff();
@@ -1324,7 +1324,11 @@ public class MailListController {
 				}else{
 					a=2;
 				}
+				System.err.println(hand_id_type.getIc_number());
+				System.err.println(s1.getSchoolId());
+				System.err.println(a);
 				tb_ic_card = iCCardService.selectIcByNumber(hand_id_type.getIc_number(), s1.getSchoolId(),a);
+				System.err.println("123");
 			}
 			// 判断是学生还是家长
 			if (tb_ic_card != null) {
@@ -1347,15 +1351,15 @@ public class MailListController {
 				if (findStudentByIcNumber != null) {
 					// 学生返回信息
 					back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD, "已经被绑定",
-							hand_id_type.getIc_number() + "，已经被学生‘" + findStudentByIcNumber.getName() + "’绑定");
+							hand_id_type.getIc_number() + "，已经被"+findStudentByIcNumber.getSchoolTitle()+","+findStudentByIcNumber.getClassTitle()+"的学生‘" + findStudentByIcNumber.getName() + "’绑定");
 				} else if (findParentByIcNumber != null) {
 					// 家长返回返回的信息
 					back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD, "已经被绑定",
-							hand_id_type.getIc_number() + "，已经被‘" + findParentByIcNumber.getName() + "的"
+							hand_id_type.getIc_number() + "，已经被"+findParentByIcNumber.getSchoolTitlel()+","+findParentByIcNumber.getClassTitle()+"‘" + findParentByIcNumber.getName() + "小朋友的"
 									+ findParentByIcNumber.getTitle() + "’绑定");
 				} else if (selectInfoByic_number != null) {
 					back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD, "已经被绑定",
-							hand_id_type.getIc_number() + "，已经被教职工‘" + selectInfoByic_number.getName() + "’绑定");
+							hand_id_type.getIc_number() + "，已经被"+selectInfoByic_number.getPhone()+"的教职工‘" + selectInfoByic_number.getName() + "’绑定");
 				} else {
 					back.setBackType(BackType.SUCCESS, "可以进行绑定");
 				}

@@ -13,13 +13,11 @@ on tmp3.class_id=tmp4.class_id) as tmp6 left join `vd_auth_switch` v on tmp6.id=
  
  
  <!-- yang  学生的查询 和家长-->
-<select id="findStudentByIcNumber" parameterType="cn.didano.base.model.Tb_student" resultType="cn.didano.base.model.Tb_student">
-
-   SELECT MAX(id),a.* FROM tb_student a where a.rfid=#{rfid} and a.deleted=0 
+<select id="findStudentByIcNumber" parameterType="cn.didano.base.model.Tb_student" resultType="cn.didano.base.model.Tb_student4List">
+   SELECT MAX(a.id),a.*,b.title as schoolTitle,c.title as classTitle FROM tb_student a left join tb_school b on a.school_id=b.id left join tb_class c on a.class_id=c.id where a.rfid=#{rfid} and a.deleted=0 
       <if test="id != null">
         <![CDATA[and a.id <> #{id}]]>
       </if>
-   
 </select>
 
 <select id="selectSchoolBystaffId" parameterType="Integer" resultType="cn.didano.base.model.Hand_staff4PhoneBook">
@@ -27,7 +25,9 @@ on tmp3.class_id=tmp4.class_id) as tmp6 left join `vd_auth_switch` v on tmp6.id=
 </select>
 
 <select id="findParentByIcNumber" parameterType="cn.didano.base.model.Tb_student" resultType="cn.didano.base.model.Hand_wholeStudent4PhoneBook">
-   select Max(a.id),a.relation_title as title,b.name from tb_student_parent a,tb_student b where a.rfid=#{rfid} and b.id=a.student_id and a.deleted=0 
+ select tmp1.title,tmp1.name,tmp2.title as schoolTitle,tmp3.title as classTitle from 
+ (select Max(a.id),a.relation_title as title,b.name,b.school_id,b.class_id from tb_student_parent a,tb_student b where a.rfid=#{rfid} and b.id=a.student_id and a.deleted=0) 
+ tmp1 left join tb_school tmp2 on tmp1.school_id=tmp2.id left join tb_class tmp3 on tmp1.class_id=tmp3.id 
       <if test="id != null">
         <![CDATA[and a.id <> #{id}]]>
       </if>

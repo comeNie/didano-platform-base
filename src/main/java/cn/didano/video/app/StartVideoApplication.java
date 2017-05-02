@@ -47,11 +47,5 @@ public class StartVideoApplication {
         logger.info("StartVideoApplication Started.............................");
 	}
 	
-	@Bean
-	CommandLineRunner init(StorageService storageService) {
-		return (args) -> {
-            storageService.deleteAll();
-            storageService.init();
-		};
-	}
+	
 }

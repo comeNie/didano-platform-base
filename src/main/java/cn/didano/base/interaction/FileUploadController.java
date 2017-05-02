@@ -3,6 +3,8 @@ package cn.didano.base.interaction;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -41,6 +43,8 @@ public class FileUploadController {
 	private InteractiveModelService interactiveService;
 
 	@Autowired
+	private Interactive info;
+	@Autowired
 	public FileUploadController(StorageService storageService) {
 		this.storageService = storageService;
 	}
@@ -59,12 +63,14 @@ public class FileUploadController {
 			@RequestParam("author") String author, @RequestParam("school_id") int school_id,
 			RedirectAttributes redirectAttributes) {
 
-		storageService.deleteAll();
-		storageService.init();
+		Path rootlocation = Paths.get(info.getLinuxPicAddress());
+		storageService.deleteAll(rootlocation);
+		storageService.init(rootlocation);
+		String pic="pic";
 		for (int i = 0; i < files.size(); i++) {
 			// Optional.ofNullable(files.get(i)).map(files.get(i)::getName).orElse("no
 			// name");
-			storageService.store(files.get(i), i + 1);
+			storageService.store(files.get(i),pic+(i+1),rootlocation);
 			redirectAttributes.addFlashAttribute("message",
 					"You successfully uploaded " + files.get(i).getOriginalFilename() + "!");
 		}

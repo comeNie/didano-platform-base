@@ -9,9 +9,15 @@ public class Interactive {
 
 	private String interactivePath;
 	
+	private String WeiXinAddress="/weixin-logo";
 	private String PicAddress="/upload-dir";
 	private String XmlAddress="/create-Xml/InteractiveModel.xml";
 	private String ZipAddress="/create-Zip/";
+	
+
+	public String getWeiXinAddress() {
+		return interactivePath+WeiXinAddress;
+	}
 	
 	public String getInteractivePath() {
 		return interactivePath;

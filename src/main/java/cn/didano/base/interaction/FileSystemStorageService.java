@@ -23,26 +23,21 @@ import cn.didano.video.entity.Interactive;
 public class FileSystemStorageService implements StorageService {
 	static Logger logger = Logger.getLogger(FileSystemStorageService.class);
 	
-	private final Path rootLocation;
 
-	@Autowired
-	public FileSystemStorageService(StorageProperties properties) {
-		this.rootLocation = Paths.get(properties.getLocation());
-	}
 	@Autowired
 	private Interactive interactive;
 
 	@Override
-	public void store(MultipartFile file, int i) {
+	public void store(MultipartFile file, String name,Path rootLocation) {
 
 		try {
 			if (file.isEmpty()) {
 				logger.warn("Failed to store empty file ,file.getOriginalFilename()=" + file.getOriginalFilename());
 				//throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
 			} else {
-				System.err.println(file.getName());
+				
 				Files.copy(file.getInputStream(),
-						this.rootLocation.resolve("pic" + i + "." + file.getOriginalFilename().split("\\.")[1]));
+						rootLocation.resolve(name  + "." + file.getOriginalFilename().split("\\.")[1]));
 			}
 
 		} catch (IOException e) {
@@ -50,45 +45,19 @@ public class FileSystemStorageService implements StorageService {
 		}
 	}
 
-	@Override
-	public Stream<Path> loadAll() {
-		try {
-			return Files.walk(this.rootLocation, 1).filter(path -> !path.equals(this.rootLocation))
-					.map(path -> this.rootLocation.relativize(path));
-		} catch (IOException e) {
-			throw new StorageException("Failed to read stored files", e);
-		}
+	
 
-	}
+	
+
+	
 
 	@Override
-	public Path load(String filename) {
-		return rootLocation.resolve(filename);
-	}
-
-	@Override
-	public Resource loadAsResource(String filename) {
-		try {
-			Path file = load(filename);
-			Resource resource = new UrlResource(file.toUri());
-			if (resource.exists() || resource.isReadable()) {
-				return resource;
-			} else {
-				throw new StorageFileNotFoundException("Could not read file: " + filename);
-
-			}
-		} catch (MalformedURLException e) {
-			throw new StorageFileNotFoundException("Could not read file: " + filename, e);
-		}
-	}
-
-	@Override
-	public void deleteAll() {
+	public void deleteAll(Path rootLocation) {
 		FileSystemUtils.deleteRecursively(rootLocation.toFile());
 	}
 
 	@Override
-	public void init() {
+	public void init(Path rootLocation) {
 		try {
 			if (!Files.exists(rootLocation, new LinkOption[] { LinkOption.NOFOLLOW_LINKS })) {
 				Files.createDirectory(rootLocation);
@@ -105,6 +74,10 @@ public class FileSystemStorageService implements StorageService {
 		    }
 		    File fileZip = new File(interactive.getLinuxZipAddress());
 		    if(!fileZip.exists()){
+		    	throw new StorageFileNotFoundException("Could not read file: " + interactive.getLinuxZipAddress());
+		    }
+		    File fileWx = new File(interactive.getWeiXinAddress());
+		    if(!fileWx.exists()){
 		    	throw new StorageFileNotFoundException("Could not read file: " + interactive.getLinuxZipAddress());
 		    }
 		} catch (IOException e) {

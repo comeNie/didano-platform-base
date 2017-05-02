@@ -58,8 +58,7 @@ public class InteractiveModelWritingController {
 	static Logger logger = Logger.getLogger(InteractiveModelWritingController.class);
      @Autowired
      private InteractiveModelService interactiveService;
-     @Autowired
-     private StorageService storageService;
+    
      
 
      /**
@@ -70,7 +69,7 @@ public class InteractiveModelWritingController {
  	 * @return
  	 */
  	@PostMapping(value = "deleteModel/{id}")
- 	@ApiOperation(value = "删除员工", notes = "删除员工")
+ 	@ApiOperation(value = "删除模板", notes = "删除模板")
  	@ResponseBody
  	public Out<String> deleteModel(@PathVariable("id") Integer id) {
  		logger.info("访问  InteractiveModelWritingController:deleteModel,id=" + id);

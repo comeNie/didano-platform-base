@@ -8,9 +8,13 @@ package cn.didano.base.model;
  *Writer：杨朝强
  */
 public class Hand_ic_type {
+	//ic卡的number
 	public String ic_number;
+	//登录老师的id
 	public Integer staff_id;
+	//类型
 	public Integer type;
+	//去除自身的验证
 	public Integer id;
 	public Integer getId() {
 		return id;

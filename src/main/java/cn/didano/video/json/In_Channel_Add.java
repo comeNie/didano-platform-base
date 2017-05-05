@@ -23,6 +23,26 @@ public class In_Channel_Add {
 	private Integer schoolId;
 	@ApiModelProperty(value = "班级ID，ID=0表明是公共场所",required=false)
 	private Integer classId;
+	@ApiModelProperty(value = "推流地址",required=false)
+	private String ossPushUrl;
+	@ApiModelProperty(value = "播放地址",required=false)
+    private String ossPlayUrl;
+
+	public String getOssPushUrl() {
+		return ossPushUrl;
+	}
+
+	public void setOssPushUrl(String ossPushUrl) {
+		this.ossPushUrl = ossPushUrl;
+	}
+
+	public String getOssPlayUrl() {
+		return ossPlayUrl;
+	}
+
+	public void setOssPlayUrl(String ossPlayUrl) {
+		this.ossPlayUrl = ossPlayUrl;
+	}
 
 	public String getName() {
 		return name;

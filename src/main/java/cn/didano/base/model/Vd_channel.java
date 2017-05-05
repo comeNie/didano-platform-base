@@ -132,4 +132,5 @@ public class Vd_channel {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
+    
 }

@@ -26,11 +26,11 @@ on tmp3.class_id=tmp4.class_id) as tmp6 left join `vd_auth_switch` v on tmp6.id=
 
 <select id="findParentByIcNumber" parameterType="cn.didano.base.model.Tb_student" resultType="cn.didano.base.model.Hand_wholeStudent4PhoneBook">
  select tmp1.title,tmp1.name,tmp2.title as schoolTitle,tmp3.title as classTitle from 
- (select Max(a.id),a.relation_title as title,b.name,b.school_id,b.class_id from tb_student_parent a,tb_student b where a.rfid=#{rfid} and b.id=a.student_id and a.deleted=0) 
- tmp1 left join tb_school tmp2 on tmp1.school_id=tmp2.id left join tb_class tmp3 on tmp1.class_id=tmp3.id 
-      <if test="id != null">
+ (select Max(a.id),a.relation_title as title,b.name,b.school_id,b.class_id from tb_student_parent a,tb_student b where a.rfid=#{rfid} and b.id=a.student_id and a.deleted=0 
+ 	  <if test="id != null">
         <![CDATA[and a.id <> #{id}]]>
-      </if>
+      </if>) 
+ tmp1 left join tb_school tmp2 on tmp1.school_id=tmp2.id left join tb_class tmp3 on tmp1.class_id=tmp3.id 
 </select>
 
  <select id="findAll" resultType="cn.didano.base.model.Hand_WholeStudentParents4PhoneBook">
@@ -67,25 +67,35 @@ where tmp1.name like #{name} and tmp1.class_id=#{schoolid} and tmp1.deleted=0 OR
  </select>
  <select id="findWholeStudentParentsByschool" parameterType="Integer" resultType="cn.didano.base.model.Hand_wholeStudentParent4PhoneBook">
  select
-		tmp2.relation_id,
-		tmp2.parent_id,
-		tmp1.id,
-		tmp1.School_id as SchoolId,
-		tmp1.class_id as classId,
-		tmp1.title,
-		tmp1.NAME,
-		tmp1.gender,
-		tmp1.birthday,
-		tmp2.relation_title as parent_name,
-		tmp3.phone as parent_phone,
-		tmp1.ic_number as student_ic_number,
-		tmp1.ic_card_id as studentIcCardId,
-		tmp2.ic_number as parent_ic_number,
-		tmp2.ic_card_id as parentIcCardId,
-		tmp1.is_use ,
-		tmp1.switchId
+	tmp2.relation_id,
+	tmp2.parent_id,
+	tmp1.id,
+	tmp1.School_id as SchoolId,
+	tmp1.class_id as classId,
+	tmp1.title,
+	tmp1.NAME,
+	tmp1.gender,
+	tmp1.birthday,
+	tmp2.relation_title as parent_name,
+	tmp3.phone as parent_phone,
+	tmp1.ic_number as student_ic_number,
+	tmp1.ic_card_id as studentIcCardId,
+	tmp2.ic_number as parent_ic_number,
+	tmp2.ic_card_id as parentIcCardId,
+	tmp1.is_use ,
+	tmp1.switchId
 		from (
-		select tmpIn.*,b.title,c.ic_number from (select tmpIn2.* from (select a.*,vd.is_use,vd.id as switchId from tb_student a left join vd_auth_switch vd on a.id=vd.owner_id where  a.school_id =#{id} AND a.deleted = 0) as tmpIn2 ORDER BY
+		select tmpIn.*,b.title,c.ic_number from (select tmpIn2.* from
+    (select a.id,
+    a.School_id,
+    a.class_id,
+    a.rfid,
+    a.ic_card_id,
+		a.NAME,
+		a.gender,
+		a.birthday,vd.is_use,vd.id as switchId from tb_student a left join vd_auth_switch vd on a.id=vd.owner_id
+    where  a.school_id =#{id} AND a.deleted = 0)
+    as tmpIn2 ORDER BY
 		CONVERT (tmpIn2. NAME USING gbk)) as tmpIn
 		left join tb_class b on tmpIn.class_id = b.id
 		left join tb_ic_card c on c.rfid=tmpIn.rfid
@@ -95,7 +105,7 @@ where tmp1.name like #{name} and tmp1.class_id=#{schoolid} and tmp1.deleted=0 OR
 		from `tb_student_parent` d left join tb_class e on e.id=d.class_id
 		left join tb_ic_card f on f.rfid=d.rfid where d.school_id=#{id} and d.deleted=0
 		) tmp2
-		on tmp1.id=tmp2.student_id left join tb_school_parent tmp3 on tmp2.parent_id=tmp3.id  
+		on tmp1.id=tmp2.student_id left join tb_school_parent tmp3 on tmp2.parent_id=tmp3.id;  
  </select>
  <select id="findteacherByschool" parameterType="Integer" resultType="cn.didano.base.model.Hand_staff4PhoneBook">
  SELECT tmp1.status,
@@ -190,7 +200,7 @@ select * from tb_student_parent where student_id=#{id}
 	 LEFT JOIN tb_sign_type c ON (tmp1.sign_type_id =c.id) left join tb_ic_card tmp2 on tmp1.rfid=tmp2.rfid ORDER BY CONVERT( tmp1.name USING gbk )
 </select>
 <select id="findParentByPid" parameterType="Integer" resultType="cn.didano.base.model.Hand_parent4mailList">
-   SELECT * FROM tb_student_parent where id=#{id}
+   SELECT * FROM tb_student_parent where parent_id=#{id}
 </select>
 <update id="Update" parameterType="cn.didano.base.model.Hand_WholeStudentParents4PhoneBook">
   UPDATE tb_student a set 
@@ -214,11 +224,10 @@ UPDATE tb_student AS a SET a.deleted=1,ic_card_id=0,rfid=NULL WHERE a.id=#{id}
         b.ic_card_id = #{icCardId},
       </if>
       <if test="parent_ic_number != null">
-        b.rfid = #{parent_ic_number},
-      </if>
+       b.rfid = #{parent_ic_number},
+     </if>
      a.phone=#{parent_phone}, b.relation_id =#{relation_id},b.relation_title=#{parent_name} where a.id = #{id} and b.parent_id=#{id}
 </update>
-
 <update id="UpdateTeacher" parameterType="cn.didano.base.model.Hand_staff4PhoneBook">
   UPDATE TB_STAFF a,tb_staff_class b,tb_staff_signdate c SET a.type = #{type},a.name=#{name},a.phone=#{phone} ,a.deleted=#{deleted},b.class_id=#{classId},
 c.set_intime=#{in_time},c.set_outtime=#{out_time} where a.id = #{id} 

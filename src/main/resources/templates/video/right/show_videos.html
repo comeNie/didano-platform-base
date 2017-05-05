@@ -149,6 +149,8 @@ function channel_add(obj){
     var channel_enName = document.getElementById("channel_enName").value;
     var channel_classId = document.getElementById("channel_classId").value;
     var channel_des = document.getElementById("channel_des").value;
+    var ossPushUrl = document.getElementById("ossPushUrl").value;
+    var ossPlayUrl = document.getElementById("ossPlayUrl").value;
     $.ajax({
         url: server_url+"/video/rest/post/channel_add", 
         type:'post',
@@ -161,6 +163,8 @@ function channel_add(obj){
             "schoolId": SCHOOL_ID,
             "des": channel_des,
             "type": 0,
+            "ossPlayUrl": ossPlayUrl,
+            "ossPushUrl":ossPushUrl,
         }),
         success:function(data){
             if(data.success){
@@ -465,6 +469,20 @@ function deleted(obj){
 														<option value="">500/30次</option>
 														<option value="">1000/75次</option>
 													</select>
+												</p>
+											</div>
+											<div class="form-group">
+												<label>推流地址</label>
+												<p>
+													<input type="text" name="ossPushUrl" id="ossPushUrl"
+														placeholder="请输入推流地址">
+												</p>
+											</div>
+											<div class="form-group">
+												<label>播放地址</label>
+												<p>
+													<input type="text" name="ossPlayUrl" id="ossPlayUrl"
+														placeholder="请输入播放地址">
 												</p>
 											</div>
 											<div class="form-group">

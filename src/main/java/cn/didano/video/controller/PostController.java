@@ -246,18 +246,23 @@ public class PostController {
 		Vd_channel vd_channel = new Vd_channel();
 		Out<String> back = new Out<String>();
 		try {
+			System.err.println("111111111111111111111111");
 			BeanUtils.copyProperties(vd_channel, c_channel);
 			vd_channel.setStatus((byte) 1);
 			vd_channel.setCreated(new Date());
 			vd_channel.setUpdated(new Date());
 			int rowNum = channelService.insertSelective(vd_channel);// insert
-			if (rowNum > 0) {
-				back.setBackTypeWithLog(BackType.SUCCESS_INSERT, "Id=" + vd_channel.getId() + ":rowNum=" + rowNum);
-				// 创建oss文件夹，里面包含了一个新建线程，所以，在此处并不能知道当前是否创建oss成功，属于异步处理
-				ossManagerService.startCreateOssChannel(vd_channel);
-			} else {
+		//不在进行云的推流  直接使用保存  
+//			if (rowNum > 0) {
+//				
+//				// 创建oss文件夹，里面包含了一个新建线程，所以，在此处并不能知道当前是否创建oss成功，属于异步处理
+//				ossManagerService.startCreateOssChannel(vd_channel);
+//			} 
+			if(rowNum < 0) {
 				// 更新有问题
 				back.setBackTypeWithLog(BackType.FAIL_UPDATE_AFTER_INSERT, "rowNum=" + rowNum);
+			}else{
+				back.setBackTypeWithLog(BackType.SUCCESS_INSERT, "Id=" + vd_channel.getId() + ":rowNum=" + rowNum);
 			}
 		} catch (ServiceException e) {
 			// 服务层错误，包括 内部service 和 对外service

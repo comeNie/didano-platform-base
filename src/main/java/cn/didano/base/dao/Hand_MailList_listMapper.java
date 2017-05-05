@@ -44,6 +44,7 @@ public interface Hand_MailList_listMapper {
 	int UpdateTeacher(Hand_staff4PhoneBook teacher);
 	int Update( Hand_WholeStudentParents4PhoneBook list); 
 	int UpdateParent(Hand_parent4mailList parent);
+	int UpdateschoolParent(Hand_parent4mailList parent);
 	int delete(Integer id);
 	int deleteparent(Integer id);
 	int deleteparentByid(Tb_deleteParentDate date);

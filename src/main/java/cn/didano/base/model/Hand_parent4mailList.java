@@ -7,6 +7,16 @@ public class Hand_parent4mailList{
 	private String parent_phone;
 	private String parent_ic_number;
 	private Integer icCardId;
+	private String rfid;
+	
+
+	public String getRfid() {
+		return rfid;
+	}
+
+	public void setRfid(String rfid) {
+		this.rfid = rfid;
+	}
 
 	public Integer getIcCardId() {
 		return icCardId;

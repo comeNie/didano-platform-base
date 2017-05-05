@@ -149,6 +149,9 @@ public class MailListService {
 	public int UpdateParent(Hand_parent4mailList parent){
 		return mailList_listMapper.UpdateParent(parent);
 	}
+	public int UpdateschoolParent(Hand_parent4mailList parent){
+		return mailList_listMapper.UpdateschoolParent(parent);
+	}
 	/**
 	 * 通过小朋友id删除其以及其父母信息
 	 */

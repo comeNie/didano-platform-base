@@ -23,17 +23,18 @@ public class Hand_wholeStudent4PhoneBook {
 	private Integer StudentIcCardId;
 	private Integer is_use;
 	private Integer switchId;
-	//学校名称
-	private String schoolTitlel;
+	//学校名称schoolTitle 
+	private String schoolTitle ;
 	//班级名称
 	private String classTitle;
 	
-	public String getSchoolTitlel() {
-		return schoolTitlel;
+
+	public String getSchoolTitle() {
+		return schoolTitle;
 	}
 
-	public void setSchoolTitlel(String schoolTitlel) {
-		this.schoolTitlel = schoolTitlel;
+	public void setSchoolTitle(String schoolTitle) {
+		this.schoolTitle = schoolTitle;
 	}
 
 	public String getClassTitle() {

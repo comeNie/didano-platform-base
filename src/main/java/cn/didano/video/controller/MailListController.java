@@ -1,5 +1,4 @@
 package cn.didano.video.controller;
-
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
@@ -31,27 +30,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.didano.base.exception.ServiceException;
+import cn.didano.base.model.Hand_WholeStudentParents4PhoneBook;
 import cn.didano.base.model.Hand_ic_type;
 import cn.didano.base.model.Hand_parent4mailList;
 import cn.didano.base.model.Hand_staff4PhoneBook;
-import cn.didano.base.model.Hand_wholeStudentParent4PhoneBook;
+import cn.didano.base.model.Hand_staffTransit4PhoneBook;
+import cn.didano.base.model.Hand_student4MailListHasParents;
 import cn.didano.base.model.Hand_wholeStudent4PhoneBook;
+import cn.didano.base.model.Hand_wholeStudentParent4PhoneBook;
 import cn.didano.base.model.Tb_bossData;
 import cn.didano.base.model.Tb_class;
 import cn.didano.base.model.Tb_classStudent;
 import cn.didano.base.model.Tb_deleteParentDate;
 import cn.didano.base.model.Tb_ic_card;
-import cn.didano.base.model.Hand_WholeStudentParents4PhoneBook;
-import cn.didano.base.model.Hand_student4MailListHasParents;
 import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_schoolparent4;
 import cn.didano.base.model.Tb_sign_type;
 import cn.didano.base.model.Tb_staff;
-import cn.didano.base.model.Hand_staffTransit4PhoneBook;
-import cn.didano.base.model.Hand_staff4PhoneBook;
 import cn.didano.base.model.Tb_staffData;
 import cn.didano.base.model.Tb_staff_class;
 import cn.didano.base.model.Tb_student;
+import cn.didano.base.model.Tb_student4List;
 import cn.didano.base.model.Tb_studentData;
 import cn.didano.base.model.Tb_studentparent;
 import cn.didano.base.model.Tb_teacherAndStudent;
@@ -95,7 +94,7 @@ public class MailListController {
 
 	/**
 	 * 家长查看本班老师
-	 * 
+	 *
 	 * @throws ParseException
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
@@ -194,7 +193,7 @@ public class MailListController {
 
 	/**
 	 * 通过名字搜索
-	 * 
+	 *
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
 	 */
@@ -347,9 +346,9 @@ public class MailListController {
 	}
 
 	/**
-	 * 
+	 *
 	 * 删除员工
-	 * 
+	 *
 	 * @param teacher_id
 	 * @return
 	 */
@@ -375,9 +374,9 @@ public class MailListController {
 
 	/**
 	 * 新增或者编辑职工
-	 * 
+	 *
 	 * 根据条件创建老师，创建老师之后，再根据生成的老师id与生成其他表的数据
-	 * 
+	 *
 	 * @param c_channel
 	 * @return
 	 */
@@ -520,7 +519,7 @@ public class MailListController {
 						vd_staff.setRfid(null);
 						vd_staff.setIcCardId(0);
 					}
-					
+
 					rowNum = staffService.updatestaff(vd_staff);
 					if (teacher_a.getType() == StaffType.TEACHEER.getIndex()) {
 						// 判断该人员是否已经有班级对应关系数据，没有则新增
@@ -585,7 +584,7 @@ public class MailListController {
 
 	/**
 	 * 通过园长id查询小朋友并通过班级分类
-	 * 
+	 *
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
 	 */
@@ -713,7 +712,7 @@ public class MailListController {
 			for (Hand_staff4PhoneBook teacher : teacherall) {
 				staff1 = new Hand_staff4PhoneBook();
 				BeanUtils.copyProperties(staff1, teacher);
-				
+
 				staff1.setSchoolId(teacher.getSchoolId());
 				staff1.setIn_time(teacher.getIn_time());
 				staff1.setOut_time(teacher.getOut_time());
@@ -748,7 +747,7 @@ public class MailListController {
 	/**
 	 * 老师进入通讯簿
 	 * 通过老师id查询小朋友------------>
-	 * 
+	 *
 	 * @throws ParseException
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
@@ -841,7 +840,7 @@ public class MailListController {
 
 	/**
 	 * 通过小朋友id编辑其家长信息
-	 * 
+	 *
 	 * @param c_channel
 	 * @return
 	 */
@@ -876,7 +875,7 @@ public class MailListController {
 
 	/**
 	 * 通讯录首页 通过小朋友id删除该小朋友及其所有家长信息
-	 * 
+	 *
 	 * @param teacher_id
 	 * @return
 	 */
@@ -909,7 +908,7 @@ public class MailListController {
 
 	/**
 	 * 通讯录首页 通过小朋友id查询该小朋友所有家长信息
-	 * 
+	 *
 	 * @param teacher_id
 	 * @return
 	 */
@@ -934,7 +933,7 @@ public class MailListController {
 
 	/**
 	 * 通讯录首页 通过小朋友id查询小朋友及其家长信息
-	 * 
+	 *
 	 * @param teacher_id
 	 * @return
 	 */
@@ -960,7 +959,7 @@ public class MailListController {
 
 	/**
 	 * 通讯录首页 查询所有小朋友及其家长信息
-	 * 
+	 *
 	 * @param teacher_id
 	 * @return
 	 */
@@ -989,9 +988,9 @@ public class MailListController {
 
 	/**
 	 * 新建小朋友
-	 * 
+	 *
 	 * 根据条件创建小朋友，创建小朋友之后，再根据生成的小朋友ID建立父母的联系
-	 * 
+	 *
 	 * @param c_channel
 	 * @return
 	 * @throws InvocationTargetException
@@ -1013,7 +1012,7 @@ public class MailListController {
 		Tb_studentparent vd_studentparent = new Tb_studentparent();
 		Out<String> back = new Out<String>();
 		Tb_ic_card tb_ic_cardNoe = null;
-		
+
 		if (student_a.getStudent_ic_number() != "") {
 			// 如果输入的编号IC卡表里面不存在，那么返回错误信息，如果有才继续
 			tb_ic_cardNoe = iCCardService.selectIcByNumber(student_a.getStudent_ic_number(), tb_class.getSchoolId(),
@@ -1062,7 +1061,7 @@ public class MailListController {
 							tb_ic_card = iCCardService.selectIcByNumber(add.getParent_ic_number(),
 									tb_class.getSchoolId(), IcCardType.ADULT.getIndex());
 						}
-						
+
 						vd_parent.setSchoolId(classService.selectById(vd_student.getClassId()).getSchoolId());
 						vd_parent.setPhone(add.getParent_phone());
 						vd_parent.setParent_id_number(add.getParent_ic_number());
@@ -1118,7 +1117,7 @@ public class MailListController {
 							respContent = EntityUtils.toString(he, "UTF-8");
 						}
 						logger.info("respContent=" + respContent);
-						
+
 					}
 				}
 				if (rowNum >= 0) {
@@ -1167,9 +1166,10 @@ public class MailListController {
 					//循环遍历是使用的循环变量
 					Integer i=0;
 					for (Hand_parent4mailList add : student_a.getParent()) {
+						System.err.println(add.getId()+"_----------->");
 						Tb_ic_card tb_ic_card = null;
-						
-						
+
+
 						if (add.getParent_ic_number() != "") {
 							tb_ic_card = iCCardService.selectIcByNumber(add.getParent_ic_number(),
 									tb_class.getSchoolId(), IcCardType.ADULT.getIndex());
@@ -1205,7 +1205,6 @@ public class MailListController {
 							}
 							vd_studentparent.setCreated(new Date());
 							// yang 添加家长的rfid
-							if(student_a.getParent().get(i).getParent_ic_number()!=""){
 								if (tb_ic_card!=null) {
 									vd_studentparent.setRfid(tb_ic_card.getRfid());
 									vd_studentparent.setIcCardId(tb_ic_card.getId());
@@ -1215,9 +1214,6 @@ public class MailListController {
 								}else{
 									vd_studentparent.setIcCardId(0);
 								}
-							}else{
-								vd_studentparent.setIcCardId(0);
-							}
 							studentService.insertStudentParentSelective(vd_studentparent);
 							// 引入二维码接口，为家长生成对应的二维码
 							HttpPost httpPost = new HttpPost(appConfigProperties.getQrcodePath());
@@ -1244,8 +1240,11 @@ public class MailListController {
 								respContent = EntityUtils.toString(he, "UTF-8");
 							}
 							logger.info("respContent=" + respContent);
-						} else {// 编辑家长
+						}else {// 编辑家长
 							Hand_parent4mailList p = mailListService.findParentByPid(add.getId());
+							
+							p.setId(add.getId());
+							System.err.println(p.getId()+"_________>");
 							// 家长信息中选择其他的时候
 							if (add.getRelation_id() != 99) {
 								Tb_relation relation = mailListService.findrealtionById(add.getRelation_id());
@@ -1257,19 +1256,22 @@ public class MailListController {
 							}
 							p.setParent_phone(add.getParent_phone());
 							// yang 添加家长的rfid
-							if(student_a.getParent().get(i).getParent_ic_number()!=""){
+								System.err.println(student_a.getParent().get(i).getParent_ic_number()+"_______________________>");
+								System.err.println(student_a.getParent().get(i).getIcCardId()+"=============>");
 								if (tb_ic_card!=null) {
-									vd_studentparent.setRfid(tb_ic_card.getRfid());
-									vd_studentparent.setIcCardId(tb_ic_card.getId());
+									System.err.println("1");
+									p.setParent_ic_number(tb_ic_card.getRfid());
+									p.setIcCardId(tb_ic_card.getId());
+
 								} else if (student_a.getParent().get(i).getIcCardId() != 0) {
-									vd_studentparent.setRfid("");
-									vd_studentparent.setIcCardId(88888888);
+									System.err.println("2");
+									p.setParent_ic_number("");
+									p.setIcCardId(88888888);
 								}else{
-									vd_studentparent.setIcCardId(0);
+									System.err.println("3");
+									p.setIcCardId(0);
 								}
-							}else{
-								vd_studentparent.setIcCardId(0);
-							}
+							System.err.println("4");
 							mailListService.UpdateParent(p);
 						}
 						i=i+1;
@@ -1290,7 +1292,7 @@ public class MailListController {
 
 	/**
 	 * 新增编辑小朋友之前验证ic卡号是否被绑定过了
-	 * 
+	 *
 	 * @param c_channel
 	 * @return
 	 * @throws InvocationTargetException
@@ -1311,19 +1313,21 @@ public class MailListController {
 		Out<String> back = new Out<String>();
 		Tb_ic_card tb_ic_card = null;
 		Tb_student tb_student = new Tb_student();
-		Tb_student findStudentByIcNumber = null;
+		Tb_student4List findStudentByIcNumber = null;
 		Hand_wholeStudent4PhoneBook findParentByIcNumber = null;
 		Hand_staffTransit4PhoneBook selectInfoByic_number = null;
 		Tb_staff tb_staff = new Tb_staff();
 		try {
 			if (hand_id_type.getIc_number() != "") {
-				
+				//零时变量
 				int a=0;
+				//拿前端传过来的值进行判断，再进行保存类型到a变量中方便查询
 				if(hand_id_type.getType()==2 || hand_id_type.getType()==3){
 					a=1;
 				}else{
 					a=2;
 				}
+				//查询前端传送过来的ic_nukber在tb_ic_card中对应的记录
 				tb_ic_card = iCCardService.selectIcByNumber(hand_id_type.getIc_number(), s1.getSchoolId(),a);
 			}
 			// 判断是学生还是家长
@@ -1347,19 +1351,19 @@ public class MailListController {
 				if (findStudentByIcNumber != null) {
 					// 学生返回信息
 					back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD, "已经被绑定",
-							hand_id_type.getIc_number() + "，已经被学生‘" + findStudentByIcNumber.getName() + "’绑定");
+							hand_id_type.getIc_number() + "，已经被"+findStudentByIcNumber.getSchoolTitle()+","+findStudentByIcNumber.getClassTitle()+"的学生‘" + findStudentByIcNumber.getName() + "’绑定");
 				} else if (findParentByIcNumber != null) {
 					// 家长返回返回的信息
 					back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD, "已经被绑定",
-							hand_id_type.getIc_number() + "，已经被‘" + findParentByIcNumber.getName() + "的"
+							hand_id_type.getIc_number() + "，已经被"+findParentByIcNumber.getSchoolTitle()+","+findParentByIcNumber.getClassTitle()+"‘" + findParentByIcNumber.getName() + "小朋友的"
 									+ findParentByIcNumber.getTitle() + "’绑定");
 				} else if (selectInfoByic_number != null) {
 					back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD, "已经被绑定",
-							hand_id_type.getIc_number() + "，已经被教职工‘" + selectInfoByic_number.getName() + "’绑定");
+							hand_id_type.getIc_number() + "，已经被"+selectInfoByic_number.getPhone()+"的教职工‘" + selectInfoByic_number.getName() + "’绑定");
 				} else {
 					back.setBackType(BackType.SUCCESS, "可以进行绑定");
 				}
-				
+
 			} else {
 				// 学生返回信息
 				back.setBackTypeWithLogInfo(BackType.FAIL_OPER_NO_BOUNDSTATE_CARD,

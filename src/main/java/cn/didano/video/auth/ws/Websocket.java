@@ -100,9 +100,12 @@ public class Websocket {
 	 */
 	@OnClose
 	public void onClose() {
-		subOnlineCount(); // 在线数减1
-		//从管理器中移除此websocket
-		WebsocketService.getWebsocketChannelMap().get(channelId).getWayMap().remove(httpSession.getId());
+		logger.info("onClose！当前在线人数为" + getOnlineCount());
+		if(WebsocketService.getWebsocketChannelMap().get(channelId).getWayMap().get(httpSession.getId())!=null){
+			subOnlineCount(); // 在线数减1
+			//从管理器中移除此websocket
+			WebsocketService.getWebsocketChannelMap().get(channelId).getWayMap().remove(httpSession.getId());
+		}
 		logger.info("有一连接关闭！当前在线人数为" + getOnlineCount());
 	}
 
@@ -128,8 +131,14 @@ public class Websocket {
 	 */
 	@OnError
 	public void onError(Session session, Throwable error) {
-		//管理器里面如何删除呢
-		logger.debug("websocket 发生错误"+error.getMessage());
+		logger.info("onError！当前在线人数为" + getOnlineCount());
+		logger.debug("websocket 发生错误:"+error.getMessage());
+		if(WebsocketService.getWebsocketChannelMap().get(channelId).getWayMap().get(httpSession.getId())!=null){
+			subOnlineCount(); // 在线数减1
+			//从管理器中移除此websocket
+			WebsocketService.getWebsocketChannelMap().get(channelId).getWayMap().remove(httpSession.getId());
+		}
+		logger.info("有一连接出现异常关闭！当前在线人数为" + getOnlineCount());
 	}
 
 	/**

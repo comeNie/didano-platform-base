@@ -2,9 +2,8 @@ package cn.didano.base.dao;
 
 import java.util.List;
 
-import cn.didano.base.model.Tb_staff;
 import cn.didano.base.model.Hand_staffTransit4PhoneBook;
-import cn.didano.base.model.Tb_student;
+import cn.didano.base.model.Tb_staff;
 
 public interface Hand_Staff_icMapper {
 	List<Hand_staffTransit4PhoneBook> selectStaff_icCard(Integer school_id);

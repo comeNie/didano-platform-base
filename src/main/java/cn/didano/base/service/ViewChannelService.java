@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.didano.base.dao.Hand_auth_switchMapper;
 import cn.didano.base.dao.View_channel_infoMapper;
 import cn.didano.base.dao.View_channel_info_onMapper;
 import cn.didano.base.dao.View_staff_channelMapper;
 import cn.didano.base.dao.View_student_channelMapper;
+import cn.didano.base.model.Tb_staffData;
 import cn.didano.base.model.Vd_auth_switch;
 import cn.didano.base.model.View_channel_info;
 import cn.didano.base.model.View_channel_infoExample;
@@ -36,6 +38,8 @@ public class ViewChannelService {
 	private View_channel_info_onMapper view_channel_info_onMapper;
 	@Autowired
 	private AuthSwitchService authSwitchService;
+	@Autowired
+	private Hand_auth_switchMapper hand_auth_switchMapper;
 
 	/**
 	 * 查询当前学生id，可以看到的所有视频频道，从学生家长身份去看，权限来自于学生
@@ -88,4 +92,15 @@ public class ViewChannelService {
 		View_channel_info_onExample condition = new View_channel_info_onExample();
 		return view_channel_info_onMapper.selectByExample(condition);
 	}
+	
+	/**
+	 * 查询所有属于班级的视频通道
+	 * 
+	 * @return
+	 */
+	public List<View_staff_channel> selectAllView_channel_info_staff(Tb_staffData tb_staffData) {
+		return hand_auth_switchMapper.select_switch_by_staff(tb_staffData);
+	}
+	
+	
 }

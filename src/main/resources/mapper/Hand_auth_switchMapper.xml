@@ -18,4 +18,10 @@
     class_id,school_id,auth_type,created,updated 
     FROM vd_auth_switch WHERE school_id=#{school_id,jdbcType=INTEGER} AND deleted=0
   </select>
+ 
+  <select id="select_switch_by_staff" parameterType="cn.didano.base.model.Tb_staffData" resultType="cn.didano.base.model.View_staff_channel">
+	select tmp2.id as staffId,tmp2.name as studentName,vd.name,vd.status,vd.oss_play_url as ossPlayUrl,vd.id as channelId 
+	from vd_channel vd left join (select a.id,b.class_id,a.name from tb_staff a,tb_staff_class b where b.class_id=#{classId} and a.id=b.staff_id and a.id=#{id}) 
+	tmp2 on vd.class_id=tmp2.class_id where vd.school_id=#{schoolId} and vd.class_id in (#{classId},0) and vd.deleted=0
+  </select>
 </mapper>

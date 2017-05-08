@@ -9,7 +9,6 @@ import cn.didano.base.dao.Hand_MailList_listMapper;
 import cn.didano.base.model.Hand_WholeStudentParents4PhoneBook;
 import cn.didano.base.model.Hand_parent4mailList;
 import cn.didano.base.model.Hand_staff4PhoneBook;
-import cn.didano.base.model.Hand_staff4PhoneBook;
 import cn.didano.base.model.Hand_staffTransit4PhoneBook;
 import cn.didano.base.model.Hand_wholeStudent4PhoneBook;
 import cn.didano.base.model.Hand_wholeStudentParent4PhoneBook;
@@ -17,6 +16,7 @@ import cn.didano.base.model.Tb_deleteParentDate;
 import cn.didano.base.model.Tb_relation;
 import cn.didano.base.model.Tb_staffData;
 import cn.didano.base.model.Tb_student;
+import cn.didano.base.model.Tb_student4List;
 import cn.didano.base.model.Tb_studentData;
 @Service
 public class MailListService {
@@ -102,7 +102,7 @@ public class MailListService {
 	 * 通过学生的ic_number进行查询学生的信息
 	 * 杨
 	 */
-	public Tb_student findStudentByIcNumber(Tb_student tb_student){
+	public Tb_student4List findStudentByIcNumber(Tb_student tb_student){
 		return mailList_listMapper.findStudentByIcNumber(tb_student);
 	}
 	
@@ -148,6 +148,9 @@ public class MailListService {
 	 */
 	public int UpdateParent(Hand_parent4mailList parent){
 		return mailList_listMapper.UpdateParent(parent);
+	}
+	public int UpdateschoolParent(Hand_parent4mailList parent){
+		return mailList_listMapper.UpdateschoolParent(parent);
 	}
 	/**
 	 * 通过小朋友id删除其以及其父母信息

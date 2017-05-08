@@ -15,13 +15,11 @@ import cn.didano.base.exception.DBExceptionEnums;
 import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Hand_icCardAndSchool_id;
 import cn.didano.base.model.Hand_ic_card;
+import cn.didano.base.model.Hand_staffTransit4PhoneBook;
 import cn.didano.base.model.Tb_ic_card;
 import cn.didano.base.model.Tb_ic_cardExample;
 import cn.didano.base.model.Tb_staff;
-import cn.didano.base.model.Hand_staffTransit4PhoneBook;
-import cn.didano.base.model.Tb_student;
 import cn.didano.video.constant.DeletedType;
-import cn.didano.video.constant.IcCardType;
 
 /**
  * 
@@ -110,10 +108,8 @@ public class IcCardService {
 	 * @return
 	 */
 	public Tb_ic_card selectIcByNumber(String number,int school_id,int ic_type) {
-		
 		Tb_ic_cardExample tb_ic_cardExample = new Tb_ic_cardExample();
 		Tb_ic_cardExample.Criteria criteria = tb_ic_cardExample.createCriteria();
-		criteria.andDeletedEqualTo(DeletedType.N0_DELETED.getValue());
 		criteria.andIcTypeEqualTo(ic_type);
 		criteria.andIcNumberEqualTo(number);
 		criteria.andSchoolIdEqualTo(school_id);

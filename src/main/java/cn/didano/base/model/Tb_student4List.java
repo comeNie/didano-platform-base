@@ -35,8 +35,31 @@ public class Tb_student4List {
 
     private String rfid;
     private String student_ic_number;
+    
+    //学校名称
+    private String schoolTitle;
+    
+    
+    //班级名称
+    private String classTitle;
+    
+    public String getSchoolTitle() {
+		return schoolTitle;
+	}
 
-    public String getRfid() {
+	public void setSchoolTitle(String schoolTitle) {
+		this.schoolTitle = schoolTitle;
+	}
+
+	public String getClassTitle() {
+		return classTitle;
+	}
+
+	public void setClassTitle(String classTitle) {
+		this.classTitle = classTitle;
+	}
+
+	public String getRfid() {
 		return rfid;
 	}
 

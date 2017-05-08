@@ -165,6 +165,15 @@ public class PostController {
 						studentall.get(1).getOrgImgUrl(), sdf.format(studentall.get(1).getCreated())));
 				student.add(new Tb_student_inf(studentall.get(2).getHeight() / 10, studentall.get(2).getWeight() / 1000,
 						studentall.get(2).getOrgImgUrl(), sdf.format(studentall.get(2).getCreated())));
+			}else if (studentall.size() == 4) {
+				student.add(new Tb_student_inf(studentall.get(0).getHeight() / 10, studentall.get(0).getWeight() / 1000,
+						studentall.get(0).getOrgImgUrl(), sdf.format(studentall.get(0).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(1).getHeight() / 10, studentall.get(1).getWeight() / 1000,
+						studentall.get(1).getOrgImgUrl(), sdf.format(studentall.get(1).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(2).getHeight() / 10, studentall.get(2).getWeight() / 1000,
+						studentall.get(2).getOrgImgUrl(), sdf.format(studentall.get(2).getCreated())));
+				student.add(new Tb_student_inf(studentall.get(3).getHeight() / 10, studentall.get(3).getWeight() / 1000,
+						studentall.get(3).getOrgImgUrl(), sdf.format(studentall.get(3).getCreated())));
 			}
 
 			for (Tb_student_inf s : student) {

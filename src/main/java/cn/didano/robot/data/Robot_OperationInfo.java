@@ -39,7 +39,7 @@ public class Robot_OperationInfo extends RInfo {
 	private String linuxCPU;
 	@ApiModelProperty(value = "Linux的内存", required = true)
 	private String linuxBoardMemory;
-	@ApiModelProperty(value = "Linux的flash占用情况", required = true)
+	@ApiModelProperty(value = "", required = true)
 	private String linuxFlashOccupation;
 	@ApiModelProperty(value = "wifi信号比", required = true)
 	private String wifiSignalRation;

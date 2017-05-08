@@ -110,4 +110,8 @@ public class VideoStructureController {
 	public ModelAndView operationInfo() {
 		return new ModelAndView("video/robot/operationInfo");
 	}
+	@GetMapping("robotDown")
+	public ModelAndView robotDown() {
+		return new ModelAndView("video/robot/robotDown");
+	}
 }

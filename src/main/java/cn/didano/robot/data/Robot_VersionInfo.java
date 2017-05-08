@@ -36,8 +36,9 @@ public class Robot_VersionInfo extends RInfo {
 	@ApiModelProperty(value = "语音包版本", required = true)
 	private String voiceZipVersion;
 	@ApiModelProperty(value = "安卓软件版本", required = true)
-	
 	private String androidVersion;
+	@ApiModelProperty(value = "操作系统版本", required = true)
+	private String androidSystemVersion;
 	@ApiModelProperty(value = "linux软件版本", required = true)
 	private String linuxSoftVersion;
 	@ApiModelProperty(value = "linux操作系统版本", required = true)
@@ -49,7 +50,12 @@ public class Robot_VersionInfo extends RInfo {
 		super();
 	}
 
-	
+	public String getAndroidSystemVersion() {
+		return androidSystemVersion;
+	}
+	public void setAndroidSystemVersion(String androidSystemVersion) {
+		this.androidSystemVersion = androidSystemVersion;
+	}
 	public String getDeviceNo() {
 		return deviceNo;
 	}

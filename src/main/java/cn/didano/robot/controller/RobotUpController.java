@@ -16,9 +16,11 @@ import cn.didano.robot.data.Robot_MeetSpeedInfo;
 import cn.didano.robot.data.Robot_OnLineInfo;
 import cn.didano.robot.data.Robot_OperationInfo;
 import cn.didano.robot.data.Robot_PhotographicQualityInfo;
-import cn.didano.robot.data.Robot_VersionInfo;
 import cn.didano.robot.data.Robot_SelfLnspectionInfo;
 import cn.didano.robot.data.Robot_TemperatureInfo;
+import cn.didano.robot.data.Robot_UploadType;
+import cn.didano.robot.data.Robot_VersionInfo;
+import cn.didano.robot.data.Robot_school;
 import cn.didano.robot.service.RobotMongoDbDataService;
 import cn.didano.video.json.Out;
 import io.swagger.annotations.Api;
@@ -75,7 +77,6 @@ public class RobotUpController {
 		logger.info("访问  RobotController :reporThardwareInfo HardwareInfo=" + hardwareInfo);
 		System.err.println("上报硬件信息");
 		Out<String> out = new Out<String>();
-
 		try {
 			// 直接保存信息
 			Object o = robotMongoDbDataService.saveHardwareInfo(hardwareInfo);
@@ -319,4 +320,59 @@ public class RobotUpController {
 		return out;
 	}
 	
+	
+	/**------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	 * 创建人：SevenYang 
+	 * @创建时间：2017年3月17日 下午3:59:48 
+	 * @Title:
+	 * reportMeetSpeedInfo 
+	 * @Description: （上报机器的照片质量信息） 
+	 * @return Out<String> 修改人：
+	 * 版本：1.0.0 @throws
+	 */
+	@PostMapping(value = "saveSchool")
+	@ApiOperation(value = "保存学校信息", notes = "保存学校信息")
+	@ResponseBody
+	public Out<String> saveSchool(
+			@ApiParam(value = "远程机器人信息管理", required = true) @RequestBody Robot_school manageInfo) {
+		logger.info("访问  RobotController :reportreportMeetSpeedInfo reportMeetSpeedInfo=" + manageInfo);
+		System.err.println("上报机器人的信息管理");
+		Out<String> out = new Out<String>();
+		try {
+			// 直接保存信息
+			Object o = robotMongoDbDataService.saveRobot_school(manageInfo);
+			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_MONGO_SAVE, e.getMessage());
+		}
+		return out;
+	}
+	/**
+	 * 创建人：SevenYang 
+	 * @创建时间：2017年3月17日 下午3:59:48 
+	 * @Title:
+	 * reportMeetSpeedInfo 
+	 * @Description: （上报机器的照片质量信息） 
+	 * @return Out<String> 修改人：
+	 * 版本：1.0.0 @throws
+	 */
+	@PostMapping(value = "saveType")
+	@ApiOperation(value = "保存上传类型信息", notes = "保存上传类型信息")
+	@ResponseBody
+	public Out<String> saveType(
+			@ApiParam(value = "保存上传类型信息", required = true) @RequestBody Robot_UploadType robot_UploadType) {
+		logger.info("访问  RobotController :reportreportMeetSpeedInfo reportMeetSpeedInfo=" + robot_UploadType);
+		System.err.println("保存上传类型信息");
+		Out<String> out = new Out<String>();
+		try {
+			// 直接保存信息
+			Object o = robotMongoDbDataService.saveRobot_UploadType(robot_UploadType);
+			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_MONGO_SAVE, e.getMessage());
+		}
+		return out;
+	}
 }

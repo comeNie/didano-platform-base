@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,7 +19,9 @@ import cn.didano.robot.data.Robot_OperationInfo;
 import cn.didano.robot.data.Robot_PhotographicQualityInfo;
 import cn.didano.robot.data.Robot_SelfLnspectionInfo;
 import cn.didano.robot.data.Robot_TemperatureInfo;
+import cn.didano.robot.data.Robot_UploadType;
 import cn.didano.robot.data.Robot_VersionInfo;
+import cn.didano.robot.data.Robot_school;
 import cn.didano.robot.service.RobotMongoDbFindService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -208,4 +211,60 @@ public class RobotFindController {
 		}
 		return operationInfo;
 	}
+	
+	/**
+	 * 查询所有的学校----------------------------------------------------------------------------------------------------------------------------
+	 * 不带翻页
+	 * @return
+	 */
+	@RequestMapping(value = "selectSchool", method = {RequestMethod.GET, RequestMethod.POST})
+	@ApiOperation(value = "查询所有的学校", notes = "查询所有的学校")
+	@ResponseBody
+	public List<Robot_school> selectSchool() {
+		List<Robot_school> operationInfo=null;
+		try {
+			operationInfo = robotMongoDbFindService.selectSchool();
+			//去掉重复的学校名称并返回
+			for  ( int  i  =   0 ; i  <  operationInfo.size()  -   1 ; i ++ )  {       
+		        for  ( int  j  =  operationInfo.size()  -   1 ; j  >  i; j -- )  {       
+		           if  (operationInfo.get(j).getSchoolName().equals(operationInfo.get(i).getSchoolName()))  {
+		        	   operationInfo.remove(j);
+		            }        
+		        }        
+		     }        
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return operationInfo;
+	}
+	/**
+	 * 查询所属学校的小诺----------------------------------------------------------------------------------------------------------------------------
+	 * 不带翻页
+	 * @return
+	 */
+	@RequestMapping(value = "selectSchoolName／{schoolName}", method = {RequestMethod.POST})
+	@ApiOperation(value = "查询所属学校的小诺", notes = "查询所属学校的小诺")
+	@ResponseBody
+	public List<Robot_school> selectSchoolName(@PathVariable("schoolName") String schoolName) {
+		List<Robot_school> operationInfo=null;
+		try {
+			operationInfo = robotMongoDbFindService.selectSchoolName(schoolName);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return operationInfo;
+	}
+	@RequestMapping(value = "selectType", method = {RequestMethod.POST})
+	@ApiOperation(value = "查询所有需要上传的类型", notes = "查询所有需要上传的类型")
+	@ResponseBody
+	public List<Robot_UploadType> selectType() {
+		List<Robot_UploadType> operationInfo=null;
+		try {
+			operationInfo = robotMongoDbFindService.selectType();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return operationInfo;
+	}
+	
 }

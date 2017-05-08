@@ -1,6 +1,7 @@
 package cn.didano.robot.controller;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,10 +39,10 @@ public class RobotDownController {
 	 * 执行,上传版本信息
 	 * @param service_no
 	 */
-	@PostMapping(value = "reportVersion")
+	@PostMapping(value = "reportVersionInfo/{service_no}")
 	@ApiOperation(value = "执行,上传版本信息", notes = "执行,上传版本信息")
 	@ResponseBody
-	public Out<String>reportVersion(@RequestBody String service_no) {
+	public Out<String> reportVersion(@PathVariable("service_no") String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			DownInfo downInfo = new DownInfo();
@@ -66,10 +67,10 @@ public class RobotDownController {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "reporThardwareInfo")
+	@PostMapping(value = "reporThardwareInfo/{service_no}")
 	@ApiOperation(value = " 执行,上传硬件信息", notes = " 执行,上传硬件信息")
 	@ResponseBody
-	public Out<String> reporThardwareInfo(@RequestBody String service_no) {
+	public Out<String> reporThardwareInfo(@PathVariable("service_no") String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
@@ -96,10 +97,10 @@ public class RobotDownController {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "reportTemperatureInfo")
+	@PostMapping(value = "reportTemperatureInfo/{service_no}")
 	@ApiOperation(value = " 执行,上传温度信息", notes = " 执行,上传温度信息")
 	@ResponseBody
-	public Out<String> reportTemperatureInfo(@RequestBody String service_no) {
+	public Out<String> reportTemperatureInfo(@PathVariable("service_no") String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
@@ -126,10 +127,10 @@ public class RobotDownController {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "reportOperationInfo")
+	@PostMapping(value = "reportOperationInfo/{service_no}")
 	@ApiOperation(value = " 执行,上传机器人运行环境信息", notes = " 执行,上传机器人运行环境信息")
 	@ResponseBody
-	public Out<String> reportOperationInfo(@RequestBody String service_no) {
+	public Out<String> reportOperationInfo(@PathVariable("service_no") String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
@@ -156,10 +157,10 @@ public class RobotDownController {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "reportSelfLnspectionInfo")
+	@PostMapping(value = "reportSelfLnspectionInfo/{service_no}")
 	@ApiOperation(value = " 执行,上传机器人自检信息", notes = " 执行,上传机器人自检信息")
 	@ResponseBody
-	public Out<String> reportSelfLnspectionInfo(@RequestBody String service_no) {
+	public Out<String> reportSelfLnspectionInfo(@PathVariable("service_no") String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
@@ -187,10 +188,10 @@ public class RobotDownController {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "reportMeetSpeedInfo")
+	@PostMapping(value = "reportMeetSpeedInfo/{service_no}")
 	@ApiOperation(value = " 执行,上传机器人识别速度信息", notes = " 执行,上传机器人识别速度信息")
 	@ResponseBody
-	public Out<String> reportMeetSpeedInfo(@RequestBody String service_no) {
+	public Out<String> reportMeetSpeedInfo(@PathVariable("service_no") String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
@@ -217,10 +218,10 @@ public class RobotDownController {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "reportMeetPropertyInfo")
+	@PostMapping(value = "reportMeetPropertyInfo/{service_no}")
 	@ApiOperation(value = " 执行,上传机器人识别性能信息", notes = " 执行,上传机器人识别性能信息")
 	@ResponseBody
-	public Out<String> reportMeetPropertyInfo(@RequestBody String service_no) {
+	public Out<String> reportMeetPropertyInfo(@PathVariable("service_no") String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
@@ -248,10 +249,10 @@ public class RobotDownController {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "reportOnLineInfo")
+	@PostMapping(value = "reportOnLineInfo/{service_no}")
 	@ApiOperation(value = " 执行,上传机器人运行在线信息", notes = " 执行,上传机器人运行在线信息")
 	@ResponseBody
-	public Out<String> reportOnLineInfo(@RequestBody String service_no) {
+	public Out<String> reportOnLineInfo(@PathVariable("service_no") String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
@@ -278,10 +279,10 @@ public class RobotDownController {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "reportPhotographicQualityInfo")
+	@PostMapping(value = "reportPhotographicQualityInfo/{service_no}")
 	@ApiOperation(value = " 执行,上传机器人照片质量信息", notes = " 执行,上传机器人照片质量信息")
 	@ResponseBody
-	public Out<String> reportPhotographicQualityInfo(@RequestBody String service_no) {
+	public Out<String> reportPhotographicQualityInfo(@PathVariable("service_no") String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
@@ -307,10 +308,10 @@ public class RobotDownController {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	@PostMapping(value = "reportManageInfo")
+	@PostMapping(value = "reportManageInfo/{service_no}")
 	@ApiOperation(value = " 执行,上传机器人信息管理", notes = " 执行,上传机器人信息管理")
 	@ResponseBody
-	public Out<String> reportManageInfo(@RequestBody String service_no) {
+	public Out<String> reportManageInfo(@PathVariable("service_no") String service_no) {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());

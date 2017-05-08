@@ -162,7 +162,6 @@ public class RobotWebsocketServer {
 		ConcurrentHashMap<String, RobotSession> tmp = RobotWebsocketServer.getRobotInfoMap();
 		RobotSession session = RobotWebsocketServer.getRobotInfoMap().get(service_no);
 		if (session != null) {
-			
 			ObjectMapper mapper = new ObjectMapper();
 			String data = null;
 			try {

@@ -10,9 +10,11 @@ import cn.didano.robot.data.Robot_MeetSpeedInfo;
 import cn.didano.robot.data.Robot_OnLineInfo;
 import cn.didano.robot.data.Robot_OperationInfo;
 import cn.didano.robot.data.Robot_PhotographicQualityInfo;
-import cn.didano.robot.data.Robot_VersionInfo;
 import cn.didano.robot.data.Robot_SelfLnspectionInfo;
 import cn.didano.robot.data.Robot_TemperatureInfo;
+import cn.didano.robot.data.Robot_UploadType;
+import cn.didano.robot.data.Robot_VersionInfo;
+import cn.didano.robot.data.Robot_school;
 import cn.didano.robot.data.repository.HardwareInfoRepository;
 import cn.didano.robot.data.repository.ManageInfoRepository;
 import cn.didano.robot.data.repository.MeetPropertyInfoRepository;
@@ -21,8 +23,10 @@ import cn.didano.robot.data.repository.OnLineInfoRepository;
 import cn.didano.robot.data.repository.OperationInfoRepository;
 import cn.didano.robot.data.repository.PhotographicQualityInfoRepository;
 import cn.didano.robot.data.repository.RVersionInfoRepository;
+import cn.didano.robot.data.repository.SchoolRepository;
 import cn.didano.robot.data.repository.SelfLnspectionInfoRepository;
 import cn.didano.robot.data.repository.TemperatureInfoRepsitory;
+import cn.didano.robot.data.repository.TypeNameRepository;
 
 /**
  * 诊断平台信息服务，面对mongodb数据库
@@ -52,6 +56,11 @@ public class RobotMongoDbDataService {
 	private PhotographicQualityInfoRepository p_sepository;
 	@Autowired
 	private ManageInfoRepository mr_sepository;
+	@Autowired
+	private SchoolRepository sr_sepository;
+	@Autowired
+	private TypeNameRepository tn_sepository;
+	
 	/**
 	 * 查询
 	 * 
@@ -197,9 +206,13 @@ public class RobotMongoDbDataService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public Robot_ManageInfo saveManageInfo(Robot_ManageInfo onLineInfo) {
-		return this.mr_sepository.save(onLineInfo);
+	public Robot_ManageInfo saveManageInfo(Robot_ManageInfo robot_ManageInfo) {
+		return this.mr_sepository.save(robot_ManageInfo);
 	}
-	
-
+	public Robot_school saveRobot_school(Robot_school robot_school) {
+		return this.sr_sepository.save(robot_school);
+	}
+	public Robot_UploadType saveRobot_UploadType(Robot_UploadType robot_UploadType) {
+		return this.tn_sepository.save(robot_UploadType);
+	}
 }

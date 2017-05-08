@@ -479,7 +479,7 @@
             return 'Search';
         },
         formatNoMatches: function () {
-            return 'No matching records found';
+            return '没有找到匹配的记录';
         },
         formatPaginationSwitch: function () {
             return 'Hide/Show pagination';

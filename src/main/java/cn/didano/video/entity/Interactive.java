@@ -8,11 +8,18 @@ import org.springframework.stereotype.Component;
 public class Interactive {
 
 	private String interactivePath;
-	
+	private String download;
 	private String PicAddress="/upload-dir";
 	private String XmlAddress="/create-Xml/InteractiveModel.xml";
 	private String ZipAddress="/create-Zip/";
 	
+	
+	public String getDownload() {
+		return download;
+	}
+	public void setDownload(String download) {
+		this.download = download;
+	}
 	public String getInteractivePath() {
 		return interactivePath;
 	}

@@ -60,6 +60,8 @@ public class InteractiveModelWritingController {
      private InteractiveModelService interactiveService;
      @Autowired
      private StorageService storageService;
+     @Autowired
+     private Interactive interactive;
      
 
      /**
@@ -70,7 +72,7 @@ public class InteractiveModelWritingController {
  	 * @return
  	 */
  	@PostMapping(value = "deleteModel/{id}")
- 	@ApiOperation(value = "删除员工", notes = "删除员工")
+ 	@ApiOperation(value = "删除模板", notes = "删除模板")
  	@ResponseBody
  	public Out<String> deleteModel(@PathVariable("id") Integer id) {
  		logger.info("访问  InteractiveModelWritingController:deleteModel,id=" + id);
@@ -114,6 +116,9 @@ public class InteractiveModelWritingController {
 			   StringBuilder sb=new StringBuilder(catalogParent.getName());
 			   sb.append("-"+catalog.getName());
 			   models.get(i).setCatalogName(sb.toString());
+			   sb=new StringBuilder(interactive.getDownload());
+			   sb.append(models.get(i).getLocation());
+			   models.get(i).setLocation(sb.toString());
 			}
 			
 			if (models.size() > 0) {
@@ -153,6 +158,9 @@ public class InteractiveModelWritingController {
 			   StringBuilder sb=new StringBuilder(catalogParent.getName());
 			   sb.append("-"+catalog.getName());
 			   models.get(i).setCatalogName(sb.toString());
+			   sb=new StringBuilder(interactive.getDownload());
+			   sb.append(models.get(i).getLocation());
+			   models.get(i).setLocation(sb.toString());
 			}
 			
 			if (models.size() > 0) {

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Wx_official_account_infoExample {
+public class Wx_official_accountExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public Wx_official_account_infoExample() {
+    public Wx_official_accountExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -115,113 +115,53 @@ public class Wx_official_account_infoExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Long value) {
+        public Criteria andIdEqualTo(Integer value) {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Long value) {
+        public Criteria andIdNotEqualTo(Integer value) {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Long value) {
+        public Criteria andIdGreaterThan(Integer value) {
             addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Long value) {
+        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Long value) {
+        public Criteria andIdLessThan(Integer value) {
             addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Long value) {
+        public Criteria andIdLessThanOrEqualTo(Integer value) {
             addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Long> values) {
+        public Criteria andIdIn(List<Integer> values) {
             addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Long> values) {
+        public Criteria andIdNotIn(List<Integer> values) {
             addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Long value1, Long value2) {
+        public Criteria andIdBetween(Integer value1, Integer value2) {
             addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Long value1, Long value2) {
+        public Criteria andIdNotBetween(Integer value1, Integer value2) {
             addCriterion("id not between", value1, value2, "id");
-            return (Criteria) this;
-        }
-
-        public Criteria andOfficialaccountidIsNull() {
-            addCriterion("officialAccountId is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andOfficialaccountidIsNotNull() {
-            addCriterion("officialAccountId is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andOfficialaccountidEqualTo(Long value) {
-            addCriterion("officialAccountId =", value, "officialaccountid");
-            return (Criteria) this;
-        }
-
-        public Criteria andOfficialaccountidNotEqualTo(Long value) {
-            addCriterion("officialAccountId <>", value, "officialaccountid");
-            return (Criteria) this;
-        }
-
-        public Criteria andOfficialaccountidGreaterThan(Long value) {
-            addCriterion("officialAccountId >", value, "officialaccountid");
-            return (Criteria) this;
-        }
-
-        public Criteria andOfficialaccountidGreaterThanOrEqualTo(Long value) {
-            addCriterion("officialAccountId >=", value, "officialaccountid");
-            return (Criteria) this;
-        }
-
-        public Criteria andOfficialaccountidLessThan(Long value) {
-            addCriterion("officialAccountId <", value, "officialaccountid");
-            return (Criteria) this;
-        }
-
-        public Criteria andOfficialaccountidLessThanOrEqualTo(Long value) {
-            addCriterion("officialAccountId <=", value, "officialaccountid");
-            return (Criteria) this;
-        }
-
-        public Criteria andOfficialaccountidIn(List<Long> values) {
-            addCriterion("officialAccountId in", values, "officialaccountid");
-            return (Criteria) this;
-        }
-
-        public Criteria andOfficialaccountidNotIn(List<Long> values) {
-            addCriterion("officialAccountId not in", values, "officialaccountid");
-            return (Criteria) this;
-        }
-
-        public Criteria andOfficialaccountidBetween(Long value1, Long value2) {
-            addCriterion("officialAccountId between", value1, value2, "officialaccountid");
-            return (Criteria) this;
-        }
-
-        public Criteria andOfficialaccountidNotBetween(Long value1, Long value2) {
-            addCriterion("officialAccountId not between", value1, value2, "officialaccountid");
             return (Criteria) this;
         }
 
@@ -282,126 +222,6 @@ public class Wx_official_account_infoExample {
 
         public Criteria andAccounttypeNotBetween(Byte value1, Byte value2) {
             addCriterion("accountType not between", value1, value2, "accounttype");
-            return (Criteria) this;
-        }
-
-        public Criteria andServicetypeinfoIsNull() {
-            addCriterion("serviceTypeInfo is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andServicetypeinfoIsNotNull() {
-            addCriterion("serviceTypeInfo is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andServicetypeinfoEqualTo(Byte value) {
-            addCriterion("serviceTypeInfo =", value, "servicetypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andServicetypeinfoNotEqualTo(Byte value) {
-            addCriterion("serviceTypeInfo <>", value, "servicetypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andServicetypeinfoGreaterThan(Byte value) {
-            addCriterion("serviceTypeInfo >", value, "servicetypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andServicetypeinfoGreaterThanOrEqualTo(Byte value) {
-            addCriterion("serviceTypeInfo >=", value, "servicetypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andServicetypeinfoLessThan(Byte value) {
-            addCriterion("serviceTypeInfo <", value, "servicetypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andServicetypeinfoLessThanOrEqualTo(Byte value) {
-            addCriterion("serviceTypeInfo <=", value, "servicetypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andServicetypeinfoIn(List<Byte> values) {
-            addCriterion("serviceTypeInfo in", values, "servicetypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andServicetypeinfoNotIn(List<Byte> values) {
-            addCriterion("serviceTypeInfo not in", values, "servicetypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andServicetypeinfoBetween(Byte value1, Byte value2) {
-            addCriterion("serviceTypeInfo between", value1, value2, "servicetypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andServicetypeinfoNotBetween(Byte value1, Byte value2) {
-            addCriterion("serviceTypeInfo not between", value1, value2, "servicetypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andVerifytypeinfoIsNull() {
-            addCriterion("verifyTypeInfo is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andVerifytypeinfoIsNotNull() {
-            addCriterion("verifyTypeInfo is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andVerifytypeinfoEqualTo(Byte value) {
-            addCriterion("verifyTypeInfo =", value, "verifytypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andVerifytypeinfoNotEqualTo(Byte value) {
-            addCriterion("verifyTypeInfo <>", value, "verifytypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andVerifytypeinfoGreaterThan(Byte value) {
-            addCriterion("verifyTypeInfo >", value, "verifytypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andVerifytypeinfoGreaterThanOrEqualTo(Byte value) {
-            addCriterion("verifyTypeInfo >=", value, "verifytypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andVerifytypeinfoLessThan(Byte value) {
-            addCriterion("verifyTypeInfo <", value, "verifytypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andVerifytypeinfoLessThanOrEqualTo(Byte value) {
-            addCriterion("verifyTypeInfo <=", value, "verifytypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andVerifytypeinfoIn(List<Byte> values) {
-            addCriterion("verifyTypeInfo in", values, "verifytypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andVerifytypeinfoNotIn(List<Byte> values) {
-            addCriterion("verifyTypeInfo not in", values, "verifytypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andVerifytypeinfoBetween(Byte value1, Byte value2) {
-            addCriterion("verifyTypeInfo between", value1, value2, "verifytypeinfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andVerifytypeinfoNotBetween(Byte value1, Byte value2) {
-            addCriterion("verifyTypeInfo not between", value1, value2, "verifytypeinfo");
             return (Criteria) this;
         }
 
@@ -475,73 +295,73 @@ public class Wx_official_account_infoExample {
             return (Criteria) this;
         }
 
-        public Criteria andUsernameIsNull() {
-            addCriterion("userName is null");
+        public Criteria andAppidIsNull() {
+            addCriterion("appid is null");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameIsNotNull() {
-            addCriterion("userName is not null");
+        public Criteria andAppidIsNotNull() {
+            addCriterion("appid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameEqualTo(String value) {
-            addCriterion("userName =", value, "username");
+        public Criteria andAppidEqualTo(String value) {
+            addCriterion("appid =", value, "appid");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameNotEqualTo(String value) {
-            addCriterion("userName <>", value, "username");
+        public Criteria andAppidNotEqualTo(String value) {
+            addCriterion("appid <>", value, "appid");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameGreaterThan(String value) {
-            addCriterion("userName >", value, "username");
+        public Criteria andAppidGreaterThan(String value) {
+            addCriterion("appid >", value, "appid");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameGreaterThanOrEqualTo(String value) {
-            addCriterion("userName >=", value, "username");
+        public Criteria andAppidGreaterThanOrEqualTo(String value) {
+            addCriterion("appid >=", value, "appid");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameLessThan(String value) {
-            addCriterion("userName <", value, "username");
+        public Criteria andAppidLessThan(String value) {
+            addCriterion("appid <", value, "appid");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameLessThanOrEqualTo(String value) {
-            addCriterion("userName <=", value, "username");
+        public Criteria andAppidLessThanOrEqualTo(String value) {
+            addCriterion("appid <=", value, "appid");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameLike(String value) {
-            addCriterion("userName like", value, "username");
+        public Criteria andAppidLike(String value) {
+            addCriterion("appid like", value, "appid");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameNotLike(String value) {
-            addCriterion("userName not like", value, "username");
+        public Criteria andAppidNotLike(String value) {
+            addCriterion("appid not like", value, "appid");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameIn(List<String> values) {
-            addCriterion("userName in", values, "username");
+        public Criteria andAppidIn(List<String> values) {
+            addCriterion("appid in", values, "appid");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameNotIn(List<String> values) {
-            addCriterion("userName not in", values, "username");
+        public Criteria andAppidNotIn(List<String> values) {
+            addCriterion("appid not in", values, "appid");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameBetween(String value1, String value2) {
-            addCriterion("userName between", value1, value2, "username");
+        public Criteria andAppidBetween(String value1, String value2) {
+            addCriterion("appid between", value1, value2, "appid");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameNotBetween(String value1, String value2) {
-            addCriterion("userName not between", value1, value2, "username");
+        public Criteria andAppidNotBetween(String value1, String value2) {
+            addCriterion("appid not between", value1, value2, "appid");
             return (Criteria) this;
         }
 

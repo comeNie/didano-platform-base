@@ -2,20 +2,14 @@ package cn.didano.base.model;
 
 import java.util.Date;
 
-public class Wx_official_account_info {
-    private Long id;
-
-    private Long officialaccountid;
+public class Wx_official_account {
+    private Integer id;
 
     private Byte accounttype;
 
-    private Byte servicetypeinfo;
-
-    private Byte verifytypeinfo;
-
     private String nickname;
 
-    private String username;
+    private String appid;
 
     private String appsecret;
 
@@ -31,20 +25,12 @@ public class Wx_official_account_info {
 
     private Boolean deleted;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Long getOfficialaccountid() {
-        return officialaccountid;
-    }
-
-    public void setOfficialaccountid(Long officialaccountid) {
-        this.officialaccountid = officialaccountid;
     }
 
     public Byte getAccounttype() {
@@ -55,22 +41,6 @@ public class Wx_official_account_info {
         this.accounttype = accounttype;
     }
 
-    public Byte getServicetypeinfo() {
-        return servicetypeinfo;
-    }
-
-    public void setServicetypeinfo(Byte servicetypeinfo) {
-        this.servicetypeinfo = servicetypeinfo;
-    }
-
-    public Byte getVerifytypeinfo() {
-        return verifytypeinfo;
-    }
-
-    public void setVerifytypeinfo(Byte verifytypeinfo) {
-        this.verifytypeinfo = verifytypeinfo;
-    }
-
     public String getNickname() {
         return nickname;
     }
@@ -79,12 +49,12 @@ public class Wx_official_account_info {
         this.nickname = nickname == null ? null : nickname.trim();
     }
 
-    public String getUsername() {
-        return username;
+    public String getAppid() {
+        return appid;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+    public void setAppid(String appid) {
+        this.appid = appid == null ? null : appid.trim();
     }
 
     public String getAppsecret() {

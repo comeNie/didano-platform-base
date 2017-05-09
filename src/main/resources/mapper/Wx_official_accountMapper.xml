@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.didano.base.dao.Wx_official_account_infoMapper">
-  <resultMap id="BaseResultMap" type="cn.didano.base.model.Wx_official_account_info">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="officialAccountId" jdbcType="BIGINT" property="officialaccountid" />
+<mapper namespace="cn.didano.base.dao.Wx_official_accountMapper">
+  <resultMap id="BaseResultMap" type="cn.didano.base.model.Wx_official_account">
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="accountType" jdbcType="TINYINT" property="accounttype" />
-    <result column="serviceTypeInfo" jdbcType="TINYINT" property="servicetypeinfo" />
-    <result column="verifyTypeInfo" jdbcType="TINYINT" property="verifytypeinfo" />
     <result column="nickName" jdbcType="VARCHAR" property="nickname" />
-    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="appid" jdbcType="VARCHAR" property="appid" />
     <result column="appSecret" jdbcType="VARCHAR" property="appsecret" />
     <result column="token" jdbcType="VARCHAR" property="token" />
     <result column="encodingAesKey" jdbcType="VARCHAR" property="encodingaeskey" />
@@ -76,17 +73,17 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, officialAccountId, accountType, serviceTypeInfo, verifyTypeInfo, nickName, userName, 
-    appSecret, token, encodingAesKey, messageUrl, created, updated, deleted
+    id, accountType, nickName, appid, appSecret, token, encodingAesKey, messageUrl, created, 
+    updated, deleted
   </sql>
-  <select id="selectByExample" parameterType="cn.didano.base.model.Wx_official_account_infoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.didano.base.model.Wx_official_accountExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from wx_official_account_info
+    from wx_official_account
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,60 +91,49 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from wx_official_account_info
-    where id = #{id,jdbcType=BIGINT}
+    from wx_official_account
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from wx_official_account_info
-    where id = #{id,jdbcType=BIGINT}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wx_official_account
+    where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="cn.didano.base.model.Wx_official_account_infoExample">
-    delete from wx_official_account_info
+  <delete id="deleteByExample" parameterType="cn.didano.base.model.Wx_official_accountExample">
+    delete from wx_official_account
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.didano.base.model.Wx_official_account_info">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+  <insert id="insert" parameterType="cn.didano.base.model.Wx_official_account">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into wx_official_account_info (officialAccountId, accountType, serviceTypeInfo, 
-      verifyTypeInfo, nickName, userName, 
+    insert into wx_official_account (accountType, nickName, appid, 
       appSecret, token, encodingAesKey, 
       messageUrl, created, updated, 
       deleted)
-    values (#{officialaccountid,jdbcType=BIGINT}, #{accounttype,jdbcType=TINYINT}, #{servicetypeinfo,jdbcType=TINYINT}, 
-      #{verifytypeinfo,jdbcType=TINYINT}, #{nickname,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+    values (#{accounttype,jdbcType=TINYINT}, #{nickname,jdbcType=VARCHAR}, #{appid,jdbcType=VARCHAR}, 
       #{appsecret,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, #{encodingaeskey,jdbcType=VARCHAR}, 
       #{messageurl,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
       #{deleted,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="cn.didano.base.model.Wx_official_account_info">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+  <insert id="insertSelective" parameterType="cn.didano.base.model.Wx_official_account">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into wx_official_account_info
+    insert into wx_official_account
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="officialaccountid != null">
-        officialAccountId,
-      </if>
       <if test="accounttype != null">
         accountType,
-      </if>
-      <if test="servicetypeinfo != null">
-        serviceTypeInfo,
-      </if>
-      <if test="verifytypeinfo != null">
-        verifyTypeInfo,
       </if>
       <if test="nickname != null">
         nickName,
       </if>
-      <if test="username != null">
-        userName,
+      <if test="appid != null">
+        appid,
       </if>
       <if test="appsecret != null">
         appSecret,
@@ -172,23 +158,14 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="officialaccountid != null">
-        #{officialaccountid,jdbcType=BIGINT},
-      </if>
       <if test="accounttype != null">
         #{accounttype,jdbcType=TINYINT},
-      </if>
-      <if test="servicetypeinfo != null">
-        #{servicetypeinfo,jdbcType=TINYINT},
-      </if>
-      <if test="verifytypeinfo != null">
-        #{verifytypeinfo,jdbcType=TINYINT},
       </if>
       <if test="nickname != null">
         #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
+      <if test="appid != null">
+        #{appid,jdbcType=VARCHAR},
       </if>
       <if test="appsecret != null">
         #{appsecret,jdbcType=VARCHAR},
@@ -213,35 +190,26 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.didano.base.model.Wx_official_account_infoExample" resultType="java.lang.Long">
-    select count(*) from wx_official_account_info
+  <select id="countByExample" parameterType="cn.didano.base.model.Wx_official_accountExample" resultType="java.lang.Long">
+    select count(*) from wx_official_account
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update wx_official_account_info
+    update wx_official_account
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
-      </if>
-      <if test="record.officialaccountid != null">
-        officialAccountId = #{record.officialaccountid,jdbcType=BIGINT},
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.accounttype != null">
         accountType = #{record.accounttype,jdbcType=TINYINT},
       </if>
-      <if test="record.servicetypeinfo != null">
-        serviceTypeInfo = #{record.servicetypeinfo,jdbcType=TINYINT},
-      </if>
-      <if test="record.verifytypeinfo != null">
-        verifyTypeInfo = #{record.verifytypeinfo,jdbcType=TINYINT},
-      </if>
       <if test="record.nickname != null">
         nickName = #{record.nickname,jdbcType=VARCHAR},
       </if>
-      <if test="record.username != null">
-        userName = #{record.username,jdbcType=VARCHAR},
+      <if test="record.appid != null">
+        appid = #{record.appid,jdbcType=VARCHAR},
       </if>
       <if test="record.appsecret != null">
         appSecret = #{record.appsecret,jdbcType=VARCHAR},
@@ -270,14 +238,11 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update wx_official_account_info
-    set id = #{record.id,jdbcType=BIGINT},
-      officialAccountId = #{record.officialaccountid,jdbcType=BIGINT},
+    update wx_official_account
+    set id = #{record.id,jdbcType=INTEGER},
       accountType = #{record.accounttype,jdbcType=TINYINT},
-      serviceTypeInfo = #{record.servicetypeinfo,jdbcType=TINYINT},
-      verifyTypeInfo = #{record.verifytypeinfo,jdbcType=TINYINT},
       nickName = #{record.nickname,jdbcType=VARCHAR},
-      userName = #{record.username,jdbcType=VARCHAR},
+      appid = #{record.appid,jdbcType=VARCHAR},
       appSecret = #{record.appsecret,jdbcType=VARCHAR},
       token = #{record.token,jdbcType=VARCHAR},
       encodingAesKey = #{record.encodingaeskey,jdbcType=VARCHAR},
@@ -289,26 +254,17 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.didano.base.model.Wx_official_account_info">
-    update wx_official_account_info
+  <update id="updateByPrimaryKeySelective" parameterType="cn.didano.base.model.Wx_official_account">
+    update wx_official_account
     <set>
-      <if test="officialaccountid != null">
-        officialAccountId = #{officialaccountid,jdbcType=BIGINT},
-      </if>
       <if test="accounttype != null">
         accountType = #{accounttype,jdbcType=TINYINT},
-      </if>
-      <if test="servicetypeinfo != null">
-        serviceTypeInfo = #{servicetypeinfo,jdbcType=TINYINT},
-      </if>
-      <if test="verifytypeinfo != null">
-        verifyTypeInfo = #{verifytypeinfo,jdbcType=TINYINT},
       </if>
       <if test="nickname != null">
         nickName = #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="username != null">
-        userName = #{username,jdbcType=VARCHAR},
+      <if test="appid != null">
+        appid = #{appid,jdbcType=VARCHAR},
       </if>
       <if test="appsecret != null">
         appSecret = #{appsecret,jdbcType=VARCHAR},
@@ -332,16 +288,13 @@
         deleted = #{deleted,jdbcType=BIT},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.didano.base.model.Wx_official_account_info">
-    update wx_official_account_info
-    set officialAccountId = #{officialaccountid,jdbcType=BIGINT},
-      accountType = #{accounttype,jdbcType=TINYINT},
-      serviceTypeInfo = #{servicetypeinfo,jdbcType=TINYINT},
-      verifyTypeInfo = #{verifytypeinfo,jdbcType=TINYINT},
+  <update id="updateByPrimaryKey" parameterType="cn.didano.base.model.Wx_official_account">
+    update wx_official_account
+    set accountType = #{accounttype,jdbcType=TINYINT},
       nickName = #{nickname,jdbcType=VARCHAR},
-      userName = #{username,jdbcType=VARCHAR},
+      appid = #{appid,jdbcType=VARCHAR},
       appSecret = #{appsecret,jdbcType=VARCHAR},
       token = #{token,jdbcType=VARCHAR},
       encodingAesKey = #{encodingaeskey,jdbcType=VARCHAR},
@@ -349,6 +302,6 @@
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},
       deleted = #{deleted,jdbcType=BIT}
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -16,7 +16,7 @@ import cn.didano.base.service.WeiXinService;
 import cn.didano.video.entity.Interactive;
 import io.swagger.annotations.Api;
 
-@Api(value = "微信信息存储")
+@Api(value = "微信机构信息存储")
 @Controller
 @RequestMapping("/weixinInfo")
 public class WeiXinSaveController {

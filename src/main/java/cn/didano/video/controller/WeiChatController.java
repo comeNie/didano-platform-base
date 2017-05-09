@@ -269,7 +269,7 @@ public class WeiChatController {
 	 * 查找所有模板
 	 */
 	@PostMapping(value = "findAllTemplate")
-	@ApiOperation(value = "查找所有微信公众号信息", notes = "查找所有微信公众号信息")
+	@ApiOperation(value = "查找所有模板", notes = "查找所有模板")
 	@ResponseBody
 	public Out<OutList<Wx_template>> findAllTemplate() {
 		logger.info("访问   WeiChatController :findAllTemplate");

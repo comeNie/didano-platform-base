@@ -111,7 +111,7 @@ public class FileUploadController {
 			Date date = new Date();
 			long time = date.getTime();
 			// 存入模板信息到数据库
-			String location = interactive.getLinuxZipAddress() + String.valueOf(time) + ".zip";
+			String location =  String.valueOf(time) + ".zip";
 			interactive_model = new Tb_interactive_model();
 			interactive_model.setAuthor(author);
 			interactive_model.setCreated(new Date());
@@ -123,7 +123,10 @@ public class FileUploadController {
 			interactive_model.setSuitableAge(suitable_age);
 			int row = interactiveService.insertModelSelective(interactive_model);
 
-			ZipOutputStream out = new ZipOutputStream(new FileOutputStream(location));
+			StringBuilder sb =new StringBuilder(interactive.getLinuxZipAddress());
+			sb.append(location);
+			System.out.println(sb.toString());
+			ZipOutputStream out = new ZipOutputStream(new FileOutputStream(sb.toString()));
 			// 获得照片文件夹下的所有照片
 			File[] file1 = new File(interactive.getLinuxPicAddress()).listFiles();
 			for (int i = 0; i < file1.length; i++) {
@@ -149,7 +152,7 @@ public class FileUploadController {
 			out.close();
 
 		} catch (Exception ex) {
-
+               ex.printStackTrace();
 		}
 
 		return "video/right/interactiveModule";

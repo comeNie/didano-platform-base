@@ -22,39 +22,70 @@ import io.swagger.annotations.Api;
 public class WeiXinSaveController {
 
 	@Autowired
-	private  StorageService storageService;
+	private StorageService storageService;
 
 	@Autowired
 	private WeiXinService weixinService;
 
 	@Autowired
 	private Interactive info;
-	
 
 	@PostMapping("/save")
-	public String weixinSave(@RequestParam("file") MultipartFile file, 
-			@RequestParam("name") String name, @RequestParam("des") String des,
-			@RequestParam("contact_phone") String  contact_phone,
-			@RequestParam("contact_person") String contact_person
-			) {
+	public String weixinSave(@RequestParam("file") MultipartFile file, @RequestParam("name") String name,
+			@RequestParam("des") String des, @RequestParam("contact_phone") String contact_phone,
+			@RequestParam("contact_person") String contact_person) {
 
-		Path rootlocation = Paths.get(info.getWeiXinAddress());
-		storageService.init(rootlocation);
-		
-	    storageService.store(file,name,rootlocation);
-	    Tb_org org = new Tb_org();
-	    org.setContactPerson(contact_person);
-	    org.setContactPhone(contact_phone);
-	    org.setCreated(new Date());
-	    org.setDes(des);
-	    StringBuilder sb = new StringBuilder(info.getWeiXinAddress());
-	    sb.append("/"+name+file.getOriginalFilename().split("\\.")[1]);
-	    org.setLogo(sb.toString());
-	    org.setName(name);
-	    weixinService.insertTb_orgSelective(org);
-	   
+		if (file != null) {
+			Path rootlocation = Paths.get(info.getWeiXinAddress());
+			storageService.init(rootlocation);
+
+			storageService.store(file, name, rootlocation);
+		}
+		Tb_org org = new Tb_org();
+		org.setContactPerson(contact_person);
+		org.setContactPhone(contact_phone);
+		org.setCreated(new Date());
+		org.setDes(des);
+		StringBuilder sb = new StringBuilder(info.getWeiXinAddress());
+		sb.append("/" + name + file.getOriginalFilename().split("\\.")[1]);
+		org.setLogo(sb.toString());
+		org.setName(name);
+		weixinService.insertTb_orgSelective(org);
 
 		return "video/right/interactiveModule";
 	}
-	
+
+	@PostMapping("/update")
+	public String weixinUpdate(@RequestParam("file") MultipartFile file, @RequestParam("id") int id,
+			@RequestParam("name") String name, @RequestParam("des") String des,
+			@RequestParam("contact_phone") String contact_phone,
+			@RequestParam("contact_person") String contact_person) {
+		Tb_org org = new Tb_org();
+		org.setId(id);
+		org.setContactPerson(contact_person);
+		org.setContactPhone(contact_phone);
+		org.setDes(des);
+		org.setName(name);
+		if (file != null) {
+			Path rootlocation = Paths.get(info.getWeiXinAddress());
+			storageService.init(rootlocation);
+			storageService.store(file, name, rootlocation);
+			StringBuilder sb = new StringBuilder(info.getWeiXinAddress());
+			sb.append("/" + name + file.getOriginalFilename().split("\\.")[1]);
+			org.setLogo(sb.toString());
+		}
+
+		weixinService.updateTb_org(org);
+
+		return "video/right/interactiveModule";
+	}
+	@PostMapping("/delete")
+	public String weixindelete(@RequestParam("id") int id) {
+		
+
+		weixinService.deleteTb_org(id);
+
+		return "video/right/interactiveModule";
+	}
+
 }

@@ -5,7 +5,7 @@
 <generatorConfiguration>
 	<!--数据库驱动 -->
 	<classPathEntry
-		location="/Users/wangyi/.m2/repository/mysql/mysql-connector-java/5.1.40/mysql-connector-java-5.1.40.jar" />
+		location="C:/.m2/repository/mysql/mysql-connector-java/5.1.40/mysql-connector-java-5.1.40.jar" />
 	<context id="video_didano" targetRuntime="MyBatis3" defaultModelType="flat">
 		<commentGenerator>
 			<property name="suppressDate" value="true" />
@@ -196,7 +196,22 @@
 			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
 			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
 		</table> -->
-		<table tableName="tb_student_parent" domainObjectName="Tb_studentparent"
+		<!--<table tableName="wx_official_account" domainObjectName="Wx_official_account"
+			enableCountByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
+			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
+		</table>
+		<table tableName="wx_org_official_account" domainObjectName="Wx_org_official_account"
+			enableCountByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
+			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
+		</table>-->
+		<!--  <table tableName="wx_template" domainObjectName="Wx_template"
+			enableCountByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
+			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
+		</table>-->
+		<table tableName="tb_org" domainObjectName="Tb_org"
 			enableCountByExample="true" enableSelectByExample="true"
 			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
 			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  

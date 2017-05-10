@@ -18,6 +18,7 @@ import cn.didano.base.model.Tb_staffData;
 import cn.didano.base.model.Tb_student;
 import cn.didano.base.model.Tb_student4List;
 import cn.didano.base.model.Tb_studentData;
+import cn.didano.base.model.Tb_studentparent;
 @Service
 public class MailListService {
 
@@ -39,8 +40,13 @@ public class MailListService {
 	/**
 	 * 通过家长id查询家长
 	 */
-	public Hand_parent4mailList findParentByPid(Integer id){
-		return mailList_listMapper.findParentByPid(id);
+	public Hand_parent4mailList findParentByPid(Tb_studentparent tsp){
+		Hand_parent4mailList hpList=null;
+		List<Hand_parent4mailList> hp=mailList_listMapper.findParentByPid(tsp);
+		if(hp!=null&&hp.size()>0){
+			hpList=hp.get(0);
+		}
+		return hpList;
 	}
 	/**
 	 *  查询学校

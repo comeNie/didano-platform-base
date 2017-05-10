@@ -14,7 +14,7 @@
   </resultMap>
   <select id="selectNoeIcInfo" parameterType="cn.didano.base.model.Tb_ic_card" resultMap="BaseResultMap"><!-- 
     SELECT id,ic_type,ic_number,school_id,STATUS,created,updated,deleted from tb_ic_card where ic_number=#{icNumber} and school_id=#{schoolId} -->
-     SELECT * from tb_ic_card where ic_number=#{icNumber} and school_id=#{schoolId}
+     SELECT * from tb_ic_card where ic_number=#{icNumber} and school_id=#{schoolId} and deleted=0
   </select> 
   
   <update id="updateInfoByid" parameterType="Integer">
@@ -38,7 +38,7 @@
   
    <select id="select_ICMaxNumber" parameterType="INTEGER" resultMap="BaseResultMap">
     <!-- SELECT id,ic_type,MAX(id),ic_number,school_id,STATUS,created,updated,deleted FROM tb_ic_card WHERE school_id=#{school_id} -->
-    SELECT * FROM tb_ic_card WHERE school_id=#{school_id}
+    SELECT * FROM tb_ic_card WHERE school_id=#{school_id} and deleted=0
   </select> 
   
 

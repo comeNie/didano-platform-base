@@ -14,6 +14,7 @@ import cn.didano.base.model.Tb_staffData;
 import cn.didano.base.model.Tb_student;
 import cn.didano.base.model.Tb_student4List;
 import cn.didano.base.model.Tb_studentData;
+import cn.didano.base.model.Tb_studentparent;
 
 public interface Hand_MailList_listMapper {
 
@@ -39,7 +40,7 @@ public interface Hand_MailList_listMapper {
 	List<Hand_WholeStudentParents4PhoneBook> findByNameClass(Tb_studentData data);
 	List<Tb_relation> findrelation();
 	Tb_relation findrelationById(Integer id);
-	Hand_parent4mailList findParentByPid(Integer id);
+	List<Hand_parent4mailList> findParentByPid(Tb_studentparent tsp);
 	Tb_staffData findClassIdBySid(Integer id);
 	int UpdateTeacher(Hand_staff4PhoneBook teacher);
 	int Update( Hand_WholeStudentParents4PhoneBook list); 

@@ -18,6 +18,11 @@ import cn.didano.base.exception.DBExceptionEnums;
  * {@link} DBExcetionEnum
  */
 public enum BackType {
+	//0-100平台信息
+	INFO_ILLEGALACCESSEXCEPTION("IllegalAccessException异常，安全权限异常",50),
+	INFO_INVOCATIONTARGETEXCEPTION("InvocationTargetException异常，访问途径异常",51),
+	INFO_IOEXCEPTION("IoException异常，访问途径异常",51),
+	
 	//负数以下是底层数据库错误，查看DBException
 	SUCCESS("成功", 1000),
 	SUCCESS_INSERT("新建成功", 1001),

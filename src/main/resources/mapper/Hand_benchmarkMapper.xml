@@ -13,6 +13,6 @@
     <result column="sex" jdbcType="INTEGER" property="sex" />
   </resultMap>
   <select id="selectByPrimaryKey" parameterType="cn.didano.base.model.Tb_benchmark" resultMap="BaseResultMap">
-   SELECT height1,height2,weight1,weight2 FROM tb_benchmark WHERE age=#{age,jdbcType=INTEGER} AND sex=#{sex,jdbcType=INTEGER};
+   SELECT height1,height2,weight1,weight2 FROM tb_benchmark WHERE age=#{age,jdbcType=INTEGER} AND sex=#{sex,jdbcType=INTEGER} and deleted=0;
   </select>
 </mapper>

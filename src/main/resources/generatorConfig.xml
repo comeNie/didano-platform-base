@@ -206,16 +206,16 @@
 			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
 			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
 		</table>-->
-		<!--  <table tableName="wx_template" domainObjectName="Wx_template"
-			enableCountByExample="true" enableSelectByExample="true"
-			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
-			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
-		</table>-->
-		<table tableName="tb_org" domainObjectName="Tb_org"
+		  <table tableName="wx_template" domainObjectName="Wx_template"
 			enableCountByExample="true" enableSelectByExample="true"
 			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
 			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
 		</table>
+		<!--<table tableName="tb_org" domainObjectName="Tb_org"
+			enableCountByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
+			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
+		</table>-->
 		
 		
 		

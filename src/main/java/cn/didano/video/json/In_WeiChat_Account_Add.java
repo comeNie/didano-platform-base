@@ -13,7 +13,7 @@ public class In_WeiChat_Account_Add {
 	@ApiModelProperty(value = "appid",required=true)
 	private String appid;
 	@ApiModelProperty(value = "appSecret",required=true)
-	private String appsecrect;
+	private String appsecret;
 	@ApiModelProperty(value = "机构id",required=true)
 	private int orgId;
 	
@@ -48,12 +48,13 @@ public class In_WeiChat_Account_Add {
 	public void setAppid(String appid) {
 		this.appid = appid;
 	}
-	public String getAppsecrect() {
-		return appsecrect;
+	public String getAppsecret() {
+		return appsecret;
 	}
-	public void setAppsecrect(String appsecrect) {
-		this.appsecrect = appsecrect;
+	public void setAppsecret(String appsecret) {
+		this.appsecret = appsecret;
 	}
+	
 	
 	
 }

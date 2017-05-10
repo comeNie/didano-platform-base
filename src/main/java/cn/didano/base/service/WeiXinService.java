@@ -70,6 +70,17 @@ public class WeiXinService {
 		return wx_infoMapper.insertSelective(record);
 	}
 	/**
+	 * 查找所有机构
+	 */
+	public List<Tb_org> findAllTb_org(){
+		Tb_orgExample condition = new Tb_orgExample();
+		Tb_orgExample.Criteria criteria = condition.createCriteria();
+		// 对于已经deleted=1的不显示
+       
+		criteria.andDeletedNotEqualTo(true);
+		return tb_orgMapper.selectByExample(condition);
+	}
+	/**
 	 * 插入机构
 	 * @param record
 	 * @return 有值，id ,否则返回-1
@@ -106,6 +117,18 @@ public class WeiXinService {
 			throw new ServiceException(DBExceptionEnums.ERROR_DB_CONTENT_NULL);
 		return wx_orgMapper.insertSelective(record);
 	}
+	/**
+	 * 查找微信公众号信息关联消息
+	 */
+	public List<Wx_org_official_account> findOfficialAccount(Wx_official_account record){
+		Wx_org_official_accountExample condition = new Wx_org_official_accountExample();
+		Wx_org_official_accountExample.Criteria criteria = condition.createCriteria();
+		// 对于已经deleted=1的不显示
+		criteria.andOfficialAccountIdEqualTo(record.getId());
+		criteria.andDeletedNotEqualTo(true);
+		return wx_orgMapper.selectByExample(condition);
+	}
+	
 	/**
 	 * 编辑机构与微信公众信息关联消息
 	 */

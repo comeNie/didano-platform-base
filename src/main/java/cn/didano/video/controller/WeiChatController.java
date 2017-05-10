@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.didano.base.exception.ServiceException;
+import cn.didano.base.model.Tb_org;
 import cn.didano.base.model.Wx_official_account;
 import cn.didano.base.model.Wx_org_official_account;
 import cn.didano.base.model.Wx_template;
@@ -58,9 +59,10 @@ public class WeiChatController {
 		Wx_org_official_account wx_org_official_account=new Wx_org_official_account();
 		try {
 			BeanUtils.copyProperties(wx_official_account, account);
-			if (wx_official_account.getId() == null) {// 新增
+			System.out.println(account.getId());
+			if (wx_official_account.getId() == 0) {// 新增
 				String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="
-						+ account.getAppid() + "&secret=" + account.getAppsecrect();
+						+ account.getAppid() + "&secret=" + account.getAppsecret();
 				// 设置链接
 				URL urlGet = new URL(url);
 				// 启动链接
@@ -101,18 +103,22 @@ public class WeiChatController {
 
 				} else {
 					// 更新有问题
-					back.setBackTypeWithLog(BackType.FAIL_UPDATE_AFTER_INSERT, "rowNum=" + row);
+					back.setBackTypeWithLog(BackType.FAIL_INSERT_NO_INSERT, "rowNum=" + row);
 				}
 			} else {// 编辑
 
 				int row = weixinService.updateAccount(wx_official_account);
-
+				List<Wx_org_official_account> official_account=weixinService.findOfficialAccount(wx_official_account);
+				if(official_account.size()>0){
+				official_account.get(0).setOrgId(account.getOrgId());
+				weixinService.updateOrg_account(official_account.get(0));
+				}
 				if (row > 0) {
-					back.setBackTypeWithLog(BackType.SUCCESS_INSERT, "Id=" + wx_official_account.getId());
+					back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "Id=" + wx_official_account.getId());
 
 				} else {
 					// 更新有问题
-					back.setBackTypeWithLog(BackType.FAIL_UPDATE_AFTER_INSERT, "rowNum=" + row);
+					back.setBackTypeWithLog(BackType.FAIL_UPDATE_NO_UPDATE, "rowNum=" + row);
 				}
 			}
 
@@ -201,7 +207,7 @@ public class WeiChatController {
 
 		try {
 			BeanUtils.copyProperties(wx_template, template);
-			if (wx_template.getId() == null) {// 新增
+			if (wx_template.getId() == 0) {// 新增
 
 				wx_template.setCreated(new Date());
 
@@ -212,18 +218,18 @@ public class WeiChatController {
 
 				} else {
 					// 更新有问题
-					back.setBackTypeWithLog(BackType.FAIL_UPDATE_AFTER_INSERT, "rowNum=" + row);
+					back.setBackTypeWithLog(BackType.FAIL_INSERT_NO_INSERT, "rowNum=" + row);
 				}
 			} else {// 编辑
 
 				int row = weixinService.updateTemplayte(wx_template);
 
 				if (row > 0) {
-					back.setBackTypeWithLog(BackType.SUCCESS_INSERT, "Id=" + wx_template.getId());
+					back.setBackTypeWithLog(BackType.SUCCESS_UPDATE, "Id=" + wx_template.getId());
 
 				} else {
 					// 更新有问题
-					back.setBackTypeWithLog(BackType.FAIL_UPDATE_AFTER_INSERT, "rowNum=" + row);
+					back.setBackTypeWithLog(BackType.FAIL_UPDATE_NO_UPDATE, "rowNum=" + row);
 				}
 			}
 
@@ -292,5 +298,33 @@ public class WeiChatController {
 		}
 		return back;
 	}
+	/**
+	 * 查找所有机构信息
+	 */
+	@PostMapping(value = "findAllTb_org")
+	@ApiOperation(value = "查找所有微信公众号信息", notes = "查找所有微信公众号信息")
+	@ResponseBody
+	public Out<OutList<Tb_org>> findAllTb_org() {
+		logger.info("访问   WeiChatController :findAllTb_org");
+		List<Tb_org> orgs = null;
+		OutList<Tb_org> outList = null;
+		Out<OutList<Tb_org>> back = new Out<OutList<Tb_org>>();
+		try {
+			orgs  = weixinService.findAllTb_org();
+			if (orgs .size() > 0) {
+
+				outList = new OutList<Tb_org>(orgs .size(), orgs );
+				back.setBackTypeWithLog(outList, BackType.SUCCESS_SEARCH_NORMAL);
+			} else {
+
+				back.setBackTypeWithLog(outList, BackType.FAIL_SEARCH_NORMAL);
+			}
+		} catch (ServiceException e) {
+			logger.warn(e.getMessage());
+			back.setServiceExceptionWithLog(e.getExceptionEnums());
+		}
+		return back;
+	}
+
 
 }

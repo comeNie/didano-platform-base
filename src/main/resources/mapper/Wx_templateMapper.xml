@@ -5,7 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="official_account_id" jdbcType="INTEGER" property="officialAccountId" />
     <result column="tmplate_wx_id" jdbcType="VARCHAR" property="tmplateWxId" />
-    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="type" jdbcType="TINYINT" property="type" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
@@ -110,7 +110,7 @@
     insert into wx_template (official_account_id, tmplate_wx_id, type, 
       title, created, updated, 
       deleted)
-    values (#{officialAccountId,jdbcType=INTEGER}, #{tmplateWxId,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+    values (#{officialAccountId,jdbcType=INTEGER}, #{tmplateWxId,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
       #{title,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
       #{deleted,jdbcType=BIT})
   </insert>
@@ -150,7 +150,7 @@
         #{tmplateWxId,jdbcType=VARCHAR},
       </if>
       <if test="type != null">
-        #{type,jdbcType=INTEGER},
+        #{type,jdbcType=TINYINT},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
@@ -185,7 +185,7 @@
         tmplate_wx_id = #{record.tmplateWxId,jdbcType=VARCHAR},
       </if>
       <if test="record.type != null">
-        type = #{record.type,jdbcType=INTEGER},
+        type = #{record.type,jdbcType=TINYINT},
       </if>
       <if test="record.title != null">
         title = #{record.title,jdbcType=VARCHAR},
@@ -209,7 +209,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       official_account_id = #{record.officialAccountId,jdbcType=INTEGER},
       tmplate_wx_id = #{record.tmplateWxId,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=TINYINT},
       title = #{record.title,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP},
@@ -228,7 +228,7 @@
         tmplate_wx_id = #{tmplateWxId,jdbcType=VARCHAR},
       </if>
       <if test="type != null">
-        type = #{type,jdbcType=INTEGER},
+        type = #{type,jdbcType=TINYINT},
       </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
@@ -249,7 +249,7 @@
     update wx_template
     set official_account_id = #{officialAccountId,jdbcType=INTEGER},
       tmplate_wx_id = #{tmplateWxId,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
+      type = #{type,jdbcType=TINYINT},
       title = #{title,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},

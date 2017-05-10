@@ -21,7 +21,7 @@ import cn.didano.base.model.Wx_template;
 import cn.didano.base.model.Wx_templateExample;
 
 @Service
-public class WeiXinService {
+public class WeiChatService {
 
 	@Autowired
 	private Wx_official_accountMapper wx_infoMapper;

@@ -21,7 +21,7 @@ import cn.didano.base.model.Tb_org;
 import cn.didano.base.model.Wx_official_account;
 import cn.didano.base.model.Wx_org_official_account;
 import cn.didano.base.model.Wx_template;
-import cn.didano.base.service.WeiXinService;
+import cn.didano.base.service.WeiChatService;
 import cn.didano.video.constant.BackType;
 import cn.didano.video.json.In_Template_Add;
 import cn.didano.video.json.In_WeiChat_Account_Add;
@@ -39,7 +39,7 @@ public class WeiChatController {
 
 	static Logger logger = Logger.getLogger(InteractiveModelWritingController.class);
 	@Autowired
-	private WeiXinService weixinService;
+	private WeiChatService weixinService;
 
 	/**
 	 * 新增编辑微信公众信息

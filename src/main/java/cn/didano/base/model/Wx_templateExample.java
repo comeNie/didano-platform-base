@@ -305,52 +305,52 @@ public class Wx_templateExample {
             return (Criteria) this;
         }
 
-        public Criteria andTypeEqualTo(Integer value) {
+        public Criteria andTypeEqualTo(Byte value) {
             addCriterion("type =", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotEqualTo(Integer value) {
+        public Criteria andTypeNotEqualTo(Byte value) {
             addCriterion("type <>", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThan(Integer value) {
+        public Criteria andTypeGreaterThan(Byte value) {
             addCriterion("type >", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
+        public Criteria andTypeGreaterThanOrEqualTo(Byte value) {
             addCriterion("type >=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThan(Integer value) {
+        public Criteria andTypeLessThan(Byte value) {
             addCriterion("type <", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThanOrEqualTo(Integer value) {
+        public Criteria andTypeLessThanOrEqualTo(Byte value) {
             addCriterion("type <=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIn(List<Integer> values) {
+        public Criteria andTypeIn(List<Byte> values) {
             addCriterion("type in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotIn(List<Integer> values) {
+        public Criteria andTypeNotIn(List<Byte> values) {
             addCriterion("type not in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeBetween(Integer value1, Integer value2) {
+        public Criteria andTypeBetween(Byte value1, Byte value2) {
             addCriterion("type between", value1, value2, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
+        public Criteria andTypeNotBetween(Byte value1, Byte value2) {
             addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }

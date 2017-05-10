@@ -9,7 +9,7 @@ public class Wx_template {
 
     private String tmplateWxId;
 
-    private Integer type;
+    private Byte type;
 
     private String title;
 
@@ -43,11 +43,11 @@ public class Wx_template {
         this.tmplateWxId = tmplateWxId == null ? null : tmplateWxId.trim();
     }
 
-    public Integer getType() {
+    public Byte getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(Byte type) {
         this.type = type;
     }
 

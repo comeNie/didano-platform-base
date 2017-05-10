@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.didano.base.model.Tb_org;
-import cn.didano.base.service.WeiXinService;
+import cn.didano.base.service.WeiChatService;
 import cn.didano.video.entity.Interactive;
 import io.swagger.annotations.Api;
 
 @Api(value = "微信机构信息存储")
 @Controller
 @RequestMapping("/weixinInfo")
-public class WeiXinSaveController {
+public class WeiChatSaveController {
 
 	@Autowired
 	private StorageService storageService;
 
 	@Autowired
-	private WeiXinService weixinService;
+	private WeiChatService weixinService;
 
 	@Autowired
 	private Interactive info;

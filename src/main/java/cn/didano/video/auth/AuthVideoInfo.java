@@ -1,14 +1,14 @@
 package cn.didano.video.auth;
 
 
-import cn.didano.video.auth.ws.Websocket;
+import cn.didano.video.auth.ws.VideoWebsocket;
 
 public class AuthVideoInfo {
 	private String openId;
 	private int studentId;
 	private int channelId;
 	private boolean isopen;
-	private Websocket websocket;
+	private VideoWebsocket websocket;
 	private String sessionId;
 
 	public String getSessionId() {
@@ -51,11 +51,11 @@ public class AuthVideoInfo {
 		this.isopen = isopen;
 	}
 
-	public Websocket getWebsocket() {
+	public VideoWebsocket getWebsocket() {
 		return websocket;
 	}
 
-	public void setWebsocket(Websocket websocket) {
+	public void setWebsocket(VideoWebsocket websocket) {
 		this.websocket = websocket;
 	}
 

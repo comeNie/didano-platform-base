@@ -15,7 +15,7 @@ import cn.didano.base.exception.ServiceException;
 import cn.didano.base.service.AuthTimeControlService;
 import cn.didano.video.auth.AuthVideoInfo;
 import cn.didano.video.auth.channel.ChannelStatus;
-import cn.didano.video.auth.ws.WebsocketChannel;
+import cn.didano.video.auth.ws.VideoWebsocketChannel;
 import cn.didano.video.constant.BackType;
 import cn.didano.video.json.Out;
 
@@ -32,7 +32,7 @@ public class WebsocketService {
 	private AuthTimeControlService controlService;
 	
 	// concurrent包的线程安全Set，用来存放每个频道的websocket的·链接
-	private static ConcurrentHashMap<Integer, WebsocketChannel> WebsocketChannelMap = new ConcurrentHashMap<Integer, WebsocketChannel>();
+	private static ConcurrentHashMap<Integer, VideoWebsocketChannel> WebsocketChannelMap = new ConcurrentHashMap<Integer, VideoWebsocketChannel>();
 
 	/**
 	 * 删除频道
@@ -40,7 +40,7 @@ public class WebsocketService {
 	 * @param channelId
 	 */
 	public static void removeChannel(int channelId) {
-		WebsocketChannel tmp = WebsocketChannelMap.get(channelId);
+		VideoWebsocketChannel tmp = WebsocketChannelMap.get(channelId);
 		WebsocketChannelMap.remove(channelId);
 		tmp = null;
 		// TODO 定时清理
@@ -52,11 +52,11 @@ public class WebsocketService {
 	 * @param websocketChannel
 	 */
 	public static synchronized void addChannel(int channelId) {
-		WebsocketChannel websocketChannel = new WebsocketChannel(channelId);
+		VideoWebsocketChannel websocketChannel = new VideoWebsocketChannel(channelId);
 		WebsocketChannelMap.put(channelId, websocketChannel);
 	}
 
-	public static ConcurrentHashMap<Integer, WebsocketChannel> getWebsocketChannelMap() {
+	public static ConcurrentHashMap<Integer, VideoWebsocketChannel> getWebsocketChannelMap() {
 		return WebsocketChannelMap;
 	}
 
@@ -86,6 +86,7 @@ public class WebsocketService {
 					// Convert object to JSON string
 					ObjectMapper mapper = new ObjectMapper();
 					data = mapper.writeValueAsString(back);
+					logger.debug("OperateVideo : send client data=" + data);
 					tmp.getWebsocket().sendMessage(data);
 					logger.debug("sessionId=" + tmp.getSessionId() + "openid=" + tmp.getOpenId());
 				}

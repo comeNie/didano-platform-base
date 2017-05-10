@@ -37,7 +37,6 @@ public class InteractiveModelWritingController {
      @Autowired
      private Interactive interactive;
      
-
      /**
  	 * 
  	 * 删除模板

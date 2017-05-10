@@ -9,7 +9,7 @@ import cn.didano.video.auth.AuthVideoInfo;
  * @author stephen
  * Created on 2016年12月23日 下午6:56:37 
  */
-public class WebsocketChannel {
+public class VideoWebsocketChannel {
 	private int channelId;
 	private ConcurrentHashMap<String, AuthVideoInfo> wayMap = new ConcurrentHashMap<String, AuthVideoInfo>();
 
@@ -25,7 +25,7 @@ public class WebsocketChannel {
 		return wayMap;
 	}
 
-	public WebsocketChannel(int channelId) {
+	public VideoWebsocketChannel(int channelId) {
 		super();
 		this.channelId = channelId;
 	}

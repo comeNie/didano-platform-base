@@ -1,6 +1,7 @@
 package cn.didano.video.auth.ws;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.EndpointConfig;
@@ -13,11 +14,14 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import cn.didano.base.exception.ServiceException;
+import cn.didano.base.model.Vd_websocket_log;
 import cn.didano.video.auth.AuthVideoInfo;
+import cn.didano.video.constant.SocketActionType;
 import cn.didano.video.exception.VideoExceptionEnums;
+import cn.didano.video.service.WebsocketLogService;
 import cn.didano.video.service.WebsocketService;
 
 /**
@@ -27,8 +31,11 @@ import cn.didano.video.service.WebsocketService;
  */
 @Component
 @ServerEndpoint(value = "/video/ws/video_auth/{channelId}/{studentId}/{openId}", configurator = GetHttpSessionConfigurator.class)
-public class Websocket {
-	static Logger logger = Logger.getLogger(Websocket.class);
+public class VideoWebsocket {
+	static Logger logger = Logger.getLogger(VideoWebsocket.class);
+	
+	@Autowired
+	private WebsocketLogService socketLogService;
 
 	// 静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
 	private static int onlineCount = 0;
@@ -36,6 +43,7 @@ public class Websocket {
 	// 与某个客户端的连接会话，需要通过它来给客户端发送数据
 	private Session session;
 
+	// websocket session
 	private HttpSession httpSession;
 
 	private int studentId;
@@ -58,30 +66,26 @@ public class Websocket {
 		this.channelId = channelId;
 		this.studentId = studentId;
 		this.openId = openId;
-		// this.key = studentId + "-" + channelId + "-" + openId;
 		this.session = session;
-		logger.debug("Websocket open one websocket,channelId=" + channelId+":studentId="+studentId+":openId="+openId);
 		this.httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
 		// 先看频道socket集合存在不，不存在添加
 		if (!ifChannelexitBychannelId(channelId)) {
 			WebsocketService.addChannel(channelId);
 		}
-		// 如果正在看视频已经存在，那么将被替换
+		// 如果正在看视频通道已经存在，那么将被替换
 		AuthVideoInfo info = new AuthVideoInfo();
 		info.setChannelId(channelId);
 		info.setStudentId(studentId);
 		info.setOpenId(openId);
 		info.setWebsocket(this);
 		info.setSessionId( httpSession.getId());
-		// if not has add channel
-		if (WebsocketService.getWebsocketChannelMap().get(channelId) == null) {
-			WebsocketService.addChannel(channelId);
-		}
-		// 不能用sessionid,因为一个用户可以多次链接，而sessionid是一样的
+		
+		// 不能用sessionid,因为一个用户可以多次链接，且sessionid是一样的
 		WebsocketService.getWebsocketChannelMap().get(channelId).getWayMap().put(httpSession.getId(), info);
 		addOnlineCount(); // 在线数加1
 		logger.info("有新连接加入！当前在线人数为" + getOnlineCount());
-		
+		//记录入表
+		insertWebsocketInfo(SocketActionType.OPEN.getIndex());
 	}
 
 	/**
@@ -107,6 +111,8 @@ public class Websocket {
 			WebsocketService.getWebsocketChannelMap().get(channelId).getWayMap().remove(httpSession.getId());
 		}
 		logger.info("有一连接关闭！当前在线人数为" + getOnlineCount());
+		//记录入表
+		insertWebsocketInfo(SocketActionType.CLOSE_NORMAL.getIndex());
 	}
 
 	/**
@@ -132,13 +138,15 @@ public class Websocket {
 	@OnError
 	public void onError(Session session, Throwable error) {
 		logger.info("onError！当前在线人数为" + getOnlineCount());
-		logger.debug("websocket 发生错误:"+error.getMessage());
 		if(WebsocketService.getWebsocketChannelMap().get(channelId).getWayMap().get(httpSession.getId())!=null){
 			subOnlineCount(); // 在线数减1
 			//从管理器中移除此websocket
 			WebsocketService.getWebsocketChannelMap().get(channelId).getWayMap().remove(httpSession.getId());
 		}
+		logger.debug("websocket 发生错误:"+error.getMessage()+",用户减1");
 		logger.info("有一连接出现异常关闭！当前在线人数为" + getOnlineCount());
+		//记录入表
+		insertWebsocketInfo(SocketActionType.CLOSE_ERROR.getIndex());
 	}
 
 	/**
@@ -159,16 +167,29 @@ public class Websocket {
 					+ ex.getMessage());
 		}
 	}
+	
 
 	public static synchronized int getOnlineCount() {
 		return onlineCount;
 	}
 
 	public static synchronized void addOnlineCount() {
-		Websocket.onlineCount++;
+		VideoWebsocket.onlineCount++;
 	}
 
 	public static synchronized void subOnlineCount() {
-		Websocket.onlineCount--;
+		VideoWebsocket.onlineCount--;
+	}
+	
+	private void insertWebsocketInfo(byte type){
+		//记录入表
+		Vd_websocket_log vd_websocket_log = new Vd_websocket_log();
+		vd_websocket_log.setVdChannelId(channelId);
+		vd_websocket_log.setHttpsessionId(httpSession.getId());
+		vd_websocket_log.setOpenId(openId);
+		vd_websocket_log.setStudentId(studentId);
+		vd_websocket_log.setType(type);
+		vd_websocket_log.setCreated(new Date());
+		socketLogService.insertSelective(vd_websocket_log);
 	}
 }

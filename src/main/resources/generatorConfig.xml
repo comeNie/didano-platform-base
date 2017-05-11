@@ -13,7 +13,7 @@
 		</commentGenerator>
 		<!--数据库链接地址账号密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost/xiaonuo" userId="root"
+			connectionURL="jdbc:mysql://localhost/tasksdb" userId="root"
 			password="123456">
 		</jdbcConnection>
 		<javaTypeResolver>
@@ -196,15 +196,15 @@
 			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
 			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
 		</table> -->
-		<table tableName="tb_student_parent" domainObjectName="Tb_studentparent"
+		<!-- <table tableName="tb_student_parent" domainObjectName="Tb_studentparent"
 			enableCountByExample="true" enableSelectByExample="true"
 			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
 			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
-		</table>
-		
-		
-		
-		
-		
+		</table> -->
+		<table tableName="vd_websocket_log" domainObjectName="Vd_websocket_log"
+			enableCountByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" >
+			<generatedKey column="ID" sqlStatement="MYSQL" identity="true"/>  
+		</table> 
 	</context>
 </generatorConfiguration>

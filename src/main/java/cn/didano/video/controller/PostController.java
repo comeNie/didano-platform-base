@@ -255,7 +255,6 @@ public class PostController {
 		Vd_channel vd_channel = new Vd_channel();
 		Out<String> back = new Out<String>();
 		try {
-			System.err.println("111111111111111111111111");
 			BeanUtils.copyProperties(vd_channel, c_channel);
 			vd_channel.setStatus((byte) 1);
 			vd_channel.setCreated(new Date());

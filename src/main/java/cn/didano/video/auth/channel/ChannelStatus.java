@@ -1,9 +1,11 @@
 package cn.didano.video.auth.channel;
 
 public class ChannelStatus {
-
+	//频道ID
 	private int channelId;
+	//频道开关状态
 	private int status;
+	//是否处于播放状态,注意，该值通过fasterxml转化为json,是open，而不是isOpen
 	private boolean isOpen; 
 	
 	public ChannelStatus(){
@@ -43,7 +45,8 @@ public class ChannelStatus {
 
 	@Override
 	public String toString() {
-		return "ChannelStatus [channelId=" + channelId + ", status=" + status + "]";
+		return "{\"channelId\":\"" + channelId + "\",\"status\":\"" + status + "\",\"isOpen\":\"" + isOpen + "\"}  ";
 	}
+	
 
 }

@@ -18,29 +18,32 @@ import io.swagger.annotations.Api;
 
 @Api(value = "微信机构信息存储")
 @Controller
-@RequestMapping("/weixinInfo")
+@RequestMapping("/weiChatInfo")
 public class WeiChatSaveController {
 
 	@Autowired
 	private StorageService storageService;
 
 	@Autowired
-	private WeiChatService weixinService;
+	private WeiChatService weiChatService;
 
 	@Autowired
 	private Interactive info;
 
+	//保存
 	@PostMapping("/save")
 	public String weixinSave(@RequestParam("file") MultipartFile file, @RequestParam("name") String name,
 			@RequestParam("des") String des, @RequestParam("contact_phone") String contact_phone,
 			@RequestParam("contact_person") String contact_person) {
 
+		//对logo进行存储
 		if (file != null) {
 			Path rootlocation = Paths.get(info.getWeiXinAddress());
 			storageService.init(rootlocation);
 
 			storageService.store(file, name, rootlocation);
 		}
+		//将机构信息存入数据库
 		Tb_org org = new Tb_org();
 		org.setContactPerson(contact_person);
 		org.setContactPhone(contact_phone);
@@ -50,11 +53,12 @@ public class WeiChatSaveController {
 		sb.append("/" + name + file.getOriginalFilename().split("\\.")[1]);
 		org.setLogo(sb.toString());
 		org.setName(name);
-		weixinService.insertTb_orgSelective(org);
+		weiChatService.insertTb_orgSelective(org);
 
 		return "video/right/interactiveModule";
 	}
 
+	//编辑
 	@PostMapping("/update")
 	public String weixinUpdate(@RequestParam("file") MultipartFile file, @RequestParam("id") int id,
 			@RequestParam("name") String name, @RequestParam("des") String des,
@@ -75,15 +79,17 @@ public class WeiChatSaveController {
 			org.setLogo(sb.toString());
 		}
 
-		weixinService.updateTb_org(org);
+		weiChatService.updateTb_org(org);
 
 		return "video/right/interactiveModule";
 	}
+	
+	//删除
 	@PostMapping("/delete")
 	public String weixindelete(@RequestParam("id") int id) {
 		
 
-		weixinService.deleteTb_org(id);
+		weiChatService.deleteTb_org(id);
 
 		return "video/right/interactiveModule";
 	}

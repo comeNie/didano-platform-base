@@ -63,6 +63,7 @@ public class FileUploadController {
 			@RequestParam("author") String author, @RequestParam("school_id") int school_id,
 			RedirectAttributes redirectAttributes) {
 
+		//存储照片
 		Path rootlocation = Paths.get(info.getLinuxPicAddress());
 		storageService.deleteAll(rootlocation);
 		storageService.init(rootlocation);

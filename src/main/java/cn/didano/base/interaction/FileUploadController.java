@@ -31,7 +31,7 @@ import io.swagger.annotations.Api;
 
 @Api(value = "互动模块照片模板上传")
 @Controller
-@RequestMapping("/video/interaction")
+@RequestMapping("/video")
 public class FileUploadController {
 
 	private final StorageService storageService;

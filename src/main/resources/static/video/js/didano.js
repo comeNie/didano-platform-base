@@ -5,4 +5,4 @@
 var server_url = "http://video.didano.com";
 
 //local
-//var server_url = "http://localhost:8080";
+//var server_url = "http://sp.didano.com:8080";

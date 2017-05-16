@@ -101,14 +101,14 @@ public class VideoWebsocket {
 	 */
 	@OnClose
 	public void onClose() {
-		logger.info("onClose！当前在线人数为" + getOnlineCount());
+		logger.info("onClose begin！当前在线人数为" + getOnlineCount());
 		if (WebsocketService.getWebsocketChannelMap().get(channelId).getWayMap().get(httpSession.getId()) != null) {
 			subOnlineCount(); // 在线数减1
 			logger.debug("onClose : 用户减1");
 			// 从管理器中移除此websocket
 			WebsocketService.getWebsocketChannelMap().get(channelId).getWayMap().remove(httpSession.getId());
 		}
-		logger.info("有一连接关闭！当前在线人数为" + getOnlineCount());
+		logger.info("onClose end！当前在线人数为" + getOnlineCount());
 		// 记录入表
 		insertWebsocketInfo(SocketActionType.CLOSE_NORMAL.getIndex());
 	}
@@ -125,6 +125,7 @@ public class VideoWebsocket {
 	public void onMessage(String message, Session session) {
 		// 客户端不发信息
 		// 同时也不向客户端发送信息
+		logger.warn("onMessage:" + message);
 	}
 
 	/**
@@ -135,14 +136,14 @@ public class VideoWebsocket {
 	 */
 	@OnError
 	public void onError(Session session, Throwable error) {
-		logger.info("onError！error="+ error.getMessage() +":当前在线人数为" + getOnlineCount());
+		logger.info("onError begin！"+ error.getMessage() +":当前在线人数为" + getOnlineCount());
 		if (WebsocketService.getWebsocketChannelMap().get(channelId).getWayMap().get(httpSession.getId()) != null) {
 			subOnlineCount(); // 在线数减1
 			logger.debug("onError 发生错误:"+error.getMessage()+",用户减1");
 			// 从管理器中移除此websocket
 			WebsocketService.getWebsocketChannelMap().get(channelId).getWayMap().remove(httpSession.getId());
 		}
-		logger.info("有一连接出现异常关闭！当前在线人数为" + getOnlineCount());
+		logger.info("onError end！当前在线人数为" + getOnlineCount());
 		// 记录入表
 		insertWebsocketInfo(SocketActionType.CLOSE_ERROR.getIndex());
 	}

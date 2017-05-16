@@ -68,6 +68,11 @@ public class VideoStructureController {
 		return new ModelAndView("video/right/test_websocket");
 	}
 	
+	@GetMapping("test_websocket2")
+	public ModelAndView test_websocket2() {
+		return new ModelAndView("video/right/test_websocket2");
+	}
+	
 	@GetMapping("haode")
 	public ModelAndView haode() {
 		return new ModelAndView("video/right/haode");

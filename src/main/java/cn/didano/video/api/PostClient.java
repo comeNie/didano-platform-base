@@ -136,7 +136,7 @@ public class PostClient {
 							if(isOneTrue){
 								isOn = true;
 							}
-						}
+						} 
 						out_View_staff_channel.getStart_ends().add(vd_auth_time_control.getStart()+"-"+vd_auth_time_control.getEnd());
 					}
 						//设置时间控制状态

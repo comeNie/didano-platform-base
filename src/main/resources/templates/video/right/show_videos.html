@@ -9,15 +9,12 @@
 <link rel="stylesheet" href="../video/css/basicStyle.css" />
 <link rel="stylesheet" href="../video/css/payAuth.css" />
 <link rel="stylesheet" href="http://g.alicdn.com/de/prismplayer/1.5.5/skins/default/index.css" />
-<script type="text/javascript" src="http://g.alicdn.com/de/prismplayer/1.5.5/prism-min.js"></script>
-
-
-
 <style type="text/css">
 body {
     background: #ccc;
 }
 </style>
+<script type="text/javascript" src="http://g.alicdn.com/de/prismplayer/1.5.5/prism-min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     var spanStr = "";
@@ -151,76 +148,89 @@ function channel_add(obj){
     var channel_des = document.getElementById("channel_des").value;
     var ossPushUrl = document.getElementById("ossPushUrl").value;
     var ossPlayUrl = document.getElementById("ossPlayUrl").value;
-    $.ajax({
-        url: server_url+"/video/rest/post/channel_add", 
-        type:'post',
-        dataType:'json',
-        contentType: "application/json; charset=utf-8",
-        data:JSON.stringify({
-            "classId": channel_classId,
-            "enName": channel_enName,
-            "name": channel_name,
-            "schoolId": SCHOOL_ID,
-            "des": channel_des,
-            "type": 0,
-            "ossPlayUrl": ossPlayUrl,
-            "ossPushUrl":ossPushUrl,
-        }),
-        success:function(data){
-            if(data.success){
-                alert("添加监控频道成功");
-                var all_channel = $('.all_channel').children().text();
-                $('.all_channel').children().text(parseInt(all_channel)+1);
-                var obj = '#' + SCHOOL_ID;
-                var school_all = $(obj).children("span:last-child").text();
-                $(obj).children("span:last-child").text(parseInt(school_all)+1);
-                var channelLiveArr = $(obj).attr('name').split('|');
-                var channelLiveStr = parseInt(channelLiveArr[0])+1+"|"+channelLiveArr[1];
-                $(obj).attr('name',channelLiveStr);
-                getSchool(obj);
-            }
-        },
-        error:function(){
-            alert("error");
-        },
-    });
+    var aa=document.getElementById("labelchannel_enName");
+    if(channel_enName==""){
+    	aa.innerHTML="请将英文名称填写完整！";
+    	window.event.cancelBubble = true;
+		return false;
+    }else{
+        $.ajax({
+            url: server_url+"/video/rest/post/channel_add", 
+            type:'post',
+            dataType:'json',
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify({
+                "classId": channel_classId,
+                "enName": channel_enName,
+                "name": channel_name,
+                "schoolId": SCHOOL_ID,
+                "des": channel_des,
+                "type": 0,
+                "ossPlayUrl": ossPlayUrl,
+                "ossPushUrl":ossPushUrl,
+            }),
+            success:function(data){
+                if(data.success){
+                    alert("添加监控频道成功");
+                    var all_channel = $('.all_channel').children().text();
+                    $('.all_channel').children().text(parseInt(all_channel)+1);
+                    var obj = '#' + SCHOOL_ID;
+                    var school_all = $(obj).children("span:last-child").text();
+                    $(obj).children("span:last-child").text(parseInt(school_all)+1);
+                    var channelLiveArr = $(obj).attr('name').split('|');
+                    var channelLiveStr = parseInt(channelLiveArr[0])+1+"|"+channelLiveArr[1];
+                    $(obj).attr('name',channelLiveStr);
+                    getSchool(obj);
+                }
+            },
+            error:function(){
+                alert("error");
+            },
+        });
+    }
 }
 function live_add(){
     var live_name = document.getElementById("live_name").value;
     var live_enName = document.getElementById("live_enName").value;
     var live_classId = document.getElementById("live_classId").value;
     var live_des = document.getElementById("live_des").value;
-    $.ajax({
-        url: server_url+"/video/rest/post/channel_add", 
-        type:'post',
-        dataType:'json',
-        contentType: "application/json; charset=utf-8",
-        data:JSON.stringify({
-            "classId": live_classId,
-            "enName": live_enName,
-            "name": live_name,
-            "schoolId": SCHOOL_ID,
-            "des": live_des,
-            "type": 1,
-        }),
-        success:function(data){
-            if(data.success){
-                alert("添加直播频道成功");
-                var all_live = $('.all_live').children().text();
-                $('.all_live').children().text(parseInt(all_live)+1);
-                var obj = '#' + SCHOOL_ID;
-                var school_all = $(obj).children("span:last-child").text();
-                $(obj).children("span:last-child").text(parseInt(school_all)+1);
-                var channelLiveArr = $(obj).attr('name').split('|');
-                var channelLiveStr = channelLiveArr[0]+"|"+ (parseInt(channelLiveArr[1])+1);
-                $(obj).attr('name',channelLiveStr);
-                getSchool(obj);
-            }
-        },
-        error:function(){
-            alert("error");
-        },
-    });
+    if(live_enName==""){
+    	document.getElementById("labellive_enName").innerHTML="请将英文名称填写完整！";
+    	window.event.cancelBubble = true;
+		return false;
+    }else{
+    	$.ajax({
+            url: server_url+"/video/rest/post/channel_add", 
+            type:'post',
+            dataType:'json',
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify({
+                "classId": live_classId,
+                "enName": live_enName,
+                "name": live_name,
+                "schoolId": SCHOOL_ID,
+                "des": live_des,
+                "type": 1,
+            }),
+            success:function(data){
+                if(data.success){
+                    alert("添加直播频道成功");
+                    var all_live = $('.all_live').children().text();
+                    $('.all_live').children().text(parseInt(all_live)+1);
+                    var obj = '#' + SCHOOL_ID;
+                    var school_all = $(obj).children("span:last-child").text();
+                    $(obj).children("span:last-child").text(parseInt(school_all)+1);
+                    var channelLiveArr = $(obj).attr('name').split('|');
+                    var channelLiveStr = channelLiveArr[0]+"|"+ (parseInt(channelLiveArr[1])+1);
+                    $(obj).attr('name',channelLiveStr);
+                    getSchool(obj);
+                }
+            },
+            error:function(){
+                alert("error");
+            },
+        });
+    }
 }
 
 var channelOldId = '';
@@ -294,7 +304,6 @@ function live_edit(obj){
 		window.event.cancelBubble = true;
 		return false;
 	}else{
-		
 		document.getElementById(EnName).innerHTML="";
 		var live_edit_name_id = "live_edit_name"+$(obj).attr('id');
 	    var live_edit_name = document.getElementById(live_edit_name_id).value;
@@ -444,7 +453,7 @@ function deleted(obj){
 												<label>英文名称</label>
 												<p>
 													<input type="text" name="channel_enName"
-														placeholder="请输入英文名" id="channel_enName">
+														placeholder="请输入英文名" id="channel_enName"><label style="color: red" id="labelchannel_enName"></label>
 												</p>
 											</div>
 											<!-- <div class="form-group">  
@@ -557,7 +566,7 @@ function deleted(obj){
 												<label>英文名称</label>
 												<p>
 													<input type="text" name="live_enName" placeholder="请输入英文名"
-														id="live_enName">
+														id="live_enName"><label style="color: red" id="labellive_enName"></label>
 												</p>
 											</div>
 											<!-- <div class="form-group">  

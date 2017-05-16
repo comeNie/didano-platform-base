@@ -46,7 +46,7 @@ public class FileSystemStorageService implements StorageService {
 			}
 
 		} catch (IOException e) {
-			throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
+			logger.error("Failed to store file " + file.getOriginalFilename(), e);
 		}
 	}
 
@@ -56,7 +56,8 @@ public class FileSystemStorageService implements StorageService {
 			return Files.walk(this.rootLocation, 1).filter(path -> !path.equals(this.rootLocation))
 					.map(path -> this.rootLocation.relativize(path));
 		} catch (IOException e) {
-			throw new StorageException("Failed to read stored files", e);
+			logger.error("Failed to read stored files:"+e.getMessage(),e);
+			return null;
 		}
 
 	}
@@ -107,8 +108,9 @@ public class FileSystemStorageService implements StorageService {
 		    if(!fileZip.exists()){
 		    	throw new StorageFileNotFoundException("Could not read file: " + interactive.getLinuxZipAddress());
 		    }
-		} catch (IOException e) {
-			throw new StorageException("Could not initialize storage", e);
+		}
+		catch (IOException e) {
+			logger.error("Could not initialize storage", e);
 		}
 	}
 }

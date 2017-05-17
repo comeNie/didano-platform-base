@@ -108,8 +108,11 @@ public class InteractiveModelWritingController {
 			Tb_interactive_catalog catalog=null;
 			Tb_interactive_catalog catalogParent=null;
 			for (int i = 0; i < models.size(); i++) {
+				//更具包类型的id进行查找种类
 			   catalog = interactiveService.findCatalogById(models.get(i).getCatalog());
+			   //根据父类id查找种类
                catalogParent=interactiveService.findCatalogById(catalog.getParentId());
+               //组合种类名称
 			   StringBuilder sb=new StringBuilder(catalogParent.getName());
 			   sb.append("-"+catalog.getName());
 			   models.get(i).setCatalogName(sb.toString());

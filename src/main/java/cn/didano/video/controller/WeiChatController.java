@@ -68,10 +68,10 @@ public class WeiChatController {
 				// 启动链接
 				HttpURLConnection http = (HttpURLConnection) urlGet.openConnection();
 				// 设置链接参数与要求
-				http.setRequestMethod("GET"); // 必须是get方式请求
-				http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-				http.setDoOutput(true);
-				http.setDoInput(true);
+					http.setRequestMethod("GET"); // 必须是get方式请求
+					http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+					http.setDoOutput(true);
+					http.setDoInput(true);
 				System.setProperty("sun.net.client.defaultConnectTimeout", "30000");// 连接超时30�?
 				System.setProperty("sun.net.client.defaultReadTimeout", "30000"); // 读取超时30�?
 				// 链接

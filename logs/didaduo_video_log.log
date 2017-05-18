@@ -441,3 +441,7 @@
 2017-04-21 19:39:59.962 [http-nio-8555-exec-1] DEBUG cn.didano.video.json.Out - 成功
 2017-04-21 19:40:00.760 [http-nio-8555-exec-1] DEBUG cn.didano.video.json.Out - 成功
 2017-04-21 19:47:18.537 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-05-18 16:58:12.625 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-05-18 17:00:21.034 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-05-18 17:01:10.232 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource
+2017-05-18 17:01:23.964 [restartedMain] DEBUG cn.didano.video.app.config.MybatisConfig - Configuring Datasource

@@ -8,7 +8,7 @@ import cn.didano.robot.data.Robot_ManageInfo;
 import cn.didano.robot.data.Robot_MeetPropertyInfo;
 import cn.didano.robot.data.Robot_MeetSpeedInfo;
 import cn.didano.robot.data.Robot_OnLineInfo;
-import cn.didano.robot.data.Robot_OperationInfo;
+import cn.didano.robot.data.Robot_LinuxHardWareUsed;
 import cn.didano.robot.data.Robot_PhotographicQualityInfo;
 import cn.didano.robot.data.Robot_SelfLnspectionInfo;
 import cn.didano.robot.data.Robot_TemperatureInfo;
@@ -120,8 +120,8 @@ public class RobotMongoDbDataService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public Robot_OperationInfo saveOperationInfo(Robot_OperationInfo operationInfo) {
-		return this.o_repository.save(operationInfo);
+	public Robot_LinuxHardWareUsed saveOperationInfo(Robot_LinuxHardWareUsed linuxHarfWareUsed) {
+		return this.o_repository.save(linuxHarfWareUsed);
 	}
 	
 	/**

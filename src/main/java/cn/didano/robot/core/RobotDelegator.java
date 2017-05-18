@@ -36,6 +36,9 @@ public class RobotDelegator {
 			Class<?> para = getParameterType(robot, upInfo.getMethodName());
 			if (para != null) {
 				String jsonString = mapper.writeValueAsString(upInfo.getInfo());
+				jsonString=jsonString.substring(0,jsonString.length()-1);
+				jsonString+=",\"deviceNo\":\""+upInfo.getDeviceNo()+"\"}";
+				System.err.println(jsonString);
 				Object[] o = new Object[] { mapper.readValue(jsonString, para) };
 				back = invokeMethod(robot, upInfo.getMethodName(), o);
 				if (back == null) {// 说明出现了异常

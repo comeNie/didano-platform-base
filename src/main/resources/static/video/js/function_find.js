@@ -90,7 +90,7 @@
 	 }
 	 //-----------------------------------------------------------------
 	 function queryOperationInfoAll(){
-		var tr='<tr><td>机器人编号</td><td>安卓CPU占用</td><td>安卓内存</td><td>flash占用情况</td><td>Linux的CPU</td><td>Linux的内存</td><td>Linux的flash占用情况</td><td>wifi信号比</td><td>上传的时间</td></tr>';
+		var tr='<tr><td>机器人编号</td><td>安卓CPU占用</td><td>安卓中CPU总占用最高的进程名称</td><td>安卓中CPU总占用最高进程的百分比</td><td>安卓CPU获取的时间</td><td>安卓总内存</td><td>安卓剩余总内存</td><td>安卓内存获取的时间</td><td>安卓flash总占用情况</td><td>安卓flash剩余总占用情况</td><td>获取安卓flash占用情况的时间</td><td>Linux总的CPU</td><td>Linux中CPU总占用最高的进程名称</td><td>Linux中CPU总占用最高进程的百分比</td><td>获取LinuxCPU的时间</td><td>Linux的总内存</td><td>Linux的内存</td><td>获取Linux内存的时间</td><td>linux的flash总占用情况</td><td>linux的flash剩余占用情况</td><td>获取linux的flash时间</td><td>平均wifi信号比</td><td>获取到wifi时间</td></tr>';
 		 $.ajax({
 	            url:"/robot/find/queryOperationInfoAll", 
 	            type:'post',
@@ -99,7 +99,7 @@
 	           	success:function(data){
 	                 $.each(data,function(i,obj){
 	                	if(i==data.length-1){
-	                		tr+='<tr><td>'+obj.deviceNo+'</td><td>'+obj.androidCPU+'</td><td>'+obj.androidBoardMemory+'</td><td>'+obj.androidFlashOccupation+'</td><td>'+obj.linuxCPU+'</td><td>'+obj.linuxBoardMemory+'</td><td>'+obj.linuxFlashOccupation+'</td><td>'+obj.wifiSignalRation+'</td><td>'+obj.createDate+'</td></tr>';													 
+	                		tr+='<tr><td>'+obj.deviceNo+'</td><td>'+obj.androidCPU+'</td><td>'+obj.androidCPUHighestName+'</td><td>'+obj.androidCPUHighestPercent+'</td><td>'+obj.androidCPUTime+'</td><td>'+obj.androidBoardMemory+'</td><td>'+obj.androidBoardMemoryResidue+'</td><td>'+obj.androidBoardTime+'</td><td>'+obj.androidFlashOccupation+'</td><td>'+obj.androidFlashOccupationResidue+'</td><td>'+obj.androidFlashOccupationTime+'</td><td>'+obj.linuxCPU+'</td><td>'+obj.linuxCPUHighestName+'</td><td>'+obj.linuxaCPUHighestPercent+'</td><td>'+obj.linuxCPUTime+'</td><td>'+obj.linuxBoardMemory+'</td><td>'+obj.linuxBoardMemoryResidue+'</td><td>'+obj.linuxBoardTime+'</td><td>'+obj.linuxFlashOccupation+'</td><td>'+obj.linuxFlashOccupationResidue+'</td><td>'+obj.linuxFlashTime+'</td><td>'+obj.wifiSignalRation+'</td><td>'+obj.wifiSignalRationTime+'</td></tr>';													 
 	                		$("#methodName").append(tr);
 	                	}
 	                });

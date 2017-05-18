@@ -10,7 +10,7 @@ import cn.didano.robot.data.Robot_ManageInfo;
 import cn.didano.robot.data.Robot_MeetPropertyInfo;
 import cn.didano.robot.data.Robot_MeetSpeedInfo;
 import cn.didano.robot.data.Robot_OnLineInfo;
-import cn.didano.robot.data.Robot_OperationInfo;
+import cn.didano.robot.data.Robot_LinuxHardWareUsed;
 import cn.didano.robot.data.Robot_PhotographicQualityInfo;
 import cn.didano.robot.data.Robot_SelfLnspectionInfo;
 import cn.didano.robot.data.Robot_TemperatureInfo;
@@ -192,7 +192,7 @@ public class RobotMongoDbFindService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public List<Robot_OperationInfo> queryOperationInfo() {
+	public List<Robot_LinuxHardWareUsed> queryOperationInfo() {
 		return this.o_repository.findAll();
 	}
 	

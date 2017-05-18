@@ -22,20 +22,6 @@
     	<div class="col-md-12 list-body bg-color-white width-80 padding-rl-0">
 	    	<div class="col-md-12 list-title list-height">
 	    		 诊断平台：小诺的环境温度
-	    		 <!-- <div style="margin-top: 6px;margin-right: 0px;">
-	    		 	显示机器人：
-			      	<select id="robot" style="width:200px;height: 40px" onchange="robot(this)">
-			        <option value="1">--2sf21---</option>   
-			        <option value="2">小诺</option>   
-			        <option value="3">小诺</option>   
-			        <option value="4">小诺</option>   
-			        <option value="5">小诺</option>   
-			        <option value="6">小诺</option>   
-			        <option value="7">小诺</option>
-			        <option value="8">小诺</option>
-			        <option value="9">小诺</option>
-			      </select>
-	    		 </div> -->
 	    	</div>
 	    	<div class="container">
 			      <table id="table"
@@ -47,13 +33,14 @@
 		               data-search="true"
 		               data-pagination="true"
 		               data-key-events="true"
-		               data-url="/robot/find/queryTemperatureInfoAll">
+		               data-url="http://localhost:8555/robot/find/queryTemperatureInfoAll">
 		            <thead style="">
 		            <!-- 1、机器人自检信息的显示 -->
 		            <tr id="tr1" class="tr1" style="display: block;">
 		                <th data-field="deviceNo">机器人编号</th>
 		                <th data-field="environmentTemperature">环境温度</th>
 		                <th data-field="cPUTemperature" >CPU温度</th>
+		                <th data-field="cPUTemperatureTime" >获取CPU温度的时间</th>
 		                <th data-field="createDate" >上传的时间</th>
 		            </tr>
 		            </thead>
@@ -65,32 +52,8 @@
             </div>
             <!-- <div class="col-md-12 list-height">班级列表</div> -->
             <div class="col-md-12 class-list-body padding-rl-0"> 
-                <!-- <div class="col-md-12 class-list-comment list-height">草莓班</div>
-                <div class="col-md-1">
-                    <span class="rectangular"></span>
-                    <span>小明</span>
-                </div>
-                <div class="col-md-1">
-                    <span class="rectangular"></span>
-                    <span>小明</span>
-                </div>
-                <div class="col-md-1">
-                    <span class="rectangular"></span>
-                    <span>小明</span>
-                </div>
-                <div class="col-md-1">
-                    <span class="rectangular"></span>
-                    <span>小明</span>
-                </div>
-                <div class="col-md-1">
-                    <span class="rectangular"></span>
-                    <span>小明</span>
-                </div> -->
-
             </div>
         </div>
-
     </div>
-    
 </body>
 </html>

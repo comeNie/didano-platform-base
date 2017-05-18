@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.didano.base.exception.BackType;
+import cn.didano.robot.core.UpInfo;
 import cn.didano.robot.data.Robot_HardwareInfo;
 import cn.didano.robot.data.Robot_ManageInfo;
 import cn.didano.robot.data.Robot_MeetPropertyInfo;
 import cn.didano.robot.data.Robot_MeetSpeedInfo;
 import cn.didano.robot.data.Robot_OnLineInfo;
-import cn.didano.robot.data.Robot_OperationInfo;
+import cn.didano.robot.data.Robot_LinuxHardWareUsed;
 import cn.didano.robot.data.Robot_PhotographicQualityInfo;
 import cn.didano.robot.data.Robot_SelfLnspectionInfo;
 import cn.didano.robot.data.Robot_TemperatureInfo;
@@ -107,6 +108,8 @@ public class RobotUpController {
 		Out<String> out = new Out<String>();
 
 		try {
+			UpInfo u=new UpInfo();
+			System.err.println(u.getDeviceNo()+"-------上报温度----");
 			// 直接保存信息
 			Object o = robotMongoDbDataService.saveTemperatureInfo(temperatureInfo);
 			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
@@ -127,18 +130,21 @@ public class RobotUpController {
 	 * @return Out<String> 修改人：
 	 * 版本：1.0.0 @throws
 	 */
-	@PostMapping(value = "reportOperationInfo")
-	@ApiOperation(value = "上报运行环境的信息", notes = "上报运行环境的信息")
+	@PostMapping(value = "reportLinuxHardWareUsed")
+	@ApiOperation(value = "上报linux运行环境的信息", notes = "上报linux运行环境的信息")
 	@ResponseBody
-	public Out<String> reportOperationInfo(
-			@ApiParam(value = "远程机器人运行环境的信息", required = true) @RequestBody Robot_OperationInfo operationInfo) {
-		logger.info("访问  RobotController :reportTemperatureInfo HardwareInfo=" + operationInfo);
-		System.err.println("上报运行环境的信息");
+	public Out<String> reportLinuxHardWareUsed(
+			@ApiParam(value = "上报linux运行环境的信息", required = true) @RequestBody Robot_LinuxHardWareUsed linuxHardWareUsed) {
+		logger.info("访问  RobotController :Robot_LinuxHardWareUsed Robot_LinuxHardWareUsed=" + linuxHardWareUsed);
+		System.err.println("上报linux运行环境的信息");
 		Out<String> out = new Out<String>();
-
 		try {
+			//将设备号保存进来
+			System.err.println("123");
+			UpInfo u=new UpInfo();
+			System.err.println(u.getDeviceNo()+"-----------");
 			// 直接保存信息
-			Object o = robotMongoDbDataService.saveOperationInfo(operationInfo);
+			Object o = robotMongoDbDataService.saveOperationInfo(linuxHardWareUsed);
 			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -165,7 +171,6 @@ public class RobotUpController {
 		logger.info("访问  RobotController :reportSelfLnspectionInfo HardwareInfo=" + SelfLnspectionInfo);
 		System.err.println("上报机器人的自检信息");
 		Out<String> out = new Out<String>();
-
 		try {
 			// 直接保存信息
 			Object o = robotMongoDbDataService.saveSelfLnspectionInfo(SelfLnspectionInfo);

@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @类名称：TemperatureInfo
- * @类描述：上报环境温度信息 
+ * @类描述：上报环境温度信息
  * @创建人：杨朝强
  * @创建时间：2017年3月17日 下午3:38:14：
  * @version
@@ -37,7 +37,17 @@ public class Robot_TemperatureInfo extends RInfo {
 	private String environmentTemperature;
 	@ApiModelProperty(value = "CPU温度", required = true)
 	private String cPUTemperature;
-	
+	@ApiModelProperty(value = "获取CPU温度的时间", required = true)
+	private String cPUTemperatureTime;
+
+	public String getcPUTemperatureTime() {
+		return cPUTemperatureTime;
+	}
+
+	public void setcPUTemperatureTime(String cPUTemperatureTime) {
+		this.cPUTemperatureTime = cPUTemperatureTime;
+	}
+
 	public String getEnvironmentTemperature() {
 		return environmentTemperature;
 	}
@@ -46,7 +56,6 @@ public class Robot_TemperatureInfo extends RInfo {
 		this.environmentTemperature = environmentTemperature;
 	}
 
-	
 	public String getDeviceNo() {
 		return deviceNo;
 	}
@@ -80,5 +89,5 @@ public class Robot_TemperatureInfo extends RInfo {
 		return "{\"deviceNo\":\"" + deviceNo + "\",\"environmentTemperature\":\"" + environmentTemperature
 				+ "\",\"cPUTemperature\":\"" + cPUTemperature + "\"}  ";
 	}
-	
+
 }

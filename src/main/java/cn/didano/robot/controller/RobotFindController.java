@@ -15,7 +15,7 @@ import cn.didano.robot.data.Robot_ManageInfo;
 import cn.didano.robot.data.Robot_MeetPropertyInfo;
 import cn.didano.robot.data.Robot_MeetSpeedInfo;
 import cn.didano.robot.data.Robot_OnLineInfo;
-import cn.didano.robot.data.Robot_OperationInfo;
+import cn.didano.robot.data.Robot_LinuxHardWareUsed;
 import cn.didano.robot.data.Robot_PhotographicQualityInfo;
 import cn.didano.robot.data.Robot_SelfLnspectionInfo;
 import cn.didano.robot.data.Robot_TemperatureInfo;
@@ -202,8 +202,8 @@ public class RobotFindController {
 	@RequestMapping(value = "queryOperationInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
 	@ApiOperation(value = "查询运行环境信息,并且不分页", notes = "查询环境信息,并且不分页")
 	@ResponseBody
-	public List<Robot_OperationInfo> queryOperationInfoAll() {
-		List<Robot_OperationInfo> operationInfo=null;
+	public List<Robot_LinuxHardWareUsed> queryOperationInfoAll() {
+		List<Robot_LinuxHardWareUsed> operationInfo=null;
 		try {
 			operationInfo = robotMongoDbFindService.queryOperationInfo();
 		} catch (Exception e) {

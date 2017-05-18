@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 @JsonInclude(JsonInclude.Include.NON_EMPTY) 
 public class UpInfo {
 	private String methodName;
+	private String deviceNo;
 	private JsonNode info;
 	public String getMethodName() {
 		return methodName;
@@ -23,4 +24,11 @@ public class UpInfo {
 	public void setInfo(JsonNode info) {
 		this.info = info;
 	}
+	public String getDeviceNo() {
+		return deviceNo;
+	}
+	public void setDeviceNo(String deviceNo) {
+		this.deviceNo = deviceNo;
+	}
+	
 }

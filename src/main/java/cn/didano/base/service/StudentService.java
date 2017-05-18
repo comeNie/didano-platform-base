@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.didano.base.constant.DeletedType;
+import cn.didano.base.constant.StatusType;
 import cn.didano.base.dao.Hand_student4MailListHasParentsMapper;
 import cn.didano.base.dao.Tb_schoolparentMapper;
 import cn.didano.base.dao.Tb_studentMapper;
@@ -20,8 +22,6 @@ import cn.didano.base.model.Tb_studentExample;
 import cn.didano.base.model.Tb_student_detection4photoWall;
 import cn.didano.base.model.Tb_student_detection4photoWallExample;
 import cn.didano.base.model.Tb_studentparent;
-import cn.didano.video.constant.DeletedType;
-import cn.didano.video.constant.StatusType;
 
 /**
  * 

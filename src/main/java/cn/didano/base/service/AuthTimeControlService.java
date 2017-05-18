@@ -22,7 +22,7 @@ import cn.didano.base.model.Tb_studentRecordExample;
 import cn.didano.base.model.Tb_student_detection;
 import cn.didano.base.model.Vd_auth_time_control;
 import cn.didano.base.model.Vd_auth_time_controlExample;
-import cn.didano.video.util.TimeUtil;
+import cn.didano.base.util.TimeUtil;
 
 
 /**
@@ -33,12 +33,6 @@ import cn.didano.video.util.TimeUtil;
 public class AuthTimeControlService {
 	@Autowired
 	private Vd_auth_time_controlMapper time_controlMapper;
-	
-	@Autowired
-	private Tb_student_detectionMapper student_detectionMapper;
-	
-	@Autowired
-	private Tb_benchmarkMapper benchmarkMapper;
 	
 	@Autowired
 	private Tb_studentRecordMapper studentRecordMapper;

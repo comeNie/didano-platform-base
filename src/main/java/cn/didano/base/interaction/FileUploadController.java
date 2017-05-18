@@ -25,8 +25,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cn.didano.base.model.Tb_interactive_catalog;
 import cn.didano.base.model.Tb_interactive_model;
+import cn.didano.base.properties.InteractiveProperties;
 import cn.didano.base.service.InteractiveModelService;
-import cn.didano.video.entity.Interactive;
 import io.swagger.annotations.Api;
 
 @Api(value = "互动模块照片模板上传")
@@ -36,7 +36,7 @@ public class FileUploadController {
 
 	private final StorageService storageService;
 	@Autowired
-	private Interactive interactive;
+	private InteractiveProperties interactive;
 	@Autowired
 	private InteractiveModelService interactiveService;
 

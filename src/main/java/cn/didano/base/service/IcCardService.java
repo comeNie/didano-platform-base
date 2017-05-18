@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.didano.base.constant.DeletedType;
 import cn.didano.base.dao.Hand_Staff_icMapper;
 import cn.didano.base.dao.Hand_ic_cardMapper;
 import cn.didano.base.dao.Tb_ic_cardMapper;
@@ -19,7 +20,6 @@ import cn.didano.base.model.Hand_staffTransit4PhoneBook;
 import cn.didano.base.model.Tb_ic_card;
 import cn.didano.base.model.Tb_ic_cardExample;
 import cn.didano.base.model.Tb_staff;
-import cn.didano.video.constant.DeletedType;
 
 /**
  * 

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import cn.didano.video.entity.Interactive;
+import cn.didano.base.properties.*;
 
 @Service
 public class FileSystemStorageService implements StorageService {
@@ -30,7 +30,7 @@ public class FileSystemStorageService implements StorageService {
 		this.rootLocation = Paths.get(properties.getLocation());
 	}
 	@Autowired
-	private Interactive interactive;
+	private InteractiveProperties interactive;
 
 	@Override
 	public void store(MultipartFile file, int i) {

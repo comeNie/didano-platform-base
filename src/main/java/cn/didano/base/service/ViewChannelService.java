@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.didano.base.constant.OwnerType;
 import cn.didano.base.dao.Hand_auth_switchMapper;
 import cn.didano.base.dao.View_channel_infoMapper;
 import cn.didano.base.dao.View_channel_info_onMapper;
@@ -21,7 +22,6 @@ import cn.didano.base.model.View_staff_channel;
 import cn.didano.base.model.View_staff_channelExample;
 import cn.didano.base.model.View_student_channel;
 import cn.didano.base.model.View_student_channelExample;
-import cn.didano.video.constant.OwnerType;
 
 /**
  * @author stephen

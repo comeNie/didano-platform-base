@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.didano.base.constant.DeletedType;
+import cn.didano.base.constant.StatusType;
 import cn.didano.base.dao.Tb_schoolMapper;
 import cn.didano.base.exception.DBExceptionEnums;
 import cn.didano.base.exception.ServiceException;
+import cn.didano.base.json.In_School_Search;
 import cn.didano.base.model.Tb_school;
 import cn.didano.base.model.Tb_schoolExample;
-import cn.didano.video.constant.DeletedType;
-import cn.didano.video.constant.StatusType;
-import cn.didano.video.json.In_School_Search;
 
 /**
  * 学校服务

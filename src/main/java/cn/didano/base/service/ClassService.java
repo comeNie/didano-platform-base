@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.didano.base.constant.DeletedType;
 import cn.didano.base.dao.Tb_classMapper;
 import cn.didano.base.exception.DBExceptionEnums;
 import cn.didano.base.exception.ServiceException;
 import cn.didano.base.model.Tb_class;
 import cn.didano.base.model.Tb_classExample;
-import cn.didano.video.constant.DeletedType;
 
 /**
  * 班级服务

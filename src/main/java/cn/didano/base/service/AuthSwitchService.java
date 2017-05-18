@@ -13,11 +13,11 @@ import cn.didano.base.dao.Vd_auth_switchMapper;
 import cn.didano.base.dao.View_switch_s_cMapper;
 import cn.didano.base.exception.DBExceptionEnums;
 import cn.didano.base.exception.ServiceException;
+import cn.didano.base.json.In_Switch_Search;
 import cn.didano.base.model.Vd_auth_switch;
 import cn.didano.base.model.Vd_auth_switchExample;
 import cn.didano.base.model.View_switch_s_c;
 import cn.didano.base.model.View_switch_s_cExample;
-import cn.didano.video.json.In_Switch_Search;
 
 /**
  * 视频授权开关服务

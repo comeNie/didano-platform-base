@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.didano.base.constant.DeletedType;
 import cn.didano.base.dao.Hand_Staff_icMapper;
 import cn.didano.base.dao.Tb_sign_typeMapper;
 import cn.didano.base.dao.Hand_staff4PhoneBookMapper;
@@ -25,7 +26,6 @@ import cn.didano.base.model.Tb_staff_class;
 import cn.didano.base.model.Tb_staff_classExample;
 import cn.didano.base.model.Tb_staff_signdate;
 import cn.didano.base.model.Tb_staff_signdateExample;
-import cn.didano.video.constant.DeletedType;
 
 /**
  * 学校服务

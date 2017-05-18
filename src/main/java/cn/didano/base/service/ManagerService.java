@@ -6,12 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.didano.base.constant.ChannelType;
+import cn.didano.base.constant.DeletedType;
+import cn.didano.base.constant.StatusType;
 import cn.didano.base.dao.Vd_channelMapper;
 import cn.didano.base.model.Vd_channel;
 import cn.didano.base.model.Vd_channelExample;
-import cn.didano.video.constant.ChannelType;
-import cn.didano.video.constant.DeletedType;
-import cn.didano.video.constant.StatusType;
 import cn.didano.video.entity.InfoChannel_C;
 import cn.didano.video.entity.WholeChannelInfo;
 

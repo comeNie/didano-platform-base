@@ -8,16 +8,15 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.didano.base.constant.DeletedType;
 import cn.didano.base.dao.Hand_channelMapper;
 import cn.didano.base.dao.Vd_channelMapper;
 import cn.didano.base.exception.DBExceptionEnums;
 import cn.didano.base.exception.ServiceException;
+import cn.didano.base.json.In_Channel_Search;
+import cn.didano.base.model.ChannelStatus;
 import cn.didano.base.model.Vd_channel;
 import cn.didano.base.model.Vd_channelExample;
-import cn.didano.video.auth.channel.ChannelStatus;
-import cn.didano.video.constant.DeletedType;
-import cn.didano.video.constant.StatusType;
-import cn.didano.video.json.In_Channel_Search;
 
 /**
  * 

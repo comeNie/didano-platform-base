@@ -30,41 +30,36 @@ public class Robot_PhotographicQualityInfo extends RInfo {
 	@ApiModelProperty(value = "产品硬件识别码", required = true)
 	private String deviceNo;
 	@ApiModelProperty(value = "平均的信心指数", required = true)
-	private String acerageConfidenceIndex;
+	private String confidence_statistics_max;
 	@ApiModelProperty(value = "最大信心指数", required = true)
-	private String maximumConfidenceInfo;
+	private String confidence_statistics_average;
 	@ApiModelProperty(value = "最小信心指数", required = true)
-	private String minimumConfidenceInfo;
+	private String confidence_statistics_min;
 	//m_webSocket.sendTextMessage(QStringLiteral("{\"methodName\":\"reportPhotographicQualityInfo\",\"info\":{\"deviceNo\":\"2sf21\",\"acerageConfidenceIndex\":\"你是我的眼\",\"maximumConfidenceInfo\":\"3.2\",\"minimumConfidenceInfo\":\"5.1\"}}"));
-
+	
 	public String getDeviceNo() {
 		return deviceNo;
 	}
 	public void setDeviceNo(String deviceNo) {
 		this.deviceNo = deviceNo;
 	}
-	public String getAcerageConfidenceIndex() {
-		return acerageConfidenceIndex;
+	public String getConfidence_statistics_max() {
+		return confidence_statistics_max;
 	}
-	public void setAcerageConfidenceIndex(String acerageConfidenceIndex) {
-		this.acerageConfidenceIndex = acerageConfidenceIndex;
+	public void setConfidence_statistics_max(String confidence_statistics_max) {
+		this.confidence_statistics_max = confidence_statistics_max;
 	}
-	public String getMaximumConfidenceInfo() {
-		return maximumConfidenceInfo;
+	public String getConfidence_statistics_average() {
+		return confidence_statistics_average;
 	}
-	public void setMaximumConfidenceInfo(String maximumConfidenceInfo) {
-		this.maximumConfidenceInfo = maximumConfidenceInfo;
+	public void setConfidence_statistics_average(String confidence_statistics_average) {
+		this.confidence_statistics_average = confidence_statistics_average;
 	}
-	public String getMinimumConfidenceInfo() {
-		return minimumConfidenceInfo;
+	public String getConfidence_statistics_min() {
+		return confidence_statistics_min;
 	}
-	public void setMinimumConfidenceInfo(String minimumConfidenceInfo) {
-		this.minimumConfidenceInfo = minimumConfidenceInfo;
+	public void setConfidence_statistics_min(String confidence_statistics_min) {
+		this.confidence_statistics_min = confidence_statistics_min;
 	}
-	@Override
-	public String toString() {
-		return "{\"deviceNo\":\"" + deviceNo + "\",\"acerageConfidenceIndex\":\"" + acerageConfidenceIndex
-				+ "\",\"maximumConfidenceInfo\":\"" + maximumConfidenceInfo + "\",\"minimumConfidenceInfo\":\""
-				+ minimumConfidenceInfo + "\"}  ";
-	}
+	
 }

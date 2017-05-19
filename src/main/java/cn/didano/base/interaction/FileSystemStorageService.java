@@ -97,16 +97,16 @@ public class FileSystemStorageService implements StorageService {
 		    File filePic = new File(interactive.getLinuxPicAddress());
 		    if(!filePic.exists()){
 		    	
-		    	throw new StorageFileNotFoundException("Could not read file: " + interactive.getLinuxPicAddress());
+		    	logger.error("Could not read file: " + interactive.getLinuxPicAddress());
 		    }
 		    File fileXml = new File(interactive.getLinuxXmlAddress());
 		    if(!fileXml.exists()){
 		    	
-		    	throw new StorageFileNotFoundException("Could not read file: " + interactive.getLinuxXmlAddress());
+		    	logger.error("Could not read file: " + interactive.getLinuxXmlAddress());
 		    }
 		    File fileZip = new File(interactive.getLinuxZipAddress());
 		    if(!fileZip.exists()){
-		    	throw new StorageFileNotFoundException("Could not read file: " + interactive.getLinuxZipAddress());
+		    	logger.error("Could not read file: " + interactive.getLinuxZipAddress());
 		    }
 		}
 		catch (IOException e) {

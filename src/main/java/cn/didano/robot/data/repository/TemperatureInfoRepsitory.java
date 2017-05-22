@@ -2,7 +2,7 @@ package cn.didano.robot.data.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import cn.didano.robot.data.Robot_TemperatureInfo;
+import cn.didano.robot.data.Robot_LinuxEnvTemperatureInfo;
 
 
 /**
@@ -12,7 +12,7 @@ import cn.didano.robot.data.Robot_TemperatureInfo;
  * @创建时间：2017年3月17日 下午4:11:05
  * @version
  */
-public interface TemperatureInfoRepsitory extends MongoRepository<Robot_TemperatureInfo, String> {
+public interface TemperatureInfoRepsitory extends MongoRepository<Robot_LinuxEnvTemperatureInfo, String> {
 	
 	/**
 	 * 创建人：SevenYang
@@ -24,5 +24,5 @@ public interface TemperatureInfoRepsitory extends MongoRepository<Robot_Temperat
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public Robot_TemperatureInfo findByDeviceNo(String device_no);
+	public Robot_LinuxEnvTemperatureInfo findByDeviceNo(String device_no);
 }

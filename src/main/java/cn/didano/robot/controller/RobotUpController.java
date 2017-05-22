@@ -10,17 +10,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cn.didano.base.exception.BackType;
 import cn.didano.robot.core.UpInfo;
+import cn.didano.robot.data.Robot_AndroidHardWareUsed;
+import cn.didano.robot.data.Robot_AndroidSoftWareVersion;
+import cn.didano.robot.data.Robot_AppRunningStatus;
+import cn.didano.robot.data.Robot_CalibrateInfo;
+import cn.didano.robot.data.Robot_CandidatesInfo;
+import cn.didano.robot.data.Robot_FinalRecogResult;
 import cn.didano.robot.data.Robot_HardwareInfo;
-import cn.didano.robot.data.Robot_ManageInfo;
-import cn.didano.robot.data.Robot_MeetPropertyInfo;
-import cn.didano.robot.data.Robot_MeetSpeedInfo;
-import cn.didano.robot.data.Robot_OnLineInfo;
+import cn.didano.robot.data.Robot_LinuxEnvTemperatureInfo;
+import cn.didano.robot.data.Robot_LinuxHardWareInfo;
 import cn.didano.robot.data.Robot_LinuxHardWareUsed;
+import cn.didano.robot.data.Robot_LinuxSoftWareVersion;
+import cn.didano.robot.data.Robot_LinuxStartUpRecord;
+import cn.didano.robot.data.Robot_MotionSoftWareVersion;
 import cn.didano.robot.data.Robot_PhotographicQualityInfo;
 import cn.didano.robot.data.Robot_SelfLnspectionInfo;
-import cn.didano.robot.data.Robot_TemperatureInfo;
 import cn.didano.robot.data.Robot_UploadType;
-import cn.didano.robot.data.Robot_VersionInfo;
 import cn.didano.robot.data.Robot_school;
 import cn.didano.robot.service.RobotMongoDbDataService;
 import cn.didano.video.json.Out;
@@ -42,16 +47,16 @@ public class RobotUpController {
 	@Autowired
 	private RobotMongoDbDataService robotMongoDbDataService;
 
-	@PostMapping(value = "reportVersionInfo")
-	@ApiOperation(value = "上报版本信息", notes = "上报版本信息")
+	@PostMapping(value = "reportLinuxSoftWareVersion")
+	@ApiOperation(value = "上报linux版本信息", notes = "上报linux版本信息")
 	@ResponseBody
-	public Out<String> reportVersionInfo(
-			@ApiParam(value = "远程机器人版本信息", required = true) @RequestBody Robot_VersionInfo robotVersionInfo) {
-		logger.info("访问  RobotController :reportVersionInfo RobotVersionInfo=" + robotVersionInfo);
-		System.err.println("上报版本信息");
+	public Out<String> reportLinuxSoftWareVersion(
+			@ApiParam(value = "上报linux版本信息", required = true) @RequestBody Robot_LinuxSoftWareVersion linuxSoftWareVersion) {
+		logger.info("访问  RobotController :reportVersionInfo RobotVersionInfo=" + linuxSoftWareVersion);
+		System.err.println("上报linux版本信息");
 		Out<String> out = new Out<String>();
 		try {
-			Object o = robotMongoDbDataService.saveRVersionInfo(robotVersionInfo);
+			Object o = robotMongoDbDataService.saveRVersionInfo(linuxSoftWareVersion);
 			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -60,6 +65,53 @@ public class RobotUpController {
 		return out;
 	}
 
+	/****--------------------->已修改
+	 * 安卓的版本信息上传
+	 * @param reportAndroidSoftWareVersion
+	 * @return
+	 */
+	@PostMapping(value = "reportAndroidSoftWareVersion")
+	@ApiOperation(value = "上报Android版本信息", notes = "上报Android版本信息")
+	@ResponseBody
+	public Out<String> reportAndroidSoftWareVersion(
+			@ApiParam(value = "上报Android版本信息", required = true) @RequestBody Robot_AndroidSoftWareVersion androidSoftWareVersion) {
+		logger.info("访问  RobotController :reportVersionInfo RobotVersionInfo=" + androidSoftWareVersion);
+		System.err.println("上报Android版本信息");
+		Out<String> out = new Out<String>();
+		try {
+			Object o = robotMongoDbDataService.saveRandroidSoftWareVersion(androidSoftWareVersion);
+			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_MONGO_SAVE, e.getMessage());
+		}
+		return out;
+	}
+	/****--------------------->已修改
+	 * 运动控制软件版本信息
+	 * @param reportMotionSoftWareVersion
+	 * @return
+	 */
+	@PostMapping(value = "reportMotionSoftWareVersion")
+	@ApiOperation(value = "运动控制软件版本信息", notes = "运动控制软件版本信息")
+	@ResponseBody
+	public Out<String> reportMotionSoftWareVersion(
+			@ApiParam(value = "运动控制软件版本信息", required = true) @RequestBody Robot_MotionSoftWareVersion motionSoftWareVersion) {
+		logger.info("访问  RobotController :reportMotionSoftWareVersion Robot_MotionSoftWareVersion=" + motionSoftWareVersion);
+		System.err.println("运动控制软件版本信息");
+		Out<String> out = new Out<String>();
+		try {
+			Object o = robotMongoDbDataService.saveRandroidSoftWareVersion(motionSoftWareVersion);
+			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_MONGO_SAVE, e.getMessage());
+		}
+		return out;
+	}
+
+	
+	
 	/**
 	 * 创建人：SevenYang 
 	 * @创建时间：2017年3月17日 下午3:59:48 
@@ -89,7 +141,7 @@ public class RobotUpController {
 		return out;
 	}
 
-	/**
+	/**------------------已经修改---------------------------------
 	 * 创建人：SevenYang 
 	 * @创建时间：2017年3月17日 下午3:59:48 
 	 * @Title:
@@ -98,20 +150,19 @@ public class RobotUpController {
 	 * @return Out<String> 修改人：
 	 * 版本：1.0.0 @throws
 	 */
-	@PostMapping(value = "reportTemperatureInfo")
+	@PostMapping(value = "reportLinuxEnvTemperatureInfo")
 	@ApiOperation(value = "上报温度信息", notes = "上报温度信息")
 	@ResponseBody
-	public Out<String> reportTemperatureInfo(
-			@ApiParam(value = "远程机器人温度信息", required = true) @RequestBody Robot_TemperatureInfo temperatureInfo) {
-		logger.info("访问  RobotController :reportTemperatureInfo HardwareInfo=" + temperatureInfo);
+	public Out<String> reportLinuxEnvTemperatureInfo(
+			@ApiParam(value = "远程机器人温度信息", required = true) @RequestBody Robot_LinuxEnvTemperatureInfo inuxEnvTemperatureInfo) {
+		logger.info("访问  RobotController :reportLinuxEnvTemperatureInfo HardwareInfo=" + inuxEnvTemperatureInfo);
 		System.err.println("上报温度信息");
-		Out<String> out = new Out<String>();
-
+		Out<String> out = new Out<String>();                                                                                                                                                                                                                                  
 		try {
 			UpInfo u=new UpInfo();
 			System.err.println(u.getDeviceNo()+"-------上报温度----");
 			// 直接保存信息
-			Object o = robotMongoDbDataService.saveTemperatureInfo(temperatureInfo);
+			Object o = robotMongoDbDataService.saveTemperatureInfo(inuxEnvTemperatureInfo);
 			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -119,9 +170,7 @@ public class RobotUpController {
 		}
 		return out;
 	}
-	
-	
-	/**
+	/**------------------已经修改---------------------------------
 	 * 创建人：SevenYang 
 	 * @创建时间：2017年3月17日 下午3:59:48 
 	 * @Title:
@@ -139,11 +188,6 @@ public class RobotUpController {
 		System.err.println("上报linux运行环境的信息");
 		Out<String> out = new Out<String>();
 		try {
-			//将设备号保存进来
-			System.err.println("123");
-			UpInfo u=new UpInfo();
-			System.err.println(u.getDeviceNo()+"-----------");
-			// 直接保存信息
 			Object o = robotMongoDbDataService.saveOperationInfo(linuxHardWareUsed);
 			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
 		} catch (Exception e) {
@@ -152,9 +196,116 @@ public class RobotUpController {
 		}
 		return out;
 	}
+	/**------------------已经修改---------------------------------
+	 * 创建人：SevenYang 
+	 * @创建时间：2017年3月17日 下午3:59:48 
+	 * @Title:
+	 * reportCandidatesInfo 
+	 * @Description: （上报机器的候选人信息） 
+	 * @return Out<String> 修改人：
+	 * 版本：1.0.0 @throws
+	 */
+	@PostMapping(value = "reportCandidatesInfo")
+	@ApiOperation(value = "上报机器的候选人信息", notes = "上报机器的候选人信息")
+	@ResponseBody
+	public Out<String> reportCandidatesInfo(
+			@ApiParam(value = "上报机器的候选人信息", required = true) @RequestBody Robot_CandidatesInfo candidatesInfo) {
+		logger.info("访问  RobotController :reportCandidatesInfo Robot_CandidatesInfo=" + candidatesInfo);
+		System.err.println("上报机器的候选人信息");
+		Out<String> out = new Out<String>();
+		try {
+			Object o = robotMongoDbDataService.saveCandidatesInfo(candidatesInfo);
+			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_MONGO_SAVE, e.getMessage());
+		}
+		return out;
+	}
+	/**------------------已经修改---------------------------------
+	 * 创建人：SevenYang 
+	 * @创建时间：2017年3月17日 下午3:59:48 
+	 * @Title:
+	 * reportFinalRecogResult 
+	 * @Description: （最终的识别结果） 
+	 * @return Out<String> 修改人：
+	 * 版本：1.0.0 @throws
+	 */
+	@PostMapping(value = "reportFinalRecogResult")
+	@ApiOperation(value = "最终的识别结果", notes = "最终的识别结果")
+	@ResponseBody
+	public Out<String> reportFinalRecogResult(
+			@ApiParam(value = "最终的识别结果", required = true) @RequestBody Robot_FinalRecogResult finalRecogResult) {
+		logger.info("访问  RobotController :reportFinalRecogResult Robot_FinalRecogResult=" + finalRecogResult);
+		System.err.println("最终的识别结果");
+		Out<String> out = new Out<String>();
+		try {
+			Object o = robotMongoDbDataService.saveFinalRecogResult(finalRecogResult);
+			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_MONGO_SAVE, e.getMessage());
+		}
+		return out;
+	}
 	
-
-	/**
+	
+	/**------------------已经修改---------------------------------
+	 * 创建人：SevenYang 
+	 * @创建时间：2017年3月17日 下午3:59:48 
+	 * @Title:
+	 * reportAndroidHardWareUsed 
+	 * @Description: （上报机器的的运行环境信息） 
+	 * @return Out<String> 修改人：
+	 * 版本：1.0.0 @throws
+	 */
+	@PostMapping(value = "reportAndroidHardWareUsed")
+	@ApiOperation(value = "上报Android运行环境的信息", notes = "上报Android运行环境的信息")
+	@ResponseBody
+	public Out<String> reportAndroidHardWareUsed(
+			@ApiParam(value = "上报Android运行环境的信息", required = true) @RequestBody Robot_AndroidHardWareUsed androidHardWareUsed) {
+		logger.info("访问  RobotController :reportAndroidHardWareUsed reportAndroidHardWareUsed=" + androidHardWareUsed);
+		System.err.println("上报Android运行环境的信息");
+		Out<String> out = new Out<String>();
+		try {
+			Object o = robotMongoDbDataService.saveAndroidHardWareUsed(androidHardWareUsed);
+			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_MONGO_SAVE, e.getMessage());
+		}
+		return out;
+	}
+	/**------------------已经修改---------------------------------
+	 * 创建人：SevenYang 
+	 * @创建时间：2017年3月17日 下午3:59:48 
+	 * @Title:
+	 * reportLinuxStartUpRecord 
+	 * @Description: （上报机器的的自检信息） 
+	 * @return Out<String> 修改人：
+	 * 版本：1.0.0 @throws
+	 */
+	@PostMapping(value = "reportLinuxStartUpRecord")
+	@ApiOperation(value = "上报机器人linux的重启信息", notes = "上报机器人linux的重启信息")
+	@ResponseBody
+	public Out<String> reportLinuxStartUpRecord(
+			@ApiParam(value = "上报机器人linux的重启信息", required = true) @RequestBody Robot_LinuxStartUpRecord linuxStartUpRecord) {
+		logger.info("访问  RobotController :reportLinuxStartUpRecord HardwareInfo=" + linuxStartUpRecord);
+		System.err.println("上报机器人linux的重启信息");
+		Out<String> out = new Out<String>();
+		try {
+			// 直接保存信息
+			Object o = robotMongoDbDataService.saveLinuxStartUpRecord(linuxStartUpRecord);
+			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_MONGO_SAVE, e.getMessage());
+		}
+		return out;
+	}
+	
+	
+	/**------------------已经修改---------------------------------
 	 * 创建人：SevenYang 
 	 * @创建时间：2017年3月17日 下午3:59:48 
 	 * @Title:
@@ -164,44 +315,42 @@ public class RobotUpController {
 	 * 版本：1.0.0 @throws
 	 */
 	@PostMapping(value = "reportSelfLnspectionInfo")
-	@ApiOperation(value = "上报机器人的自检信息", notes = "上报机器人的自检信息")
+	@ApiOperation(value = "上报机器的的自检信息", notes = "上报机器的的自检信息")
 	@ResponseBody
 	public Out<String> reportSelfLnspectionInfo(
-			@ApiParam(value = "远程机器人自检信息", required = true) @RequestBody Robot_SelfLnspectionInfo SelfLnspectionInfo) {
-		logger.info("访问  RobotController :reportSelfLnspectionInfo HardwareInfo=" + SelfLnspectionInfo);
-		System.err.println("上报机器人的自检信息");
+			@ApiParam(value = "上报机器的的自检信息", required = true) @RequestBody Robot_SelfLnspectionInfo selfLnspectionInfo) {
+		logger.info("访问  RobotController :reportSelfLnspectionInfo HardwareInfo=" + selfLnspectionInfo);
+		System.err.println("上报机器的的自检信息");
 		Out<String> out = new Out<String>();
 		try {
 			// 直接保存信息
-			Object o = robotMongoDbDataService.saveSelfLnspectionInfo(SelfLnspectionInfo);
+			Object o = robotMongoDbDataService.saveSelfLnspectionInfo(selfLnspectionInfo);
 			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_MONGO_SAVE, e.getMessage());
 		}
 		return out;
-	}
-	/**
+	}/**------------------已经修改---------------------------------
 	 * 创建人：SevenYang 
 	 * @创建时间：2017年3月17日 下午3:59:48 
 	 * @Title:
-	 * reportMeetSpeedInfo 
-	 * @Description: （上报机器的识别速度信息） 
+	 * reportLinuxHardWareInfo 
+	 * @Description: （CPU的ECID号） 
 	 * @return Out<String> 修改人：
 	 * 版本：1.0.0 @throws
 	 */
-	@PostMapping(value = "reportMeetSpeedInfo")
-	@ApiOperation(value = "上报机器人的识别速度信息", notes = "上报机器人的别速度信息")
+	@PostMapping(value = "reportLinuxHardWareInfo")
+	@ApiOperation(value = "CPU的ECID号", notes = "CPU的ECID号")
 	@ResponseBody
-	public Out<String> reportMeetSpeedInfo(
-			@ApiParam(value = "远程机器人别速度信息", required = true) @RequestBody Robot_MeetSpeedInfo meetSpeedInfo) {
-		logger.info("访问  RobotController :reportreportMeetSpeedInfo reportMeetSpeedInfo=" + meetSpeedInfo);
-		System.err.println("上报机器人的别速度信息");
+	public Out<String> reportLinuxHardWareInfo(
+			@ApiParam(value = "CPU的ECID号", required = true) @RequestBody Robot_LinuxHardWareInfo linuxHardWareInfo) {
+		logger.info("访问  RobotController :reportLinuxHardWareInfo HardwareInfo=" + linuxHardWareInfo);
+		System.err.println("CPU的ECID号");
 		Out<String> out = new Out<String>();
-
 		try {
 			// 直接保存信息
-			Object o = robotMongoDbDataService.saveMeetSpeedInfo(meetSpeedInfo);
+			Object o = robotMongoDbDataService.saveLinuxHardWareInfo(linuxHardWareInfo);
 			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -210,56 +359,53 @@ public class RobotUpController {
 		return out;
 	}
 	
-	/**
+	/**--------------------------------------------已修改
 	 * 创建人：SevenYang 
 	 * @创建时间：2017年3月17日 下午3:59:48 
 	 * @Title:
-	 * reportMeetSpeedInfo 
-	 * @Description: （上报机器的识别性能信息） 
-	 * @return Out<String> 修改人：
-	 * 版本：1.0.0 @throws
-	 */
-	@PostMapping(value = "reportMeetPropertyInfo")
-	@ApiOperation(value = "上报机器人的别性能信息", notes = "上报机器人的别性能信息")
-	@ResponseBody
-	public Out<String> reportMeetPropertyInfo(
-			@ApiParam(value = "远程机器人别性能信息", required = true) @RequestBody Robot_MeetPropertyInfo meetPropertyInfo) {
-		logger.info("访问  RobotController :reportreportMeetSpeedInfo reportMeetSpeedInfo=" + meetPropertyInfo);
-		System.err.println("上报机器人的别性能信息");
-		Out<String> out = new Out<String>();
-
-		try {
-			// 直接保存信息
-			Object o = robotMongoDbDataService.saveMeetPropertyInfo(meetPropertyInfo);
-			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_MONGO_SAVE, e.getMessage());
-		}
-		return out;
-	}
-	
-	/**
-	 * 创建人：SevenYang 
-	 * @创建时间：2017年3月17日 下午3:59:48 
-	 * @Title:
-	 * reportMeetSpeedInfo 
+	 * reportAppRunningStatus 
 	 * @Description: （上报机器的运行在线信息） 
 	 * @return Out<String> 修改人：
 	 * 版本：1.0.0 @throws
 	 */
-	@PostMapping(value = "reportOnLineInfo")
+	@PostMapping(value = "reportAppRunningStatus")
 	@ApiOperation(value = "上报机器人的运行在线信息", notes = "上报机器人的运行在线信息")
 	@ResponseBody
-	public Out<String> reportOnLineInfo(
-			@ApiParam(value = "远程机器人运行在线信息", required = true) @RequestBody Robot_OnLineInfo onLineInfo) {
-		logger.info("访问  RobotController :reportreportMeetSpeedInfo reportMeetSpeedInfo=" + onLineInfo);
+	public Out<String> reportAppRunningStatus(
+			@ApiParam(value = "远程机器人运行在线信息", required = true) @RequestBody Robot_AppRunningStatus appRunningStatus) {
+		logger.info("访问  RobotController :reportAppRunningStatus reportMeetSpeedInfo=" + appRunningStatus);
 		System.err.println("上报机器人的运行在线信息");
 		Out<String> out = new Out<String>();
-
 		try {
 			// 直接保存信息
-			Object o = robotMongoDbDataService.saveOnLineInfo(onLineInfo);
+			Object o = robotMongoDbDataService.saveOnLineInfo(appRunningStatus);
+			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_MONGO_SAVE, e.getMessage());
+		}
+		return out;
+	}
+	/**--------------------------------------------已修改
+	 * 创建人：SevenYang 
+	 * @创建时间：2017年3月17日 下午3:59:48 
+	 * @Title:
+	 * reportCalibrateInfo 
+	 * @Description: （上报机器的运行在线信息） 
+	 * @return Out<String> 修改人：
+	 * 版本：1.0.0 @throws
+	 */
+	@PostMapping(value = "reportCalibrateInfo")
+	@ApiOperation(value = "上报体重校准信息", notes = "上报体重校准信息")
+	@ResponseBody
+	public Out<String> reportCalibrateInfo(
+			@ApiParam(value = "上报体重校准信息", required = true) @RequestBody Robot_CalibrateInfo calibrateInfo) {
+		logger.info("访问  RobotController :reportCalibrateInfo reportMeetSpeedInfo=" + calibrateInfo);
+		System.err.println("上报体重校准信息");
+		Out<String> out = new Out<String>();
+		try {
+			// 直接保存信息
+			Object o = robotMongoDbDataService.saveCalibrateInfo(calibrateInfo);
 			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -295,36 +441,6 @@ public class RobotUpController {
 		}
 		return out;
 	}
-	
-	/**
-	 * 创建人：SevenYang 
-	 * @创建时间：2017年3月17日 下午3:59:48 
-	 * @Title:
-	 * reportMeetSpeedInfo 
-	 * @Description: （上报机器的照片质量信息） 
-	 * @return Out<String> 修改人：
-	 * 版本：1.0.0 @throws
-	 */
-	@PostMapping(value = "reportManageInfo")
-	@ApiOperation(value = "上报机器人的信息管理", notes = "上报机器人的信息管理")
-	@ResponseBody
-	public Out<String> reportManageInfo(
-			@ApiParam(value = "远程机器人信息管理", required = true) @RequestBody Robot_ManageInfo manageInfo) {
-		logger.info("访问  RobotController :reportreportMeetSpeedInfo reportMeetSpeedInfo=" + manageInfo);
-		System.err.println("上报机器人的信息管理");
-		Out<String> out = new Out<String>();
-
-		try {
-			// 直接保存信息
-			Object o = robotMongoDbDataService.saveManageInfo(manageInfo);
-			out.setBackTypeWithLog(o.toString(), BackType.SUCCESS);
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			out.setBackTypeWithLog(BackType.FAIL_DIAGNOSE_MONGO_SAVE, e.getMessage());
-		}
-		return out;
-	}
-	
 	
 	/**------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	 * 创建人：SevenYang 

@@ -5,22 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.didano.robot.data.Robot_AppRunningStatus;
 import cn.didano.robot.data.Robot_HardwareInfo;
-import cn.didano.robot.data.Robot_ManageInfo;
-import cn.didano.robot.data.Robot_MeetPropertyInfo;
-import cn.didano.robot.data.Robot_MeetSpeedInfo;
-import cn.didano.robot.data.Robot_OnLineInfo;
+import cn.didano.robot.data.Robot_LinuxEnvTemperatureInfo;
 import cn.didano.robot.data.Robot_LinuxHardWareUsed;
+import cn.didano.robot.data.Robot_LinuxSoftWareVersion;
+import cn.didano.robot.data.Robot_LinuxStartUpRecord;
 import cn.didano.robot.data.Robot_PhotographicQualityInfo;
-import cn.didano.robot.data.Robot_SelfLnspectionInfo;
-import cn.didano.robot.data.Robot_TemperatureInfo;
 import cn.didano.robot.data.Robot_UploadType;
-import cn.didano.robot.data.Robot_VersionInfo;
 import cn.didano.robot.data.Robot_school;
 import cn.didano.robot.data.repository.HardwareInfoRepository;
-import cn.didano.robot.data.repository.ManageInfoRepository;
-import cn.didano.robot.data.repository.MeetPropertyInfoRepository;
-import cn.didano.robot.data.repository.MeetSpeedInfoRepository;
 import cn.didano.robot.data.repository.OnLineInfoRepository;
 import cn.didano.robot.data.repository.OperationInfoRepository;
 import cn.didano.robot.data.repository.PhotographicQualityInfoRepository;
@@ -49,15 +43,9 @@ public class RobotMongoDbFindService {
 	@Autowired
 	private SelfLnspectionInfoRepository s_repository;
 	@Autowired
-	private MeetSpeedInfoRepository m_repository;
-	@Autowired
-	private MeetPropertyInfoRepository mp_repository;
-	@Autowired
 	private OnLineInfoRepository or_repository;
 	@Autowired
 	private PhotographicQualityInfoRepository p_repository;
-	@Autowired
-	private ManageInfoRepository mr_repository;
 	@Autowired
 	private SchoolRepository sr_repository;
 	@Autowired
@@ -74,7 +62,7 @@ public class RobotMongoDbFindService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public List<Robot_VersionInfo> queryRVersionInfo() {
+	public List<Robot_LinuxSoftWareVersion> queryRVersionInfo() {
 		System.err.println("123");
 		return this.v_repository.findAll();
 	}
@@ -88,7 +76,7 @@ public class RobotMongoDbFindService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public List<Robot_SelfLnspectionInfo> querySelfLnspectionInfo() {
+	public List<Robot_LinuxStartUpRecord> querySelfLnspectionInfo() {
 		return this.s_repository.findAll();
 	}
 	/**
@@ -114,7 +102,7 @@ public class RobotMongoDbFindService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public List<Robot_TemperatureInfo> queryTemperatureInfo() {
+	public List<Robot_LinuxEnvTemperatureInfo> queryTemperatureInfo() {
 		return this.t_repository.findAll();
 	}
 	/**
@@ -127,33 +115,7 @@ public class RobotMongoDbFindService {
 	 * 版本：1.0.0
 	 * @throws
 	 */
-	public List<Robot_MeetSpeedInfo> queryMeetSpeedInfo() {
-		return this.m_repository.findAll();
-	}
-	/**
-	 * 创建人：SevenYang
-	 * @创建时间：2017年3月17日 下午4:13:13
-	 * @Title: saveTemperatureInfo
-	 * @Description: （查询所有机器人的环境温度信息信息，并且不分页查询）
-	 * @return queryAllByPage 
-	 * 修改人：
-	 * 版本：1.0.0
-	 * @throws
-	 */
-	public List<Robot_MeetPropertyInfo> queryMeetPropertyInfo() {
-		return this.mp_repository.findAll();
-	}
-	/**
-	 * 创建人：SevenYang
-	 * @创建时间：2017年3月17日 下午4:13:13
-	 * @Title: saveTemperatureInfo
-	 * @Description: （查询所有机器人的环境温度信息信息，并且不分页查询）
-	 * @return queryAllByPage 
-	 * 修改人：
-	 * 版本：1.0.0
-	 * @throws
-	 */
-	public List<Robot_OnLineInfo> queryOnLineInfo() {
+	public List<Robot_AppRunningStatus> queryOnLineInfo() {
 		return this.or_repository.findAll();
 	}
 	/**
@@ -168,19 +130,6 @@ public class RobotMongoDbFindService {
 	 */
 	public List<Robot_PhotographicQualityInfo> queryPhotographicQualityInfo() {
 		return this.p_repository.findAll();
-	}
-	/**
-	 * 创建人：SevenYang
-	 * @创建时间：2017年3月17日 下午4:13:13
-	 * @Title: saveTemperatureInfo
-	 * @Description: （查询所有机器人的环境温度信息信息，并且不分页查询）
-	 * @return queryAllByPage 
-	 * 修改人：
-	 * 版本：1.0.0
-	 * @throws
-	 */
-	public List<Robot_ManageInfo> queryManageInfo() {
-		return this.mr_repository.findAll();
 	}
 	/**
 	 * 创建人：SevenYang

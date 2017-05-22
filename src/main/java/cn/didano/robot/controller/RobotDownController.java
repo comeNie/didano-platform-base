@@ -29,9 +29,9 @@ import io.swagger.annotations.ApiOperation;
 public class RobotDownController {
 	static Logger logger = Logger.getLogger(RobotDownController.class);
 
+	
+	
 	/**
-	 * 
-	 * 
 	 * 有一个最大的问题  在服务器下控的过程中  当下控命令结束后，与服务器连接的设备就会与服务器断开连接
 	 * 在功能中需要设备与服务器一直处于连接状态，不然达不到诊断平台的要求
 	 * 
@@ -74,7 +74,6 @@ public class RobotDownController {
 		Out<String> back = new Out<String>();
 		if (RobotWebsocketServer.getRobotInfoMap() != null) {
 			System.err.println(RobotWebsocketServer.getRobotInfoMap().toString());
-			
 			DownInfo downInfo = new DownInfo();
 			downInfo.setMethodName("reporThardwareInfo");
 			back.setBackTypeWithLog(BackType.SUCCESS_DIAGNOSE_EXCUTE);

@@ -21,43 +21,34 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- *机器的识别速度
- *主要是上行和下行的信息容器
+ * 
+ * @author stephen.wang
+ * @Todo 没有安卓操作系统版本号
  */
 @ApiModel
-@TypeAlias("识别速度")
-public class Robot_MeetSpeedInfo extends RInfo {
+@TypeAlias("运动控制软件版本信息")
+public class Robot_MotionSoftWareVersion extends RInfo {
+	
 	@ApiModelProperty(value = "产品硬件识别码", required = true)
 	private String deviceNo;
-	@ApiModelProperty(value = "最大识别时间", required = true)
-	private String maximumMeetTime;
-	@ApiModelProperty(value = "最小识别时间", required = true)
-	private String minimumMeetTime;
-	@ApiModelProperty(value = "平均识别时间", required = true)
-	private String vaerageMeetTime;
-	
+	@ApiModelProperty(value = "运动控制软件版本号", required = true)
+	private String motion_version_software;
 	public String getDeviceNo() {
 		return deviceNo;
 	}
 	public void setDeviceNo(String deviceNo) {
 		this.deviceNo = deviceNo;
 	}
-	public String getMaximumMeetTime() {
-		return maximumMeetTime;
+	public String getMotion_version_software() {
+		return motion_version_software;
 	}
-	public void setMaximumMeetTime(String maximumMeetTime) {
-		this.maximumMeetTime = maximumMeetTime;
+	public void setMotion_version_software(String motion_version_software) {
+		this.motion_version_software = motion_version_software;
 	}
-	public String getMinimumMeetTime() {
-		return minimumMeetTime;
+	@Override
+	public String toString() {
+		return "Robot_MotionSoftWareVersion [deviceNo=" + deviceNo + ", motion_version_software="
+				+ motion_version_software + "]";
 	}
-	public void setMinimumMeetTime(String minimumMeetTime) {
-		this.minimumMeetTime = minimumMeetTime;
-	}
-	public String getVaerageMeetTime() {
-		return vaerageMeetTime;
-	}
-	public void setVaerageMeetTime(String vaerageMeetTime) {
-		this.vaerageMeetTime = vaerageMeetTime;
-	}
+	
 }

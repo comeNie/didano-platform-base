@@ -15,115 +15,81 @@
  */
 package cn.didano.robot.data;
 
-import java.util.Date;
-
 import org.springframework.data.annotation.TypeAlias;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- *机器人自检信息类
- *主要是上行和下行的信息容器
+ * 
+ * @author stephen.wang
+ * @Todo 没有安卓操作系统版本号
  */
 @ApiModel
 @TypeAlias("自检信息")
 public class Robot_SelfLnspectionInfo extends RInfo {
+	
 	@ApiModelProperty(value = "产品硬件识别码", required = true)
 	private String deviceNo;
-	@ApiModelProperty(value = "液晶屏", required = true)
-	private String siLiquidCrystalDisplay;
-	@ApiModelProperty(value = "摄像头1", required = true)
-	private String siOneCamera;
-	@ApiModelProperty(value = "摄像头2", required = true)
-	private String siTowcamera;
-	@ApiModelProperty(value = "热像仪", required = true)
-	private String siThermalImager;
-	@ApiModelProperty(value = "运动控制模块", required = true)
-	private String siMovementModule;
-	@ApiModelProperty(value = "语音模块", required = true)
-	private String siVoiceModule;
-	@ApiModelProperty(value = "rfid", required = true)
-	private String siRfid;
-	@ApiModelProperty(value = "上次启动的时间", required = true)
-	private String siTheLastTime;
-	@ApiModelProperty(value = "本次启动的时间", required = true)
-	private String siTheStartTime;
-	@ApiModelProperty(value = "启动的原因", required = true)
-	private String siStartTheReason;
+	@ApiModelProperty(value = "彩色摄像头检查结果", required = true)
+	private String selfcheck_color_camera;
+	@ApiModelProperty(value = "黑白摄像头检查结果", required = true)
+	private String selfcheck_black_camera;
+	@ApiModelProperty(value = "射频卡模块检查结果", required = true)
+	private String selfcheck_rfid;
+	@ApiModelProperty(value = "运动控制模块检查结果", required = true)
+	private String selfcheck_motion;
+	@ApiModelProperty(value = "温度模块检查结果", required = true)
+	private String selfcheck_lepton;
+	@ApiModelProperty(value = "语音模块检查结果", required = true)
+	private String selfcheck_voice;
 	public String getDeviceNo() {
 		return deviceNo;
 	}
 	public void setDeviceNo(String deviceNo) {
 		this.deviceNo = deviceNo;
 	}
-	public String getSiLiquidCrystalDisplay() {
-		return siLiquidCrystalDisplay;
+	public String getSelfcheck_color_camera() {
+		return selfcheck_color_camera;
 	}
-	public void setSiLiquidCrystalDisplay(String siLiquidCrystalDisplay) {
-		this.siLiquidCrystalDisplay = siLiquidCrystalDisplay;
+	public void setSelfcheck_color_camera(String selfcheck_color_camera) {
+		this.selfcheck_color_camera = selfcheck_color_camera;
 	}
-	public String getSiOneCamera() {
-		return siOneCamera;
+	public String getSelfcheck_black_camera() {
+		return selfcheck_black_camera;
 	}
-	public void setSiOneCamera(String siOneCamera) {
-		this.siOneCamera = siOneCamera;
+	public void setSelfcheck_black_camera(String selfcheck_black_camera) {
+		this.selfcheck_black_camera = selfcheck_black_camera;
 	}
-	public String getSiTowcamera() {
-		return siTowcamera;
+	public String getSelfcheck_rfid() {
+		return selfcheck_rfid;
 	}
-	public void setSiTowcamera(String siTowcamera) {
-		this.siTowcamera = siTowcamera;
+	public void setSelfcheck_rfid(String selfcheck_rfid) {
+		this.selfcheck_rfid = selfcheck_rfid;
 	}
-	public String getSiThermalImager() {
-		return siThermalImager;
+	public String getSelfcheck_motion() {
+		return selfcheck_motion;
 	}
-	public void setSiThermalImager(String siThermalImager) {
-		this.siThermalImager = siThermalImager;
+	public void setSelfcheck_motion(String selfcheck_motion) {
+		this.selfcheck_motion = selfcheck_motion;
 	}
-	public String getSiMovementModule() {
-		return siMovementModule;
+	public String getSelfcheck_lepton() {
+		return selfcheck_lepton;
 	}
-	public void setSiMovementModule(String siMovementModule) {
-		this.siMovementModule = siMovementModule;
+	public void setSelfcheck_lepton(String selfcheck_lepton) {
+		this.selfcheck_lepton = selfcheck_lepton;
 	}
-	public String getSiVoiceModule() {
-		return siVoiceModule;
+	public String getSelfcheck_voice() {
+		return selfcheck_voice;
 	}
-	public void setSiVoiceModule(String siVoiceModule) {
-		this.siVoiceModule = siVoiceModule;
-	}
-	public String getSiRfid() {
-		return siRfid;
-	}
-	public void setSiRfid(String siRfid) {
-		this.siRfid = siRfid;
-	}
-	public String getSiTheLastTime() {
-		return siTheLastTime;
-	}
-	public void setSiTheLastTime(String siTheLastTime) {
-		this.siTheLastTime = siTheLastTime;
-	}
-	public String getSiTheStartTime() {
-		return siTheStartTime;
-	}
-	public void setSiTheStartTime(String siTheStartTime) {
-		this.siTheStartTime = siTheStartTime;
-	}
-	public String getSiStartTheReason() {
-		return siStartTheReason;
-	}
-	public void setSiStartTheReason(String siStartTheReason) {
-		this.siStartTheReason = siStartTheReason;
+	public void setSelfcheck_voice(String selfcheck_voice) {
+		this.selfcheck_voice = selfcheck_voice;
 	}
 	@Override
 	public String toString() {
-		return "{\"deviceNo\":\"" + deviceNo + "\",\"siLiquidCrystalDisplay\":\"" + siLiquidCrystalDisplay
-				+ "\",\"siOneCamera\":\"" + siOneCamera + "\",\"siTowcamera\":\"" + siTowcamera
-				+ "\",\"siThermalImager\":\"" + siThermalImager + "\",\"siMovementModule\":\"" + siMovementModule
-				+ "\",\"siVoiceModule\":\"" + siVoiceModule + "\",\"siRfid\":\"" + siRfid + "\",\"siTheLastTime\":\""
-				+ siTheLastTime + "\",\"siTheStartTime\":\"" + siTheStartTime + "\",\"siStartTheReason\":\""
-				+ siStartTheReason + "\"}  ";
+		return "Robot_SelfLnspectionInfo [deviceNo=" + deviceNo + ", selfcheck_color_camera=" + selfcheck_color_camera
+				+ ", selfcheck_black_camera=" + selfcheck_black_camera + ", selfcheck_rfid=" + selfcheck_rfid
+				+ ", selfcheck_motion=" + selfcheck_motion + ", selfcheck_lepton=" + selfcheck_lepton
+				+ ", selfcheck_voice=" + selfcheck_voice + "]";
 	}
 }

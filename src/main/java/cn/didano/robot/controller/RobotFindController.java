@@ -10,17 +10,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.didano.robot.data.Robot_AppRunningStatus;
 import cn.didano.robot.data.Robot_HardwareInfo;
-import cn.didano.robot.data.Robot_ManageInfo;
-import cn.didano.robot.data.Robot_MeetPropertyInfo;
-import cn.didano.robot.data.Robot_MeetSpeedInfo;
-import cn.didano.robot.data.Robot_OnLineInfo;
+import cn.didano.robot.data.Robot_LinuxEnvTemperatureInfo;
 import cn.didano.robot.data.Robot_LinuxHardWareUsed;
+import cn.didano.robot.data.Robot_LinuxSoftWareVersion;
+import cn.didano.robot.data.Robot_LinuxStartUpRecord;
 import cn.didano.robot.data.Robot_PhotographicQualityInfo;
-import cn.didano.robot.data.Robot_SelfLnspectionInfo;
-import cn.didano.robot.data.Robot_TemperatureInfo;
 import cn.didano.robot.data.Robot_UploadType;
-import cn.didano.robot.data.Robot_VersionInfo;
 import cn.didano.robot.data.Robot_school;
 import cn.didano.robot.service.RobotMongoDbFindService;
 import io.swagger.annotations.Api;
@@ -48,8 +45,8 @@ public class RobotFindController {
 	@RequestMapping(value = "querySelfLnspectionInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
 	@ApiOperation(value = "查询自检信息,并且不分页", notes = "查询自检信息,并且不分页")
 	@ResponseBody
-	public List<Robot_SelfLnspectionInfo> querySelfLnspectionInfoAll() {
-		List<Robot_SelfLnspectionInfo> selectSelfLnspectionInfo=null;
+	public List<Robot_LinuxStartUpRecord> querySelfLnspectionInfoAll() {
+		List<Robot_LinuxStartUpRecord> selectSelfLnspectionInfo=null;
 		try {
 			
 			selectSelfLnspectionInfo = robotMongoDbFindService.querySelfLnspectionInfo();
@@ -66,8 +63,8 @@ public class RobotFindController {
 	@RequestMapping(value = "queryVersionInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
 	@ApiOperation(value = "查询版本信息,并且不分页", notes = "查询版本信息,并且不分页")
 	@ResponseBody
-	public List<Robot_VersionInfo> queryVersionInfoAll() {
-		List<Robot_VersionInfo> rVersionInfo=null;
+	public List<Robot_LinuxSoftWareVersion> queryVersionInfoAll() {
+		List<Robot_LinuxSoftWareVersion> rVersionInfo=null;
 		try {
 			rVersionInfo = robotMongoDbFindService.queryRVersionInfo();
 		} catch (Exception e) {
@@ -100,48 +97,14 @@ public class RobotFindController {
 	@RequestMapping(value = "queryTemperatureInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
 	@ApiOperation(value = "查询环境温度信息,并且不分页", notes = "查询环境温度信息,并且不分页")
 	@ResponseBody
-	public List<Robot_TemperatureInfo> queryTemperatureInfoAll() {
-		List<Robot_TemperatureInfo> temperatureInfo=null;
+	public List<Robot_LinuxEnvTemperatureInfo> queryTemperatureInfoAll() {
+		List<Robot_LinuxEnvTemperatureInfo> temperatureInfo=null;
 		try {
 			temperatureInfo = robotMongoDbFindService.queryTemperatureInfo();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 		return temperatureInfo;
-	}
-	/**
-	 * 查询所有的机器人识别速度信息----------------------------------------------------------------------------------------------------------------------------
-	 * 不带翻页
-	 * @return
-	 */
-	@RequestMapping(value = "queryMeetSpeedInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
-	@ApiOperation(value = "查询识别速度信息,并且不分页", notes = "查询识别速度信息,并且不分页")
-	@ResponseBody
-	public List<Robot_MeetSpeedInfo> queryMeetSpeedInfoAll() {
-		List<Robot_MeetSpeedInfo> meetSpeedInfo=null;
-		try {
-			meetSpeedInfo = robotMongoDbFindService.queryMeetSpeedInfo();
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-		return meetSpeedInfo;
-	}
-	/**
-	 * 查询所有的机器人自检信息----------------------------------------------------------------------------------------------------------------------------
-	 * 不带翻页
-	 * @return
-	 */
-	@RequestMapping(value = "queryMeetPropertyInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
-	@ApiOperation(value = "查询识别性能信息,并且不分页", notes = "查询识别性能信息,并且不分页")
-	@ResponseBody
-	public List<Robot_MeetPropertyInfo> queryMeetPropertyInfoAll() {
-		List<Robot_MeetPropertyInfo> meetPropertyInfo=null;
-		try {
-			meetPropertyInfo = robotMongoDbFindService.queryMeetPropertyInfo();
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-		return meetPropertyInfo;
 	}
 	/**
 	 * 查询所有的机器人自检信息----------------------------------------------------------------------------------------------------------------------------
@@ -151,8 +114,8 @@ public class RobotFindController {
 	@RequestMapping(value = "queryOnLineInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
 	@ApiOperation(value = "查询运行在线信息,并且不分页", notes = "查询运行在线信息,并且不分页")
 	@ResponseBody
-	public List<Robot_OnLineInfo> queryOnLineInfoAll() {
-		List<Robot_OnLineInfo> onLineInfo=null;
+	public List<Robot_AppRunningStatus> queryOnLineInfoAll() {
+		List<Robot_AppRunningStatus> onLineInfo=null;
 		try {
 			onLineInfo = robotMongoDbFindService.queryOnLineInfo();
 		} catch (Exception e) {
@@ -176,23 +139,6 @@ public class RobotFindController {
 			logger.error(e.getMessage());
 		}
 		return photographicQualityInfo;
-	}
-	/**
-	 * 查询所有的机器人自检信息----------------------------------------------------------------------------------------------------------------------------
-	 * 不带翻页
-	 * @return
-	 */
-	@RequestMapping(value = "queryManageInfoAll", method = {RequestMethod.GET, RequestMethod.POST})
-	@ApiOperation(value = "查询管理信息,并且不分页", notes = "查询管理信息,并且不分页")
-	@ResponseBody
-	public List<Robot_ManageInfo> queryManageInfoAll() {
-		List<Robot_ManageInfo> ManageInfo=null;
-		try {
-			ManageInfo = robotMongoDbFindService.queryManageInfo();
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-		return ManageInfo;
 	}
 	/**
 	 * 查询所有的机器人自检信息----------------------------------------------------------------------------------------------------------------------------

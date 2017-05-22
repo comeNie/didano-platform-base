@@ -16,55 +16,51 @@
 package cn.didano.robot.data;
 
 import org.springframework.data.annotation.TypeAlias;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * 运行在线信息类
+ *linux的重启信息
+ *主要是上行和下行的信息容器
  */
 @ApiModel
-@TypeAlias("运行在线")
-public class Robot_OnLineInfo extends RInfo {
+@TypeAlias("linux的重启信息")
+public class Robot_LinuxStartUpRecord extends RInfo {
 	@ApiModelProperty(value = "产品硬件识别码", required = true)
 	private String deviceNo;
-	
-	@ApiModelProperty(value = "Linux在线", required = true)
-	private String linuxOnLine;
-	
-	@ApiModelProperty(value = "安卓在线", required = true)
-	private String androidOnLine;
-	
-	@ApiModelProperty(value = "运行控制模版在线", required = true)
-	private String exerciseOnline;
-
+	@ApiModelProperty(value = "上次启动的时间", required = true)
+	private String poweroff_time;
+	@ApiModelProperty(value = "本次启动的时间", required = true)
+	private String startup_time;
+	@ApiModelProperty(value = "启动的原因", required = true)
+	private String startup_reason;
 	public String getDeviceNo() {
 		return deviceNo;
 	}
 	public void setDeviceNo(String deviceNo) {
 		this.deviceNo = deviceNo;
 	}
-	public String getLinuxOnLine() {
-		return linuxOnLine;
+	public String getPoweroff_time() {
+		return poweroff_time;
 	}
-	public void setLinuxOnLine(String linuxOnLine) {
-		this.linuxOnLine = linuxOnLine;
+	public void setPoweroff_time(String poweroff_time) {
+		this.poweroff_time = poweroff_time;
 	}
-	public String getAndroidOnLine() {
-		return androidOnLine;
+	public String getStartup_time() {
+		return startup_time;
 	}
-	public void setAndroidOnLine(String androidOnLine) {
-		this.androidOnLine = androidOnLine;
+	public void setStartup_time(String startup_time) {
+		this.startup_time = startup_time;
 	}
-	public String getExerciseOnline() {
-		return exerciseOnline;
+	public String getStartup_reason() {
+		return startup_reason;
 	}
-	public void setExerciseOnline(String exerciseOnline) {
-		this.exerciseOnline = exerciseOnline;
+	public void setStartup_reason(String startup_reason) {
+		this.startup_reason = startup_reason;
 	}
 	@Override
 	public String toString() {
-		return "{\"deviceNo\":\"" + deviceNo + "\",\"linuxOnLine\":\"" + linuxOnLine + "\",\"androidOnLine\":\""
-				+ androidOnLine + "\",\"exerciseOnline\":\"" + exerciseOnline + "\"}  ";
+		return "Robot_SelfLnspectionInfo [deviceNo=" + deviceNo + ", poweroff_time=" + poweroff_time + ", startup_time="
+				+ startup_time + ", startup_reason=" + startup_reason + "]";
 	}
 }

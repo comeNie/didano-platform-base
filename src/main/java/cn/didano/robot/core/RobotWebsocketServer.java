@@ -99,19 +99,17 @@ public class RobotWebsocketServer {
 	public void onMessage(String message, Session session) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			System.err.println(message+"11111111");
 			logger.info("RobotWebsocket收到消息：" + message);
+			System.err.println(message);
 			UpInfo report = mapper.readValue(message, UpInfo.class);
 			RobotUpController robotController = ContextUtil.act.getBean(RobotUpController.class);
 			RobotDelegator delegator = new RobotDelegator();
 			delegator.handle(service_no,robotController, report);
-			System.err.println("保存信息完成"+service_no);
 		} catch (Exception ex) {
 			logger.error(message);
 			ex.printStackTrace();
 		}
 	}
-
 	/**
 	 * 发生错误时调用 此方法被自动调用，同时之后会自动调用onClose
 	 * 

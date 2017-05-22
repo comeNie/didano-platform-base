@@ -106,9 +106,9 @@ public class VideoStructureController {
 	public ModelAndView manageInfo() {
 		return new ModelAndView("video/robot/manageInfo");
 	}
-	@GetMapping("operationInfo")
+	@GetMapping("linuxHardWareUsed")
 	public ModelAndView operationInfo() {
-		return new ModelAndView("video/robot/operationInfo");
+		return new ModelAndView("video/robot/linuxHardWareUsed");
 	}
 	@GetMapping("robotDown")
 	public ModelAndView robotDown() {

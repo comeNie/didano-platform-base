@@ -41,29 +41,23 @@
     SELECT * FROM tb_ic_card WHERE school_id=#{school_id} and deleted=0
   </select> 
   
-
-<!-- <update id="Update" parameterType="cn.didano.base.model.Tb_mailList_list">UPDATE tb_student a SET a.name=#{name},a.class_id=#{class_id},a.gender=#{gender,jdbcType=TINYINT},a.birthday=#{birthday,jdbcType=DATE} where a.id=#{id}</update>
-
-<update id="delete" parameterType="Integer">
-UPDATE tb_student AS a SET a.deleted=1 WHERE a.id=#{id} 
-</update>
-
-
-<update id="UpdateParent" parameterType="cn.didano.base.model.Tb_parent4mailList">
-  UPDATE tb_school_parent SET phone=#{parent_phone} where id = (select id from(SELECT p.id FROM 
-(SELECT tmp1.id,tmp1.name,tmp1.birthday,tmp1.gender,tmp1.class_id,p.parent_id AS parent_id FROM 
- tb_student  AS tmp1 ,tb_student_parent p WHERE tmp1.id=p.student_id AND tmp1.id=#{id}) AS tmp2 LEFT JOIN tb_school_parent p ON tmp2.parent_id=p.id WHERE p.name=#{parent_name})a )
-</update>
-
-<update id="UpdateTeacher" parameterType="cn.didano.base.model.Tb_teacher">
-  UPDATE TB_STAFF a,tb_staff_class b,tb_staff_signdate c SET a.type = #{type},a.name=#{name},a.phone=#{phone} ,a.deleted=#{deleted},b.class_id=#{class_id},
-c.set_intime=#{in_time},c.set_outtime=#{out_time} where a.id = #{id} 
-</update>
-<update id="deleteparent" parameterType="Integer">
-  UPDATE tb_school_parent a,tb_student_parent b SET a.deleted=1 ,b.deleted = 1 WHERE
-   a.id IN (SELECT * FROM(SELECT parent_id FROM tb_student_parent WHERE student_id=#{id})a) 
-   AND b.student_id=#{id}
-</update> -->
-
+  
+  
+  
+  
+  
+  <update id="updateChongZhiIcCardInfo" parameterType="cn.didano.base.model.Tb_ic_card">
+		UPDATE tb_ic_card AS a SET a.status=1,a.school_id=0 where a.id=#{id} and deleted=0
+  </update>
+  <update id="updateChongZhiStudentInfo" parameterType="cn.didano.base.model.Tb_ic_card">
+		UPDATE tb_student AS stu SET stu.ic_card_id=0,stu.rfid='' where stu.ic_card_id=#{id} and stu.rfid=#{rfid}
+  </update>
+  <update id="updateChongZhiParentInfo" parameterType="cn.didano.base.model.Tb_ic_card">
+		UPDATE tb_student_parent AS sp SET sp.ic_card_id=0,sp.rfid='' where sp.ic_card_id=#{id} and sp.rfid=#{rfid}
+  </update>
+  <update id="updateChongZhiTeacherInfo" parameterType="cn.didano.base.model.Tb_ic_card">
+		UPDATE tb_staff AS sf SET sf.ic_card_id=0,sf.rfid='' where sf.ic_card_id=#{id} and sf.rfid=#{rfid}
+  </update>
+  
 </mapper>
 

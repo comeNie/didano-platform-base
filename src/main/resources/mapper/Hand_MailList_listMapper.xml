@@ -4,9 +4,9 @@
 <!-- 需要修改rfid -->
 <select id="findByTeacher" parameterType="Integer" resultType="cn.didano.base.model.Hand_WholeStudentParents4PhoneBook">
 select tmp6.id,tmp6.classId,v.id as switchId,v.is_use,tmp6.icCardId,tmp6.school_id,tmp6.name,tmp6.gender,tmp6.birthday,tmp6.device_registered,tmp6.status,tmp6.rfid,tmp6.ic_card_id,tmp6.ic_number,tmp6.student_ic_number,tmp6.staff_ic_number from (select tmp3.class_id as classId,tmp3.ic_card_id as icCardId,tmp3.*,tmp3.ic_number as student_ic_number,tmp4.ic_number as staff_ic_number from (select tmp1.*,tmp2.ic_number from 
-	(SELECT a.* FROM tb_student a,tb_staff_class b WHERE b.staff_id=#{id} AND a.class_id=b.class_id  AND a.deleted =0 AND b.deleted=0 ORDER BY CONVERT( a.name USING gbk))tmp1 left join tb_ic_card tmp2 on tmp1.rfid=tmp2.rfid) tmp3 
+	(SELECT a.* FROM tb_student a,tb_staff_class b WHERE b.staff_id=#{id} AND a.class_id=b.class_id  AND a.deleted =0 AND b.deleted=0 ORDER BY CONVERT( a.name USING gbk))tmp1 left join (select * from tb_ic_card where deleted=0) tmp2 on tmp1.rfid=tmp2.rfid) tmp3 
 	left join 
-	(select card.ic_number,tmp5.class_id from (select staff.rfid,sc.class_id from tb_staff staff,tb_staff_class sc where staff.id=sc.staff_id and staff.deleted=0 and sc.staff_id=#{id}) tmp5 left join tb_ic_card card on tmp5.rfid=card.rfid) tmp4 
+	(select card.ic_number,tmp5.class_id from (select staff.rfid,sc.class_id from tb_staff staff,tb_staff_class sc where staff.id=sc.staff_id and staff.deleted=0 and sc.staff_id=#{id}) tmp5 left join (select * from tb_ic_card where deleted=0) card on tmp5.rfid=card.rfid) tmp4 
 on tmp3.class_id=tmp4.class_id) as tmp6 left join `vd_auth_switch` v on tmp6.id=v.owner_id
  </select> 
  
@@ -47,7 +47,7 @@ on tmp3.class_id=tmp4.class_id) as tmp6 left join `vd_auth_switch` v on tmp6.id=
 	select tmp3.id,v.id as switchId,tmp3.classId,tmp3.name,tmp3.gender,tmp3.birthday,tmp3.student_ic_number,tmp3.icCardId,v.`is_use` from (select tmp1.id,tmp1.class_id as classId,tmp1.name,tmp1.gender,tmp1.birthday,tmp2.ic_number as 
 	student_ic_number,tmp1.ic_card_id as icCardId from
 	tb_student tmp1
-	left join tb_ic_card tmp2
+	left join (select * from tb_ic_card where school_id=#{schoolid} and deleted=0 and ic_type=2) tmp2
 	on tmp1.rfid=tmp2.rfid 
 	where tmp1.name like #{name}
 	and tmp1.school_id=#{schoolid}
@@ -59,7 +59,7 @@ on tmp3.class_id=tmp4.class_id) as tmp6 left join `vd_auth_switch` v on tmp6.id=
  --> 
 select tmp3.id,v.id as switchId,v.is_use,tmp3.classId,tmp3.name,tmp3.gender,tmp3.birthday,tmp3.student_ic_number,tmp3.icCardId from 
 (select tmp1.id,tmp1.class_id  as classId,tmp1.name,tmp1.gender,tmp1.birthday,tmp2.ic_number as student_ic_number,tmp1.ic_card_id as icCardId 
-from tb_student tmp1 left join tb_ic_card tmp2 on tmp1.rfid=tmp2.rfid 
+from tb_student tmp1 left join (select * from tb_ic_card where deleted=0 and ic_type=2) tmp2 on tmp1.rfid=tmp2.rfid 
 where tmp1.name like #{name} and tmp1.class_id=#{schoolid} and tmp1.deleted=0 ORDER BY CONVERT( NAME USING gbk ) )as tmp3 left join `vd_auth_switch` v on tmp3.id=v.owner_id
  </select>
  <select id="findByschool" parameterType="Integer" resultType="cn.didano.base.model.Hand_WholeStudentParents4PhoneBook">
@@ -98,12 +98,12 @@ where tmp1.name like #{name} and tmp1.class_id=#{schoolid} and tmp1.deleted=0 OR
     as tmpIn2 ORDER BY
 		CONVERT (tmpIn2. NAME USING gbk)) as tmpIn
 		left join tb_class b on tmpIn.class_id = b.id
-		left join tb_ic_card c on c.rfid=tmpIn.rfid
+		left join (select * from tb_ic_card where school_id=#{id} and deleted=0 and ic_type=2) c on c.rfid=tmpIn.rfid
 		) tmp1
 		left join
 		(select d.relation_id,d.ic_card_id,d.parent_id,d.relation_title,d.student_id,f.ic_number,e.title
 		from `tb_student_parent` d left join tb_class e on e.id=d.class_id
-		left join tb_ic_card f on f.rfid=d.rfid where d.school_id=#{id} and d.deleted=0
+		left join (select * from tb_ic_card where school_id=#{id} and deleted=0 and ic_type=1) f on f.rfid=d.rfid where d.school_id=#{id} and d.deleted=0
 		) tmp2
 		on tmp1.id=tmp2.student_id left join tb_school_parent tmp3 on tmp2.parent_id=tmp3.id;  
  </select>
@@ -123,7 +123,7 @@ where tmp1.name like #{name} and tmp1.class_id=#{schoolid} and tmp1.deleted=0 OR
 	FROM
 	(SELECT a.ic_card_id,a.status,a.id,b.class_id,a.type,a.school_id,a.name,a.phone,c.in_time,c.out_time,a.rfid
 	FROM tb_staff a,tb_staff_class b ,tb_sign_type c WHERE a.school_id=#{id} AND a.deleted=0 AND a.type =32 and a.id=b.staff_id and a.sign_type_id=c.id
-	)AS tmp1 LEFT JOIN tb_class c ON tmp1.class_id=c.id left join tb_ic_card tmp3 on tmp1.rfid=tmp3.rfid ORDER BY CONVERT( tmp1.name USING gbk ) 
+	)AS tmp1 LEFT JOIN tb_class c ON tmp1.class_id=c.id left join (select * from tb_ic_card where deleted=0 and school_id=#{id} and ic_type=1) tmp3 on tmp1.rfid=tmp3.rfid ORDER BY CONVERT( tmp1.name USING gbk ) 
  </select>
  <select id="findrelation" resultType="cn.didano.base.model.Tb_relation">
       select id,title from tb_relation
@@ -161,7 +161,7 @@ FROM
     AND p.deleted = 0
     AND tmp1.deleted = 0
   ) AS tmp2
-LEFT JOIN tb_school_parent p ON tmp2.parent_id = p.id left join tb_ic_card tmp3 on tmp2.rfid=tmp3.rfid 	
+LEFT JOIN tb_school_parent p ON tmp2.parent_id = p.id left join (select * from tb_ic_card where deleted=0 and ic_type=1) tmp3 on tmp2.rfid=tmp3.rfid 	
 </select>
 
 <select id="findParentByStudentId" parameterType="Integer" resultType="cn.didano.base.model.Hand_parent4mailList">
@@ -179,7 +179,7 @@ select * from tb_student_parent where student_id=#{id} and deleted=0
 	 tb_staff a,tb_staff_class b ,tb_class c
 	 WHERE 
 	 a.type=32 AND a.id=b.staff_id  AND a.deleted=0 AND b.deleted=0 AND b.class_id=c.id ) AS tmp1 
-	 LEFT JOIN tb_sign_type c ON (tmp1.sign_type_id =c.id) left join tb_ic_card card on tmp1.rfid=card.rfid
+	 LEFT JOIN tb_sign_type c ON (tmp1.sign_type_id =c.id) left join (select * from tb_ic_card where deleted=0 and ic_type=1) card on tmp1.rfid=card.rfid
 	 WHERE  class_id=#{id} ORDER BY CONVERT( tmp1.name USING gbk )
 </select>
 <select id="findBystaffbyId" parameterType="Integer" resultType="cn.didano.base.model.Hand_staff4PhoneBook">
@@ -189,7 +189,7 @@ select * from tb_student_parent where student_id=#{id} and deleted=0
 	a.id,a.name,a.phone,a.type,b.class_id,a.rfid FROM tb_staff a,tb_staff_class b ,tb_class c
 	 WHERE a.id=b.staff_id  AND a.deleted=0  AND 
 	b.class_id=c.id AND a.id=#{id} ORDER BY CONVERT( a.name USING gbk )
-	) tmp1 left join tb_ic_card tmp2 on tmp1.rfid=tmp2.rfid
+	) tmp1 left join (select * from tb_ic_card where deleted=0) tmp2 on tmp1.rfid=tmp2.rfid
 </select>
 
 
@@ -197,7 +197,7 @@ select * from tb_student_parent where student_id=#{id} and deleted=0
 	select tmp1.ic_card_id as icCardId,tmp2.ic_number as staff_ic_number,tmp1.sign_type_id AS SignTypeId,tmp1.title,tmp1.status,tmp1.school_id,tmp1.id,tmp1.name,tmp1.type,tmp1.phone,tmp1.class_id  as classId,c.in_time,c.out_time FROM 
 	 (SELECT a.ic_card_id,a.rfid,c.title,a.status,a.sign_type_id,a.school_id,a.id,a.name,a.phone,a.type,b.class_id FROM tb_staff a,tb_staff_class b ,tb_class c
 	 WHERE   a.id=b.staff_id  AND a.deleted=0 AND b.deleted=0 AND b.class_id=c.id AND a.name LIKE #{name} and a.school_id=#{schoolId}) AS tmp1 
-	 LEFT JOIN tb_sign_type c ON (tmp1.sign_type_id =c.id) left join tb_ic_card tmp2 on tmp1.rfid=tmp2.rfid ORDER BY CONVERT( tmp1.name USING gbk )
+	 LEFT JOIN tb_sign_type c ON (tmp1.sign_type_id =c.id) left join (select * from tb_ic_card where deleted=0 and school_id=#{schoolId} and ic_type=1) tmp2 on tmp1.rfid=tmp2.rfid ORDER BY CONVERT( tmp1.name USING gbk )
 </select>
 <select id="findParentByPid" parameterType="cn.didano.base.model.Tb_studentparent" resultType="cn.didano.base.model.Hand_parent4mailList">
    SELECT * FROM tb_student_parent where  student_id=#{id} and parent_id=#{parentId}  and deleted=0
